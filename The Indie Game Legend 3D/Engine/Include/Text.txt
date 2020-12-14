@@ -1,0 +1,9 @@
+Client Enum 옮김
+
+CStage float _fDeletatime 되어 있는거 
+부모의 인자값 타입 다름 
+cosnt 붙여서 일치시킴
+
+릭 확인 하는 코드 추가 
+
+펙토리 메니저 추가 일단 파일 읽는거만 

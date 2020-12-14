@@ -1,0 +1,144 @@
+#include "..\Header\Renderer.h"
+/*추가->오브젝트 랜더 호출 */
+#include "GameObject.h"
+
+USING(Engine)
+
+CRenderer::CRenderer(LPDIRECT3DDEVICE9 _pDevice)
+	: m_pDevice(_pDevice)
+{
+	SafeAddRef(_pDevice);
+}
+
+void CRenderer::Free()
+{
+	/*차피 랜더 끝나고 클리어하지만 예외적인 종료 상황시 처리*/
+	for (_int i = 0; i < (_int)ERenderID::End; ++i)
+	{
+		for (auto& pObject : m_GameObjects[i])
+		{
+			SafeRelease(pObject);
+		}
+
+		m_GameObjects[i].clear();
+	}
+	SafeRelease(m_pDevice);
+}
+
+/* 매 프레임마다 렌더 리스트에 오브젝트를 추가한다. */
+HRESULT CRenderer::AddInRenderer(const ERenderID _eRenderID, CGameObject * const _pGameObject)
+{
+	if (0 > (_int)_eRenderID ||
+		ERenderID::End <= _eRenderID)
+	{
+		PrintLog(L"Error", L"Out of range Render list");
+		return E_FAIL;
+	}
+
+	if (nullptr == _pGameObject)
+		return E_FAIL;
+
+	m_GameObjects[(_int)_eRenderID].push_back(_pGameObject);
+	SafeAddRef(_pGameObject);
+
+	return S_OK;
+}
+
+
+HRESULT CRenderer::RenderPriority()
+{
+	for (auto& pObject : m_GameObjects[(_int)ERenderID::Priority])
+	{
+		if (FAILED(pObject->Render()))
+			return E_FAIL;
+
+		SafeRelease(pObject);
+	}
+
+	m_GameObjects[(_int)ERenderID::Priority].clear();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::RenderNoAlpha()
+{
+	for (auto& pObject : m_GameObjects[(_int)ERenderID::NoAlpha])
+	{
+		if (FAILED(pObject->Render()))
+			return E_FAIL;
+
+		SafeRelease(pObject);
+	}
+
+	m_GameObjects[(_int)ERenderID::NoAlpha].clear();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::RenderAlpha()
+{
+	/*알파 테스팅 */
+	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	m_pDevice->SetRenderState(D3DRS_ALPHAREF, 1); /*알파기준값*/
+	m_pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	for (auto& pObject : m_GameObjects[(_int)ERenderID::Alpha])
+	{
+		if (FAILED(pObject->Render()))
+			return E_FAIL;
+
+		SafeRelease(pObject);
+	}
+
+	m_GameObjects[(_int)ERenderID::Alpha].clear();
+
+	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	return S_OK;
+
+}
+
+HRESULT CRenderer::RenderUI()
+{
+	for (auto& pObject : m_GameObjects[(_int)ERenderID::UI])
+	{
+		if (FAILED(pObject->Render()))
+			return E_FAIL;
+
+		SafeRelease(pObject);
+	}
+
+	m_GameObjects[(_int)ERenderID::UI].clear();
+
+	return S_OK;
+}
+ 
+
+HRESULT CRenderer::Render(HWND _hWnd)
+{
+	m_pDevice->Clear(0, nullptr, D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(255, 0, 0, 255), 1.f, 0);
+	m_pDevice->BeginScene();
+
+	if (FAILED(RenderPriority()))
+		return E_FAIL;
+
+	if (FAILED(RenderNoAlpha()))
+		return E_FAIL;
+
+	if (FAILED(RenderAlpha()))
+		return E_FAIL;
+
+	if (FAILED(RenderUI()))
+		return E_FAIL;
+
+	m_pDevice->EndScene();
+	m_pDevice->Present(nullptr, nullptr, _hWnd, nullptr);
+
+	return S_OK;
+}
+
+CRenderer * CRenderer::Create(LPDIRECT3DDEVICE9 _pDevice)
+{
+	if (nullptr == _pDevice)
+		return nullptr;
+	return new CRenderer(_pDevice);
+}
