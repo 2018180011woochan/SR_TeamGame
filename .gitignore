@@ -10,7 +10,8 @@
 *.slo
 *.lo
 *.o
-*.obj
+The Indie Game Legend 3D\Client\Include\Debug\*.obj
+The Indie Game Legend 3D\Engine\Include\Debug\*.obj
 
 # Precompiled Headers
 *.gch
