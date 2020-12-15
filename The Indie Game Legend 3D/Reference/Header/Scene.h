@@ -12,7 +12,7 @@ private:
 protected:
 	LPDIRECT3DDEVICE9	m_pDevice;
 protected:
-	explicit CScene(CScene* const _pScene);
+	explicit CScene(const UINT _nSceneID);
 	//template<typename T>
 	//explicit CScene();
 	virtual ~CScene() = default;

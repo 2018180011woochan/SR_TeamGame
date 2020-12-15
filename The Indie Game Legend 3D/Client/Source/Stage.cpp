@@ -7,7 +7,7 @@
 #include "Mouse.h"
 #include "Sector.h"
 CStage::CStage()
-	: CScene(this)
+	: CScene(GetTypeHashCode<CStage>())
 {
 }
 
@@ -19,15 +19,14 @@ HRESULT CStage::Awake()
 	AddPrototype(CPlayerCamera::Create());
 	AddPrototype(CMouse::Create());
 	AddPrototype(CSector::Create());
-
+	
 	AddGameObject<CPlayer>();
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CMouse>();
-	//AddGameObject<CBub>();
+	AddGameObject<CBub>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
-
 
 	CScene::Awake();
 	return S_OK;

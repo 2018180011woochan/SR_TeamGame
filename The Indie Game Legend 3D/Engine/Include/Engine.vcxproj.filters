@@ -89,7 +89,7 @@
       <UniqueIdentifier>{743a92aa-e9b3-4981-b5ab-947560247969}</UniqueIdentifier>
     </Filter>
     <Filter Include="01.Utility\05.Component\03.Image">
-      <UniqueIdentifier>{21cc928a-aace-428c-bfc8-8f2fc4eab37f}</UniqueIdentifier>
+      <UniqueIdentifier>{d4f5402a-7b74-43ca-9e35-3afa12f9db6b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +192,11 @@
     <ClInclude Include="..\Header\FrameManager.h">
       <Filter>00.System\03.FrameManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\EngineExtern.h" />
     <ClInclude Include="..\Header\Image.h">
       <Filter>01.Utility\05.Component\03.Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EngineExtern.h">
+      <Filter>99.Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

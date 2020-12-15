@@ -75,6 +75,13 @@ TSTRING GetTypeName()
 	return sTypeName;
 }
 
+template<typename T>
+UINT GetTypeHashCode()
+{
+	UINT nHashCode = typeid(T).hash_code();
+	return nHashCode;
+}
+
 //TSTRING GetTypeName(LPGAMEOBJECT* const _pGameObject)
 //{
 //#ifdef UNICODE

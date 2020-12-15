@@ -99,6 +99,30 @@ HRESULT CRenderer::RenderAlpha()
 
 HRESULT CRenderer::RenderUI()
 {
+	/*알파 테스팅 */
+	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	m_pDevice->SetRenderState(D3DRS_ALPHAREF, 1); /*알파기준값*/
+	m_pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	//Off Z-Buffer
+	m_pDevice->SetRenderState(D3DRS_ZENABLE, false);
+	//뷰 행렬을 항등행렬로 변환.
+	D3DXMATRIX matView;
+	D3DXMatrixIdentity(&matView);
+	m_pDevice->SetTransform(D3DTS_VIEW, &matView);
+	/*직교 투영 변환*/
+	D3DXMATRIX matOrtho;
+	//직교 투영 변환에 필요한 화면 크기 정보 받아오기.
+	LPDIRECT3DSURFACE9	pBackBuffer;
+	m_pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
+	D3DSURFACE_DESC tSurfaceDesc;
+	ZeroMemory(&tSurfaceDesc, sizeof(D3DSURFACE_DESC));
+	pBackBuffer->GetDesc(&tSurfaceDesc);
+	SafeRelease(pBackBuffer);
+	//화면 정보 기반으로 직교 투영 행렬 생성 및 장치에 전달.
+	D3DXMatrixOrthoLH(&matOrtho, float(tSurfaceDesc.Width), float(tSurfaceDesc.Height), 0.f, 1.f);
+	m_pDevice->SetTransform(D3DTS_PROJECTION, &matOrtho);
+
 	for (auto& pObject : m_GameObjects[(_int)ERenderID::UI])
 	{
 		if (FAILED(pObject->Render()))
@@ -109,6 +133,10 @@ HRESULT CRenderer::RenderUI()
 
 	m_GameObjects[(_int)ERenderID::UI].clear();
 
+	//On Z-Buffer 
+	m_pDevice->SetRenderState(D3DRS_ZENABLE, true);
+
+	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	return S_OK;
 }
  

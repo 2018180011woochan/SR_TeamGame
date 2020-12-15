@@ -21,6 +21,7 @@ CGameObject::CGameObject(const CGameObject & _rOther)
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);
+	m_pTransform = (CTransform*)AddComponent<CTransform>();
 }
 
 void CGameObject::Free()
@@ -41,7 +42,6 @@ HRESULT CGameObject::InitializePrototype()
 
 HRESULT CGameObject::Awake()
 {
-	m_pTransform = (CTransform*)AddComponent<CTransform>();
 	return S_OK;
 }
 

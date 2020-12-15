@@ -12,8 +12,8 @@ HINSTANCE	g_hInstance;                        // 현재 인스턴스입니다.
 HWND		g_hWnd;								// 메인 윈도우 핸들.
 TCHAR		szTitle[MAX_LOADSTRING];			// 제목 표시줄 텍스트.
 TCHAR		szWindowClass[MAX_LOADSTRING];		// 메인 윈도우 클래스 이름.
-CONST INT	g_nWinCX = 800;						// 메인 윈도우 가로 길이.
-CONST INT	g_nWinCY = 600;						// 메인 윈도우 세로 길이.
+CONST INT	g_nWinCX = 1280;						// 메인 윈도우 가로 길이.
+CONST INT	g_nWinCY = 720;						// 메인 윈도우 세로 길이.
 #pragma endregion
 
 #pragma region FUNCTION PROTOTYPE
@@ -24,6 +24,8 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpszCmdParam, int nCmdShow)
 {
+	//난수 시드 초기화.
+	srand((unsigned)time(NULL));
 
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 

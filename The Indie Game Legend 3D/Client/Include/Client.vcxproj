@@ -163,7 +163,10 @@
     <ClInclude Include="..\Header\ClientExtern.h" />
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
+    <ClInclude Include="..\Header\Intro.h" />
+    <ClInclude Include="..\Header\IntroBackGround.h" />
     <ClInclude Include="..\Header\KeyManager.h" />
+    <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
@@ -172,6 +175,7 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\Sector.h" />
     <ClInclude Include="..\Header\Stage.h" />
+    <ClInclude Include="..\Header\Star.h" />
     <ClInclude Include="..\Header\TexturePool.h" />
     <ClInclude Include="..\Header\TexturePoolManager.h" />
     <ClInclude Include="Client.h" />
@@ -181,7 +185,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\FactoryManager.cpp" />
+    <ClCompile Include="..\Source\Intro.cpp" />
+    <ClCompile Include="..\Source\IntroBackGround.cpp" />
     <ClCompile Include="..\Source\KeyManager.cpp" />
+    <ClCompile Include="..\Source\Logo.cpp" />
     <ClCompile Include="..\Source\Monster.cpp" />
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
@@ -191,6 +198,7 @@
     <ClCompile Include="..\Source\MainApp.cpp" />
     <ClCompile Include="..\Source\Sector.cpp" />
     <ClCompile Include="..\Source\Stage.cpp" />
+    <ClCompile Include="..\Source\Star.cpp" />
     <ClCompile Include="..\Source\TexturePool.cpp" />
     <ClCompile Include="..\Source\TexturePoolManager.cpp" />
     <ClCompile Include="Client.cpp" />

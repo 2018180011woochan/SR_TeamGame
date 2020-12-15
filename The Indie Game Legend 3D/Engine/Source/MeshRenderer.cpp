@@ -13,8 +13,7 @@ CMeshRenderer::CMeshRenderer(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9
 void CMeshRenderer::Free()
 {
 	SafeRelease(m_pMesh);
-	SafeRelease(m_pMeshManager);
-	
+	SafeRelease(m_pMeshManager);	
 }
 
 HRESULT CMeshRenderer::Initialize()

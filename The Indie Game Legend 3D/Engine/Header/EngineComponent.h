@@ -7,6 +7,7 @@
 #include "VIBuffer_Cube.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "Image.h"
 #pragma endregion
 
 

@@ -19,6 +19,7 @@ public:
 	HRESULT Load(const TSTRING& _sFilePath);
 
 	LPDIRECT3DTEXTURE9	GetTexture();
+	D3DXIMAGE_INFO		GetDesc();
 };
 END
 #define __TEXTURE_H__

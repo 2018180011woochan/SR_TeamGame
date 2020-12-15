@@ -1,4 +1,5 @@
 #include "..\Header\Image.h"
+#include "Texture.h"
 
 USING(Engine)
 
@@ -43,7 +44,23 @@ Image * Image::Create(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const 
 
 HRESULT Image::Initialize()
 {
+	if (FAILED(CreateBuffer()))
+		return E_FAIL;
 	return S_OK;
+}
+
+HRESULT Image::Render()
+{
+	if (FAILED(m_pDevice->SetTexture(0, (m_pTexture == nullptr ? 0 : m_pTexture->GetTexture()))))
+		return E_FAIL;
+	if (FAILED(m_pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEXRECT))))
+		return E_FAIL;
+	if (FAILED(m_pDevice->SetFVF(VERTEXRECT::FVF)))
+		return E_FAIL;
+	if (FAILED(m_pDevice->SetIndices(m_pIndexBuffer)))
+		return E_FAIL;
+	return m_pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_nVertexCount, 0, m_nIndexCount);
+
 }
 
 HRESULT Image::SetTexture(CTexture * const _pTexture)
@@ -54,12 +71,36 @@ HRESULT Image::SetTexture(CTexture * const _pTexture)
 	m_pTexture = _pTexture;
 	//변경된 텍스처 레퍼런스 카운트 증가.
 	SafeAddRef(_pTexture);
+
+	SetNativeSize();
+
+	return S_OK;
+}
+
+HRESULT Image::SetNativeSize()
+{
+	if (nullptr == m_pTexture || nullptr == m_pTexture->GetTexture())
+		return S_OK;
+	LPVERTEXRECT pVertices = nullptr;
+
+	D3DXIMAGE_INFO tImageDesc = m_pTexture->GetDesc();
+
+	m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
+	
+	pVertices[0].Position = D3DXVECTOR3(-float(tImageDesc.Width * 0.5f), -float(tImageDesc.Height * 0.5f), 0.f);
+	pVertices[1].Position = D3DXVECTOR3(-float(tImageDesc.Width * 0.5f),  float(tImageDesc.Height * 0.5f), 0.f);
+	pVertices[2].Position = D3DXVECTOR3( float(tImageDesc.Width * 0.5f),  float(tImageDesc.Height * 0.5f), 0.f);
+	pVertices[3].Position = D3DXVECTOR3( float(tImageDesc.Width * 0.5f), -float(tImageDesc.Height * 0.5f), 0.f);
+	
+	m_pVertexBuffer->Unlock();
+
+
 	return S_OK;
 }
 
 HRESULT Image::CreateBuffer()
 {
-	m_nVertexCount = 6;
+	m_nVertexCount = 4;
 	m_nIndexCount = 2;
 	//버텍스 버퍼 생성.
 	m_pDevice->CreateVertexBuffer(
@@ -105,6 +146,34 @@ HRESULT Image::CreateBuffer()
 	pIndices[0] = { 0,1,2 };
 	pIndices[1] = { 0,2,3 };
 	m_pIndexBuffer->Unlock();
-	return E_NOTIMPL;
+	return S_OK;
+}
+
+HRESULT Image::UpdateBuffer()
+{
+	if (nullptr == m_pTexture)
+		return S_OK;
+
+	LPVERTEXRECT pVertices = nullptr;
+
+	/*
+	1--------2
+	|		 |
+	|		 |
+	|		 |
+	0--------3
+	*/
+
+	m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
+	pVertices[0].Position = D3DXVECTOR3(-0.5f, -0.5f, 0.f);
+	pVertices[1].Position = D3DXVECTOR3(-0.5f, 0.5f, 0.f);
+	pVertices[1].UV = D3DXVECTOR2(0.f, 0.f);
+	pVertices[2].Position = D3DXVECTOR3(0.5f, 0.5f, 0.f);
+	pVertices[2].UV = D3DXVECTOR2(1.f, 0.f);
+	pVertices[3].Position = D3DXVECTOR3(0.5f, -0.5f, 0.f);
+	pVertices[3].UV = D3DXVECTOR2(1.f, 1.f);
+	m_pVertexBuffer->Unlock();
+
+	return S_OK;
 }
 

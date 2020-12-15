@@ -3,7 +3,7 @@
 #include "KeyManager.h"
 #include "MsgManager.h"
 #include "FactoryManager.h"
-#include "Stage.h"
+#include "Intro.h"
 CMainApp::CMainApp()
 	: m_pManagement(CManagement::GetInstance())
 {
@@ -24,7 +24,7 @@ void CMainApp::Free()
 
 HRESULT CMainApp::Initialize()
 {
-	if (FAILED(m_pManagement->Initialize(g_hWnd, g_nWinCX, g_nWinCY, EDisplayMode::Window,120.f)))
+	if (FAILED(m_pManagement->Initialize(g_hWnd, 1280, 720, EDisplayMode::Window,120.f)))
 	{
 		PrintLog(TEXT("Error"), TEXT("Failed to ready engine."));
 		return E_FAIL;
@@ -43,7 +43,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(ReadyDefaultSetting()))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->SetUpCurrentScene(CStage::Create())))
+	if (FAILED(m_pManagement->SetUpCurrentScene(CIntro::Create())))
 	{
 		PrintLog(L"Error", L"Failed To SetUpCurrentScene");
 		return E_FAIL;

@@ -2,13 +2,13 @@
 
 USING(Engine)
 
-CScene::CScene(CScene * const _pScene)
+CScene::CScene(const UINT _nSceneID)
 	: m_pManagement(CManagement::GetInstance())
 	, m_pDevice(m_pManagement->GetDevice())
 {
 	SafeAddRef(m_pManagement);
 	SafeAddRef(m_pDevice);
-	m_nSceneID = typeid(*_pScene).hash_code();
+	m_nSceneID = _nSceneID;
 }
 
 void CScene::Free()

@@ -11,7 +11,7 @@ CPlayer::CPlayer()
 }
 
 CPlayer::CPlayer(const CPlayer & _rOther)
-	:CGameObject()
+	:CGameObject(_rOther)
 {
 
 }

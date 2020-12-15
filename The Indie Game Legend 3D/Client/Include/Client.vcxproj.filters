@@ -49,9 +49,6 @@
     <Filter Include="02.GameObject\00.Monster">
       <UniqueIdentifier>{79f9398c-aef0-4296-a2bc-e4d1840f75fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\00.Monster\00.Bub">
-      <UniqueIdentifier>{9d28111f-dabd-4384-8621-dd59724a2e7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.Scene">
       <UniqueIdentifier>{6964212a-0ad1-4029-8df3-8fbfb2d78db9}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,27 @@
     </Filter>
     <Filter Include="02.GameObject\03.Sector">
       <UniqueIdentifier>{0c5aec88-7dd8-4872-82bb-317466d431f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\00.Base">
+      <UniqueIdentifier>{b57aae91-6f47-4f73-b777-f318eddccf8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\01.Bub">
+      <UniqueIdentifier>{9d28111f-dabd-4384-8621-dd59724a2e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\01.Intro">
+      <UniqueIdentifier>{45f3a4b4-745b-45bb-8788-2df9da9c3462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI">
+      <UniqueIdentifier>{1e580bcd-9ab1-4711-9a72-0d1a3129b852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\00.IntroBackGround">
+      <UniqueIdentifier>{d169ca4b-f1b6-4e64-b60f-0f646a2122cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\01.Star">
+      <UniqueIdentifier>{1f295b24-9a9a-4608-9e11-6129dd2060af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\02.Logo">
+      <UniqueIdentifier>{76ae1038-37be-4237-9286-cbc1f1944112}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -118,7 +136,7 @@
       <Filter>97.Manager\99.MsgManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bub.h">
-      <Filter>02.GameObject\00.Monster\00.Bub</Filter>
+      <Filter>02.GameObject\00.Monster\01.Bub</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FactoryManager.h">
       <Filter>97.Manager\98.FactoryManager</Filter>
@@ -137,6 +155,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\Sector.h">
       <Filter>02.GameObject\03.Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Monster.h">
+      <Filter>02.GameObject\00.Monster\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Intro.h">
+      <Filter>03.Scene\01.Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IntroBackGround.h">
+      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Star.h">
+      <Filter>02.GameObject\04.UI\01.Star</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Logo.h">
+      <Filter>02.GameObject\04.UI\02.Logo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +198,7 @@
       <Filter>97.Manager\99.MsgManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Bub.cpp">
-      <Filter>02.GameObject\00.Monster\00.Bub</Filter>
+      <Filter>02.GameObject\00.Monster\01.Bub</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\FactoryManager.cpp">
       <Filter>97.Manager\98.FactoryManager</Filter>
@@ -181,6 +214,21 @@
     </ClCompile>
     <ClCompile Include="..\Source\Sector.cpp">
       <Filter>02.GameObject\03.Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Monster.cpp">
+      <Filter>02.GameObject\00.Monster\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Intro.cpp">
+      <Filter>03.Scene\01.Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IntroBackGround.cpp">
+      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Star.cpp">
+      <Filter>02.GameObject\04.UI\01.Star</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Logo.cpp">
+      <Filter>02.GameObject\04.UI\02.Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
