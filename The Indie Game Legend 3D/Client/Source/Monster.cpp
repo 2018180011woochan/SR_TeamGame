@@ -76,10 +76,10 @@ HRESULT CMonster::IsBillboarding()
 
 	D3DXMatrixInverse(&matBillY, 0, &matBillY);
 
-	_matrix matWorld = m_pTransformCom->Get_WorldMatrix();
+	_matrix matWorld = m_pTransform->Get_WorldMatrix();
 
 	_matrix NewWorld = matBillY * matWorld;
-	m_pTransformCom->Set_WorldMatrix(NewWorld);
+	m_pTransform->Set_WorldMatrix(NewWorld);
 
 	return S_OK;
 }

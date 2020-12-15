@@ -1,7 +1,7 @@
 #pragma once
 #ifndef __BUB_H__
 
-#include "GameObject.h"
+#include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
 class CBub final : public CGameObject

@@ -102,9 +102,6 @@
     <ClInclude Include="..\Header\MainApp.h">
       <Filter>01.MainApp</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Player.h">
-      <Filter>02.GameObject\00.Player</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\KeyManager.h">
       <Filter>97.Manager\00.KeyManager</Filter>
     </ClInclude>
@@ -132,6 +129,9 @@
     <ClInclude Include="..\Header\TexturePoolManager.h">
       <Filter>04.Pool\00.Texture\01.Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Monster.h">
+      <Filter>02.GameObject\00.Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -145,9 +145,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\MainApp.cpp">
       <Filter>01.MainApp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Player.cpp">
-      <Filter>02.GameObject\00.Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\KeyManager.cpp">
       <Filter>97.Manager\00.KeyManager</Filter>
@@ -172,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\TexturePoolManager.cpp">
       <Filter>04.Pool\00.Texture\01.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Monster.cpp">
+      <Filter>02.GameObject\00.Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
