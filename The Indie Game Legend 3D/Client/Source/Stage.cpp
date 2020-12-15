@@ -1,7 +1,11 @@
 #include "stdafx.h"
 #include "Stage.h"
 #include "Bub.h"
-
+#include "FactoryManager.h"
+#include "Player.h"
+#include "PlayerCamera.h"
+#include "Mouse.h"
+#include "Sector.h"
 CStage::CStage()
 	: CScene(this)
 {
@@ -9,14 +13,32 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
-	if (FAILED(AddMonsterLayer(L"Layer_Monster")))
-		return E_FAIL;
+
+	AddPrototype(CBub::Create());
+	AddPrototype(CPlayer::Create());
+	AddPrototype(CPlayerCamera::Create());
+	AddPrototype(CMouse::Create());
+	AddPrototype(CSector::Create());
+
+	AddGameObject<CPlayer>();
+	AddGameObject<CPlayerCamera>();
+	AddGameObject<CMouse>();
+	//AddGameObject<CBub>();
+
+	CSector* pSector = (CSector*)AddGameObject<CSector>();
+	pSector->SetSectorName(L"Sector1");
+
+
 	CScene::Awake();
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
+
+	CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
+	CFactoryManager::GetInstance()->LoadScene(this);
+
 	CScene::Start();
 
 	return S_OK;
@@ -38,12 +60,6 @@ UINT CStage::LateUpdate(float _fDeltaTime)
 
 HRESULT CStage::AddMonsterLayer(const wstring & LayerTag)
 {
-	auto pManagement = CManagement::GetInstance();
-	if (nullptr == pManagement)
-		return E_FAIL;
-
-	AddPrototype(CBub::Create());
-	AddGameObject<CBub>();
 
 
 	return S_OK;
@@ -52,12 +68,6 @@ HRESULT CStage::AddMonsterLayer(const wstring & LayerTag)
 CStage * CStage::Create()
 {
 	CStage* pInstance = new CStage;
-	//if (FAILED(pInstance->Awake()))
-	//{
-	//	PrintLog(L"Error", L"Failed To Create CStage");
-	//	SafeRelease(pInstance);
-	//}
-
 	return pInstance;
 }
 
@@ -65,4 +75,3 @@ void CStage::Free()
 {
 	CScene::Free();
 }
-

@@ -3,7 +3,7 @@
 #include "Camera.h"
 USING(Engine)
 
-class CPlayerCamera : public CCamera
+class CPlayerCamera final : public CCamera
 {
 private:
 	float	m_fDistanceToAt = 10.f;
@@ -29,6 +29,7 @@ public:
 	virtual CGameObject * Clone() override;
 
 	static CPlayerCamera* Create();
+private:
 	virtual void Free();
 
 };

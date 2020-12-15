@@ -27,9 +27,9 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	_matrix matRotAxis;
 	/*Eye*/
 	m_tCameraDesc.vEye = pPlayerTransFomr->Get_Position();
-	m_tCameraDesc.vEye.y += 3.f;
+	m_tCameraDesc.vEye.y += 5.f;
 
-	/*At*/
+	/*At . RotY */
 	memcpy(&vPlayerLook, &PlayerTransFormDesc.matWorld.m[2][0], sizeof(_vector));
 	D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
 	vPlayerLook *= m_fDistanceToAt;
@@ -37,12 +37,13 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	memcpy(&vPlayerRight, &PlayerTransFormDesc.matWorld.m[0][0], sizeof(_vector));
 	D3DXVec3Normalize(&vPlayerRight, &vPlayerRight);
 
-	/* 임의의 축 기준으로 회전 */
+	/*At . RotX*/
 	D3DXMatrixRotationAxis(&matRotAxis, &vPlayerRight, D3DXToRadian(m_fCameraAngleX));
 	D3DXVec3TransformNormal(&vPlayerLook, &vPlayerLook, &matRotAxis);
 
-	m_tCameraDesc.vAt = m_tCameraDesc.vEye + vPlayerLook;
 
+	m_tCameraDesc.vAt = m_tCameraDesc.vEye + vPlayerLook;
+	m_eRenderID = ERenderID::Alpha;
 	return E_NOTIMPL;
 }
 
@@ -74,9 +75,15 @@ HRESULT CPlayerCamera::InitializePrototype()
 
 HRESULT CPlayerCamera::Awake()
 {
-	m_fDistanceToAt = 10.f;
+	/*CameraDesc setting*/
+	m_tCameraDesc.fAspect = (float)g_nWinCX / g_nWinCY;
+	m_tCameraDesc.fFar = 500.f;
+	m_tCameraDesc.fNear = 1.f;
+	m_tCameraDesc.fFovY = D3DXToRadian(90.f);
+	m_tCameraDesc.vUp = _vector(0, 1, 0);
 	m_fCameraAngleX = 0.f;
-	m_fCameraAngleSpeed = 90.f;
+	m_fDistanceToAt = 1.f;
+	m_fCameraAngleSpeed = 200.f;
 	return S_OK;
 }
 
@@ -130,5 +137,5 @@ void CPlayerCamera::Free()
 {
 	SafeRelease(m_pPlayer);
 	SafeRelease(m_pMouse);
-
+	CCamera::Free();
 }

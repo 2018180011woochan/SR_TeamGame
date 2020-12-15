@@ -4,7 +4,6 @@
 #include "MsgManager.h"
 #include "FactoryManager.h"
 #include "Stage.h"
-#include "Bub.h"
 CMainApp::CMainApp()
 	: m_pManagement(CManagement::GetInstance())
 {
@@ -18,14 +17,14 @@ void CMainApp::Free()
 	CMsgManager::DeleteInstance();
 	m_pTexturePoolManager->Release();
 	SafeRelease(m_pDevice);
-	m_pManagement->ReleaseEngine();
-	SafeRelease(m_pManagement);
-	//CManagement::ReleaseEngine();
+    SafeRelease(m_pManagement);
+	CManagement::GetInstance()->ReleaseEngine();
+
 }
 
 HRESULT CMainApp::Initialize()
 {
-	if (FAILED(m_pManagement->Initialize(g_hWnd, g_nWinCX, g_nWinCY, EDisplayMode::Window)))
+	if (FAILED(m_pManagement->Initialize(g_hWnd, g_nWinCX, g_nWinCY, EDisplayMode::Window,120.f)))
 	{
 		PrintLog(TEXT("Error"), TEXT("Failed to ready engine."));
 		return E_FAIL;
@@ -34,6 +33,7 @@ HRESULT CMainApp::Initialize()
 	m_pDevice = m_pManagement->GetDevice();
 	if (nullptr == m_pDevice)
 		return E_FAIL;
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, false);
 
 	SafeAddRef(m_pDevice);
 
@@ -48,7 +48,6 @@ HRESULT CMainApp::Initialize()
 		PrintLog(L"Error", L"Failed To SetUpCurrentScene");
 		return E_FAIL;
 	}
-	//CFactoryManager::GetInstance()->LoadDataFile(L"Test");
 	return S_OK;
 }
 
@@ -56,19 +55,13 @@ UINT CMainApp::Update()
 {
 	if (nullptr == m_pManagement)
 		return 0;
-	//CKeyManager::GetInstance()->Update_KeyManager();
-	m_pManagement->Update();
-	m_pManagement->Render(g_hWnd);
+	CKeyManager::GetInstance()->Update_KeyManager();
+	m_pManagement->Running();
 	return S_OK;
 }
 
 HRESULT CMainApp::ReadyStageResources()
 {
-//#pragma region GameObject_Monster_Bub
-//	//if (FAILED(m_pManagement->AddPrototype(CBub::Create())))
-//	//	return E_FAIL;
-//#pragma endregion
-//
 	return S_OK;
 }
 

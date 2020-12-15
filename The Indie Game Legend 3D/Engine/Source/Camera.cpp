@@ -50,8 +50,11 @@ UINT CCamera::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 
-	D3DXMatrixLookAtLH(&m_tCameraDesc.matView, &m_tCameraDesc.vEye, &m_tCameraDesc.vAt, &m_tCameraDesc.vUp);
-	D3DXMatrixPerspectiveFovLH(&m_tCameraDesc.matProj, m_tCameraDesc.fFovY, m_tCameraDesc.fAspect, m_tCameraDesc.fNear, m_tCameraDesc.fFar);
+	D3DXMatrixLookAtLH(&m_tCameraDesc.matView, &m_tCameraDesc.vEye,
+		&m_tCameraDesc.vAt, &m_tCameraDesc.vUp);
+
+	D3DXMatrixPerspectiveFovLH(&m_tCameraDesc.matProj, m_tCameraDesc.fFovY,
+		m_tCameraDesc.fAspect, m_tCameraDesc.fNear, m_tCameraDesc.fFar);
 
 	if (FAILED(m_pDevice->SetTransform(D3DTS_VIEW, &m_tCameraDesc.matView)))
 		return 0;
@@ -78,6 +81,4 @@ void CCamera::Free()
 void CCamera::Set_Camera(CAMERA_DESC _CameraDesc)
 {
 	m_tCameraDesc = _CameraDesc;
-
-	
 }

@@ -23,6 +23,7 @@ public:
 public:
 	virtual CGameObject * Clone() override;
 	static CBub* Create();
+private:
 	virtual void Free() override;
 
 private:

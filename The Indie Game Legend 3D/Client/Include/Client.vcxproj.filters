@@ -73,6 +73,9 @@
     <Filter Include="04.Pool\00.Texture\01.Manager">
       <UniqueIdentifier>{f25cf7ac-6e50-43b2-af89-da368835d0bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\03.Sector">
+      <UniqueIdentifier>{0c5aec88-7dd8-4872-82bb-317466d431f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -102,9 +105,6 @@
     <ClInclude Include="..\Header\MainApp.h">
       <Filter>01.MainApp</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Player.h">
-      <Filter>02.GameObject\00.Player</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\KeyManager.h">
       <Filter>97.Manager\00.KeyManager</Filter>
     </ClInclude>
@@ -132,6 +132,12 @@
     <ClInclude Include="..\Header\TexturePoolManager.h">
       <Filter>04.Pool\00.Texture\01.Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Player.h">
+      <Filter>02.GameObject\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Sector.h">
+      <Filter>02.GameObject\03.Sector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -145,9 +151,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\MainApp.cpp">
       <Filter>01.MainApp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Player.cpp">
-      <Filter>02.GameObject\00.Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\KeyManager.cpp">
       <Filter>97.Manager\00.KeyManager</Filter>
@@ -172,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\TexturePoolManager.cpp">
       <Filter>04.Pool\00.Texture\01.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Player.cpp">
+      <Filter>02.GameObject\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sector.cpp">
+      <Filter>02.GameObject\03.Sector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

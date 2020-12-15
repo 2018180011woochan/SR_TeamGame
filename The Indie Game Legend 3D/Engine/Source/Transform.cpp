@@ -17,6 +17,7 @@ CTransform::CTransform(const CTransform & _rOther)
 HRESULT CTransform::Initialize()
 {
 	ZeroMemory(&m_tTransformDesc, sizeof(TRANSFORM_DESC));
+	m_tTransformDesc.vScale = _vector(1, 1, 1);
 	D3DXMatrixIdentity(&m_tTransformDesc.matWorld);
 	return S_OK;
 }
@@ -25,15 +26,15 @@ void CTransform::UpdateTransform()
 {
 	_matrix matScale, matRotX, matRotY, matRotZ, matTrans;
 	D3DXMatrixScaling(&matScale, m_tTransformDesc.vScale.x, m_tTransformDesc.vScale.y, m_tTransformDesc.vScale.z);
-	D3DXMatrixRotationX(&matRotX, m_tTransformDesc.vRotation.x);
-	D3DXMatrixRotationY(&matRotY, m_tTransformDesc.vRotation.y);
-	D3DXMatrixRotationZ(&matRotZ, m_tTransformDesc.vRotation.z);
+	D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_tTransformDesc.vRotation.x));
+	D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_tTransformDesc.vRotation.y));
+	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_tTransformDesc.vRotation.z));
 	D3DXMatrixTranslation(&matTrans, m_tTransformDesc.vPosition.x, m_tTransformDesc.vPosition.y, m_tTransformDesc.vPosition.z);
 
 	m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans;
 }
 /*행렬 세팅용*/
-HRESULT CTransform::DeviceSetting()
+HRESULT CTransform::UpdateWorld()
 {
 	if (FAILED(m_pDevice->SetTransform(D3DTS_WORLD, &m_tTransformDesc.matWorld)))
 		return E_FAIL;

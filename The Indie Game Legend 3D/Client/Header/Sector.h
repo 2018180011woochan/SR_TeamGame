@@ -1,22 +1,15 @@
 #pragma once
-#ifndef __PLAYER_H__
+#ifndef __SECTOR1_H__
 #include "GameObject.h"
 USING(Engine)
-class CPlayer final: public CGameObject
+class CSector final : public CGameObject
 {
 private:
-	 class CKeyManager* m_pKeyMgr;
-	 float				m_fMoveSpeed = 0.f;
-	 float				m_fMouseSpeedX = 0.f;
-private:
-	HRESULT Key_Input(const float _fDeltaTime);
-
-protected:
-	explicit CPlayer();
-	explicit CPlayer(const CPlayer& _rOther);
+	explicit CSector();
+	explicit CSector(const CSector& _rOther);
+	virtual ~CSector() = default;
 public:
-	virtual ~CPlayer() = default;
-public:
+	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT InitializePrototype() override;
 	virtual HRESULT Awake() override;
 	virtual HRESULT Start() override;
@@ -25,9 +18,16 @@ public:
 	virtual HRESULT Render() override;
 	virtual CGameObject * Clone() override;
 public:
-	static CPlayer* Create();
+	static CSector* Create();
 private:
-	virtual void Free() override;
+	virtual void Free();
+public:
+	void SetSectorName(const TSTRING& _sSectorName);
+
+private:
+	TSTRING		m_sSectorName;
+	CMeshRenderer* m_pMeshRenderer = nullptr;
 };
-#define __PLAYER_H__
+
+#define __SECTOR1_H__
 #endif

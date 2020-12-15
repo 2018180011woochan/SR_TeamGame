@@ -13,7 +13,7 @@ public:
 	/*데이터 파일 읽고 데이터 저장*/
 	HRESULT LoadDataFile(const TSTRING& _sFileName);
 	/*저장한 대이터를 순회하면서 생성*/
-	HRESULT LoadScene(class CScene* const _pScene);
+	HRESULT LoadScene( CScene* const _pScene);
 private:
 	void ClearData();
 private:

@@ -56,6 +56,11 @@ HRESULT CMouse::Start()
 
 UINT CMouse::Update(const float _fDeltaTime)
 {
+	if (CKeyManager::GetInstance()->Key_Toggle(VK_F1))
+	{
+		UpdateMouseDir();
+		MoveToCentorCursor();
+	}
 	return OBJ_NOENVET;
 }
 
@@ -90,4 +95,5 @@ CMouse * CMouse::Create()
 
 void CMouse::Free()
 {
+	CGameObject::Free();
 }
