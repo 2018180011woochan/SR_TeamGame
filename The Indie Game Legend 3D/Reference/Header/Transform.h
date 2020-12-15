@@ -29,7 +29,7 @@ public:
 
 public:
 	void UpdateTransform();
-	HRESULT DeviceSetting();
+	HRESULT UpdateWorld();
 public:
 	explicit CTransform(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	explicit CTransform(const CTransform& _rOther);

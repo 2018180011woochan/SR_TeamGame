@@ -30,6 +30,7 @@ public:
 
 public:
 	static CMouse* Create();
+private:
 	virtual void Free() override;
 };
 #define __MOUSE_H__

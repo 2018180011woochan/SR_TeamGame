@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FactoryManager.h"
 #include "GameObject.h"
+#include "Scene.h"
 IMPLEMENT_SINGLETON(CFactoryManager)
 HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 {
@@ -50,17 +51,17 @@ HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 	return S_OK;
 }
 
-HRESULT CFactoryManager::LoadScene(const _uint& _nSceneID)
+HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 {
 	/*3데이터의 사이즈가 다르면 로드실패*/
-	if (m_vecSaveDataRoomID.size() != m_vecSaveDataPosition.size() != m_vecSaveDataType.size())
-	{
-		PrintLog(L"Error", L"Failed Load Data");
-		int a = m_vecSaveDataRoomID.size();
-		int b = m_vecSaveDataPosition.size();
-		int c = m_vecSaveDataType.size();
-		return E_FAIL;
-	}
+	//if (m_vecSaveDataRoomID.size() != m_vecSaveDataPosition.size() != m_vecSaveDataType.size())
+	//{
+	//	PrintLog(L"Error", L"Failed Load Data");
+	//	int a = m_vecSaveDataRoomID.size();
+	//	int b = m_vecSaveDataPosition.size();
+	//	int c = m_vecSaveDataType.size();
+	//	return E_FAIL;
+	//}
 
 	CManagement* pManagement = CManagement::GetInstance();
 	CGameObject* pGameObject = nullptr;
@@ -69,10 +70,15 @@ HRESULT CFactoryManager::LoadScene(const _uint& _nSceneID)
 	{
 
 		TSTRING TypeID =  L"C" + m_vecSaveDataType[i];
-		pGameObject = pManagement->AddGameObject(_nSceneID, TypeID);
-		if (nullptr == pGameObject)
-			return E_FAIL;
 
+		pGameObject = _pScene->AddGameObject(TypeID);
+
+		if (nullptr == pGameObject)
+		{
+			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
+			return E_FAIL;
+		}
+		pGameObject->Awake();
 		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[i]);
 		pGameObject->SetTag(m_vecSaveDataRoomID[i]);
 	}

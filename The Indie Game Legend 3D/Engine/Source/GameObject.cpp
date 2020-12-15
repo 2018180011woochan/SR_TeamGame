@@ -7,6 +7,7 @@ CGameObject::CGameObject()
 	, m_pDevice(m_pManagement->GetDevice())
 	, m_pTransform(nullptr)
 	, m_nTag(-1)
+	, m_eRenderID(ERenderID::End)
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);

@@ -7,7 +7,7 @@
 #include "Renderer.h"
 #include "TimeManager.h"
 #include "EngineComponent.h"
-
+#include "FrameManager.h"
 BEGIN(Engine)
 class ENGINE_DLL CManagement final : public CBase
 {
@@ -19,13 +19,16 @@ private:
 	CSceneManager*			m_pSceneManager;
 	CRenderer*				m_pRenderer;
 	CTimeManager*			m_pTimeManager;
+	CFrameManager*			m_pFrameManager;
+	HWND					m_hWnd;
 private:
 	explicit CManagement();
 	virtual ~CManagement() = default;
 public:
-	HRESULT Initialize(const HWND _hWnd, const UINT _nWinCX, const UINT _nWinCY, const EDisplayMode _eDisplayMode);
+	HRESULT Initialize(const HWND _hWnd, const UINT _nWinCX, const UINT _nWinCY, const EDisplayMode _eDisplayMode,const float _fSetFrame);
 	UINT	Update();
 	HRESULT	Render(HWND _hWnd);
+	void	Running();
 
 	// CBase을(를) 통해 상속됨
 	virtual void Free() override;

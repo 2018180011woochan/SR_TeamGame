@@ -1,4 +1,5 @@
 #include "..\Header\Management.h"
+#include "MeshManager.h"
 
 USING(Engine)
 IMPLEMENT_SINGLETON(CManagement)
@@ -8,11 +9,13 @@ CManagement::CManagement()
 	, m_pGameObjectManager(CGameObjectManager::GetInstance())
 	, m_pSceneManager(CSceneManager::GetInstance())
 	, m_pTimeManager(CTimeManager::GetInstance())
+	, m_pFrameManager(CFrameManager::GetInstance())
 {
 	SafeAddRef(m_pGraphicDevice);
 	SafeAddRef(m_pGameObjectManager);
 	SafeAddRef(m_pSceneManager);
 	SafeAddRef(m_pTimeManager);
+	SafeAddRef(m_pFrameManager);
 }
 
 void CManagement::Free()
@@ -26,6 +29,8 @@ void CManagement::ReleaseEngine()
 	SafeRelease(m_pSceneManager);
 	SafeRelease(m_pGraphicDevice);
 	SafeRelease(m_pTimeManager);
+	SafeRelease(m_pFrameManager);
+
 	if (CGraphicDevice::DeleteInstance())
 		PrintLog(L"Warning", L"Failed To Release CGraphicDevice");
 	if (CGameObjectManager::DeleteInstance())
@@ -34,11 +39,15 @@ void CManagement::ReleaseEngine()
 		PrintLog(L"Warning", L"Failed To Release CSceneManager");
 	if (CTimeManager::DeleteInstance())
 		PrintLog(L"Warning", L"Failed To Release CTimeManager");
+	if (FAILED(CMeshManager::DeleteInstance()))
+		PrintLog(L"Warning", L"Failed To Release CMeshManager");
+	if (FAILED(CFrameManager::DeleteInstance()))
+		PrintLog(L"Warning", L"Failed To Release CFrameManager");
 	if (CManagement::DeleteInstance())
 		PrintLog(L"Warning", L"Failed To Release CManagement");
 }
 
-HRESULT CManagement::Initialize(const HWND _hWnd, const UINT _nWinCX, const UINT _nWinCY, const EDisplayMode _eDisplayMode)
+HRESULT CManagement::Initialize(const HWND _hWnd, const UINT _nWinCX, const UINT _nWinCY, const EDisplayMode _eDisplayMode,const float _fSetFrame)
 {
 	if (nullptr == m_pGraphicDevice || FAILED(m_pGraphicDevice->Initialize(_hWnd, _nWinCX, _nWinCY, _eDisplayMode)))
 		return E_FAIL;
@@ -51,6 +60,9 @@ HRESULT CManagement::Initialize(const HWND _hWnd, const UINT _nWinCX, const UINT
 		PrintLog(TEXT("Error"), TEXT("Failed to create renderer"));
 		return E_FAIL;
 	}
+
+	m_hWnd = _hWnd;
+	m_pFrameManager->Set_LimitFrame(_fSetFrame);
 	return S_OK;
 }
 
@@ -58,12 +70,13 @@ UINT CManagement::Update()
 {
 	if (nullptr == m_pSceneManager)
 		return 0;
-
 	float fDeltaTime = m_pTimeManager->GetDeltaTime();
-
-	m_pSceneManager->Update(fDeltaTime);
-	m_pSceneManager->LateUpdate(fDeltaTime);
-
+	if (m_pFrameManager->LimitFrame())
+	{
+		m_pSceneManager->Update(fDeltaTime);
+		m_pSceneManager->LateUpdate(fDeltaTime);
+	}
+	m_pFrameManager->ShowFrame(m_hWnd, fDeltaTime);
 	return 0;
 }
 
@@ -73,6 +86,21 @@ HRESULT CManagement::Render(HWND _hWnd)
 		return E_FAIL;
 
 	return m_pRenderer->Render(_hWnd);
+}
+
+void CManagement::Running()
+{
+	if (nullptr == m_pSceneManager)
+		return ;
+
+	if (m_pFrameManager->LimitFrame())
+	{
+		float fDeltaTime = m_pTimeManager->GetDeltaTime();
+		m_pSceneManager->Update(fDeltaTime);
+		m_pSceneManager->LateUpdate(fDeltaTime);
+		m_pRenderer->Render(m_hWnd);
+		m_pFrameManager->ShowFrame(m_hWnd, fDeltaTime);
+	}
 }
 
 HRESULT CManagement::AwakeGameObject(const size_t _nSceneID)

@@ -14,8 +14,7 @@ void CMeshRenderer::Free()
 {
 	SafeRelease(m_pMesh);
 	SafeRelease(m_pMeshManager);
-	if(FAILED(CMeshManager::DeleteInstance()))
-		PrintLog(L"Warning", L"Failed To Release CMeshManager");
+	
 }
 
 HRESULT CMeshRenderer::Initialize()

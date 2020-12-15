@@ -166,8 +166,10 @@
     <ClInclude Include="..\Header\KeyManager.h" />
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
+    <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\Sector.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\TexturePool.h" />
     <ClInclude Include="..\Header\TexturePoolManager.h" />
@@ -181,9 +183,11 @@
     <ClCompile Include="..\Source\KeyManager.cpp" />
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
+    <ClCompile Include="..\Source\Player.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />
     <ClCompile Include="..\Source\Bub.cpp" />
     <ClCompile Include="..\Source\MainApp.cpp" />
+    <ClCompile Include="..\Source\Sector.cpp" />
     <ClCompile Include="..\Source\Stage.cpp" />
     <ClCompile Include="..\Source\TexturePool.cpp" />
     <ClCompile Include="..\Source\TexturePoolManager.cpp" />

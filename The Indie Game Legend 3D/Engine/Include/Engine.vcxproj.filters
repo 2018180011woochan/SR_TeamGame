@@ -85,6 +85,9 @@
     <Filter Include="01.Utility\04.GameObject\03.Gizmo">
       <UniqueIdentifier>{cc5338de-e841-4fbf-9b62-29e72ed4aa66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.System\03.FrameManager">
+      <UniqueIdentifier>{743a92aa-e9b3-4981-b5ab-947560247969}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineInclude.h">
@@ -183,6 +186,9 @@
     <ClInclude Include="..\Header\Gizmo.h">
       <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\FrameManager.h">
+      <Filter>00.System\03.FrameManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp">
@@ -244,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Gizmo.cpp">
       <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FrameManager.cpp">
+      <Filter>00.System\03.FrameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

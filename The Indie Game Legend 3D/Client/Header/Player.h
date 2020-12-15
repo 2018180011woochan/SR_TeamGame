@@ -2,12 +2,12 @@
 #ifndef __PLAYER_H__
 #include "GameObject.h"
 USING(Engine)
-class CPlayer : public CGameObject
+class CPlayer final: public CGameObject
 {
 private:
-	 CTransform*		m_pTransform;
 	 class CKeyManager* m_pKeyMgr;
 	 float				m_fMoveSpeed = 0.f;
+	 float				m_fMouseSpeedX = 0.f;
 private:
 	HRESULT Key_Input(const float _fDeltaTime);
 
@@ -26,6 +26,7 @@ public:
 	virtual CGameObject * Clone() override;
 public:
 	static CPlayer* Create();
+private:
 	virtual void Free() override;
 };
 #define __PLAYER_H__

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "KeyManager.h"
+#include "Mouse.h"
+
 USING(Engine)
 
 CPlayer::CPlayer()
@@ -10,8 +12,6 @@ CPlayer::CPlayer()
 
 CPlayer::CPlayer(const CPlayer & _rOther)
 	:CGameObject()
-	, m_pTransform(_rOther.m_pTransform)
-
 {
 
 }
@@ -21,56 +21,59 @@ HRESULT CPlayer::Key_Input(const float _fDeltaTime)
 	_vector vMoveDir = vZero;
 	if (m_pKeyMgr->Key_Press(KEY_W))
 	{
-		vMoveDir.z = 1;
+		vMoveDir += m_pTransform->Get_Look();
 		if (m_pKeyMgr->Key_Press(KEY_A))
 		{
-			vMoveDir.x = -1;
+			vMoveDir += -(m_pTransform->Get_Right());
 		}
 		else if (m_pKeyMgr->Key_Press(KEY_D))
 		{
-			vMoveDir.x = 1;
+			vMoveDir += (m_pTransform->Get_Right());
 		}
-		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
-		m_pTransform->Add_Position(vMoveDir*_fDeltaTime);
 	}
 	else if (m_pKeyMgr->Key_Press(KEY_S))
 	{
-		vMoveDir.z = -1;
+		vMoveDir -= m_pTransform->Get_Look();
 		if (m_pKeyMgr->Key_Press(KEY_A))
 		{
-			vMoveDir.x = -1;
+			vMoveDir += -(m_pTransform->Get_Right());
 		}
 		else if (m_pKeyMgr->Key_Press(KEY_D))
 		{
-			vMoveDir.x = 1;
+			vMoveDir += (m_pTransform->Get_Right());
 		}
-		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
-		m_pTransform->Add_Position(vMoveDir*_fDeltaTime);
 	}
 	else if (m_pKeyMgr->Key_Press(KEY_A))
 	{
-		m_pTransform->Add_Position(vMoveDir*_fDeltaTime);
+		vMoveDir += -(m_pTransform->Get_Right());
 	}
 	else if (m_pKeyMgr->Key_Press(KEY_D))
 	{
-		m_pTransform->Add_Position(vMoveDir*_fDeltaTime);
+		vMoveDir += (m_pTransform->Get_Right());
 	}
+
+	D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+	vMoveDir *= m_fMoveSpeed;
+	m_pTransform->Add_Position(vMoveDir*_fDeltaTime);
+
+	CMouse* pMouse = (CMouse*)FindGameObjectOfType<CMouse>();
+	m_pTransform->Add_RotationY(pMouse->Get_MouseDir().x *  m_fMouseSpeedX * _fDeltaTime);
 	return S_OK;
 }
 
 HRESULT CPlayer::InitializePrototype()
 {
-	m_fMoveSpeed = 5.f;
 	return S_OK;
 }
 
 HRESULT CPlayer::Awake()
 {
-	m_pTransform = (CTransform*)AddComponent<CTransform>();
+	CGameObject::Awake();
 	m_pKeyMgr = CKeyManager::GetInstance();
-	SafeAddRef(m_pTransform);
-	SafeAddRef(m_pKeyMgr);
 	m_pTransform->Set_Position(_vector(0, 0, 0));
+	m_eRenderID = ERenderID::Alpha;
+	m_fMoveSpeed = 50.f;
+	m_fMouseSpeedX = 200.f;
 	return S_OK;
 }
 
@@ -82,12 +85,15 @@ HRESULT CPlayer::Start()
 UINT CPlayer::Update(const float _fDeltaTime)
 {
 	Key_Input(_fDeltaTime);
+	m_pTransform->UpdateTransform();
 
+	cout << _fDeltaTime << endl;
 	return OBJ_NOENVET;
 }
 
 UINT CPlayer::LateUpdate(const float _fDeltaTime)
 {
+	m_pTransform->UpdateWorld();
 	return OBJ_NOENVET;
 }
 
@@ -116,7 +122,5 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Free()
 {
-	SafeRelease(m_pTransform);
-	SafeRelease(m_pKeyMgr);
 	CGameObject::Free();
 }
