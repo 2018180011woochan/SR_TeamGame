@@ -88,6 +88,9 @@
     <Filter Include="00.System\03.FrameManager">
       <UniqueIdentifier>{743a92aa-e9b3-4981-b5ab-947560247969}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\05.Component\03.Image">
+      <UniqueIdentifier>{21cc928a-aace-428c-bfc8-8f2fc4eab37f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineInclude.h">
@@ -189,6 +192,10 @@
     <ClInclude Include="..\Header\FrameManager.h">
       <Filter>00.System\03.FrameManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\EngineExtern.h" />
+    <ClInclude Include="..\Header\Image.h">
+      <Filter>01.Utility\05.Component\03.Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp">
@@ -253,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\FrameManager.cpp">
       <Filter>00.System\03.FrameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Image.cpp">
+      <Filter>01.Utility\05.Component\03.Image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
