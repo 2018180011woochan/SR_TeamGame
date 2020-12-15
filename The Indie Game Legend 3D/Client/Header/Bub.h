@@ -28,6 +28,8 @@ public:
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
+
+	bool m_bIsTPS;
 };
 
 #define __BUB_H__

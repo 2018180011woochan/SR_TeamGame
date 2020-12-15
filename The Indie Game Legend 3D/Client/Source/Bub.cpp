@@ -3,6 +3,7 @@
 #include "VIBuffer_Rect.h"
 #include "MeshRenderer.h"
 #include "Transform.h"
+#include "Player.h"
 CBub::CBub()
 	:m_pTexturePool(nullptr)
 {
@@ -32,7 +33,7 @@ HRESULT CBub::Awake()
 	/* 뷰행렬 만드는 함수 */
 	D3DXMatrixLookAtLH(
 		&matView, /* 반환 값 */
-		&D3DXVECTOR3(0.f,0.f, -5.f), /* 월드상 카메라 위치 Eye */
+		&D3DXVECTOR3(0.f,100.f, -5.f), /* 월드상 카메라 위치 Eye */
 		&D3DXVECTOR3(0.f, 0.f, 0.f), /* 카메라가 바라보는 지점 At */
 		&D3DXVECTOR3(0.f, 1.f, 0.f) /* Up벡터 */);
 
@@ -57,6 +58,9 @@ HRESULT CBub::Awake()
 	SafeAddRef(m_pTexturePool);
 
 	m_eRenderID = ERenderID::Alpha;
+
+
+
 	return S_OK;
 }
 
@@ -73,12 +77,51 @@ UINT CBub::Update(const float _fDeltaTime)
 	static UINT nIndex = 0;
 	if (GetAsyncKeyState('I') & 0x8000)
 	{
-		++nIndex;
-		if (nIndex >= 2)
-			nIndex = 0;
-		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
+		m_bIsTPS = !m_bIsTPS;
 	}
 
+	D3DXVECTOR3 vAdd;
+	float fSpeed = 10.f;
+	if (GetAsyncKeyState('W') & 0x8000)
+	{
+		vAdd = m_pTransform->Get_Up() * _fDeltaTime * fSpeed;
+		m_pTransform->Add_Position(vAdd);
+	}
+	if (GetAsyncKeyState('S') & 0x8000)
+	{
+		vAdd = m_pTransform->Get_Up() * -_fDeltaTime * fSpeed;
+		m_pTransform->Add_Position(vAdd);
+	}
+	if (m_bIsTPS)
+	{
+		D3DXMATRIX matView;
+		D3DXVECTOR3 vecDir = D3DXVECTOR3(0.f, -1.f, 1.f);
+		D3DXMATRIX matRotY;
+		D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_pTransform->Get_TransformDesc().vRotation.y));
+		D3DXVec3TransformNormal(&vecDir, &vecDir, &matRotY);
+		D3DXVec3Normalize(&vecDir, &vecDir);
+		float fDistance = 25.f;
+
+		D3DXVECTOR3 vecEye = m_pTransform->Get_TransformDesc().vPosition - vecDir * fDistance;
+		D3DXMatrixLookAtLH(&matView, &vecEye, &(m_pTransform->Get_TransformDesc().vPosition), &D3DXVECTOR3(0.f, 1.f, 0.f));
+		m_pDevice->SetTransform(D3DTS_VIEW, &matView);
+	}
+	else
+	{
+		D3DXMATRIX matView;
+		D3DXVECTOR3 vecDir = D3DXVECTOR3(0.f, 0.f, 1.f);
+		D3DXMATRIX matRotY;
+		D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_pTransform->Get_TransformDesc().vRotation.y));
+		D3DXVec3TransformNormal(&vecDir, &vecDir, &matRotY);
+		D3DXVec3Normalize(&vecDir, &vecDir);
+		float fDistance = 25.f;
+
+		D3DXVECTOR3 vecPos = m_pTransform->Get_TransformDesc().vPosition;
+		vecPos.y += 1.f;
+		D3DXVECTOR3 vecLookAt = vecPos + vecDir*fDistance;
+		D3DXMatrixLookAtLH(&matView, &(vecPos), &vecLookAt, &D3DXVECTOR3(0.f, 1.f, 0.f));
+		m_pDevice->SetTransform(D3DTS_VIEW, &matView);
+	}
 	return _uint();
 }
 
@@ -103,11 +146,11 @@ HRESULT CBub::Render()
 	static float fAngle = 0.f;
 	if (GetAsyncKeyState('Q') & 0x8000)
 	{
-		fAngle -= 0.01f;
+		fAngle -= 0.001f;
 	}
 	if (GetAsyncKeyState('E') & 0x8000)
 	{
-		fAngle += 0.01f;
+		fAngle += 0.001f;
 	}
 
 	D3DXMATRIX matRot;

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FactoryManager.h"
 #include "GameObject.h"
+#include "Scene.h"
 IMPLEMENT_SINGLETON(CFactoryManager)
 HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 {
@@ -50,7 +51,7 @@ HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 	return S_OK;
 }
 
-HRESULT CFactoryManager::LoadScene(const _uint& _nSceneID)
+HRESULT CFactoryManager::LoadScene(class CScene* const _pScene)
 {
 	/*3데이터의 사이즈가 다르면 로드실패*/
 	if (m_vecSaveDataRoomID.size() != m_vecSaveDataPosition.size() != m_vecSaveDataType.size())
@@ -69,7 +70,7 @@ HRESULT CFactoryManager::LoadScene(const _uint& _nSceneID)
 	{
 
 		TSTRING TypeID =  L"C" + m_vecSaveDataType[i];
-		pGameObject = pManagement->AddGameObject(_nSceneID, TypeID);
+		pGameObject = _pScene->AddGameObject(TypeID);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 

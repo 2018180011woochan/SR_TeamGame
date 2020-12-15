@@ -85,6 +85,9 @@
     <Filter Include="01.Utility\04.GameObject\03.Gizmo">
       <UniqueIdentifier>{cc5338de-e841-4fbf-9b62-29e72ed4aa66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\05.Component\03.Imgae">
+      <UniqueIdentifier>{085fc31d-19f2-4bc0-a80a-0a02ec2f851b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineInclude.h">
@@ -183,6 +186,12 @@
     <ClInclude Include="..\Header\Gizmo.h">
       <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Image.h">
+      <Filter>01.Utility\05.Component\03.Imgae</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EngineExtern.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp">
@@ -244,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Gizmo.cpp">
       <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Image.cpp">
+      <Filter>01.Utility\05.Component\03.Imgae</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

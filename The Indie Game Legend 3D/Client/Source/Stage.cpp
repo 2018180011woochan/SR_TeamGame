@@ -11,7 +11,6 @@ HRESULT CStage::Awake()
 {
 	if (FAILED(AddMonsterLayer(L"Layer_Monster")))
 		return E_FAIL;
-
 	CScene::Awake();
 	return S_OK;
 }
@@ -66,3 +65,4 @@ void CStage::Free()
 {
 	CScene::Free();
 }
+

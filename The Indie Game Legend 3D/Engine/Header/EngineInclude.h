@@ -27,6 +27,7 @@ using namespace std;
 #include "EngineEnum.h"
 #include "EngineFunction.h"
 #include "EngineStruct.h"
+#include "EngineExtern.h"
 #include "FileInfo.h"
 #pragma endregion
 

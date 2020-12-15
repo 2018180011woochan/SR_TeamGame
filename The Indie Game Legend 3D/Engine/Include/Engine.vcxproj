@@ -169,6 +169,7 @@
     <ClInclude Include="..\Header\Base.h" />
     <ClInclude Include="..\Header\Camera.h" />
     <ClInclude Include="..\Header\EngineComponent.h" />
+    <ClInclude Include="..\Header\EngineExtern.h" />
     <ClInclude Include="..\Header\FileInfo.h" />
     <ClInclude Include="..\Header\GameObject.hpp" />
     <ClInclude Include="..\Header\GameObjectManager.hpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="..\Header\Gizmo.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\Group.h" />
+    <ClInclude Include="..\Header\Image.h" />
     <ClInclude Include="..\Header\Layer.h" />
     <ClInclude Include="..\Header\Management.h" />
     <ClInclude Include="..\Header\Management.hpp" />
@@ -208,6 +210,7 @@
     <ClCompile Include="..\Source\Gizmo.cpp" />
     <ClCompile Include="..\Source\GraphicDevice.cpp" />
     <ClCompile Include="..\Source\Group.cpp" />
+    <ClCompile Include="..\Source\Image.cpp" />
     <ClCompile Include="..\Source\Layer.cpp" />
     <ClCompile Include="..\Source\Management.cpp" />
     <ClCompile Include="..\Source\Mesh.cpp" />

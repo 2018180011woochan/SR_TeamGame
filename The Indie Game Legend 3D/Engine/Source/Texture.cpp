@@ -60,3 +60,8 @@ LPDIRECT3DTEXTURE9 CTexture::GetTexture()
 	return m_pTexture;
 }
 
+D3DXIMAGE_INFO CTexture::GetDesc()
+{
+	return m_tImageInfo;
+}
+
