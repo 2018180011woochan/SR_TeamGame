@@ -171,6 +171,7 @@
     <ClInclude Include="..\Header\EngineComponent.h" />
     <ClInclude Include="..\Header\EngineExtern.h" />
     <ClInclude Include="..\Header\FileInfo.h" />
+    <ClInclude Include="..\Header\Font.h" />
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\GameObject.hpp" />
     <ClInclude Include="..\Header\GameObjectManager.hpp" />
@@ -206,6 +207,7 @@
     <ClCompile Include="..\Source\Camera.cpp" />
     <ClCompile Include="..\Source\Component.cpp" />
     <ClCompile Include="..\Source\FileInfo.cpp" />
+    <ClCompile Include="..\Source\Font.cpp" />
     <ClCompile Include="..\Source\FrameManager.cpp" />
     <ClCompile Include="..\Source\GameObject.cpp" />
     <ClCompile Include="..\Source\GameObjectManager.cpp" />
