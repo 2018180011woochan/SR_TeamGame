@@ -28,7 +28,6 @@ protected:
 	const CTransform* m_pPlayerTransform;
 	class CVIBuffer* m_pVIBufferCom = nullptr;
 	class CTexture*	 m_pTextureCom = nullptr;
-	CTransform* m_pTransformCom = nullptr;
 };
 
 #define __MONSTER_H__
