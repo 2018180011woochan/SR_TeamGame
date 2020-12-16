@@ -1,22 +1,22 @@
 #include "stdafx.h"
-#include "Bub.h"
+#include "Rub.h"
 #include "VIBuffer_Rect.h"
 #include "MeshRenderer.h"
 #include "Transform.h"
 #include "Player.h"
 #include "Camera.h"
 
-CBub::CBub()
+CRub::CRub()
 	:m_pTexturePool(nullptr)
 {
 }
 
-CBub::CBub(const CBub & other)
+CRub::CRub(const CRub & other)
 	: CMonster(other)
 {
 }
 
-HRESULT CBub::InitializePrototype()
+HRESULT CRub::InitializePrototype()
 {
 	if (FAILED(CMonster::InitializePrototype()))
 		return E_FAIL;
@@ -24,7 +24,7 @@ HRESULT CBub::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CBub::Awake()
+HRESULT CRub::Awake()
 {
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
@@ -32,43 +32,32 @@ HRESULT CBub::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bub"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Rub"));
 	SafeAddRef(m_pTexturePool);
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
 
-HRESULT CBub::Start()
+HRESULT CRub::Start()
 {
 	CMonster::Start();
-	m_pTransform->Set_Scale(_vector(5, 5, 5));
-	m_pTransform->Add_Position(_vector(0, 3, 0));
+	m_pTransform->Set_Scale(_vector(1, 1, 1));
+	m_pTransform->Add_Position(_vector(5.f, 3.f, 10.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	return S_OK;
 }
 
-UINT CBub::Update(const float _fDeltaTime)
+UINT CRub::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
-
-	if (m_pTransform->Get_Position().y > m_fMaxJump || m_pTransform->Get_Position().y < 3.f)
-	{
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
-	}
-
-	m_fJumpingCnt++;
 
 	if (nIndex >= 2)
 		nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	if (m_fJumpingCnt / 100.f > 1.f)
-	{
-		//Jumping(_fDeltaTime);
-		++nIndex;
-		m_fJumpingCnt = 0.f;
-	}
+	Jumping(_fDeltaTime);
 
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
@@ -79,13 +68,13 @@ UINT CBub::Update(const float _fDeltaTime)
 	return _uint();
 }
 
-UINT CBub::LateUpdate(const float _fDeltaTime)
+UINT CRub::LateUpdate(const float _fDeltaTime)
 {
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
 
-HRESULT CBub::Render()
+HRESULT CRub::Render()
 {
 	/*엔진에서 호출하는 식으로*/
 	if (FAILED(CMonster::Render()))
@@ -97,7 +86,7 @@ HRESULT CBub::Render()
 }
 
 
-HRESULT CBub::Movement(float fDeltaTime)
+HRESULT CRub::Movement(float fDeltaTime)
 {
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 
@@ -110,7 +99,7 @@ HRESULT CBub::Movement(float fDeltaTime)
 	return S_OK;
 }
 
-void CBub::Jumping(float fDeltaTime)
+void CRub::Jumping(float fDeltaTime)
 {
 	_vector vDir = { 0.f, m_pTransform->Get_Position().y + 1, 0.f };
 	D3DXVec3Normalize(&vDir, &vDir);
@@ -137,19 +126,19 @@ void CBub::Jumping(float fDeltaTime)
 	}
 }
 
-CGameObject * CBub::Clone()
+CGameObject * CRub::Clone()
 {
-	CBub* pClone = new CBub(*this);
+	CRub* pClone = new CRub(*this);
 	return pClone;
 }
 
-CBub * CBub::Create()
+CRub * CRub::Create()
 {
-	CBub* pInstance = new CBub();
+	CRub* pInstance = new CRub();
 	return pInstance;
 }
 
-void CBub::Free()
+void CRub::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();

@@ -1,5 +1,5 @@
 #include "..\Header\Image.h"
-
+#include "Texture.h"
 USING(Engine)
 
 const DWORD VERTEXRECT::FVF = D3DFVF_XYZ | D3DFVF_TEX1;

@@ -38,7 +38,7 @@ HRESULT CMonster::Start()
 UINT CMonster::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
-
+	
 
 
 	return _uint();

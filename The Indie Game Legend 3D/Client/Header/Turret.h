@@ -1,15 +1,14 @@
 #pragma once
-#ifndef __BUB_H__
-
+#ifndef __TURRET_H__
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CBub final : public CMonster
+class CTurret final : public CMonster
 {
 private:
-	explicit CBub();
-	explicit CBub(const CBub& other);
-	virtual ~CBub() = default;
+	explicit CTurret();
+	explicit CTurret(const CTurret& other);
+	virtual ~CTurret() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -20,33 +19,23 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
-private:
-	HRESULT Movement(float fDeltaTime);
-	void Jumping(float fDeltaTime);
-
 public:
+	void BulletFire();
 
 public:
 	virtual CGameObject * Clone() override;
-	static CBub* Create();
+	static CTurret* Create();
 private:
 	virtual void Free() override;
 
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
-
-	float				m_fJumpingCnt = 0;
-	float				m_fJumpSpeed = 5;
-	float				m_fMaxJump = 5.f;
-	float				m_fMoveSpeed = 5.f;
-	bool				m_isMaxJump = false;
-	bool				m_isJumping = false;
-
-	UINT nIndex = 0;
-
-	bool m_bIsTPS;
+	DWORD		   m_dwFireTime;
+	float		   m_fFireSpeed;
+	float		   m_fFireDeltaTime;
 };
 
-#define __BUB_H__
-#endif // !__BUB_H__
+#define __TURRET_H__
+#endif // !__TURRET_H__
+

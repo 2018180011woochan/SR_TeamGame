@@ -170,10 +170,14 @@
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\Rub.h" />
     <ClInclude Include="..\Header\Sector.h" />
+    <ClInclude Include="..\Header\sqrNub.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\TexturePool.h" />
     <ClInclude Include="..\Header\TexturePoolManager.h" />
+    <ClInclude Include="..\Header\Turret.h" />
+    <ClInclude Include="..\Header\TurretBullet.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -189,10 +193,14 @@
     <ClCompile Include="..\Source\PlayerCamera.cpp" />
     <ClCompile Include="..\Source\Bub.cpp" />
     <ClCompile Include="..\Source\MainApp.cpp" />
+    <ClCompile Include="..\Source\Rub.cpp" />
     <ClCompile Include="..\Source\Sector.cpp" />
+    <ClCompile Include="..\Source\sqrNub.cpp" />
     <ClCompile Include="..\Source\Stage.cpp" />
     <ClCompile Include="..\Source\TexturePool.cpp" />
     <ClCompile Include="..\Source\TexturePoolManager.cpp" />
+    <ClCompile Include="..\Source\Turret.cpp" />
+    <ClCompile Include="..\Source\TurretBullet.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

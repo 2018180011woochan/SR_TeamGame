@@ -25,9 +25,11 @@ public:
 	virtual CGameObject * Clone() = 0;
 
 protected:
-	const CTransform* m_pPlayerTransform;
-	class CVIBuffer* m_pVIBufferCom = nullptr;
-	class CTexture*	 m_pTextureCom = nullptr;
+	const CTransform*	m_pPlayerTransform;
+	class CVIBuffer*	m_pVIBufferCom = nullptr;
+	class CTexture*		m_pTextureCom = nullptr;
+
+	_vector				m_vecInitPos;
 };
 
 #define __MONSTER_H__
