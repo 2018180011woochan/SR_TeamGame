@@ -12,14 +12,13 @@ CMainApp::CMainApp()
 
 void CMainApp::Free()
 {
-	CFactoryManager::DeleteInstance();
-	CKeyManager::DeleteInstance();
-	CMsgManager::DeleteInstance();
 	m_pTexturePoolManager->Release();
 	SafeRelease(m_pDevice);
     SafeRelease(m_pManagement);
 	CManagement::GetInstance()->ReleaseEngine();
-
+	CFactoryManager::DeleteInstance();
+	CKeyManager::DeleteInstance();
+	CMsgManager::DeleteInstance();
 }
 
 HRESULT CMainApp::Initialize()
@@ -73,7 +72,7 @@ HRESULT CMainApp::Initialize()
 	m_pDevice->SetLight(1, &light2);
 	m_pDevice->LightEnable(1, TRUE);
 
-	m_pDevice->SetRenderState(D3DRS_LIGHTING, true);
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, false);
 	m_pDevice->SetRenderState(D3DRS_AMBIENT, 0x00808080);
 	//Test
 	return S_OK;

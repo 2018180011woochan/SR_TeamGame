@@ -25,7 +25,7 @@ HRESULT CGizmo::Awake()
 		return E_FAIL;
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Gizmo"));
-	m_eRenderID = ERenderID::Alpha;
+	m_eRenderID = ERenderID::NoAlpha;
 	return S_OK;
 }
 

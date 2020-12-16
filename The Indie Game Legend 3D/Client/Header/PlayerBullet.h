@@ -5,18 +5,19 @@ USING(Engine)
 class CPlayerBullet final : public CBullet
 {
 private:
-	EBulletType		m_eBulletType;
+	EWeaponType		m_eBulletType;
 private:
 	explicit CPlayerBullet();
 	explicit CPlayerBullet(const CPlayerBullet& _rOther);
 	virtual ~CPlayerBullet() = default;
 
 public:
-	void Set_Type(const EBulletType& _eBulletType);
+	void Set_Type(const EWeaponType& _eBulletType);
 public:
 	// CBullet을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 	virtual HRESULT Fire() override;
+	HRESULT	Fire(const _vector _Dir)override;
 public:
 	virtual HRESULT InitializePrototype() override;
 	virtual HRESULT Awake() override;

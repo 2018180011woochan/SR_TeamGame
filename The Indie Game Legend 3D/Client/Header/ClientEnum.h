@@ -8,10 +8,12 @@ enum class ESceneID
 	MaxCount
 };
 
-enum class EBulletType
+enum class EWeaponType : unsigned int
 {
+	Big,
+	Multiple,
 	Normal,
-	MaxCount
+	End
 };
 
 #define  __CLIENTENUM_H__
