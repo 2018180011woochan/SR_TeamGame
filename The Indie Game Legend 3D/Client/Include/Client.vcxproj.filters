@@ -201,29 +201,29 @@
     <ClInclude Include="..\Header\BulletSpawn.h">
       <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Rub.h">
-      <Filter>02.GameObject\00.Monster\02.Rub</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\sqrNub.h">
-      <Filter>02.GameObject\00.Monster\03.sqrNub</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Turret.h">
-      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TurretBullet.h">
-      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Intro.h">
       <Filter>03.Scene\01.Intro</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\IntroBackGround.h">
       <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Logo.h">
+      <Filter>02.GameObject\04.UI\02.Logo</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Star.h">
       <Filter>02.GameObject\04.UI\01.Star</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Logo.h">
-      <Filter>02.GameObject\04.UI\02.Logo</Filter>
+    <ClInclude Include="..\Header\sqrNub.h">
+      <Filter>02.GameObject\00.Monster\03.sqrNub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Rub.h">
+      <Filter>02.GameObject\00.Monster\02.Rub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Turret.h">
+      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TurretBullet.h">
+      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -284,11 +284,17 @@
     <ClCompile Include="..\Source\BulletSpawn.cpp">
       <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Turret.cpp">
-      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
+    <ClCompile Include="..\Source\Intro.cpp">
+      <Filter>03.Scene\01.Intro</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\TurretBullet.cpp">
-      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
+    <ClCompile Include="..\Source\Logo.cpp">
+      <Filter>02.GameObject\04.UI\02.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Star.cpp">
+      <Filter>02.GameObject\04.UI\01.Star</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IntroBackGround.cpp">
+      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\sqrNub.cpp">
       <Filter>02.GameObject\00.Monster\03.sqrNub</Filter>
@@ -296,17 +302,11 @@
     <ClCompile Include="..\Source\Rub.cpp">
       <Filter>02.GameObject\00.Monster\02.Rub</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Intro.cpp">
-      <Filter>03.Scene\01.Intro</Filter>
+    <ClCompile Include="..\Source\Turret.cpp">
+      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\IntroBackGround.cpp">
-      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Star.cpp">
-      <Filter>02.GameObject\04.UI\01.Star</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Logo.cpp">
-      <Filter>02.GameObject\04.UI\02.Logo</Filter>
+    <ClCompile Include="..\Source\TurretBullet.cpp">
+      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
