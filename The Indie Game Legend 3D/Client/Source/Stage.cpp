@@ -10,6 +10,8 @@
 #include "PlayerCamera.h"
 #include "Mouse.h"
 #include "Sector.h"
+#include "PlayerBullet.h"
+#include "BulletSpawn.h"
 CStage::CStage()
 	: CScene(this)
 {
@@ -26,10 +28,13 @@ HRESULT CStage::Awake()
 	AddPrototype(CPlayerCamera::Create());
 	AddPrototype(CMouse::Create());
 	AddPrototype(CSector::Create());
-
+	AddPrototype(CPlayerBullet::Create());
+	AddPrototype(CBulletSpawn::Create());
 	AddGameObject<CPlayer>();
 	AddGameObject<CPlayerCamera>();
+	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+
 	//AddGameObject<CBub>();
 	// Test용으로 추가함
 	AddGameObject<CRub>();

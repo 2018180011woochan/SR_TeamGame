@@ -106,6 +106,24 @@
     <Filter Include="02.GameObject\00.Monster\04.Turret\00.TurretBullet">
       <UniqueIdentifier>{d20bc0d3-5ee7-4b87-9583-e72424dc4663}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\99.Trigger">
+      <UniqueIdentifier>{b2d4931d-f887-4fc3-831b-70b26ddeb176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\99.Trigger\00.PlayerSpawn">
+      <UniqueIdentifier>{0c15ffeb-e1e5-476e-9d89-76457ca9c176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet">
+      <UniqueIdentifier>{37d58b97-5d68-4628-b3a4-6eb877924076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\00.Base">
+      <UniqueIdentifier>{a09e32af-f961-4af2-8d6d-3d4062889a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet">
+      <UniqueIdentifier>{6ac1f5d0-c9c5-4beb-8503-fe75932c46e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\99.Trigger\01.BulletSpawn">
+      <UniqueIdentifier>{84291075-3e58-4e64-8013-b1df7d15e855}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -171,7 +189,6 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
     </ClInclude>
-
     <ClInclude Include="..\Header\Intro.h">
       <Filter>03.Scene\01.Intro</Filter>
     </ClInclude>
@@ -195,6 +212,19 @@
     </ClInclude>
     <ClInclude Include="..\Header\TurretBullet.h">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
+      <Filter>02.GameObject\00.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerSpawn.h">
+      <Filter>02.GameObject\99.Trigger\00.PlayerSpawn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>02.GameObject\04.Bullet\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BulletSpawn.h">
+      <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +271,7 @@
       <Filter>02.GameObject\03.Sector</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Monster.cpp">
+
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
     </ClCompile>
 
@@ -267,6 +298,19 @@
     </ClCompile>
     <ClCompile Include="..\Source\TurretBullet.cpp">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
+      <Filter>02.GameObject\00.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PlayerSpawn.cpp">
+      <Filter>02.GameObject\99.Trigger\00.PlayerSpawn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Bullet.cpp">
+      <Filter>02.GameObject\04.Bullet\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PlayerBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BulletSpawn.cpp">
+      <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

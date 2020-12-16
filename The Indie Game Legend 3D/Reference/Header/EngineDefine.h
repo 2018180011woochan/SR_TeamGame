@@ -60,5 +60,12 @@ UINT ClassName::DeleteInstance()				\
 
 #pragma endregion
 
+
+#pragma region GAMEOBJECT
+
+#define OBJ_DEAD 1
+#define OBJ_NOENVET 0
+
+#pragma endregion
 #define __ENGINE_DEFINE_H__
 #endif // !__ENGINE_DEFINE_H__

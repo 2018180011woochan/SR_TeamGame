@@ -3,6 +3,7 @@
 #include "KeyManager.h"
 #include "Mouse.h"
 
+#include "PlayerBullet.h"
 USING(Engine)
 
 CPlayer::CPlayer()
@@ -58,6 +59,18 @@ HRESULT CPlayer::Key_Input(const float _fDeltaTime)
 
 	CMouse* pMouse = (CMouse*)FindGameObjectOfType<CMouse>();
 	m_pTransform->Add_RotationY(pMouse->Get_MouseDir().x *  m_fMouseSpeedX * _fDeltaTime);
+
+	//
+
+	if (m_pKeyMgr->Key_Toggle(VK_F2))
+	{
+		if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
+		{
+			CPlayerBullet* pBullet = (CPlayerBullet*)AddGameObject<CPlayerBullet>();
+			pBullet->Set_Type(EBulletType::Normal);
+			pBullet->Fire();
+		}
+	}
 	return S_OK;
 }
 
@@ -87,7 +100,6 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	Key_Input(_fDeltaTime);
 	m_pTransform->UpdateTransform();
 
-	cout << _fDeltaTime << endl;
 	return OBJ_NOENVET;
 }
 
