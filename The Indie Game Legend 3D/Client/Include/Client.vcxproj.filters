@@ -73,12 +73,6 @@
     <Filter Include="02.GameObject\03.Sector">
       <UniqueIdentifier>{0c5aec88-7dd8-4872-82bb-317466d431f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\00.Monster\00.Base">
-      <UniqueIdentifier>{b57aae91-6f47-4f73-b777-f318eddccf8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\00.Monster\01.Bub">
-      <UniqueIdentifier>{9d28111f-dabd-4384-8621-dd59724a2e7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.Scene\01.Intro">
       <UniqueIdentifier>{45f3a4b4-745b-45bb-8788-2df9da9c3462}</UniqueIdentifier>
     </Filter>
@@ -93,6 +87,24 @@
     </Filter>
     <Filter Include="02.GameObject\04.UI\02.Logo">
       <UniqueIdentifier>{76ae1038-37be-4237-9286-cbc1f1944112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\01.Bub">
+      <UniqueIdentifier>{9d28111f-dabd-4384-8621-dd59724a2e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\00.Base">
+      <UniqueIdentifier>{c5cd3b14-455a-4985-8182-275f1de6cd29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\02.Rub">
+      <UniqueIdentifier>{64ae2fb8-dda6-45c6-a052-2b5dd0536e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\03.sqrNub">
+      <UniqueIdentifier>{dc7761c8-c59b-4f53-b223-1ecdbe06c826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\04.Turret">
+      <UniqueIdentifier>{d11ea759-a664-4104-9a32-a8aa24a85eb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\04.Turret\00.TurretBullet">
+      <UniqueIdentifier>{d20bc0d3-5ee7-4b87-9583-e72424dc4663}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +171,7 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
     </ClInclude>
+
     <ClInclude Include="..\Header\Intro.h">
       <Filter>03.Scene\01.Intro</Filter>
     </ClInclude>
@@ -170,6 +183,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\Logo.h">
       <Filter>02.GameObject\04.UI\02.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Rub.h">
+      <Filter>02.GameObject\00.Monster\02.Rub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\sqrNub.h">
+      <Filter>02.GameObject\00.Monster\03.sqrNub</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Turret.h">
+      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TurretBullet.h">
+      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +243,7 @@
     <ClCompile Include="..\Source\Monster.cpp">
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
     </ClCompile>
+
     <ClCompile Include="..\Source\Intro.cpp">
       <Filter>03.Scene\01.Intro</Filter>
     </ClCompile>
@@ -229,6 +255,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\Logo.cpp">
       <Filter>02.GameObject\04.UI\02.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Rub.cpp">
+      <Filter>02.GameObject\00.Monster\02.Rub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\sqrNub.cpp">
+      <Filter>02.GameObject\00.Monster\03.sqrNub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Turret.cpp">
+      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TurretBullet.cpp">
+      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
