@@ -31,7 +31,7 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
-	//AddPrototype(CBub::Create());
+	AddPrototype(CBub::Create());
 	AddPrototype(CRub::Create());
 	AddPrototype(CsqrNub::Create());
 	AddPrototype(CTurret::Create());
@@ -51,12 +51,12 @@ HRESULT CStage::Awake()
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
 
-	//AddGameObject<CBub>();
+	AddGameObject<CBub>();
 	// Test용으로 추가함
-	//AddGameObject<CRub>();
+	AddGameObject<CRub>();
 	AddGameObject<CsqrNub>();
-	//AddGameObject<CTurret>();
-	//AddGameObject<CWalker>();
+	AddGameObject<CTurret>();
+	AddGameObject<CWalker>();
 	AddGameObject<CCryder>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
