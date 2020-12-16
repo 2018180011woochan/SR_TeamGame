@@ -124,6 +124,15 @@
     <Filter Include="02.GameObject\99.Trigger\01.BulletSpawn">
       <UniqueIdentifier>{84291075-3e58-4e64-8013-b1df7d15e855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\00.Monster\05.Walker">
+      <UniqueIdentifier>{9ac9aeb7-1dd0-4738-bf34-2768d543189b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\05.Walker\00.WalkerBullet">
+      <UniqueIdentifier>{1bb31730-009a-4135-aa31-6884edac8f94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\06.Cryder">
+      <UniqueIdentifier>{76e6b108-3c64-4079-8c0c-15f30dac35cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -225,6 +234,15 @@
     <ClInclude Include="..\Header\TurretBullet.h">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Walker.h">
+      <Filter>02.GameObject\00.Monster\05.Walker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WalkerBullet.h">
+      <Filter>02.GameObject\00.Monster\05.Walker\00.WalkerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Cryder.h">
+      <Filter>02.GameObject\00.Monster\06.Cryder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -307,6 +325,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\TurretBullet.cpp">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Walker.cpp">
+      <Filter>02.GameObject\00.Monster\05.Walker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WalkerBullet.cpp">
+      <Filter>02.GameObject\00.Monster\05.Walker\00.WalkerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Cryder.cpp">
+      <Filter>02.GameObject\00.Monster\06.Cryder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

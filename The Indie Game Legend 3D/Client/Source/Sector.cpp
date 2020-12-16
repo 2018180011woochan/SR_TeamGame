@@ -25,7 +25,7 @@ HRESULT CSector::Awake()
 		return E_FAIL;
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(m_sSectorName);
-	m_eRenderID = ERenderID::Alpha;
+	m_eRenderID = ERenderID::NoAlpha;
 
 	return S_OK;
 }

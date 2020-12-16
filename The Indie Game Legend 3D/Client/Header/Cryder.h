@@ -1,15 +1,15 @@
 #pragma once
-#ifndef __RUB_H__
+#ifndef __CRYDER_H__
 
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CRub final : public CMonster
+class CCryder final : public CMonster
 {
 private:
-	explicit CRub();
-	explicit CRub(const CRub& other);
-	virtual ~CRub() = default;
+	explicit CCryder();
+	explicit CCryder(const CCryder& other);
+	virtual ~CCryder() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -28,7 +28,7 @@ public:
 
 public:
 	virtual CGameObject * Clone() override;
-	static CRub* Create();
+	static CCryder* Create();
 private:
 	virtual void Free() override;
 
@@ -36,17 +36,21 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 
-	float				m_fJumpingCnt = 0;
-	float				m_fJumpSpeed = 10;
-	float				m_fMaxJump = 8.f;
-	float				m_fMoveSpeed = 8.f;
-	bool				m_isMaxJump = false;
-	bool				m_isJumping = false;
+	float				m_fMoveSpeed;
+	bool				m_isMaxJump;
+	bool				m_isJumping;
 
-	UINT nIndex = 0;
+	float				m_fWalkSpeed;
+	float				m_fWalkDeltaTime;
+
+	float				m_fJumpPower;
+	float				m_fJumpTime;
+	float				m_fYTest;
+
+	UINT nIndex;
 
 	bool m_bIsTPS;
 };
 
-#define __RUB_H__
-#endif // !__RUB_H__
+#define __CRYDER_H__
+#endif // !__CRYDER_H__

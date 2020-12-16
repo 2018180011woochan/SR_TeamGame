@@ -164,6 +164,7 @@
     <ClInclude Include="..\Header\ClientEnum.h" />
     <ClInclude Include="..\Header\ClientExtern.h" />
     <ClInclude Include="..\Header\ClientInclude.h" />
+    <ClInclude Include="..\Header\Cryder.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
     <ClInclude Include="..\Header\IntroBackGround.h" />
@@ -186,6 +187,8 @@
     <ClInclude Include="..\Header\TexturePoolManager.h" />
     <ClInclude Include="..\Header\Turret.h" />
     <ClInclude Include="..\Header\TurretBullet.h" />
+    <ClInclude Include="..\Header\Walker.h" />
+    <ClInclude Include="..\Header\WalkerBullet.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -194,6 +197,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
+    <ClCompile Include="..\Source\Cryder.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
@@ -217,6 +221,8 @@
     <ClCompile Include="..\Source\TexturePoolManager.cpp" />
     <ClCompile Include="..\Source\Turret.cpp" />
     <ClCompile Include="..\Source\TurretBullet.cpp" />
+    <ClCompile Include="..\Source\Walker.cpp" />
+    <ClCompile Include="..\Source\WalkerBullet.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "..\Header\TurretBullet.h"
+#include "WalkerBullet.h"
 #include "Player.h"
 #include "Camera.h"
 
-CTurretBullet::CTurretBullet()
+CWalkerBullet::CWalkerBullet()
 	: m_pTexturePool(nullptr)
 {
 }
 
-CTurretBullet::CTurretBullet(const CTurretBullet & other)
+CWalkerBullet::CWalkerBullet(const CWalkerBullet & other)
 	: CGameObject(other)
 {
 }
 
 
 
-HRESULT CTurretBullet::InitializePrototype()
+HRESULT CWalkerBullet::InitializePrototype()
 {
 	if (FAILED(CGameObject::InitializePrototype()))
 		return E_FAIL;
@@ -23,7 +23,7 @@ HRESULT CTurretBullet::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CTurretBullet::Awake()
+HRESULT CWalkerBullet::Awake()
 {
 	if (FAILED(CGameObject::Awake()))
 		return E_FAIL;
@@ -37,7 +37,7 @@ HRESULT CTurretBullet::Awake()
 	return S_OK;
 }
 
-HRESULT CTurretBullet::Start()
+HRESULT CWalkerBullet::Start()
 {
 	CGameObject::Start();
 
@@ -49,7 +49,7 @@ HRESULT CTurretBullet::Start()
 	return S_OK;
 }
 
-UINT CTurretBullet::Update(const float _fDeltaTime)
+UINT CWalkerBullet::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 
@@ -66,14 +66,14 @@ UINT CTurretBullet::Update(const float _fDeltaTime)
 	return _uint();
 }
 
-UINT CTurretBullet::LateUpdate(const float _fDeltaTime)
+UINT CWalkerBullet::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 	IsBillboarding();
 	return _uint();
 }
 
-HRESULT CTurretBullet::Render()
+HRESULT CWalkerBullet::Render()
 {
 	if (FAILED(CGameObject::Render()))
 		return E_FAIL;
@@ -83,25 +83,25 @@ HRESULT CTurretBullet::Render()
 	return S_OK;
 }
 
-CGameObject * CTurretBullet::Clone()
+CGameObject * CWalkerBullet::Clone()
 {
-	CTurretBullet* pClone = new CTurretBullet(*this);
+	CWalkerBullet* pClone = new CWalkerBullet(*this);
 	return pClone;
 }
 
-CTurretBullet * CTurretBullet::Create()
+CWalkerBullet * CWalkerBullet::Create()
 {
-	CTurretBullet* pInstance = new CTurretBullet();
+	CWalkerBullet* pInstance = new CWalkerBullet();
 	return pInstance;
 }
 
-HRESULT CTurretBullet::Movement(float fDeltaTime)
+HRESULT CWalkerBullet::Movement(float fDeltaTime)
 {
 	m_pTransform->Add_Position(m_vecDir * fDeltaTime * m_fBulletSpeed);
 	return S_OK;
 }
 
-void CTurretBullet::SetTurretPos(const _vector _TurretPos)
+void CWalkerBullet::SetTurretPos(const _vector _TurretPos)
 {
 	m_pTransform->Set_Position(_TurretPos);
 	D3DXVECTOR3 vecTarget;
@@ -117,7 +117,7 @@ void CTurretBullet::SetTurretPos(const _vector _TurretPos)
 	D3DXVec3Normalize(&m_vecDir, &m_vecDir);
 }
 
-HRESULT CTurretBullet::IsBillboarding()
+HRESULT CWalkerBullet::IsBillboarding()
 {
 	CCamera* pCamera = (CCamera*)FindGameObjectOfType<CCamera>();
 	if (pCamera == nullptr)
@@ -142,7 +142,7 @@ HRESULT CTurretBullet::IsBillboarding()
 	return S_OK;
 }
 
-void CTurretBullet::Free()
+void CWalkerBullet::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
