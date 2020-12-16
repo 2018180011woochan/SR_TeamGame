@@ -124,6 +124,18 @@
     <Filter Include="02.GameObject\99.Trigger\01.BulletSpawn">
       <UniqueIdentifier>{84291075-3e58-4e64-8013-b1df7d15e855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo">
+      <UniqueIdentifier>{75108c0d-c752-453e-a185-f06d938b8c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\00.Gauge">
+      <UniqueIdentifier>{aec674f9-d85e-429a-b40f-22aefcbd088d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\01.Frame">
+      <UniqueIdentifier>{b7030400-c1df-4a76-abba-e11665a034be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\05.Heart">
+      <UniqueIdentifier>{ed44e63c-cdd1-413e-878a-3156b3f131f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -225,6 +237,15 @@
     <ClInclude Include="..\Header\TurretBullet.h">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\AmmoGauge.h">
+      <Filter>02.GameObject\04.UI\03.Ammo\00.Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AmmoFrame.h">
+      <Filter>02.GameObject\04.UI\03.Ammo\01.Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Heart.h">
+      <Filter>02.GameObject\04.UI\05.Heart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -307,6 +328,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\TurretBullet.cpp">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AmmoGauge.cpp">
+      <Filter>02.GameObject\04.UI\03.Ammo\00.Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AmmoFrame.cpp">
+      <Filter>02.GameObject\04.UI\03.Ammo\01.Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Heart.cpp">
+      <Filter>02.GameObject\04.UI\05.Heart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

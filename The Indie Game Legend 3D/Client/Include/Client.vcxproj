@@ -157,6 +157,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\AmmoFrame.h" />
+    <ClInclude Include="..\Header\AmmoGauge.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="..\Header\ClientExtern.h" />
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
+    <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\Intro.h" />
     <ClInclude Include="..\Header\IntroBackGround.h" />
     <ClInclude Include="..\Header\KeyManager.h" />
@@ -192,9 +195,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\AmmoFrame.cpp" />
+    <ClCompile Include="..\Source\AmmoGauge.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
+    <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
     <ClCompile Include="..\Source\KeyManager.cpp" />

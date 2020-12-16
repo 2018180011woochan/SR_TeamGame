@@ -12,6 +12,13 @@
 #include "Sector.h"
 #include "PlayerBullet.h"
 #include "BulletSpawn.h"
+
+#pragma region INCLUDE_UI
+#include "AmmoGauge.h"
+#include "AmmoFrame.h"
+#pragma endregion
+
+
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -44,7 +51,7 @@ HRESULT CStage::Awake()
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
 
-
+	AddUIObject();
 	CScene::Awake();
 	return S_OK;
 }
@@ -78,6 +85,15 @@ HRESULT CStage::AddMonsterLayer(const wstring & LayerTag)
 {
 
 
+	return S_OK;
+}
+
+HRESULT CStage::AddUIObject()
+{
+	AddPrototype(CAmmoGauge::Create());
+	AddPrototype(CAmmoFrame::Create());
+	AddGameObject<CAmmoGauge>();
+	AddGameObject<CAmmoFrame>();
 	return S_OK;
 }
 

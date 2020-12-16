@@ -18,6 +18,10 @@ typedef struct tagIndex16
 
 class ENGINE_DLL Image final : public CComponent
 {
+public:
+	enum ImageType { Simple, Fill};
+	enum FillMethod { Horizontal};
+	enum FillOrigin { Left, Right};
 private:
 	LPDIRECT3DVERTEXBUFFER9	m_pVertexBuffer;
 	LPDIRECT3DINDEXBUFFER9	m_pIndexBuffer;
@@ -28,6 +32,11 @@ private:
 
 	UINT					m_nScreenWidth;
 	UINT					m_nScreenHeight;
+
+	ImageType				m_eImageType;
+	FillMethod				m_eFillMethod;
+	FillOrigin				m_eFillOrigin;
+	float					m_fFillAmount;
 
 private:
 	explicit Image(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
@@ -45,10 +54,13 @@ public:
 	HRESULT SetTexture(CTexture* const _pTexture);
 	//설정된 텍스쳐의 크기로 정점 재배치.
 	HRESULT SetNativeSize();
+
+	HRESULT SetImageType(const ImageType _eImageType);
+	HRESULT SetFillAmount(const float _fValue);
 private:
 	HRESULT CreateBuffer();
-	//텍스처 변경에 따른 버퍼 업데이트.
-	HRESULT UpdateBuffer();
+
+	HRESULT FillHorizontal();
 };
 END
 #define __IMAGE_H__

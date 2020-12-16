@@ -73,7 +73,7 @@ HRESULT CMainApp::Initialize()
 	m_pDevice->SetLight(1, &light2);
 	m_pDevice->LightEnable(1, TRUE);
 
-	m_pDevice->SetRenderState(D3DRS_LIGHTING, true);
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, false);
 	m_pDevice->SetRenderState(D3DRS_AMBIENT, 0x00808080);
 	//Test
 	return S_OK;

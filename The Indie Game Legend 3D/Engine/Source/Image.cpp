@@ -14,6 +14,10 @@ Image::Image(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 	, m_nScreenWidth(0)
 	, m_nIndexCount(0)
 	, m_nVertexCount(0)
+	, m_eImageType(ImageType::Simple)
+	, m_eFillMethod(FillMethod::Horizontal)
+	, m_eFillOrigin(FillOrigin::Left)
+	, m_fFillAmount(1.0f)
 {
 }
 
@@ -98,6 +102,37 @@ HRESULT Image::SetNativeSize()
 	return S_OK;
 }
 
+HRESULT Image::SetImageType(const ImageType _eImageType)
+{
+	m_eImageType = _eImageType;
+	return S_OK;
+}
+
+HRESULT Image::SetFillAmount(const float _fValue)
+{
+	if (ImageType::Fill != m_eImageType)
+		return S_OK;
+	if (_fValue == m_fFillAmount)
+		return S_OK;
+
+	m_fFillAmount = _fValue;
+
+	if (0 > m_fFillAmount)
+		m_fFillAmount = 0;
+	else if (1 < m_fFillAmount)
+		m_fFillAmount = 1;
+
+	switch (m_eFillMethod)
+	{
+	case Engine::Image::Horizontal:
+		FillHorizontal();
+		break;
+	default:
+		break;
+	}
+	return S_OK;
+}
+
 HRESULT Image::CreateBuffer()
 {
 	m_nVertexCount = 4;
@@ -105,7 +140,7 @@ HRESULT Image::CreateBuffer()
 	//버텍스 버퍼 생성.
 	m_pDevice->CreateVertexBuffer(
 		sizeof(VERTEXRECT) * m_nVertexCount,
-		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
+		D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS |D3DUSAGE_WRITEONLY,
 		VERTEXRECT::FVF,
 		D3DPOOL_DEFAULT,
 		&m_pVertexBuffer,
@@ -149,31 +184,30 @@ HRESULT Image::CreateBuffer()
 	return S_OK;
 }
 
-HRESULT Image::UpdateBuffer()
+HRESULT Image::FillHorizontal()
 {
-	if (nullptr == m_pTexture)
-		return S_OK;
+	D3DXIMAGE_INFO tImageDesc = m_pTexture->GetDesc();
 
 	LPVERTEXRECT pVertices = nullptr;
+	m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, D3DLOCK_DONOTWAIT);
 
-	/*
-	1--------2
-	|		 |
-	|		 |
-	|		 |
-	0--------3
-	*/
+	switch (m_eFillOrigin)
+	{
+	case Engine::Image::Left:
+		pVertices[0].Position = D3DXVECTOR3(-float(tImageDesc.Width * 0.5f), -float(tImageDesc.Height * 0.5f), 0.f);
+		pVertices[1].Position = D3DXVECTOR3(-float(tImageDesc.Width * 0.5f),  float(tImageDesc.Height * 0.5f), 0.f);
+		pVertices[2].Position = D3DXVECTOR3(-float(tImageDesc.Width * 0.5f) + float(m_fFillAmount * tImageDesc.Width),  float(tImageDesc.Height * 0.5f), 0.f);
+		pVertices[2].UV = D3DXVECTOR2(m_fFillAmount, 0.f);
+		pVertices[3].Position = D3DXVECTOR3(-float(tImageDesc.Width * 0.5f) + float(m_fFillAmount * tImageDesc.Width), -float(tImageDesc.Height * 0.5f), 0.f);
+		pVertices[3].UV = D3DXVECTOR2(m_fFillAmount, 1.f);
+		break;
+	case Engine::Image::Right:
+		break;
+	default:
+		break;
+	}
 
-	m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
-	pVertices[0].Position = D3DXVECTOR3(-0.5f, -0.5f, 0.f);
-	pVertices[1].Position = D3DXVECTOR3(-0.5f, 0.5f, 0.f);
-	pVertices[1].UV = D3DXVECTOR2(0.f, 0.f);
-	pVertices[2].Position = D3DXVECTOR3(0.5f, 0.5f, 0.f);
-	pVertices[2].UV = D3DXVECTOR2(1.f, 0.f);
-	pVertices[3].Position = D3DXVECTOR3(0.5f, -0.5f, 0.f);
-	pVertices[3].UV = D3DXVECTOR2(1.f, 1.f);
 	m_pVertexBuffer->Unlock();
-
 	return S_OK;
 }
 

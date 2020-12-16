@@ -4,6 +4,8 @@
 #include "Mouse.h"
 
 #include "PlayerBullet.h"
+
+#include "AmmoGauge.h"
 USING(Engine)
 
 CPlayer::CPlayer()
@@ -99,6 +101,7 @@ UINT CPlayer::Update(const float _fDeltaTime)
 {
 	Key_Input(_fDeltaTime);
 	m_pTransform->UpdateTransform();
+
 
 	return OBJ_NOENVET;
 }

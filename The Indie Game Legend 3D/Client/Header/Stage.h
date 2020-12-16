@@ -19,6 +19,7 @@ private:
 	HRESULT AddMonsterLayer(const wstring& LayerTag);
 	HRESULT AddCameraLayer(const wstring& LayerTag);
 
+	HRESULT AddUIObject();
 public:
 	static CStage* Create();
 	virtual void Free() override;
