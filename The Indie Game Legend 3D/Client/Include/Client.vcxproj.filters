@@ -189,17 +189,17 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Intro.h">
-      <Filter>03.Scene\01.Intro</Filter>
+    <ClInclude Include="..\Header\PlayerSpawn.h">
+      <Filter>02.GameObject\99.Trigger\00.PlayerSpawn</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\IntroBackGround.h">
-      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>02.GameObject\04.Bullet\00.Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Star.h">
-      <Filter>02.GameObject\04.UI\01.Star</Filter>
+    <ClInclude Include="..\Header\PlayerBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Logo.h">
-      <Filter>02.GameObject\04.UI\02.Logo</Filter>
+    <ClInclude Include="..\Header\BulletSpawn.h">
+      <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Rub.h">
       <Filter>02.GameObject\00.Monster\02.Rub</Filter>
@@ -212,19 +212,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\TurretBullet.h">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
-      <Filter>02.GameObject\00.Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerSpawn.h">
-      <Filter>02.GameObject\99.Trigger\00.PlayerSpawn</Filter>
+    <ClInclude Include="..\Header\Intro.h">
+      <Filter>03.Scene\01.Intro</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Bullet.h">
-      <Filter>02.GameObject\04.Bullet\00.Base</Filter>
+    <ClInclude Include="..\Header\IntroBackGround.h">
+      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerBullet.h">
-      <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
+    <ClInclude Include="..\Header\Star.h">
+      <Filter>02.GameObject\04.UI\01.Star</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BulletSpawn.h">
-      <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
+    <ClInclude Include="..\Header\Logo.h">
+      <Filter>02.GameObject\04.UI\02.Logo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -271,34 +270,7 @@
       <Filter>02.GameObject\03.Sector</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Monster.cpp">
-
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
-    </ClCompile>
-
-    <ClCompile Include="..\Source\Intro.cpp">
-      <Filter>03.Scene\01.Intro</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\IntroBackGround.cpp">
-      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Star.cpp">
-      <Filter>02.GameObject\04.UI\01.Star</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Logo.cpp">
-      <Filter>02.GameObject\04.UI\02.Logo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Rub.cpp">
-      <Filter>02.GameObject\00.Monster\02.Rub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\sqrNub.cpp">
-      <Filter>02.GameObject\00.Monster\03.sqrNub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Turret.cpp">
-      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\TurretBullet.cpp">
-      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
-      <Filter>02.GameObject\00.Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\PlayerSpawn.cpp">
       <Filter>02.GameObject\99.Trigger\00.PlayerSpawn</Filter>
@@ -311,6 +283,30 @@
     </ClCompile>
     <ClCompile Include="..\Source\BulletSpawn.cpp">
       <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Turret.cpp">
+      <Filter>02.GameObject\00.Monster\04.Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TurretBullet.cpp">
+      <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\sqrNub.cpp">
+      <Filter>02.GameObject\00.Monster\03.sqrNub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Rub.cpp">
+      <Filter>02.GameObject\00.Monster\02.Rub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Intro.cpp">
+      <Filter>03.Scene\01.Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IntroBackGround.cpp">
+      <Filter>02.GameObject\04.UI\00.IntroBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Star.cpp">
+      <Filter>02.GameObject\04.UI\01.Star</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Logo.cpp">
+      <Filter>02.GameObject\04.UI\02.Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@
 #include "PlayerBullet.h"
 #include "BulletSpawn.h"
 CStage::CStage()
-	: CScene(this)
+	: CScene(GetTypeHashCode<CStage>())
 {
 }
 
