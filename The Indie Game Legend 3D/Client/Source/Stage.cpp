@@ -51,7 +51,7 @@ HRESULT CStage::Awake()
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
 
-	//AddGameObject<CBub>();
+	AddGameObject<CBub>();
 	// Test용으로 추가함
 	AddGameObject<CRub>();
 	AddGameObject<CsqrNub>();
