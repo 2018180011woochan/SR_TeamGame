@@ -16,6 +16,8 @@
 #pragma region INCLUDE_UI
 #include "AmmoGauge.h"
 #include "AmmoFrame.h"
+#include "HeartManager.h"
+#include "Heart.h"
 #pragma endregion
 
 
@@ -92,8 +94,11 @@ HRESULT CStage::AddUIObject()
 {
 	AddPrototype(CAmmoGauge::Create());
 	AddPrototype(CAmmoFrame::Create());
+	AddPrototype(CHeart::Create());
+	AddPrototype(CHeartManager::Create());
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
+	AddGameObject<CHeartManager>();
 	return S_OK;
 }
 

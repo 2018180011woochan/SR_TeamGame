@@ -66,6 +66,11 @@ UINT CGameObjectManager::Update(const size_t _nSceneID, const float _fDeltaTime)
 	auto iter_Obj = iter->second.begin();
 	for (; iter_Obj != iter->second.end(); )
 	{
+		if (false == (*iter_Obj)->IsEnable())
+		{
+			++iter_Obj;
+			continue;
+		}
 		_uint nEvent = (*iter_Obj)->Update(_fDeltaTime);
 		if (nEvent == OBJ_DEAD)
 		{
@@ -93,6 +98,8 @@ UINT CGameObjectManager::LateUpdate(const size_t _nSceneID, const float _fDeltaT
 
 	for (auto pGameObject : iter->second)
 	{
+		if (false == pGameObject->IsEnable())
+			continue;
 		pGameObject->LateUpdate(_fDeltaTime);
 	}
 	return 0;

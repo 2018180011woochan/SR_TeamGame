@@ -46,10 +46,11 @@ HRESULT CAmmoFrame::Awake()
 {
 	CGameObject::Awake();
 	m_pImage = (Image*)AddComponent<Image>();
+	m_pImage->SetPivot(0.f, 0.5f);
 
 	m_eRenderID = ERenderID::UI;
 
-	m_pTransform->Set_Position(D3DXVECTOR3(-422.5f, -285.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(-615.5f, -285.f, 0.f));
 	m_pTransform->Set_Scale(D3DXVECTOR3(5.f, 5.f, 1.f));
 	m_pTransform->UpdateTransform();
 	return S_OK;
@@ -62,7 +63,7 @@ HRESULT CAmmoFrame::Start()
 	m_sTextureKey = TEXT("HUD_Secondary");
 	SafeAddRef(m_pTexturePool);
 
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[1]);
 	return S_OK;
 }
 

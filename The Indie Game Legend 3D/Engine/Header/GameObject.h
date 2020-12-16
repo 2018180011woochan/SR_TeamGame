@@ -17,6 +17,8 @@ protected:
 	ERenderID			m_eRenderID;
 	class CTransform*   m_pTransform;
 	_int				m_nTag;
+
+	bool				m_bEnable;
 protected:
 	explicit CGameObject();
 	explicit CGameObject(const CGameObject& _rOther);
@@ -52,6 +54,9 @@ public:
 	CComponent*				GetComponent(const TSTRING& _sTypeName);
 
 	void					SetSceneID(const UINT _nSceneID);
+
+	bool					IsEnable();
+	void					SetEnable(const bool _bEnable);
 };
 END
 #include "GameObject.hpp"

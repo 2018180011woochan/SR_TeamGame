@@ -168,6 +168,7 @@
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
     <ClInclude Include="..\Header\Heart.h" />
+    <ClInclude Include="..\Header\HeartManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
     <ClInclude Include="..\Header\IntroBackGround.h" />
     <ClInclude Include="..\Header\KeyManager.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
+    <ClCompile Include="..\Source\HeartManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
     <ClCompile Include="..\Source\KeyManager.cpp" />

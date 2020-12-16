@@ -136,6 +136,12 @@
     <Filter Include="02.GameObject\04.UI\05.Heart">
       <UniqueIdentifier>{ed44e63c-cdd1-413e-878a-3156b3f131f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\05.Heart\00.Base">
+      <UniqueIdentifier>{0a1ee56a-c497-49ce-8d16-acf663145f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\05.Heart\01.Manager">
+      <UniqueIdentifier>{20c4dfb7-b07e-4085-9f6f-010c1f6680c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -244,7 +250,10 @@
       <Filter>02.GameObject\04.UI\03.Ammo\01.Frame</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Heart.h">
-      <Filter>02.GameObject\04.UI\05.Heart</Filter>
+      <Filter>02.GameObject\04.UI\05.Heart\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HeartManager.h">
+      <Filter>02.GameObject\04.UI\05.Heart\01.Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -336,7 +345,10 @@
       <Filter>02.GameObject\04.UI\03.Ammo\01.Frame</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Heart.cpp">
-      <Filter>02.GameObject\04.UI\05.Heart</Filter>
+      <Filter>02.GameObject\04.UI\05.Heart\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\HeartManager.cpp">
+      <Filter>02.GameObject\04.UI\05.Heart\01.Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

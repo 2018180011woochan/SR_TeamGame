@@ -48,10 +48,11 @@ HRESULT CAmmoGauge::Awake()
 	CGameObject::Awake();
 	
 	m_pImage = (Image*)AddComponent<Image>();
+	m_pImage->SetPivot(0.f, 0.5f);
 	m_pImage->SetImageType(Image::ImageType::Fill);
 	m_eRenderID = ERenderID::UI;
 
-	m_pTransform->Set_Position(D3DXVECTOR3(-362.5f, -285.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(-480.5f, -286.f, 0.f));
 	m_pTransform->Set_Scale(D3DXVECTOR3(5.f, 5.f, 1.f));
 	m_pTransform->UpdateTransform();
 	return S_OK;
@@ -64,7 +65,7 @@ HRESULT CAmmoGauge::Start()
 	m_sTextureKey = TEXT("AmmoGauge");
 	SafeAddRef(m_pTexturePool);
 
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[2]);
 	return S_OK;
 }
 

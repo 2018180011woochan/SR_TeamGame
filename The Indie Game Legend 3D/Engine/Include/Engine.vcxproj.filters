@@ -94,6 +94,9 @@
     <Filter Include="01.Utility\09.Font">
       <UniqueIdentifier>{a1797c30-ca1d-478b-84bc-91dca5ad0de7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\05.Component\04.RectTransform">
+      <UniqueIdentifier>{bfbb70eb-0b65-4239-9e88-079c73b62dbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineInclude.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="..\Header\EngineExtern.h">
       <Filter>99.Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RectTransform.h">
+      <Filter>01.Utility\05.Component\04.RectTransform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp">
@@ -277,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Gizmo.cpp">
       <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RectTransform.cpp">
+      <Filter>01.Utility\05.Component\04.RectTransform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

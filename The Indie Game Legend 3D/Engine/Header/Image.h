@@ -15,7 +15,11 @@ typedef struct tagIndex16
 	WORD _2;
 	WORD _3;
 }INDEX16, *LPINDEX16;
-
+typedef struct tagPivot
+{
+	float fX;
+	float fY;
+}PIVOT, *LPPIVOT;
 class ENGINE_DLL Image final : public CComponent
 {
 public:
@@ -38,6 +42,10 @@ private:
 	FillOrigin				m_eFillOrigin;
 	float					m_fFillAmount;
 
+	PIVOT					m_tPivot;
+
+	float					m_fWidth;
+	float					m_fHeight;
 private:
 	explicit Image(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	virtual ~Image() = default;
@@ -57,6 +65,9 @@ public:
 
 	HRESULT SetImageType(const ImageType _eImageType);
 	HRESULT SetFillAmount(const float _fValue);
+
+	//
+	void	SetPivot(const float _fX, const float _fY);
 private:
 	HRESULT CreateBuffer();
 

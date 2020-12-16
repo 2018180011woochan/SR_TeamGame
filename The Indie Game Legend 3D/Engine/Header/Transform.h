@@ -3,7 +3,7 @@
 #include "Component.h"
 BEGIN(Engine)
 
-class ENGINE_DLL CTransform final : public CComponent
+class ENGINE_DLL CTransform : public CComponent
 {
 private:
 	TRANSFORM_DESC	m_tTransformDesc;

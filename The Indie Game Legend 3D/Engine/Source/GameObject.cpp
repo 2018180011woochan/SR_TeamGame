@@ -8,6 +8,7 @@ CGameObject::CGameObject()
 	, m_pTransform(nullptr)
 	, m_nTag(-1)
 	, m_eRenderID(ERenderID::End)
+	, m_bEnable(true)
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);
@@ -19,6 +20,7 @@ CGameObject::CGameObject(const CGameObject & _rOther)
 	, m_pTransform(nullptr)
 	, m_nTag(_rOther.m_nTag)
 	, m_eRenderID(_rOther.m_eRenderID)
+	, m_bEnable(true)
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);
@@ -100,4 +102,14 @@ CComponent * CGameObject::GetComponent(const TSTRING & _sTypeName)
 void CGameObject::SetSceneID(const UINT _nSceneID)
 {
 	m_nSceneID = _nSceneID;
+}
+
+bool CGameObject::IsEnable()
+{
+	return m_bEnable;
+}
+
+void CGameObject::SetEnable(const bool _bEnable)
+{
+	m_bEnable = _bEnable;
 }

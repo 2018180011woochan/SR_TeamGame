@@ -11,6 +11,8 @@ CHeart::CHeart()
 
 CHeart::CHeart(const CHeart & _rOther)
 	: CGameObject(_rOther)
+	, m_pImage(nullptr)
+	, m_pTexturePool(nullptr)
 {
 }
 
@@ -48,16 +50,23 @@ HRESULT CHeart::Awake()
 	CGameObject::Awake();
 
 	m_pImage = (Image*)AddComponent<Image>();
+
 	m_eRenderID = ERenderID::UI;
+
+	m_pTransform->Set_Scale(D3DXVECTOR3(5.f, 5.f, 1.f));
+	m_pTransform->UpdateTransform();
 	return S_OK;
 }
 
 HRESULT CHeart::Start()
 {
 	CGameObject::Start();
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
-	m_sTextureKey = TEXT("Heart");
-	SafeAddRef(m_pTexturePool);
+	if (nullptr == m_pTexturePool)
+	{
+		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
+		m_sTextureKey = TEXT("Heart");
+		SafeAddRef(m_pTexturePool);
+	}
 
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
@@ -86,7 +95,7 @@ HRESULT CHeart::Render()
 
 void CHeart::SetGauge(const UINT _nValue)
 {
-	UINT nIndex = 0;
+	UINT nIndex = _nValue;
 	if (_nValue >= m_nMaxFrame)
 		nIndex = m_nMaxFrame - 1;
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[nIndex]);
