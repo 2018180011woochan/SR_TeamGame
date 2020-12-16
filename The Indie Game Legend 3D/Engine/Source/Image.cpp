@@ -1,9 +1,8 @@
 #include "..\Header\Image.h"
+#include "Texture.h"
 
 USING(Engine)
-
 const DWORD VERTEXRECT::FVF = D3DFVF_XYZ | D3DFVF_TEX1;
-
 Image::Image(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 	: CComponent(_pGameObject, _pDevice)
 	, m_pVertexBuffer(nullptr)
@@ -53,7 +52,7 @@ HRESULT Image::SetTexture(CTexture * const _pTexture)
 	//텍스처 변경
 	m_pTexture = _pTexture;
 	//변경된 텍스처 레퍼런스 카운트 증가.
-	SafeAddRef(_pTexture);
+	SafeAddRef(m_pTexture);
 	return S_OK;
 }
 

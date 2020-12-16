@@ -14,6 +14,7 @@ public:
 	const _vector Get_Look() const;
 	const _vector Get_Up() const;
 	const _vector Get_Position() const;
+	const _vector Get_Parent() const;
 	const _matrix Get_WorldMatrix() const;
 	/*Setter*/
 	void Set_Position(const _vector& _rPosition);
@@ -23,6 +24,15 @@ public:
 	void Add_RotationX(const float& _rRotationX);
 	void Add_RotationY(const float& _rRotationY);
 	void Add_RotationZ(const float& _rRotationZ);
+
+	void Set_Revolution(const _vector& _rRevolution);
+	void Add_Revolution(const _vector& _rRevolution);
+	void Add_RevolutionX(const float& _rRevolutionX);
+	void Add_RevolutionY(const float& _rRevolutionY);
+	void Add_RevolutionZ(const float& _rRevolutionZ);
+
+	void Set_Parent(const _vector& _rParent);
+	void Add_parent(const _vector& _rParent);
 
 	void Set_WorldMatrix(const _matrix & matWorld);
 	void Set_Scale(const _vector & _rScale);

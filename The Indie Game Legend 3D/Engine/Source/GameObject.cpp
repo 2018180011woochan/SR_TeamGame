@@ -18,6 +18,7 @@ CGameObject::CGameObject(const CGameObject & _rOther)
 	, m_pManagement(_rOther.m_pManagement)
 	, m_pTransform(nullptr)
 	, m_nTag(_rOther.m_nTag)
+	, m_eRenderID(_rOther.m_eRenderID)
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);

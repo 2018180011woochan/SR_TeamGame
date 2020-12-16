@@ -10,7 +10,7 @@
 
 #include "ClientDefine.h"
 #include "ClientExtern.h"
-
+#include "ClientEnum.h"
 #pragma endregion
 
 

@@ -186,15 +186,17 @@
     <ClInclude Include="..\Header\Texture.h">
       <Filter>01.Utility\08.Texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Gizmo.h">
-      <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\FrameManager.h">
       <Filter>00.System\03.FrameManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\EngineExtern.h" />
     <ClInclude Include="..\Header\Image.h">
       <Filter>01.Utility\05.Component\03.Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Gizmo.h">
+      <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EngineExtern.h">
+      <Filter>99.Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -255,14 +257,14 @@
     <ClCompile Include="..\Source\Texture.cpp">
       <Filter>01.Utility\08.Texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Gizmo.cpp">
-      <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\FrameManager.cpp">
       <Filter>00.System\03.FrameManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Image.cpp">
       <Filter>01.Utility\05.Component\03.Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gizmo.cpp">
+      <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

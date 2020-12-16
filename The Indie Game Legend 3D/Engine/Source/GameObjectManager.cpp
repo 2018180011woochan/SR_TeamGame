@@ -59,10 +59,23 @@ UINT CGameObjectManager::Update(const size_t _nSceneID, const float _fDeltaTime)
 		return 0;
 	}
 
-	for (auto pGameObject : iter->second)
+	//for (auto pGameObject : iter->second)
+	//{
+	//	pGameObject->Update(_fDeltaTime);
+	//}
+	auto iter_Obj = iter->second.begin();
+	for (; iter_Obj != iter->second.end(); )
 	{
-		pGameObject->Update(_fDeltaTime);
+		_uint nEvent = (*iter_Obj)->Update(_fDeltaTime);
+		if (nEvent == OBJ_DEAD)
+		{
+			SafeRelease((*iter_Obj));
+			iter_Obj = iter->second.erase(iter_Obj);
+		}
+		else 
+			++iter_Obj;
 	}
+
 	return 0;
 }
 

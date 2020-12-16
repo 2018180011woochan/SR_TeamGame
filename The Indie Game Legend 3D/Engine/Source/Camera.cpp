@@ -48,8 +48,6 @@ UINT CCamera::Update(const float _fDeltaTime)
 
 UINT CCamera::LateUpdate(const float _fDeltaTime)
 {
-	CGameObject::LateUpdate(_fDeltaTime);
-
 	D3DXMatrixLookAtLH(&m_tCameraDesc.matView, &m_tCameraDesc.vEye,
 		&m_tCameraDesc.vAt, &m_tCameraDesc.vUp);
 

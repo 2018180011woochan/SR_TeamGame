@@ -27,7 +27,7 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	_matrix matRotAxis;
 	/*Eye*/
 	m_tCameraDesc.vEye = pPlayerTransFomr->Get_Position();
-	m_tCameraDesc.vEye.y += 5.f;
+	m_tCameraDesc.vEye.y = 5.f; //점프 없을거라고 봄
 
 	/*At . RotY */
 	memcpy(&vPlayerLook, &PlayerTransFormDesc.matWorld.m[2][0], sizeof(_vector));
@@ -43,17 +43,15 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 
 
 	m_tCameraDesc.vAt = m_tCameraDesc.vEye + vPlayerLook;
-	m_eRenderID = ERenderID::Alpha;
 	return E_NOTIMPL;
 }
 
 CPlayerCamera::CPlayerCamera()
-	:CCamera()
 {
 }
 
 CPlayerCamera::CPlayerCamera(const CPlayerCamera & _rOther)
-	:CCamera()
+	:CCamera(_rOther)
 	,m_fDistanceToAt(_rOther.m_fDistanceToAt)
 	,m_fCameraAngleX(_rOther.m_fCameraAngleX)
 	,m_fCameraAngleSpeed(_rOther.m_fCameraAngleSpeed)
@@ -82,7 +80,7 @@ HRESULT CPlayerCamera::Awake()
 	m_tCameraDesc.fFovY = D3DXToRadian(90.f);
 	m_tCameraDesc.vUp = _vector(0, 1, 0);
 	m_fCameraAngleX = 0.f;
-	m_fDistanceToAt = 1.f;
+	m_fDistanceToAt = 500.f;
 	m_fCameraAngleSpeed = 200.f;
 	return S_OK;
 }

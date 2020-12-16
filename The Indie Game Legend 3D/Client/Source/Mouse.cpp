@@ -56,6 +56,7 @@ HRESULT CMouse::Start()
 
 UINT CMouse::Update(const float _fDeltaTime)
 {
+	m_vMouseDir = vZero;
 	if (CKeyManager::GetInstance()->Key_Toggle(VK_F1))
 	{
 		UpdateMouseDir();
