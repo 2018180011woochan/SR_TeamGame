@@ -1,14 +1,14 @@
 #pragma once
-#ifndef __TURRETBULLET_H__
+#ifndef __WALKERBULLET_H__
 #include "GameObject.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CTurretBullet : public CGameObject
+class CWalkerBullet : public CGameObject
 {
 private:
-	explicit CTurretBullet();
-	explicit CTurretBullet(const CTurretBullet& other);
-	virtual ~CTurretBullet() = default;
+	explicit CWalkerBullet();
+	explicit CWalkerBullet(const CWalkerBullet& other);
+	virtual ~CWalkerBullet() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -21,7 +21,7 @@ public:
 
 public:
 	virtual CGameObject * Clone() override;
-	static CTurretBullet* Create();
+	static CWalkerBullet* Create();
 
 private:
 	HRESULT Movement(float fDeltaTime);
@@ -44,6 +44,6 @@ private:
 	float					m_fBulletSpeed;
 };
 
-#define __TURRETBULLET_H__
-#endif // !__TURRETBULLET_H__
+#define __WALKERBULLET_H__
+#endif // !__WALKERBULLET_H__
 

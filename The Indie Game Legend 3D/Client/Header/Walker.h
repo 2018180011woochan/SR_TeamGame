@@ -1,15 +1,14 @@
 #pragma once
-#ifndef __RUB_H__
-
+#ifndef __WALKER_H__
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CRub final : public CMonster
+class CWalker final : public CMonster
 {
 private:
-	explicit CRub();
-	explicit CRub(const CRub& other);
-	virtual ~CRub() = default;
+	explicit CWalker();
+	explicit CWalker(const CWalker& other);
+	virtual ~CWalker() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -20,33 +19,29 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+public:
+	void BulletFire();
+
 private:
 	HRESULT Movement(float fDeltaTime);
-	void Jumping(float fDeltaTime);
-
-public:
 
 public:
 	virtual CGameObject * Clone() override;
-	static CRub* Create();
+	static CWalker* Create();
 private:
 	virtual void Free() override;
 
 private:
-	CMeshRenderer* m_pMeshRenderer = nullptr;
-	CTexturePool*  m_pTexturePool;
-
-	float				m_fJumpingCnt = 0;
-	float				m_fJumpSpeed = 10;
-	float				m_fMaxJump = 8.f;
-	float				m_fMoveSpeed = 8.f;
-	bool				m_isMaxJump = false;
-	bool				m_isJumping = false;
-
-	UINT nIndex = 0;
-
-	bool m_bIsTPS;
+	CMeshRenderer*	m_pMeshRenderer = nullptr;
+	CTexturePool*	m_pTexturePool;
+	float			m_fFireSpeed;
+	float			m_fFireDeltaTime;
+	float			m_fWalkSpeed;
+	float			m_fWalkDeltaTime;
+	float			m_fMoveSpeed;
+	UINT			nIndex = 0;
 };
 
-#define __RUB_H__
-#endif // !__RUB_H__
+#define __WALKER_H__
+#endif // !__WALKER_H__
+

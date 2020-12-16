@@ -5,6 +5,9 @@
 #include "sqrNub.h"
 #include "Turret.h"
 #include "TurretBullet.h"
+#include "Walker.h"
+#include "WalkerBullet.h"
+#include "Cryder.h"
 #include "FactoryManager.h"
 #include "Player.h"
 #include "PlayerCamera.h"
@@ -28,11 +31,15 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
-	AddPrototype(CBub::Create());
+	//AddPrototype(CBub::Create());
 	AddPrototype(CRub::Create());
 	AddPrototype(CsqrNub::Create());
 	AddPrototype(CTurret::Create());
 	AddPrototype(CTurretBullet::Create());
+	AddPrototype(CWalker::Create());
+	AddPrototype(CWalkerBullet::Create());
+	AddPrototype(CCryder::Create());
+
 	AddPrototype(CPlayer::Create());
 	AddPrototype(CPlayerCamera::Create());
 	AddPrototype(CMouse::Create());
@@ -46,9 +53,11 @@ HRESULT CStage::Awake()
 
 	//AddGameObject<CBub>();
 	// Test용으로 추가함
-	AddGameObject<CRub>();
+	//AddGameObject<CRub>();
 	AddGameObject<CsqrNub>();
-	AddGameObject<CTurret>();
+	//AddGameObject<CTurret>();
+	//AddGameObject<CWalker>();
+	AddGameObject<CCryder>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
