@@ -12,14 +12,13 @@ CMainApp::CMainApp()
 
 void CMainApp::Free()
 {
-	CFactoryManager::DeleteInstance();
-	CKeyManager::DeleteInstance();
-	CMsgManager::DeleteInstance();
 	m_pTexturePoolManager->Release();
 	SafeRelease(m_pDevice);
     SafeRelease(m_pManagement);
 	CManagement::GetInstance()->ReleaseEngine();
-
+	CFactoryManager::DeleteInstance();
+	CKeyManager::DeleteInstance();
+	CMsgManager::DeleteInstance();
 }
 
 HRESULT CMainApp::Initialize()

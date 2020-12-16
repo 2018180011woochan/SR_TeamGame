@@ -28,6 +28,8 @@ public:
 	virtual CGameObject * Clone() PURE;
 
 	virtual HRESULT Fire() PURE;
+	virtual HRESULT Fire(const _vector _Dir) PURE;
+
 protected:
 	HRESULT IsBillboarding();
 	virtual void Free() override;

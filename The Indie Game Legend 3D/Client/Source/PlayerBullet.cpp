@@ -5,7 +5,7 @@
 #include "BulletSpawn.h"
 
 CPlayerBullet::CPlayerBullet()
-	:m_eBulletType(EBulletType::MaxCount)
+	:m_eBulletType(EWeaponType::Normal)
 {
 }
 
@@ -15,14 +15,25 @@ CPlayerBullet::CPlayerBullet(const CPlayerBullet & _rOther)
 {
 }
 
-void CPlayerBullet::Set_Type(const EBulletType & _eBulletType)
+void CPlayerBullet::Set_Type(const EWeaponType & _eBulletType)
 {
 	m_eBulletType = _eBulletType;
 
 	SafeRelease(m_pTexturePool);
 	switch (m_eBulletType)
 	{
-	case EBulletType::Normal:
+	case EWeaponType::Big:
+		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
+		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("BigBullet"))[0]);
+		m_fMoveSpeed = 40.f;
+		m_pTransform->Set_Scale(_vector(2, 2, 2));
+		break;
+	case EWeaponType::Normal:
+		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
+		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("NormalBullet"))[0]);
+		m_fMoveSpeed = 100.f;
+		break;
+	case EWeaponType::Multiple:
 		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("NormalBullet"))[0]);
 		m_fMoveSpeed = 100.f;
@@ -47,16 +58,61 @@ HRESULT CPlayerBullet::Fire()
 {
 	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
-
-	//Test
 	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
 	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
+
+	//Test
+	//CameraDesc.vAt -> 피킹 지점으로 바꿔야함 
 	m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_Position();
-	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
 	m_pTransform->Set_Position(pSpawnTrans->Get_Position());
 
-	//m_vDiraction = CameraDesc.vAt - pSpawnDecs->Get_Position();
-	//m_pTransform->Set_Position(pSpawnDecs->Get_Position());
+	switch (m_eBulletType)
+	{
+	case EWeaponType::Big:
+	case EWeaponType::Normal:
+		break;
+	case EWeaponType::Multiple:
+	{
+		_matrix matRotY;
+
+		CPlayerBullet* pBullet = (CPlayerBullet*)AddGameObject<CPlayerBullet>();
+		pBullet->Set_Type(EWeaponType::Normal);
+		_vector vDir;
+		
+		D3DXMatrixRotationY(&matRotY, D3DXToRadian(15.f));
+		D3DXVec3TransformNormal(&vDir, &m_vDiraction, &matRotY);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		pBullet->Fire(vDir);
+
+		pBullet = (CPlayerBullet*)AddGameObject<CPlayerBullet>();
+		pBullet->Set_Type(EWeaponType::Normal);
+		D3DXMatrixRotationY(&matRotY, D3DXToRadian(-15.f));
+		D3DXVec3TransformNormal(&vDir, &m_vDiraction, &matRotY);
+		D3DXVec3Normalize(&vDir, &vDir);
+		pBullet->Fire(vDir);
+	}
+		break;
+	case EWeaponType::End:
+		break;
+	default:
+		break;
+	}
+
+	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+
+
+	return S_OK;
+}
+
+HRESULT CPlayerBullet::Fire(const _vector _Dir)
+{
+	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
+	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
+
+	m_vDiraction = _Dir;
+	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	m_pTransform->Set_Position(pSpawnTrans->Get_Position());
 
 	return S_OK;
 }
@@ -78,7 +134,6 @@ HRESULT CPlayerBullet::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_fLiveTiem = 5.f;
 	m_eRenderID = ERenderID::Alpha;
-
 	return S_OK;
 }
 
