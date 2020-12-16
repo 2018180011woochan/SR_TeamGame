@@ -65,7 +65,7 @@ HRESULT CAmmoGauge::Start()
 	m_sTextureKey = TEXT("AmmoGauge");
 	SafeAddRef(m_pTexturePool);
 
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[2]);
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
 	return S_OK;
 }
 
@@ -78,7 +78,7 @@ UINT CAmmoGauge::Update(const float _fDeltaTime)
 		fTest -= 0.05f;
 		m_pImage->SetFillAmount(fTest);
 	}
-	else if (GetAsyncKeyState('Q') & 0x8000)
+	else if (GetAsyncKeyState('O') & 0x8000)
 	{
 		fTest += 0.05f;
 		m_pImage->SetFillAmount(fTest);
