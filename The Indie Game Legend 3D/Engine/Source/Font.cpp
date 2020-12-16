@@ -1,5 +1,5 @@
 #include "..\Header\Font.h"
-
+#include "Texture.h"
 USING(Engine)
 
 Font::Font()
