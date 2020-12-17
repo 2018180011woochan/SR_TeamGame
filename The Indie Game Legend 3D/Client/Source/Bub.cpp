@@ -41,8 +41,8 @@ HRESULT CBub::Awake()
 HRESULT CBub::Start()
 {
 	CMonster::Start();
-	m_pTransform->Set_Scale(_vector(5, 5, 5));
-	m_pTransform->Add_Position(_vector(0, 3, 0));
+	m_pTransform->Set_Scale(_vector(4, 4, 4));
+	m_pTransform->Add_Position(_vector(0, -3, 0));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	return S_OK;
@@ -63,15 +63,19 @@ UINT CBub::Update(const float _fDeltaTime)
 		nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	if (m_fJumpingCnt / 100.f > 1.f)
+	//공평회용
+	if (GetKeyState(VK_F3))
 	{
-		//Jumping(_fDeltaTime);
-		++nIndex;
-		m_fJumpingCnt = 0.f;
-	}
+		if (m_fJumpingCnt / 100.f > 1.f)
+		{
+			Jumping(_fDeltaTime);
+			++nIndex;
+			m_fJumpingCnt = 0.f;
+		}
 
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
+		if (FAILED(Movement(_fDeltaTime)))
+			return 0;
+	}
 
 	m_pTransform->UpdateTransform();
 

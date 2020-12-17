@@ -48,8 +48,8 @@ HRESULT CsqrNub::Awake()
 HRESULT CsqrNub::Start()
 {
 	CMonster::Start();
-	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_pTransform->Add_Position(_vector(-5.f, 3.f, 10.f));
+	m_pTransform->Set_Scale(_vector(3, 3, 3));
+	m_pTransform->Add_Position(_vector(0, -2.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	return S_OK;
@@ -69,22 +69,25 @@ UINT CsqrNub::Update(const float _fDeltaTime)
 		m_dwSwitch = GetTickCount();
 	}
 
-	if (m_isJumping)
-		Jumping(_fDeltaTime);
-
-	m_isJumping = false;
-	if (!m_isJumping)
+	//공평회용
+	if (GetKeyState(VK_F3))
 	{
-		if (m_pTransform->Get_Position().y > m_fMaxJump || m_pTransform->Get_Position().y < 3.f)
+		if (m_isJumping)
+			Jumping(_fDeltaTime);
+
+		m_isJumping = false;
+		if (!m_isJumping)
 		{
-			m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
+			if (m_pTransform->Get_Position().y > m_fMaxJump || m_pTransform->Get_Position().y < 3.f)
+			{
+				m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
+			}
 		}
+
+
+		if (FAILED(Movement(_fDeltaTime)))
+			return 0;
 	}
-
-
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
-
 	m_pTransform->UpdateTransform();
 
 

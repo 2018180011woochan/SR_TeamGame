@@ -3,9 +3,10 @@
 #include "GameObject.h"
 USING(Engine)
 
-#define NormalDelay 0.15f
-#define BigDelay 1.f
-#define MultipleDelay 0.3f
+#define NormalDelay 0.35f
+#define BigDelay 1.5f
+#define MultipleDelay 0.5f
+#define RapidDelay 0.1f
 
 class CPlayer final: public CGameObject
 {
@@ -26,17 +27,22 @@ private:
 	 bool				m_bUseWeapon;
 	 float				m_fBulletFireDelay = 0.f;
 	 float				m_fBulletFireTime = 0.f;
-	 _uint				m_nAmmo;
-	 _uint				m_nAmmoMax;
+
+	 float				m_fAmmo;
+	 float				m_fAmmoMax;
+	 _uint				m_nAmmoDecrease;
+
+	 //Test
+	 Image*				m_pAmmobar;
 private:
 	HRESULT Key_Input(const float _fDeltaTime);
 	void	BulletFire();
-	void	ChangeWeaponSetting();// 무기 교체시 설정해줄 함수
-	void    ChangeWeapon();
+	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
+	void    ChangeWeapon();// 관련 세팅값 설정
 public:
 	//Getter Setter
-	const _uint& GetAmmo() { return m_nAmmo; }
-	const _uint& GetAmmoMax() { return m_nAmmoMax; }
+	const float& GetAmmo() { return m_fAmmo; }
+	const float& GetAmmoMax() { return m_fAmmoMax; }
 	void AddWeapon(const EWeaponType _eWeaponType);
 protected:
 	explicit CPlayer();

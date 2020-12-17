@@ -65,13 +65,16 @@ UINT CTurret::Update(const float _fDeltaTime)
 		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
 	}
 
-	m_fFireDeltaTime += _fDeltaTime;
-	if (m_fFireSpeed <= m_fFireDeltaTime)
+	//공평회용
+	if (GetKeyState(VK_F3))
 	{
-		m_fFireDeltaTime -= m_fFireSpeed;
-		BulletFire();
+		m_fFireDeltaTime += _fDeltaTime;
+		if (m_fFireSpeed <= m_fFireDeltaTime)
+		{
+			m_fFireDeltaTime -= m_fFireSpeed;
+			BulletFire();
+		}
 	}
-
 
 	m_pTransform->UpdateTransform();
 

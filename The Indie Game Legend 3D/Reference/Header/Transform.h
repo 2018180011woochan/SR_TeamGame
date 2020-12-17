@@ -14,6 +14,8 @@ public:
 	const _vector Get_Look() const;
 	const _vector Get_Up() const;
 	const _vector Get_Position() const;
+	const _vector Get_WorldPosition() const;
+
 	const _vector Get_Parent() const;
 	const _matrix Get_WorldMatrix() const;
 	/*Setter*/

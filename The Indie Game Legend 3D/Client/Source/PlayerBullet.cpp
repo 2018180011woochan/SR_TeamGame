@@ -63,8 +63,8 @@ HRESULT CPlayerBullet::Fire()
 
 	//Test
 	//CameraDesc.vAt -> 피킹 지점으로 바꿔야함 
-	m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_Position();
-	m_pTransform->Set_Position(pSpawnTrans->Get_Position());
+	m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
+	m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
 
 	switch (m_eBulletType)
 	{
@@ -112,7 +112,7 @@ HRESULT CPlayerBullet::Fire(const _vector _Dir)
 
 	m_vDiraction = _Dir;
 	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-	m_pTransform->Set_Position(pSpawnTrans->Get_Position());
+	m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
 
 	return S_OK;
 }

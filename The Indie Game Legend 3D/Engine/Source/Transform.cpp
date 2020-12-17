@@ -101,6 +101,11 @@ const _vector CTransform::Get_Up() const
 
 const _vector CTransform::Get_Position() const
 {
+	return m_tTransformDesc.vPosition;
+}
+
+const _vector CTransform::Get_WorldPosition() const
+{
 	_vector vPos;
 	memcpy(&vPos, &m_tTransformDesc.matWorld.m[3][0], sizeof(_vector));
 	return vPos;

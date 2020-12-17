@@ -42,9 +42,9 @@ HRESULT CRub::Awake()
 HRESULT CRub::Start()
 {
 	CMonster::Start();
-	m_pTransform->Set_Scale(_vector(1, 1, 1));
+	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	// Test
-	m_pTransform->Add_Position(_vector(5.f, 1.f, 10.f));
+	m_pTransform->Add_Position(_vector(0.f, -3.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	return S_OK;
@@ -58,10 +58,14 @@ UINT CRub::Update(const float _fDeltaTime)
 		nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
+	//공평회용
+	if(GetKeyState(VK_F3))
+	{
 	Jumping(_fDeltaTime);
 
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
+	}
 
 	m_pTransform->UpdateTransform();
 

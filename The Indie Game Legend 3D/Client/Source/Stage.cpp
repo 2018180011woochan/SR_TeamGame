@@ -51,13 +51,13 @@ HRESULT CStage::Awake()
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
 
-	AddGameObject<CBub>();
 	// Test용으로 추가함
-	AddGameObject<CRub>();
-	AddGameObject<CsqrNub>();
-	AddGameObject<CTurret>();
-	AddGameObject<CWalker>();
-	AddGameObject<CCryder>();
+	//AddGameObject<CBub>();
+	//AddGameObject<CRub>();
+	//AddGameObject<CsqrNub>();
+	//AddGameObject<CTurret>();
+	//AddGameObject<CWalker>();
+	//AddGameObject<CCryder>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
@@ -70,7 +70,7 @@ HRESULT CStage::Awake()
 HRESULT CStage::Start()
 {
 
-	CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
+	CFactoryManager::GetInstance()->LoadDataFile(L"Test");
 	CFactoryManager::GetInstance()->LoadScene(this);
 
 	CScene::Start();

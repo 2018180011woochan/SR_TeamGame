@@ -77,23 +77,26 @@ UINT CHeartManager::Update(const float _fDeltaTime)
 
 	static UINT nMax = 3;
 	static UINT nHP = 12;
-	if (GetAsyncKeyState('L') & 0x8000)
+	if (GetAsyncKeyState('L') & 0x0001)
 	{
 		nMax++;
 	}
-	else if (GetAsyncKeyState('K') & 0x8000)
+	else if (GetAsyncKeyState('K') & 0x0001)
 	{
 		nMax--;
 	}
-	if (GetAsyncKeyState('J') & 0x8000)
+	if (GetAsyncKeyState('J') & 0x0001)
 	{
 		nHP++;
 
 	}
-	else if (GetAsyncKeyState('H') & 0x8000)
+	else if (GetAsyncKeyState('H') & 0x0001)
 	{
 		nHP--;
 	}
+	nHP = CLAMP(nHP,12, 24);
+	nMax = CLAMP(nMax, 3, 6);
+
 	SetHeartCount(nMax);
 	SetGauge(nHP);
 	return 0;

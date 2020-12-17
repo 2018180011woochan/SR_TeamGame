@@ -57,8 +57,8 @@ UINT CWalkerBullet::Update(const float _fDeltaTime)
 		nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
+	//if (FAILED(Movement(_fDeltaTime)))
+	//	return 0;
 
 	m_pTransform->UpdateTransform();
 

@@ -24,6 +24,7 @@
 //#include "EngineComponent.h"
 
 //ÄÜ¼ÖÃ¢
+#ifdef _DEBUG
 #ifdef UNICODE
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 #else
@@ -31,3 +32,4 @@
 #endif
 #include <iostream>
 using namespace std;
+#endif
