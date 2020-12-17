@@ -15,7 +15,6 @@ enum class EState : _uint
 	Hurt,
 	End
 };
-class CCamera;
 class CPlayer final: public CGameObject
 {
 private:

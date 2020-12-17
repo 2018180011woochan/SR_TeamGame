@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "KeyManager.h"
 #include "Mouse.h"
-#include "Camera.h"
 #include "PlayerBullet.h"
 
 #include "AmmoGauge.h"
