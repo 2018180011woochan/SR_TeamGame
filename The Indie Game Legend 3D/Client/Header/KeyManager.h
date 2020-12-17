@@ -13,6 +13,7 @@
 #define KEY_E		0x00000001 << 7
 #define KEY_F		0x00000001 << 8
 
+#define KEY_SPACE   0x00000001 << 9
 
 USING(Engine)
 class CKeyManager : public CBase

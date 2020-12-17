@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "KeyManager.h"
 #include "Mouse.h"
-
+#include "Camera.h"
 #include "PlayerBullet.h"
 
 #include "AmmoGauge.h"
@@ -13,6 +13,7 @@ USING(Engine)
 CPlayer::CPlayer()
 	:CGameObject()
 	, m_fMoveSpeed(0.f)
+	, m_fDashSpeed(0.f)
 	, m_fMouseSpeedX(0.f)
 	, m_bUseWeapon(false)
 	, m_fAmmo(0)
@@ -23,6 +24,10 @@ CPlayer::CPlayer()
 	, m_fBulletFireTime(0.f)
 	, m_eCurWeaponType(EWeaponType::Big)
 	, m_ePreWeaponType(EWeaponType::End)
+	, m_fDashDelay(0.f)
+	, m_fDashDelayTime(0.f)
+	, m_fDashDuration(0.f)
+	, m_fDashDurationTime(0.f)
 
 {
 }
@@ -31,6 +36,7 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 	: CGameObject(_rOther)
 	, m_bUseWeapon(false)
 	, m_fMoveSpeed(_rOther.m_fMoveSpeed)
+	, m_fDashSpeed(_rOther.m_fDashSpeed)
 	, m_fMouseSpeedX(_rOther.m_fMouseSpeedX)
 	, m_fAmmo(_rOther.m_fAmmo)
 	, m_fAmmoMax(_rOther.m_fAmmoMax)
@@ -45,53 +51,19 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 
 }
 
-HRESULT CPlayer::Key_Input(const float _fDeltaTime)
+HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 {
-	_vector vMoveDir = vZero;
+	if (m_eState == EState::Hurt)
+		return S_OK;
 
 	//Move Code
-	if (m_pKeyMgr->Key_Press(KEY_W))
-	{
-		vMoveDir += m_pTransform->Get_Look();
-		if (m_pKeyMgr->Key_Press(KEY_A))
-		{
-			vMoveDir += -(m_pTransform->Get_Right());
-		}
-		else if (m_pKeyMgr->Key_Press(KEY_D))
-		{
-			vMoveDir += (m_pTransform->Get_Right());
-		}
-	}
-	else if (m_pKeyMgr->Key_Press(KEY_S))
-	{
-		vMoveDir -= m_pTransform->Get_Look();
-		if (m_pKeyMgr->Key_Press(KEY_A))
-		{
-			vMoveDir += -(m_pTransform->Get_Right());
-		}
-		else if (m_pKeyMgr->Key_Press(KEY_D))
-		{
-			vMoveDir += (m_pTransform->Get_Right());
-		}
-	}
-	else if (m_pKeyMgr->Key_Press(KEY_A))
-	{
-		vMoveDir += -(m_pTransform->Get_Right());
-	}
-	else if (m_pKeyMgr->Key_Press(KEY_D))
-	{
-		vMoveDir += (m_pTransform->Get_Right());
-	}
+	MoveCheck();
 
-	D3DXVec3Normalize(&vMoveDir, &vMoveDir);
-	vMoveDir *= m_fMoveSpeed;
-	m_pTransform->Add_Position(vMoveDir*_fDeltaTime);
-
+	//camera code
 	CMouse* pMouse = (CMouse*)FindGameObjectOfType<CMouse>();
 	m_pTransform->Add_RotationY(pMouse->Get_MouseDir().x *  m_fMouseSpeedX * _fDeltaTime);
 
 	//Fire
-
 	if (m_pKeyMgr->Key_Toggle(VK_F2))
 	{
 		if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
@@ -120,6 +92,81 @@ HRESULT CPlayer::Key_Input(const float _fDeltaTime)
 		ChangeWeaponUISetting();
 	}
 	return S_OK;
+}
+
+HRESULT CPlayer::MoveCheck()
+{
+	if (m_eState == EState::Dash)
+		return S_OK;
+
+	m_vMoveDir = vZero;
+
+	if (m_pKeyMgr->Key_Press(KEY_W))
+	{
+		m_vMoveDir += m_pTransform->Get_Look();
+		if (m_pKeyMgr->Key_Press(KEY_A))
+		{
+			m_vMoveDir += -(m_pTransform->Get_Right());
+		}
+		else if (m_pKeyMgr->Key_Press(KEY_D))
+		{
+			m_vMoveDir += (m_pTransform->Get_Right());
+		}
+	}
+	else if (m_pKeyMgr->Key_Press(KEY_S))
+	{
+		m_vMoveDir -= m_pTransform->Get_Look();
+		if (m_pKeyMgr->Key_Press(KEY_A))
+		{
+			m_vMoveDir += -(m_pTransform->Get_Right());
+		}
+		else if (m_pKeyMgr->Key_Press(KEY_D))
+		{
+			m_vMoveDir += (m_pTransform->Get_Right());
+		}
+	}
+	else if (m_pKeyMgr->Key_Press(KEY_A))
+	{
+		m_vMoveDir += -(m_pTransform->Get_Right());
+	}
+	else if (m_pKeyMgr->Key_Press(KEY_D))
+	{
+		m_vMoveDir += (m_pTransform->Get_Right());
+	}
+
+
+	if (m_pKeyMgr->Key_Down(KEY_SPACE) && m_fDashDelay <= m_fDashDelayTime)
+	{
+		m_eState = EState::Dash;
+		m_fDashDurationTime = 0.f;
+		m_fDashDelayTime = 0.f;
+	}
+
+
+	return S_OK;
+}
+
+void CPlayer::Move(const float& _fSpeed,  const float _fDeltaTime)
+{
+	D3DXVec3Normalize(&m_vMoveDir, &m_vMoveDir);
+	m_pTransform->Add_Position(m_vMoveDir * _fSpeed *_fDeltaTime);
+}
+
+void CPlayer::UpdateState(const float _fDeltaTime)
+{
+	switch (m_eState)
+	{
+	case EState::Move:
+		Move(m_fMoveSpeed, _fDeltaTime);
+		break;
+	case EState::Dash:
+		Move(m_fDashSpeed, _fDeltaTime);
+		m_fDashDelayTime += _fDeltaTime;
+		m_fDashDurationTime += _fDeltaTime;
+		break;
+	default:
+		break;
+	}
 }
 
 void CPlayer::BulletFire()
@@ -279,9 +326,13 @@ HRESULT CPlayer::Awake()
 	m_pTransform->Set_Position(_vector(0, 0, 0));
 	m_eRenderID = ERenderID::Alpha;
 	m_fMoveSpeed = 30.f;
+	m_fDashSpeed = 70.f;
 	m_fMouseSpeedX = 200.f;
 	m_fAmmoMax = 50.f;
 	m_fAmmo = m_fAmmoMax;
+	m_fDashDelay = 2.f;
+	m_fDashDelayTime = m_fDashDelay;
+	m_fDashDuration = 1.f;
 	return S_OK;
 }
 
@@ -289,34 +340,17 @@ HRESULT CPlayer::Start()
 {
 	//Test
 	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
-
+	SafeAddRef(m_pAmmobar);
 
 	return S_OK;
 }
 
 UINT CPlayer::Update(const float _fDeltaTime)
 {
-	Key_Input(_fDeltaTime);
-	m_pTransform->UpdateTransform();
 
-	//Test
-	if (GetAsyncKeyState('Z') & 0x0001)
-	{
-		AddWeapon(EWeaponType::Big);
-	}
-	if (GetAsyncKeyState('X') & 0x0001)
-	{
-		AddWeapon(EWeaponType::Multiple);
-	}
-	if (GetAsyncKeyState('C') & 0x0001)
-	{
-		AddWeapon(EWeaponType::Rapid);
-	}
-	if (GetAsyncKeyState('P') & 0x8000)
-	{
-		m_fAmmo += 10.f;
-		m_fAmmo = CLAMP(m_fAmmo, 0, m_fAmmoMax);
-	}
+	KeyInput(_fDeltaTime);
+	m_pTransform->UpdateTransform();
+	UpdateState(_fDeltaTime);
 
 	return OBJ_NOENVET;
 }
@@ -328,6 +362,10 @@ UINT CPlayer::LateUpdate(const float _fDeltaTime)
 
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 		m_fBulletFireTime += _fDeltaTime;
+
+	//대쉬에서 복귀
+	if (m_eState == EState::Dash && m_fDashDelay < m_fDashDelayTime)
+		m_eState = EState::Move;
 
 	m_pTransform->UpdateWorld();
 	return OBJ_NOENVET;
@@ -358,6 +396,7 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Free()
 {
+	SafeRelease(m_pAmmobar);
 	m_vecWeapons.clear();
 	m_vecWeapons.shrink_to_fit();
 	CGameObject::Free();
