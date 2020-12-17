@@ -21,8 +21,9 @@
 #include "AmmoFrame.h"
 #include "HeartManager.h"
 #include "Heart.h"
+#include "CrossHair.h"
 #pragma endregion
-
+#include "SkyBox.h"
 
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
@@ -63,6 +64,12 @@ HRESULT CStage::Awake()
 	pSector->SetSectorName(L"Sector1");
 
 	AddUIObject();
+
+#pragma region SKYBOX
+	AddPrototype(CSkyBox::Create());
+	AddGameObject<CSkyBox>();
+#pragma endregion
+
 	CScene::Awake();
 	return S_OK;
 }
@@ -105,9 +112,11 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CAmmoFrame::Create());
 	AddPrototype(CHeart::Create());
 	AddPrototype(CHeartManager::Create());
+	AddPrototype(CCrossHair::Create());
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
 	AddGameObject<CHeartManager>();
+	AddGameObject<CCrossHair>();
 	return S_OK;
 }
 
