@@ -5,7 +5,7 @@ BEGIN(Engine)
 class CGameObject;
 class ENGINE_DLL CComponent abstract : public CBase
 {
-private:
+protected:
 	CGameObject*		m_pGameObject;
 protected:
 	LPDIRECT3DDEVICE9	m_pDevice;

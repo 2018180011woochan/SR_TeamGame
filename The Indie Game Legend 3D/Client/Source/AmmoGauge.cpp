@@ -72,19 +72,6 @@ HRESULT CAmmoGauge::Start()
 UINT CAmmoGauge::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
-	//static float fTest = 1.0f;
-	//if (GetAsyncKeyState('P') & 0x8000)
-	//{
-	//	fTest -= 0.05f;
-	//	m_pImage->SetFillAmount(fTest);
-	//}
-	//else if (GetAsyncKeyState('O') & 0x8000)
-	//{
-	//	fTest += 0.05f;
-	//	m_pImage->SetFillAmount(fTest);
-	//}
-	////test
-	//fTest = CLAMP(fTest, 0.f, 1.f);
 	return 0;
 }
 

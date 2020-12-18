@@ -47,8 +47,6 @@ HRESULT CSkyBox::Awake()
 {
 	CGameObject::Awake();
 
-	((CCollider*)AddComponent<CCollider>())->SetMesh(TEXT("SkyBox"));
-
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("SkyBox"));
 

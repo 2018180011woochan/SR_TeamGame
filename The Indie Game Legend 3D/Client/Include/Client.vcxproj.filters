@@ -157,7 +157,6 @@
     <Filter Include="02.GameObject\05.SkyBox">
       <UniqueIdentifier>{363babe2-3135-4c4d-a0c8-c573bed24618}</UniqueIdentifier>
     </Filter>
-
     <Filter Include="02.GameObject\00.Monster\07.Egg">
       <UniqueIdentifier>{3d0ea45b-5eaf-46d0-a775-ed6c2a8086d6}</UniqueIdentifier>
     </Filter>
@@ -322,15 +321,6 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02.GameObject\05.SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Egg.h">
-      <Filter>02.GameObject\00.Monster\07.Egg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\WalkerBoss.h">
-      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\WalkBossBullet.h">
-      <Filter>02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ElectricTile.h">
       <Filter>02.GameObject\06.Tile\01.ElectricTile</Filter>
     </ClInclude>
@@ -351,6 +341,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\SoundMgr.h">
       <Filter>97.Manager\01.SoundMananger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Egg.h">
+      <Filter>02.GameObject\00.Monster\07.Egg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WalkBossBullet.h">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WalkerBoss.h">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -462,15 +461,6 @@
     <ClCompile Include="..\Source\SkyBox.cpp">
       <Filter>02.GameObject\05.SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Egg.cpp">
-      <Filter>02.GameObject\00.Monster\07.Egg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\WalkerBoss.cpp">
-      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\WalkBossBullet.cpp">
-      <Filter>02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\ElectricTile.cpp">
       <Filter>02.GameObject\06.Tile\01.ElectricTile</Filter>
     </ClCompile>
@@ -491,6 +481,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\SoundMgr.cpp">
       <Filter>97.Manager\01.SoundMananger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WalkerBoss.cpp">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WalkBossBullet.cpp">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Egg.cpp">
+      <Filter>02.GameObject\00.Monster\07.Egg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
