@@ -26,6 +26,7 @@ Image::Image(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 
 void Image::Free()
 {
+	CComponent::Free();
 	SafeRelease(m_pVertexBuffer);
 	SafeRelease(m_pIndexBuffer);
 	SafeRelease(m_pTexture);

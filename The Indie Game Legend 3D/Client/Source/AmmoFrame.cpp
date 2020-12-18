@@ -63,7 +63,7 @@ HRESULT CAmmoFrame::Start()
 	m_sTextureKey = TEXT("HUD_Secondary");
 	SafeAddRef(m_pTexturePool);
 
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[1]);
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
 	return S_OK;
 }
 

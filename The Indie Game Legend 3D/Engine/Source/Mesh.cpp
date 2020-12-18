@@ -1,8 +1,31 @@
 #include "..\Header\Mesh.h"
 #include "GraphicDevice.h"
+
 USING(Engine)
 
+tagVertices::tagVertices()
+	: pVertices(nullptr)
+{
+}
+
+void tagVertices::Free()
+{
+	SafeDeleteArray(pVertices);
+}
+
+tagVertices * tagVertices::Create()
+{
+	tagVertices* pInstance = new tagVertices;
+	return pInstance;
+}
+
+const DWORD VERTEX::FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
+
 CMesh::CMesh()
+	: m_nVertexCount(0)
+	, m_nFaceCount(0)
+	, m_pVertexBuffer(nullptr)
+	, m_pVertices(nullptr)
 {
 	m_pDevice = CGraphicDevice::GetInstance()->GetDevice();
 	SafeAddRef(m_pDevice);
@@ -10,23 +33,49 @@ CMesh::CMesh()
 
 CMesh::CMesh(const CMesh & _rOther)
 	: m_pDevice(_rOther.m_pDevice)
+	, m_nVertexCount(_rOther.m_nVertexCount)
+	, m_nFaceCount(_rOther.m_nFaceCount)
+	, m_pVertexBuffer(_rOther.m_pVertexBuffer)
+	, m_pVertices(_rOther.m_pVertices)
 {
-	for (CGroup* pGroup : _rOther.m_Groups)
+	for (CSubSet* pSubSet : _rOther.m_Subset)
 	{
-		m_Groups.emplace_back(pGroup->Clone());
+		m_Subset.emplace_back(pSubSet->Clone());
 	}
 	SafeAddRef(m_pDevice);
+	SafeAddRef(m_pVertexBuffer);
+	SafeAddRef(m_pVertices);
 }
 
 void CMesh::Free()
 {
-	for (CGroup* pGroup : m_Groups)
+	for (CSubSet* pSubSet : m_Subset)
 	{
-		SafeRelease(pGroup);
+		SafeRelease(pSubSet);
 	}
-	m_Groups.clear();
-	m_Groups.shrink_to_fit();
+	m_Subset.clear();
+	m_Subset.shrink_to_fit();
+	SafeRelease(m_pVertexBuffer);
+	SafeRelease(m_pVertices);
 	SafeRelease(m_pDevice);
+}
+
+CMesh * CMesh::Create(const TSTRING& _sFileName)
+{
+	CMesh* pInstance = new CMesh;
+	if (FAILED(pInstance->LoadMesh(_sFileName)))
+	{
+		delete pInstance;
+		return nullptr;
+	}
+	return pInstance;
+}
+
+CMesh * CMesh::Clone()
+{
+	CMesh* pClone = new CMesh(*this);
+
+	return pClone;
 }
 
 HRESULT CMesh::LoadMesh(const TSTRING & _sFileName)
@@ -85,8 +134,11 @@ HRESULT CMesh::LoadMesh(const TSTRING & _sFileName)
 	//파일 위치 지정자를 파일 시작 위치로 이동.
 	fseek(pFile, 0, SEEK_SET);
 
-	CGroup* pGroup = nullptr;
+
+	CSubSet* pSubSet = nullptr;
+	vector<VERTEX> vecVertices;
 	MATERIAL tMaterial;
+	UINT	nStartVertex = 0;
 	while (EOF != _ftscanf_s(pFile, TEXT("%s"), szWord, MAX_PATH))
 	{
 		if (0 == _tcscmp(TEXT("usemtl"), szWord))
@@ -108,7 +160,6 @@ HRESULT CMesh::LoadMesh(const TSTRING & _sFileName)
 		else if (0 == _tcscmp(TEXT("f"), szWord))
 		{
 			fseek(pFile, -1, SEEK_CUR);
-			vector<VERTEX> vecVertices;
 			VERTEX	tVertices[3];
 			UINT	nPositionIndices[3];
 			UINT	nUVIndices[3];
@@ -141,35 +192,44 @@ HRESULT CMesh::LoadMesh(const TSTRING & _sFileName)
 					vecVertices.push_back(tVertices[i]);
 				}
 
+				//메쉬 전체 폴리곤 개수.
+				++m_nFaceCount;
+				//서브셋 폴리곤 개수.
 				++nFaceCount;
+				//메쉬 전체 버텍스 개수.
+				m_nVertexCount += 3;
 			}
-
-			LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
-			//버텍스 버퍼 생성.
-			m_pDevice->CreateVertexBuffer(
-				sizeof(VERTEX) * vecVertices.size(),
-				0,
-				VERTEX::FVF,
-				D3DPOOL_MANAGED,
-				&pVertexBuffer,
-				0
-			);
-			//버텍스 버퍼 데이터 설정.
-			VERTEX* pVertices = nullptr;
-			pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
-			memcpy(pVertices, &vecVertices[0], sizeof(VERTEX) * vecVertices.size());
-			pVertexBuffer->Unlock();
-
-			pGroup = CGroup::Create(m_pDevice, tMaterial, pVertexBuffer, nFaceCount);
-
-			//그룹 저장.
-			m_Groups.emplace_back(pGroup);
-
-			vecVertices.clear();
-			vecVertices.shrink_to_fit();
+			//서브셋 세팅 및 추가.
+			pSubSet = CSubSet::Create(m_pDevice, tMaterial, nStartVertex, nFaceCount);
+			m_Subset.emplace_back(pSubSet);
+			//다음 서브셋의 시작 버텍스 갱신
+			nStartVertex = m_nVertexCount;
 		}
 	}
 
+	//버텍스 버퍼 생성.
+	m_pDevice->CreateVertexBuffer(
+		sizeof(VERTEX) * vecVertices.size(),
+		0,
+		VERTEX::FVF,
+		D3DPOOL_MANAGED,
+		&m_pVertexBuffer,
+		0
+	);
+	//버텍스 버퍼 데이터 설정.
+	VERTEX* pVertices = nullptr;
+	m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
+	memcpy(pVertices, &vecVertices[0], sizeof(VERTEX) * vecVertices.size());
+	m_pVertexBuffer->Unlock();
+	//충돌 및 픽킹을 위한 버텍스 데이터 저장.
+	m_pVertices = VERTICES::Create();
+	m_pVertices->pVertices = new VERTEX[vecVertices.size()];
+	memcpy(m_pVertices->pVertices, &vecVertices[0], sizeof(VERTEX) * vecVertices.size());
+	vecVertices.clear();
+	vecVertices.shrink_to_fit();
+
+
+	//지역 STL 컨테이너 클리어.
 	vecPosition.clear();
 	vecNormal.clear();
 	vecUV.clear();
@@ -177,6 +237,8 @@ HRESULT CMesh::LoadMesh(const TSTRING & _sFileName)
 	vecNormal.shrink_to_fit();
 	vecUV.shrink_to_fit();
 	materials.clear();
+
+	//파일 닫기.
 	fclose(pFile);
 
 	return S_OK;
@@ -245,38 +307,45 @@ HRESULT CMesh::LoadMaterial(const TSTRING & _sFullPath, unordered_map<TSTRING, M
 	return S_OK;
 }
 
-HRESULT CMesh::Render()
+HRESULT CMesh::Draw()
 {
-	for (CGroup* pGroup : m_Groups)
+	if (FAILED(m_pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEX))))
+		return E_FAIL;
+	if (FAILED(m_pDevice->SetFVF(VERTEX::FVF)))
+		return E_FAIL;
+	for (CSubSet* pSubSet : m_Subset)
 	{
-		if (FAILED(pGroup->Render()))
+		if (FAILED(pSubSet->DrawSubSet()))
 			return E_FAIL;
 	}
 	return S_OK;
 }
 
-HRESULT CMesh::SetTexture(const UINT _nGroupIndex, CTexture* const _pTexture)
+HRESULT CMesh::DrawSubSet(const UINT _nSubSet)
 {
-	if (m_Groups.size() <= _nGroupIndex)
+	if (_nSubSet >= m_Subset.size())
 		return E_FAIL;
-
-	return m_Groups[_nGroupIndex]->SetTexture(_pTexture);
+	if (FAILED(m_pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEX))))
+		return E_FAIL;
+	if (FAILED(m_pDevice->SetFVF(VERTEX::FVF)))
+		return E_FAIL;
+	return m_Subset[_nSubSet]->DrawSubSet();
 }
 
-CMesh * CMesh::Create(const TSTRING& _sFileName)
+const LPVERTEX CMesh::GetVertices()
 {
-	CMesh* pInstance = new CMesh;
-	if (FAILED(pInstance->LoadMesh(_sFileName)))
-	{
-		delete pInstance;
-		return nullptr;
-	}
-	return pInstance;
+	return m_pVertices->pVertices;
 }
 
-CMesh * CMesh::Clone()
+const UINT CMesh::GetVertexCount()
 {
-	CMesh* pClone = new CMesh(*this);
-
-	return pClone;
+	return m_nVertexCount;
 }
+
+HRESULT CMesh::SetTexture(const UINT _nSubSet, CTexture* const _pTexture)
+{
+	if (m_Subset.size() <= _nSubSet)
+		return E_FAIL;
+	return m_Subset[_nSubSet]->SetTexture(_pTexture);
+}
+

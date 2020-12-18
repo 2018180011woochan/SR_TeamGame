@@ -12,6 +12,7 @@ CMeshRenderer::CMeshRenderer(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9
 
 void CMeshRenderer::Free()
 {
+	CComponent::Free();
 	SafeRelease(m_pMesh);
 	SafeRelease(m_pMeshManager);	
 }
@@ -26,7 +27,7 @@ HRESULT CMeshRenderer::Render()
 	if (nullptr == m_pMesh)
 		return E_FAIL;
 
-	m_pMesh->Render();
+	m_pMesh->Draw();
 
 	return S_OK;
 }
