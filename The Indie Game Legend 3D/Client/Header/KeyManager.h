@@ -14,6 +14,7 @@
 #define KEY_F		0x00000001 << 8
 
 #define KEY_SPACE   0x00000001 << 9
+#define KEY_LSHIFT  0x00000001 << 10
 
 USING(Engine)
 class CKeyManager : public CBase

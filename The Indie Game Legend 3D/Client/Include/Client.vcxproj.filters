@@ -157,6 +157,33 @@
     <Filter Include="02.GameObject\05.SkyBox">
       <UniqueIdentifier>{363babe2-3135-4c4d-a0c8-c573bed24618}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\06.Tile">
+      <UniqueIdentifier>{90005640-4976-48fb-a0c6-3e2d96eeb226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\06.Tile\00.Base">
+      <UniqueIdentifier>{8068bcee-e837-4983-a325-898f59b68f41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\06.Tile\01.ElectricTile">
+      <UniqueIdentifier>{5ed45fec-23eb-4bff-a9ea-6e25c0034004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\06.Tile\02.SwampTile">
+      <UniqueIdentifier>{b7ef9ff9-af1e-4e22-a2f0-886b57cc963d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\06.Tile\03.LavaTile">
+      <UniqueIdentifier>{54bf23cf-a0dc-41c6-9a38-2e8b52f110bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\06.Tile\04.SandTile">
+      <UniqueIdentifier>{3cb12dce-c847-4d01-9fa4-f0a316a725a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\07.trap">
+      <UniqueIdentifier>{fb63990f-4f7d-441c-b4e5-3eefef15f005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\07.trap\00.Slider">
+      <UniqueIdentifier>{29973fc6-e40b-45a8-916b-aaade504ded6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\01.SoundMananger">
+      <UniqueIdentifier>{f5d8778e-f6fe-4a08-bf75-db8dcef7e6dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -285,6 +312,27 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02.GameObject\05.SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ElectricTile.h">
+      <Filter>02.GameObject\06.Tile\01.ElectricTile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Tile.h">
+      <Filter>02.GameObject\06.Tile\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SwampTile.h">
+      <Filter>02.GameObject\06.Tile\02.SwampTile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LavaTile.h">
+      <Filter>02.GameObject\06.Tile\03.LavaTile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SandTile.h">
+      <Filter>02.GameObject\06.Tile\04.SandTile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Slider.h">
+      <Filter>02.GameObject\07.trap\00.Slider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoundMgr.h">
+      <Filter>97.Manager\01.SoundMananger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -394,6 +442,27 @@
     </ClCompile>
     <ClCompile Include="..\Source\SkyBox.cpp">
       <Filter>02.GameObject\05.SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ElectricTile.cpp">
+      <Filter>02.GameObject\06.Tile\01.ElectricTile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Tile.cpp">
+      <Filter>02.GameObject\06.Tile\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SwampTile.cpp">
+      <Filter>02.GameObject\06.Tile\02.SwampTile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LavaTile.cpp">
+      <Filter>02.GameObject\06.Tile\03.LavaTile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SandTile.cpp">
+      <Filter>02.GameObject\06.Tile\04.SandTile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Slider.cpp">
+      <Filter>02.GameObject\07.trap\00.Slider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SoundMgr.cpp">
+      <Filter>97.Manager\01.SoundMananger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

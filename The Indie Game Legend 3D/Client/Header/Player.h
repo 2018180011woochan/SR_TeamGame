@@ -7,21 +7,23 @@ USING(Engine)
 #define BigDelay 1.5f
 #define MultipleDelay 0.5f
 #define RapidDelay 0.1f
+#define RunCameraYCycle 0.3f
 
 enum class EState : _uint
 {
 	Move,
 	Dash,
+	Run,
 	Hurt,
 	End
 };
-class CCamera;
 class CPlayer final: public CGameObject
 {
 private:
 	 class CKeyManager* m_pKeyMgr;
 	 float				m_fMoveSpeed = 0.f;
 	 float				m_fDashSpeed = 0.f;
+	 float				m_fRunSpeed = 0.f;
 	 float				m_fMouseSpeedX = 0.f;
 
 	//weapon
@@ -45,11 +47,10 @@ private:
 		delay 변수랑 시간 누적해서딜레이랑 비교하는 변수 이름 뭐로 하세요 보통?
 	 */
 	 //Test
-	 Image*				m_pAmmobar;
+	 Image*				m_pAmmobar = nullptr;
 	 //Action
 	 EState				m_eState;
-
-
+	 float				m_fRunningTime = 0.f;
 	 _vector			m_vMoveDir;
 
 	 float				m_fDashDelay;

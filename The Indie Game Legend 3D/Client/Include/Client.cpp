@@ -45,7 +45,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpsz
 	// 메시지 루프.
 	MSG tMessage;
 	tMessage.message = WM_NULL;
-
+	ShowCursor(false);
 	CMainApp* pMainApp = CMainApp::Create();
 	if (nullptr == pMainApp)
 		return FALSE;
