@@ -32,6 +32,18 @@
 #pragma endregion
 #include "SkyBox.h"
 
+//tile
+#include "LavaTile.h"
+#include "ElectricTile.h"
+#include "SwampTile.h"
+#include "SandTile.h"
+
+//Objct
+#include "Slider.h"
+
+//tset
+#include "SoundMgr.h"
+
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -51,6 +63,14 @@ HRESULT CStage::Awake()
 	AddPrototype(CWalkerBoss::Create());
 	AddPrototype(CWalkBossBullet::Create());
 
+	AddPrototype(CSandTile::Create());
+	AddPrototype(CElectricTile::Create());
+	AddPrototype(CLavaTile::Create());
+	AddPrototype(CSwampTile::Create());
+
+	AddPrototype(CSlider::Create());
+
+
 	AddPrototype(CPlayer::Create());
 	AddPrototype(CPlayerCamera::Create());
 	AddPrototype(CMouse::Create());
@@ -63,6 +83,8 @@ HRESULT CStage::Awake()
 	AddGameObject<CMouse>();
 
 	// Test용으로 추가함
+	AddGameObject<CSlider>();
+
 	//AddGameObject<CBub>();
 	//AddGameObject<CRub>();
 	AddGameObject<CsqrNub>();
@@ -81,15 +103,17 @@ HRESULT CStage::Awake()
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();
 #pragma endregion
-
 	CScene::Awake();
+
+	CSoundMgr::GetInstance()->Initialize();
+	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
 
-	CFactoryManager::GetInstance()->LoadDataFile(L"Test");
+	CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
 	CFactoryManager::GetInstance()->LoadScene(this);
 
 	CScene::Start();
@@ -100,7 +124,21 @@ HRESULT CStage::Start()
 UINT CStage::Update(float _fDeltaTime)
 {
 	CScene::Update(_fDeltaTime);
+	//Test
+	static float fTestVolum = 1.f;
 
+	if (GetAsyncKeyState('1') & 0x8000)
+	{
+		fTestVolum -= 0.01f;
+	}
+	if (GetAsyncKeyState('2') & 0x8000)
+	{
+		fTestVolum += 0.01f;
+	}
+	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
+
+	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, fTestVolum);
+	//Test
 	return 0;
 }
 

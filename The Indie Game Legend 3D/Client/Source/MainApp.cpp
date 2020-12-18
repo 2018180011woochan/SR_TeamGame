@@ -4,6 +4,7 @@
 #include "MsgManager.h"
 #include "FactoryManager.h"
 #include "Intro.h"
+#include "SoundMgr.h"
 CMainApp::CMainApp()
 	: m_pManagement(CManagement::GetInstance())
 {
@@ -19,6 +20,7 @@ void CMainApp::Free()
 	CFactoryManager::DeleteInstance();
 	CKeyManager::DeleteInstance();
 	CMsgManager::DeleteInstance();
+	CSoundMgr::DeleteInstance();
 }
 
 HRESULT CMainApp::Initialize()

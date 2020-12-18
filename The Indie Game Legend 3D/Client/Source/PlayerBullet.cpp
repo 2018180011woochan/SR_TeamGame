@@ -132,8 +132,9 @@ HRESULT CPlayerBullet::Awake()
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
-	m_fLiveTiem = 5.f;
 	m_eRenderID = ERenderID::Alpha;
+
+	m_fLiveTiem = 5.f;
 	return S_OK;
 }
 

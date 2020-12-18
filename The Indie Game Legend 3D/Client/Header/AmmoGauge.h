@@ -7,7 +7,7 @@ class CAmmoGauge final : public CGameObject
 {
 private:
 	CTexturePool* m_pTexturePool;
-	Image*		  m_pImage;
+	Image*		  m_pImage = nullptr;
 	TSTRING		  m_sTextureKey;
 private:
 	explicit CAmmoGauge();

@@ -7,14 +7,24 @@ USING(Engine)
 #define BigDelay 1.5f
 #define MultipleDelay 0.5f
 #define RapidDelay 0.1f
+#define RunCameraYCycle 0.3f
 
+enum class EState : _uint
+{
+	Move,
+	Dash,
+	Run,
+	Hurt,
+	End
+};
 class CPlayer final: public CGameObject
 {
 private:
 	 class CKeyManager* m_pKeyMgr;
 	 float				m_fMoveSpeed = 0.f;
+	 float				m_fDashSpeed = 0.f;
+	 float				m_fRunSpeed = 0.f;
 	 float				m_fMouseSpeedX = 0.f;
-
 
 	//weapon
 	 vector<EWeaponType>	m_vecWeapons; 
@@ -31,11 +41,28 @@ private:
 	 float				m_fAmmo;
 	 float				m_fAmmoMax;
 	 _uint				m_nAmmoDecrease;
-
+	 /*
+	 그 변수명 다른분들 뭐로 하시는 궁금해서 물어보는건데
+	 지금 데쉬 딜레이 판정 변수 두개 만드는데 
+		delay 변수랑 시간 누적해서딜레이랑 비교하는 변수 이름 뭐로 하세요 보통?
+	 */
 	 //Test
-	 Image*				m_pAmmobar;
+	 Image*				m_pAmmobar = nullptr;
+	 //Action
+	 EState				m_eState;
+	 float				m_fRunningTime = 0.f;
+	 _vector			m_vMoveDir;
+
+	 float				m_fDashDelay;
+	 float				m_fDashDelayTime;
+	 float				m_fDashDuration;
+	 float				m_fDashDurationTime;
 private:
-	HRESULT Key_Input(const float _fDeltaTime);
+	HRESULT KeyInput(const float _fDeltaTime);
+	HRESULT MoveCheck();
+	void	Move(const float& _fSpeed , const float _fDeltaTime);
+	void	UpdateState(const float _fDeltaTime);
+
 	void	BulletFire();
 	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
 	void    ChangeWeapon();// 관련 세팅값 설정
