@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
+
+#pragma region MONSTER
 #include "Bub.h"
 #include "Rub.h"
 #include "sqrNub.h"
@@ -8,6 +10,11 @@
 #include "Walker.h"
 #include "WalkerBullet.h"
 #include "Cryder.h"
+#include "Egg.h"
+#include "WalkerBoss.h"
+#include "WalkBossBullet.h"
+#pragma endregion
+
 #include "FactoryManager.h"
 #include "Player.h"
 #include "PlayerCamera.h"
@@ -40,6 +47,9 @@ HRESULT CStage::Awake()
 	AddPrototype(CWalker::Create());
 	AddPrototype(CWalkerBullet::Create());
 	AddPrototype(CCryder::Create());
+	AddPrototype(CEgg::Create());
+	AddPrototype(CWalkerBoss::Create());
+	AddPrototype(CWalkBossBullet::Create());
 
 	AddPrototype(CPlayer::Create());
 	AddPrototype(CPlayerCamera::Create());
@@ -55,10 +65,12 @@ HRESULT CStage::Awake()
 	// Test용으로 추가함
 	//AddGameObject<CBub>();
 	//AddGameObject<CRub>();
-	//AddGameObject<CsqrNub>();
+	AddGameObject<CsqrNub>();
 	//AddGameObject<CTurret>();
-	//AddGameObject<CWalker>();
-	//AddGameObject<CCryder>();
+	AddGameObject<CWalker>();
+	AddGameObject<CCryder>();
+	AddGameObject<CEgg>();
+	AddGameObject<CWalkerBoss>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");

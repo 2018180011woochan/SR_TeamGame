@@ -25,6 +25,7 @@ private:
 	void Jumping(float fDeltaTime);
 
 public:
+	void SetEggPos(const _vector _EggPos);
 
 public:
 	virtual CGameObject * Clone() override;

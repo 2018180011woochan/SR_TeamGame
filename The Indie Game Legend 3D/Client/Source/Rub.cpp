@@ -35,6 +35,21 @@ HRESULT CRub::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Rub"));
 	SafeAddRef(m_pTexturePool);
 
+	m_fJumpPower = 10.f;
+	m_fJumpTime = 0.f;
+	m_fMoveSpeed = 8.f;
+	m_bJump = false;
+	nIndex = 0;
+
+	m_fJumpDeltaTime = 0.f;
+	m_fJumpSpeed = 2.f;
+
+	m_fWalkSpeed = 0.5f;
+	m_fWalkDeltaTime = 0.f;
+	m_fYTest = 0.f;
+
+	nIndex = 0;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -54,21 +69,35 @@ UINT CRub::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
 
-	if (nIndex >= 2)
-		nIndex = 0;
+	m_fWalkDeltaTime += _fDeltaTime;
+	if (m_fWalkSpeed <= m_fWalkDeltaTime)
+	{
+		nIndex++;
+		if (nIndex >= 2)
+			nIndex = 0;
+		m_fWalkDeltaTime -= m_fWalkSpeed;
+	}
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	//공평회용
-	if(GetKeyState(VK_F3))
-	{
-	Jumping(_fDeltaTime);
 
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
+
+
+	m_fJumpDeltaTime += _fDeltaTime;
+	if (m_fJumpSpeed <= m_fJumpDeltaTime)
+	{
+		m_fJumpDeltaTime -= m_fJumpSpeed;
+
+		if (false == m_bJump)
+			m_bJump = true;
+
+		m_fYTest = m_pTransform->Get_Position().y;
+
 	}
 
+	Jumping(_fDeltaTime);
 	m_pTransform->UpdateTransform();
-
 
 	return _uint();
 }
@@ -97,6 +126,7 @@ HRESULT CRub::Movement(float fDeltaTime)
 
 	_vector vDir;
 	vDir = m_pPlayerTransform->Get_Position() - m_pTransform->Get_Position();
+	vDir.y = 0.f;
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	m_pTransform->Add_Position(vDir * fDeltaTime * m_fMoveSpeed);
@@ -106,29 +136,30 @@ HRESULT CRub::Movement(float fDeltaTime)
 
 void CRub::Jumping(float fDeltaTime)
 {
-	_vector vDir = { 0.f, m_pTransform->Get_Position().y + 1, 0.f };
-	D3DXVec3Normalize(&vDir, &vDir);
-
-
-
-	if (m_pTransform->Get_Position().y < 1.f)
+	float fY = 0.f;
+	if (m_bJump)
 	{
-		++nIndex;
-		m_isMaxJump = false;
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 1.f, m_pTransform->Get_Position().z));
-	}
-	if (m_pTransform->Get_Position().y >= 1.f &&
-		m_pTransform->Get_Position().y <= m_fMaxJump)
-	{
-		if (m_pTransform->Get_Position().y >= m_fMaxJump - 0.1f)
-			m_isMaxJump = true;
+		fY = m_fYTest + (m_fJumpPower * m_fJumpTime - 9.8f * m_fJumpTime * m_fJumpTime * 0.5f);
+		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+			fY,
+			m_pTransform->Get_Position().z));
 
-		if (m_isMaxJump)
-			m_pTransform->Add_Position(vDir * -fDeltaTime * m_fJumpSpeed);
-		else
-			m_pTransform->Add_Position(vDir * fDeltaTime * m_fJumpSpeed);
+		m_fJumpTime += 0.1f;
 
+		if (fY < 2.f)
+		{
+			m_bJump = false;
+			m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+				2.f,
+				m_pTransform->Get_Position().z));
+			m_fJumpTime = 0.f;
+		}
 	}
+}
+
+void CRub::SetEggPos(const _vector _EggPos)
+{
+	m_pTransform->Set_Position(_EggPos);
 }
 
 CGameObject * CRub::Clone()

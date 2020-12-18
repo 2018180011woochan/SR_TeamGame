@@ -157,6 +157,15 @@
     <Filter Include="02.GameObject\05.SkyBox">
       <UniqueIdentifier>{363babe2-3135-4c4d-a0c8-c573bed24618}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\00.Monster\07.Egg">
+      <UniqueIdentifier>{3d0ea45b-5eaf-46d0-a775-ed6c2a8086d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\08.WalkerBoss">
+      <UniqueIdentifier>{55bad240-36c5-4a41-9afc-498987cd0d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet">
+      <UniqueIdentifier>{d83ba554-4f77-43cd-a8aa-0a0d7deafa88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -285,6 +294,15 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02.GameObject\05.SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Egg.h">
+      <Filter>02.GameObject\00.Monster\07.Egg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WalkerBoss.h">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WalkBossBullet.h">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -394,6 +412,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\SkyBox.cpp">
       <Filter>02.GameObject\05.SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Egg.cpp">
+      <Filter>02.GameObject\00.Monster\07.Egg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WalkerBoss.cpp">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WalkBossBullet.cpp">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
