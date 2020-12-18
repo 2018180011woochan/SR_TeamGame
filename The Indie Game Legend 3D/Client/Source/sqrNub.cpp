@@ -7,13 +7,7 @@
 #include "Camera.h"
 
 CsqrNub::CsqrNub()
-	:m_pTexturePool(nullptr), m_dwSwitch(GetTickCount()),
-	m_fJumpingCnt(0.f),
-	m_fJumpSpeed(15.f),
-	m_fMaxJump(6.f),
-	m_fMoveSpeed(6.f),
-	m_isMaxJump(false),
-	m_isJumping(false)
+	:m_pTexturePool(nullptr)
 {
 }
 
@@ -41,6 +35,22 @@ HRESULT CsqrNub::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("sprNub"));
 	SafeAddRef(m_pTexturePool);
 
+	m_fJumpPower = 15.f;
+	m_fJumpTime = 0.f;
+	m_fMoveSpeed = 8.f;
+	m_bJump = false;
+	nIndex = 0;
+
+	m_fJumpDeltaTime = 0.f;
+	m_fJumpSpeed = 1.f;
+
+	m_fWalkSpeed = 0.5f;
+	m_fWalkDeltaTime = 0.f;
+	m_fYTest = 0.f;
+
+	nIndex = 0;
+
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -48,8 +58,10 @@ HRESULT CsqrNub::Awake()
 HRESULT CsqrNub::Start()
 {
 	CMonster::Start();
+
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	m_pTransform->Add_Position(_vector(0, -2.f, 0.f));
+	m_pTransform->Add_Position(_vector(0.f, 1.5f, 0.f));
+
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	return S_OK;
@@ -59,37 +71,35 @@ UINT CsqrNub::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
 
-	if (nIndex >= 2)
-		nIndex = 0;
+	m_fWalkDeltaTime += _fDeltaTime;
+	if (m_fWalkSpeed <= m_fWalkDeltaTime)
+	{
+		nIndex++;
+		if (nIndex >= 2)
+			nIndex = 0;
+		m_fWalkDeltaTime -= m_fWalkSpeed;
+	}
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	if (m_dwSwitch + 4000 > GetTickCount())
+
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
+
+
+	m_fJumpDeltaTime += _fDeltaTime;
+	if (m_fJumpSpeed <= m_fJumpDeltaTime)
 	{
-		m_isJumping = true;
-		m_dwSwitch = GetTickCount();
+		m_fJumpDeltaTime -= m_fJumpSpeed;
+
+		if (false == m_bJump)
+			m_bJump = true;
+
+		m_fYTest = m_pTransform->Get_Position().y;
+
 	}
 
-	//공평회용
-	if (GetKeyState(VK_F3))
-	{
-		if (m_isJumping)
-			Jumping(_fDeltaTime);
-
-		m_isJumping = false;
-		if (!m_isJumping)
-		{
-			if (m_pTransform->Get_Position().y > m_fMaxJump || m_pTransform->Get_Position().y < 3.f)
-			{
-				m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
-			}
-		}
-
-
-		if (FAILED(Movement(_fDeltaTime)))
-			return 0;
-	}
+	Jumping(_fDeltaTime);
 	m_pTransform->UpdateTransform();
-
 
 	return _uint();
 }
@@ -118,6 +128,7 @@ HRESULT CsqrNub::Movement(float fDeltaTime)
 
 	_vector vDir;
 	vDir = m_pPlayerTransform->Get_Position() - m_pTransform->Get_Position();
+	vDir.y = 0.f;
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	m_pTransform->Add_Position(vDir * fDeltaTime * m_fMoveSpeed);
@@ -127,28 +138,30 @@ HRESULT CsqrNub::Movement(float fDeltaTime)
 
 void CsqrNub::Jumping(float fDeltaTime)
 {
-	_vector vDir = { 0.f, m_pTransform->Get_Position().y + 1, 0.f };
-	D3DXVec3Normalize(&vDir, &vDir);
-	 
-
-	if (m_pTransform->Get_Position().y < 3.f)
+	float fY = 0.f;
+	if (m_bJump)
 	{
-		++nIndex;
-		m_isMaxJump = false;
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
-	}
-	if (m_pTransform->Get_Position().y >= 3.f &&
-		m_pTransform->Get_Position().y <= m_fMaxJump)
-	{
-		if (m_pTransform->Get_Position().y >= m_fMaxJump - 0.1f)
-			m_isMaxJump = true;
+		fY = m_fYTest + (m_fJumpPower * m_fJumpTime - 9.8f * m_fJumpTime * m_fJumpTime * 0.5f);
+		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+			fY,
+			m_pTransform->Get_Position().z));
 
-		if (m_isMaxJump)
-			m_pTransform->Add_Position(vDir * -fDeltaTime * m_fJumpSpeed);
-		else
-			m_pTransform->Add_Position(vDir * fDeltaTime * m_fJumpSpeed);
+		m_fJumpTime += 0.05f;
 
+		if (fY < 1.5f)
+		{
+			m_bJump = false;
+			m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+				1.5f,
+				m_pTransform->Get_Position().z));
+			m_fJumpTime = 0.f;
+		}
 	}
+}
+
+void CsqrNub::SetEggPos(const _vector _EggPos)
+{
+	m_pTransform->Set_Position(_EggPos);
 }
 
 CGameObject * CsqrNub::Clone()

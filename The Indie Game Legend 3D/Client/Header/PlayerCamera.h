@@ -3,12 +3,14 @@
 #include "Camera.h"
 USING(Engine)
 
+#define PlayerCameraEye 10.f
 class CPlayerCamera final : public CCamera
 {
 private:
 	float	m_fDistanceToAt = 10.f;
 	float	m_fCameraAngleX = 0.f;
 	float	m_fCameraAngleSpeed = 1.f;
+	float	m_fCameraHeight = 10.f;
 	class CPlayer* m_pPlayer;
 	class CMouse*  m_pMouse;
 private:
@@ -16,6 +18,11 @@ private:
 private:
 	explicit CPlayerCamera();
 	explicit CPlayerCamera(const CPlayerCamera& _rOther);
+
+public:
+	//Camera Work
+	void SetHeghitPersent(const float& _fHeight);
+
 public:
 	virtual ~CPlayerCamera() = default;
 

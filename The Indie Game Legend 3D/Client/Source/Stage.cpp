@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
+
+#pragma region MONSTER
 #include "Bub.h"
 #include "Rub.h"
 #include "sqrNub.h"
@@ -8,6 +10,11 @@
 #include "Walker.h"
 #include "WalkerBullet.h"
 #include "Cryder.h"
+#include "Egg.h"
+#include "WalkerBoss.h"
+#include "WalkBossBullet.h"
+#pragma endregion
+
 #include "FactoryManager.h"
 #include "Player.h"
 #include "PlayerCamera.h"
@@ -25,6 +32,18 @@
 #pragma endregion
 #include "SkyBox.h"
 
+//tile
+#include "LavaTile.h"
+#include "ElectricTile.h"
+#include "SwampTile.h"
+#include "SandTile.h"
+
+//Objct
+#include "Slider.h"
+
+//tset
+#include "SoundMgr.h"
+
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -40,6 +59,17 @@ HRESULT CStage::Awake()
 	AddPrototype(CWalker::Create());
 	AddPrototype(CWalkerBullet::Create());
 	AddPrototype(CCryder::Create());
+	AddPrototype(CEgg::Create());
+	AddPrototype(CWalkerBoss::Create());
+	AddPrototype(CWalkBossBullet::Create());
+
+	AddPrototype(CSandTile::Create());
+	AddPrototype(CElectricTile::Create());
+	AddPrototype(CLavaTile::Create());
+	AddPrototype(CSwampTile::Create());
+
+	AddPrototype(CSlider::Create());
+
 
 	AddPrototype(CPlayer::Create());
 	AddPrototype(CPlayerCamera::Create());
@@ -53,12 +83,16 @@ HRESULT CStage::Awake()
 	AddGameObject<CMouse>();
 
 	// Test용으로 추가함
+	AddGameObject<CSlider>();
+
 	//AddGameObject<CBub>();
 	//AddGameObject<CRub>();
-	//AddGameObject<CsqrNub>();
+	AddGameObject<CsqrNub>();
 	//AddGameObject<CTurret>();
-	//AddGameObject<CWalker>();
-	//AddGameObject<CCryder>();
+	AddGameObject<CWalker>();
+	AddGameObject<CCryder>();
+	AddGameObject<CEgg>();
+	AddGameObject<CWalkerBoss>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
@@ -69,15 +103,17 @@ HRESULT CStage::Awake()
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();
 #pragma endregion
-
 	CScene::Awake();
+
+	CSoundMgr::GetInstance()->Initialize();
+	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
 
-	CFactoryManager::GetInstance()->LoadDataFile(L"Test");
+	CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
 	CFactoryManager::GetInstance()->LoadScene(this);
 
 	CScene::Start();
@@ -88,7 +124,21 @@ HRESULT CStage::Start()
 UINT CStage::Update(float _fDeltaTime)
 {
 	CScene::Update(_fDeltaTime);
+	//Test
+	static float fTestVolum = 1.f;
 
+	if (GetAsyncKeyState('1') & 0x8000)
+	{
+		fTestVolum -= 0.01f;
+	}
+	if (GetAsyncKeyState('2') & 0x8000)
+	{
+		fTestVolum += 0.01f;
+	}
+	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
+
+	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, fTestVolum);
+	//Test
 	return 0;
 }
 

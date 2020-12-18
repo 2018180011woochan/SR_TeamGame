@@ -70,31 +70,29 @@ UINT CWalker::Update(const float _fDeltaTime)
 	{
 		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 4.f, m_pTransform->Get_Position().z));
 	}
-	//공평회용
-	if (GetKeyState(VK_F3))
+
+
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
+
+	m_fWalkDeltaTime += _fDeltaTime;
+	if (m_fWalkSpeed <= m_fWalkDeltaTime)
 	{
-
-		if (FAILED(Movement(_fDeltaTime)))
-			return 0;
-
-		m_fWalkDeltaTime += _fDeltaTime;
-		if (m_fWalkSpeed <= m_fWalkDeltaTime)
-		{
-			m_fWalkDeltaTime -= m_fWalkSpeed;
-			if (nIndex >= 3)
-				nIndex = 0;
-			nIndex++;
-		}
-
-		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
-
-		m_fFireDeltaTime += _fDeltaTime;
-		if (m_fFireSpeed <= m_fFireDeltaTime)
-		{
-			m_fFireDeltaTime -= m_fFireSpeed;
-			BulletFire();
-		}
+		m_fWalkDeltaTime -= m_fWalkSpeed;
+		if (nIndex >= 3)
+			nIndex = 0;
+		nIndex++;
 	}
+
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
+
+	m_fFireDeltaTime += _fDeltaTime;
+	if (m_fFireSpeed <= m_fFireDeltaTime)
+	{
+		m_fFireDeltaTime -= m_fFireSpeed;
+		BulletFire();
+	}
+
 
 	m_pTransform->UpdateTransform();
 
@@ -129,6 +127,7 @@ HRESULT CWalker::Movement(float fDeltaTime)
 
 	_vector vDir;
 	vDir = m_pPlayerTransform->Get_Position() - m_pTransform->Get_Position();
+	vDir.y = 0.f;
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	m_pTransform->Add_Position(vDir * fDeltaTime * m_fMoveSpeed);

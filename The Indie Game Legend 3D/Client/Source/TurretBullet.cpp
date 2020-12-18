@@ -32,7 +32,7 @@ HRESULT CTurretBullet::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_fBulletSpeed = 30.f;
+	m_fBulletSpeed = 100.f;
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -113,7 +113,7 @@ void CTurretBullet::SetTurretPos(const _vector _TurretPos)
 	vecTarget = ((CTransform*)pGameObject->GetComponent<CTransform>())->Get_Position();
 
 	m_vecDir = vecTarget - _TurretPos;
-
+	m_vecDir.y = 5.f;
 	D3DXVec3Normalize(&m_vecDir, &m_vecDir);
 }
 

@@ -168,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\Base.h" />
     <ClInclude Include="..\Header\Camera.h" />
+    <ClInclude Include="..\Header\Collider.h" />
     <ClInclude Include="..\Header\EngineComponent.h" />
     <ClInclude Include="..\Header\EngineExtern.h" />
     <ClInclude Include="..\Header\FileInfo.h" />
@@ -186,7 +187,6 @@
     <ClInclude Include="..\Header\GameObjectManager.h" />
     <ClInclude Include="..\Header\Gizmo.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
-    <ClInclude Include="..\Header\Group.h" />
     <ClInclude Include="..\Header\Image.h" />
     <ClInclude Include="..\Header\Layer.h" />
     <ClInclude Include="..\Header\Management.h" />
@@ -199,6 +199,7 @@
     <ClInclude Include="..\Header\Scene.h" />
     <ClInclude Include="..\Header\Scene.hpp" />
     <ClInclude Include="..\Header\SceneManager.h" />
+    <ClInclude Include="..\Header\SubSet.h" />
     <ClInclude Include="..\Header\Texture.h" />
     <ClInclude Include="..\Header\TimeManager.h" />
     <ClInclude Include="..\Header\Transform.h" />
@@ -206,6 +207,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp" />
     <ClCompile Include="..\Source\Camera.cpp" />
+    <ClCompile Include="..\Source\Collider.cpp" />
     <ClCompile Include="..\Source\Component.cpp" />
     <ClCompile Include="..\Source\FileInfo.cpp" />
     <ClCompile Include="..\Source\Font.cpp" />
@@ -214,7 +216,6 @@
     <ClCompile Include="..\Source\GameObjectManager.cpp" />
     <ClCompile Include="..\Source\Gizmo.cpp" />
     <ClCompile Include="..\Source\GraphicDevice.cpp" />
-    <ClCompile Include="..\Source\Group.cpp" />
     <ClCompile Include="..\Source\Image.cpp" />
     <ClCompile Include="..\Source\Layer.cpp" />
     <ClCompile Include="..\Source\Management.cpp" />
@@ -225,6 +226,7 @@
     <ClCompile Include="..\Source\Renderer.cpp" />
     <ClCompile Include="..\Source\Scene.cpp" />
     <ClCompile Include="..\Source\SceneManager.cpp" />
+    <ClCompile Include="..\Source\SubSet.cpp" />
     <ClCompile Include="..\Source\Texture.cpp" />
     <ClCompile Include="..\Source\TimeManager.cpp" />
     <ClCompile Include="..\Source\Transform.cpp" />

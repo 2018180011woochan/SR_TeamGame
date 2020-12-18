@@ -23,6 +23,7 @@ public:
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Jumping(float fDeltaTime);
+	bool isCloseToPlayer();
 
 public:
 
@@ -37,8 +38,6 @@ private:
 	CTexturePool*  m_pTexturePool;
 
 	float				m_fMoveSpeed;
-	bool				m_isMaxJump;
-	bool				m_isJumping;
 
 	float				m_fWalkSpeed;
 	float				m_fWalkDeltaTime;
@@ -46,6 +45,10 @@ private:
 	float				m_fJumpPower;
 	float				m_fJumpTime;
 	float				m_fYTest;
+	bool				m_bJump;
+
+	float				m_fJumpSpeed;
+	float				m_fJumpDeltaTime;
 
 	UINT nIndex;
 

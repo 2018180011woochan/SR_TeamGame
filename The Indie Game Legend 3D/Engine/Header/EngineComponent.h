@@ -8,6 +8,7 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Image.h"
+#include "Collider.h"
 #pragma endregion
 
 

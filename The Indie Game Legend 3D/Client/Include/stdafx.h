@@ -17,11 +17,18 @@
 #include <memory.h>
 #include <tchar.h>
 #include <time.h>
+#include <map>
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 #include "ClientInclude.h"
 #include "Management.h"
 //#include "EngineComponent.h"
+
+
+//Fmod
+#include <io.h>
+#include "fmod.h"
+#pragma comment (lib, "fmodex_vc.lib")
 
 //콘솔창
 #ifdef _DEBUG

@@ -27,8 +27,8 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	_matrix matRotAxis;
 	/*Eye*/
 	m_tCameraDesc.vEye = pPlayerTransFomr->Get_Position();
-	m_tCameraDesc.vEye.y = 10.f; //점프 없을거라고 봄
-
+	m_tCameraDesc.vEye.y = m_fCameraHeight; //점프 없을거라고 봄
+	
 	/*At . RotY */
 	memcpy(&vPlayerLook, &PlayerTransFormDesc.matWorld.m[2][0], sizeof(_vector));
 	D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
@@ -58,6 +58,11 @@ CPlayerCamera::CPlayerCamera(const CPlayerCamera & _rOther)
 	,m_pPlayer(_rOther.m_pPlayer)
 	,m_pMouse(_rOther.m_pMouse)
 {
+}
+
+void CPlayerCamera::SetHeghitPersent(const float & _fHeight)
+{
+	m_fCameraHeight = PlayerCameraEye * _fHeight;
 }
 
 

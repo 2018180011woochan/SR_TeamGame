@@ -23,8 +23,9 @@ public:
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Jumping(float fDeltaTime);
-
+	
 public:
+	void SetEggPos(const _vector _EggPos);
 
 public:
 	virtual CGameObject * Clone() override;
@@ -36,14 +37,20 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 
-	float				m_fJumpingCnt = 0;
-	float				m_fJumpSpeed = 10;
-	float				m_fMaxJump = 8.f;
-	float				m_fMoveSpeed = 8.f;
-	bool				m_isMaxJump = false;
-	bool				m_isJumping = false;
+	float				m_fMoveSpeed;
 
-	UINT nIndex = 0;
+	float				m_fWalkSpeed;
+	float				m_fWalkDeltaTime;
+
+	float				m_fJumpPower;
+	float				m_fJumpTime;
+	float				m_fYTest;
+	bool				m_bJump;
+
+	float				m_fJumpSpeed;
+	float				m_fJumpDeltaTime;
+
+	UINT nIndex;
 
 	bool m_bIsTPS;
 };

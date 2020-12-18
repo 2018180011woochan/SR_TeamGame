@@ -26,6 +26,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpsz
 {
 	//난수 시드 초기화.
 	srand((unsigned)time(NULL));
+	//커서 감추기.
+	ShowCursor(false);
 
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
@@ -45,7 +47,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpsz
 	// 메시지 루프.
 	MSG tMessage;
 	tMessage.message = WM_NULL;
-
+	ShowCursor(false);
 	CMainApp* pMainApp = CMainApp::Create();
 	if (nullptr == pMainApp)
 		return FALSE;

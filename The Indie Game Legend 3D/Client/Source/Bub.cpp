@@ -63,19 +63,17 @@ UINT CBub::Update(const float _fDeltaTime)
 		nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	//공평회용
-	if (GetKeyState(VK_F3))
-	{
-		if (m_fJumpingCnt / 100.f > 1.f)
-		{
-			Jumping(_fDeltaTime);
-			++nIndex;
-			m_fJumpingCnt = 0.f;
-		}
 
-		if (FAILED(Movement(_fDeltaTime)))
-			return 0;
+	if (m_fJumpingCnt / 100.f > 1.f)
+	{
+		Jumping(_fDeltaTime);
+		++nIndex;
+		m_fJumpingCnt = 0.f;
 	}
+
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
+
 
 	m_pTransform->UpdateTransform();
 
@@ -107,6 +105,7 @@ HRESULT CBub::Movement(float fDeltaTime)
 
 	_vector vDir;
 	vDir = m_pPlayerTransform->Get_Position() - m_pTransform->Get_Position();
+	vDir.y = 0.f;
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	m_pTransform->Add_Position(vDir * fDeltaTime * m_fMoveSpeed);
@@ -139,6 +138,11 @@ void CBub::Jumping(float fDeltaTime)
 			m_pTransform->Add_Position(vDir * fDeltaTime * m_fJumpSpeed);
 
 	}
+}
+
+void CBub::SetEggPos(const _vector _EggPos)
+{
+	m_pTransform->Set_Position(_EggPos);
 }
 
 CGameObject * CBub::Clone()

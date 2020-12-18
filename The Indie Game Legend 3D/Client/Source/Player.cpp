@@ -3,7 +3,7 @@
 #include "KeyManager.h"
 #include "Mouse.h"
 #include "PlayerBullet.h"
-
+#include "PlayerCamera.h"
 #include "AmmoGauge.h"
 USING(Engine)
 
@@ -27,6 +27,7 @@ CPlayer::CPlayer()
 	, m_fDashDelayTime(0.f)
 	, m_fDashDuration(0.f)
 	, m_fDashDurationTime(0.f)
+	, m_eState(EState::Move)
 
 {
 }
@@ -46,6 +47,9 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 	, m_eCurWeaponType(_rOther.m_eCurWeaponType)
 	, m_ePreWeaponType(_rOther.m_ePreWeaponType)
 	, m_vecWeapons(_rOther.m_vecWeapons)
+	, m_eState(_rOther.m_eState)
+	, m_fDashDurationTime(_rOther.m_fDashDurationTime)
+
 {
 
 }
@@ -133,6 +137,8 @@ HRESULT CPlayer::MoveCheck()
 		m_vMoveDir += (m_pTransform->Get_Right());
 	}
 
+	if (m_pKeyMgr->Key_Press(KEY_LSHIFT))
+		m_eState = EState::Run;
 
 	if (m_pKeyMgr->Key_Down(KEY_SPACE) && m_fDashDelay <= m_fDashDelayTime)
 	{
@@ -158,10 +164,27 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 	case EState::Move:
 		Move(m_fMoveSpeed, _fDeltaTime);
 		break;
+	case EState::Run:
+	{
+		Move(m_fRunSpeed, _fDeltaTime);
+		m_fRunningTime += _fDeltaTime;
+		float fPer = 0.8f;
+		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 5.f);
+		fPer = CLAMP(fPer, 0.5f, 1.f);
+		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+		pCamera->SetHeghitPersent(fPer);
+	}
+		break;
 	case EState::Dash:
+	{
 		Move(m_fDashSpeed, _fDeltaTime);
-		m_fDashDelayTime += _fDeltaTime;
 		m_fDashDurationTime += _fDeltaTime;
+		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+		float fPer = 0.5f;
+		fPer += fabs(0.5f - m_fDashDurationTime / m_fDashDuration);
+		fPer = CLAMP(fPer, 0.5f, 1.f);
+		pCamera->SetHeghitPersent(fPer);
+	}
 		break;
 	default:
 		break;
@@ -325,13 +348,14 @@ HRESULT CPlayer::Awake()
 	m_pTransform->Set_Position(_vector(0, 0, 0));
 	m_eRenderID = ERenderID::Alpha;
 	m_fMoveSpeed = 30.f;
-	m_fDashSpeed = 70.f;
+	m_fRunSpeed = 45.f;
+	m_fDashSpeed = 60.f;
 	m_fMouseSpeedX = 200.f;
 	m_fAmmoMax = 50.f;
 	m_fAmmo = m_fAmmoMax;
 	m_fDashDelay = 2.f;
 	m_fDashDelayTime = m_fDashDelay;
-	m_fDashDuration = 1.f;
+	m_fDashDuration = 0.4f;
 	return S_OK;
 }
 
@@ -339,7 +363,7 @@ HRESULT CPlayer::Start()
 {
 	//Test
 	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
-	SafeAddRef(m_pAmmobar);
+	//SafeAddRef(m_pAmmobar);
 
 	return S_OK;
 }
@@ -363,8 +387,14 @@ UINT CPlayer::LateUpdate(const float _fDeltaTime)
 		m_fBulletFireTime += _fDeltaTime;
 
 	//대쉬에서 복귀
-	if (m_eState == EState::Dash && m_fDashDelay < m_fDashDelayTime)
+	if (m_eState == EState::Dash && m_fDashDuration < m_fDashDurationTime)
 		m_eState = EState::Move;
+
+	if(m_eState == EState::Run && !m_pKeyMgr->Key_Press(KEY_LSHIFT))
+		m_eState = EState::Move;
+
+	if(m_fDashDelayTime < m_fDashDelay)
+		m_fDashDelayTime += _fDeltaTime;
 
 	m_pTransform->UpdateWorld();
 	return OBJ_NOENVET;
@@ -395,7 +425,7 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Free()
 {
-	SafeRelease(m_pAmmobar);
+	//SafeRelease(m_pAmmobar);
 	m_vecWeapons.clear();
 	m_vecWeapons.shrink_to_fit();
 	CGameObject::Free();
