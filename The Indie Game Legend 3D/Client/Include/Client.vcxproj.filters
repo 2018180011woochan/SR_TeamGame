@@ -193,6 +193,9 @@
     <Filter Include="97.Manager\01.SoundMananger">
       <UniqueIdentifier>{f5d8778e-f6fe-4a08-bf75-db8dcef7e6dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Manager\02.LightManager">
+      <UniqueIdentifier>{b92e58a0-b4ad-46a2-a01b-3d17e9c541fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -351,6 +354,9 @@
     <ClInclude Include="..\Header\WalkerBoss.h">
       <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LightMananger.h">
+      <Filter>97.Manager\02.LightManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -490,6 +496,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Egg.cpp">
       <Filter>02.GameObject\00.Monster\07.Egg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LightMananger.cpp">
+      <Filter>97.Manager\02.LightManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

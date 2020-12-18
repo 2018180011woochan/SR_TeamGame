@@ -51,6 +51,7 @@ HRESULT CMainApp::Initialize()
 
 	//Test
 	D3DLIGHT9 light;
+
 	ZeroMemory(&light, sizeof(D3DLIGHT9));
 	light.Diffuse.r = 1.f;
 	light.Diffuse.g = 1.f;

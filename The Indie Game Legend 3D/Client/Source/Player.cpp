@@ -168,8 +168,8 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 	{
 		Move(m_fRunSpeed, _fDeltaTime);
 		m_fRunningTime += _fDeltaTime;
-		float fPer = 0.8f;
-		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 5.f);
+		float fPer = 0.9f;
+		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 10.f);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 		pCamera->SetHeghitPersent(fPer);
@@ -180,8 +180,8 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 		Move(m_fDashSpeed, _fDeltaTime);
 		m_fDashDurationTime += _fDeltaTime;
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
-		float fPer = 0.5f;
-		fPer += fabs(0.5f - m_fDashDurationTime / m_fDashDuration);
+		float fPer = 0.7f;
+		fPer += fabs(0.3f - m_fDashDurationTime / m_fDashDuration);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		pCamera->SetHeghitPersent(fPer);
 	}
