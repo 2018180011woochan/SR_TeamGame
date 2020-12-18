@@ -5,7 +5,7 @@
 #include "TurretBullet.h"
 
 CTurret::CTurret()
-	: m_pTexturePool(nullptr) , m_dwFireTime(GetTickCount())
+	: m_pTexturePool(nullptr)
 {
 }
 
@@ -36,7 +36,6 @@ HRESULT CTurret::Awake()
 	m_fFireDeltaTime = 0;
 	m_fFireSpeed = 3;
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
-	//m_pTransform->Add_Position(_vector(-5.f, 5.f, 10.f));
 	m_pTransform->Set_Position(_vector(-5.f, 5.f, 10.f));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -65,16 +64,14 @@ UINT CTurret::Update(const float _fDeltaTime)
 		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
 	}
 
-	//공평회용
-	if (GetKeyState(VK_F3))
+
+	m_fFireDeltaTime += _fDeltaTime;
+	if (m_fFireSpeed <= m_fFireDeltaTime)
 	{
-		m_fFireDeltaTime += _fDeltaTime;
-		if (m_fFireSpeed <= m_fFireDeltaTime)
-		{
-			m_fFireDeltaTime -= m_fFireSpeed;
-			BulletFire();
-		}
+		m_fFireDeltaTime -= m_fFireSpeed;
+		BulletFire();
 	}
+
 
 	m_pTransform->UpdateTransform();
 

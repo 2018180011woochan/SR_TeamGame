@@ -32,7 +32,7 @@ HRESULT CWalkerBullet::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_fBulletSpeed = 30.f;
+	m_fBulletSpeed = 100.f;
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -57,8 +57,8 @@ UINT CWalkerBullet::Update(const float _fDeltaTime)
 		nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
 
 	m_pTransform->UpdateTransform();
 
@@ -113,7 +113,7 @@ void CWalkerBullet::SetTurretPos(const _vector _TurretPos)
 	vecTarget = ((CTransform*)pGameObject->GetComponent<CTransform>())->Get_Position();
 
 	m_vecDir = vecTarget - _TurretPos;
-
+	m_vecDir.y = 5.f;
 	D3DXVec3Normalize(&m_vecDir, &m_vecDir);
 }
 

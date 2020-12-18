@@ -1,15 +1,14 @@
 #pragma once
-#ifndef __SQRNUB_H__
-
+#ifndef __EGG_H__
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CsqrNub final : public CMonster
+class CEgg final : public CMonster
 {
 private:
-	explicit CsqrNub();
-	explicit CsqrNub(const CsqrNub& other);
-	virtual ~CsqrNub() = default;
+	explicit CEgg();
+	explicit CEgg(const CEgg& other);
+	virtual ~CEgg() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -20,40 +19,25 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
-private:
-	HRESULT Movement(float fDeltaTime);
-	void Jumping(float fDeltaTime);
-
 public:
-	void SetEggPos(const _vector _EggPos);
+	void EggDrop();
 
 public:
 	virtual CGameObject * Clone() override;
-	static CsqrNub* Create();
+	static CEgg* Create();
 private:
 	virtual void Free() override;
 
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
-
-	float				m_fMoveSpeed;
-
-	float				m_fWalkSpeed;
-	float				m_fWalkDeltaTime;
-
-	float				m_fJumpPower;
-	float				m_fJumpTime;
-	float				m_fYTest;
-	bool				m_bJump;
-
-	float				m_fJumpSpeed;
-	float				m_fJumpDeltaTime;
+	DWORD		   m_dwFireTime;
+	float		   m_fBreathSpeed;
+	float		   m_fBreathDeltaTime;
 
 	UINT nIndex;
-
-	bool m_bIsTPS;
 };
 
-#define __SQRNUB_H__
-#endif // !__SQRNUB_H__
+#define __EGG_H__
+#endif // !__EGG_H__
+

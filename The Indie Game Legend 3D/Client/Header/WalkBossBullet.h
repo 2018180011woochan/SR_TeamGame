@@ -1,15 +1,15 @@
 #pragma once
-#ifndef __SQRNUB_H__
+#ifndef __WALKBOSSBULLET_H__
 
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CsqrNub final : public CMonster
+class CWalkBossBullet final : public CGameObject
 {
 private:
-	explicit CsqrNub();
-	explicit CsqrNub(const CsqrNub& other);
-	virtual ~CsqrNub() = default;
+	explicit CWalkBossBullet();
+	explicit CWalkBossBullet(const CWalkBossBullet& other);
+	virtual ~CWalkBossBullet() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -25,11 +25,14 @@ private:
 	void Jumping(float fDeltaTime);
 
 public:
-	void SetEggPos(const _vector _EggPos);
+	void SetWalkBossPos(const _vector _TurretPos);
+
+public:
+	HRESULT IsBillboarding();
 
 public:
 	virtual CGameObject * Clone() override;
-	static CsqrNub* Create();
+	static CWalkBossBullet* Create();
 private:
 	virtual void Free() override;
 
@@ -49,11 +52,12 @@ private:
 
 	float				m_fJumpSpeed;
 	float				m_fJumpDeltaTime;
-
+	D3DXVECTOR3				m_vecDir;
+	float					m_fBulletSpeed;
 	UINT nIndex;
 
 	bool m_bIsTPS;
 };
 
-#define __SQRNUB_H__
-#endif // !__SQRNUB_H__
+#define __WALKBOSSBULLET_H__
+#endif // !__WALKBOSSBULLET_H__

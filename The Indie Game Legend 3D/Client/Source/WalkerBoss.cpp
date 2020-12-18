@@ -1,20 +1,21 @@
 #include "stdafx.h"
-#include "Walker.h"
+#include "WalkerBoss.h"
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "WalkerBullet.h"
+#include "WalkBossBullet.h"
 
-CWalker::CWalker()
+CWalkerBoss::CWalkerBoss()
 	: m_pTexturePool(nullptr)
 {
 }
 
-CWalker::CWalker(const CWalker & other)
+CWalkerBoss::CWalkerBoss(const CWalkerBoss & other)
 	: CMonster(other)
 {
 }
 
-HRESULT CWalker::InitializePrototype()
+HRESULT CWalkerBoss::InitializePrototype()
 {
 	if (FAILED(CMonster::InitializePrototype()))
 		return E_FAIL;
@@ -22,7 +23,7 @@ HRESULT CWalker::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CWalker::Awake()
+HRESULT CWalkerBoss::Awake()
 {
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
@@ -30,7 +31,7 @@ HRESULT CWalker::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Walker"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("WallkerBoss"));
 	SafeAddRef(m_pTexturePool);
 
 	m_fFireDeltaTime = 0.f;
@@ -48,7 +49,7 @@ HRESULT CWalker::Awake()
 	return S_OK;
 }
 
-HRESULT CWalker::Start()
+HRESULT CWalkerBoss::Start()
 {
 	CMonster::Start();
 
@@ -57,7 +58,7 @@ HRESULT CWalker::Start()
 	return S_OK;
 }
 
-UINT CWalker::Update(const float _fDeltaTime)
+UINT CWalkerBoss::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
 
@@ -79,7 +80,7 @@ UINT CWalker::Update(const float _fDeltaTime)
 	if (m_fWalkSpeed <= m_fWalkDeltaTime)
 	{
 		m_fWalkDeltaTime -= m_fWalkSpeed;
-		if (nIndex >= 3)
+		if (nIndex >= 7)
 			nIndex = 0;
 		nIndex++;
 	}
@@ -99,13 +100,13 @@ UINT CWalker::Update(const float _fDeltaTime)
 	return _uint();
 }
 
-UINT CWalker::LateUpdate(const float _fDeltaTime)
+UINT CWalkerBoss::LateUpdate(const float _fDeltaTime)
 {
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
 
-HRESULT CWalker::Render()
+HRESULT CWalkerBoss::Render()
 {
 	if (FAILED(CMonster::Render()))
 		return E_FAIL;
@@ -115,13 +116,13 @@ HRESULT CWalker::Render()
 	return S_OK;
 }
 
-void CWalker::BulletFire()
+void CWalkerBoss::BulletFire()
 {
-	CWalkerBullet* pGameObject = (CWalkerBullet*)AddGameObject<CWalkerBullet>();
-	pGameObject->SetTurretPos(m_pTransform->Get_Position());
+	CWalkBossBullet* pGameObject = (CWalkBossBullet*)AddGameObject<CWalkBossBullet>();
+	pGameObject->SetWalkBossPos(m_pTransform->Get_Position());
 }
 
-HRESULT CWalker::Movement(float fDeltaTime)
+HRESULT CWalkerBoss::Movement(float fDeltaTime)
 {
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 
@@ -136,19 +137,19 @@ HRESULT CWalker::Movement(float fDeltaTime)
 }
 
 
-CGameObject * CWalker::Clone()
+CGameObject * CWalkerBoss::Clone()
 {
-	CWalker* pClone = new CWalker(*this);
+	CWalkerBoss* pClone = new CWalkerBoss(*this);
 	return pClone;
 }
 
-CWalker * CWalker::Create()
+CWalkerBoss * CWalkerBoss::Create()
 {
-	CWalker* pInstance = new CWalker();
+	CWalkerBoss* pInstance = new CWalkerBoss();
 	return pInstance;
 }
 
-void CWalker::Free()
+void CWalkerBoss::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();

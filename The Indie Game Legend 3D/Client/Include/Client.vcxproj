@@ -167,6 +167,7 @@
     <ClInclude Include="..\Header\ClientExtern.h" />
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\Cryder.h" />
+    <ClInclude Include="..\Header\Egg.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
@@ -191,7 +192,9 @@
     <ClInclude Include="..\Header\TexturePoolManager.h" />
     <ClInclude Include="..\Header\Turret.h" />
     <ClInclude Include="..\Header\TurretBullet.h" />
+    <ClInclude Include="..\Header\WalkBossBullet.h" />
     <ClInclude Include="..\Header\Walker.h" />
+    <ClInclude Include="..\Header\WalkerBoss.h" />
     <ClInclude Include="..\Header\WalkerBullet.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -204,6 +207,7 @@
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
+    <ClCompile Include="..\Source\Egg.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
@@ -229,7 +233,9 @@
     <ClCompile Include="..\Source\TexturePoolManager.cpp" />
     <ClCompile Include="..\Source\Turret.cpp" />
     <ClCompile Include="..\Source\TurretBullet.cpp" />
+    <ClCompile Include="..\Source\WalkBossBullet.cpp" />
     <ClCompile Include="..\Source\Walker.cpp" />
+    <ClCompile Include="..\Source\WalkerBoss.cpp" />
     <ClCompile Include="..\Source\WalkerBullet.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
