@@ -168,6 +168,7 @@
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\CrossHair.h" />
     <ClInclude Include="..\Header\Cryder.h" />
+    <ClInclude Include="..\Header\DoomBird.h" />
     <ClInclude Include="..\Header\Egg.h" />
     <ClInclude Include="..\Header\ElectricTile.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
@@ -181,11 +182,13 @@
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
+    <ClInclude Include="..\Header\NubBoss.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\PlayerSpawn.h" />
+    <ClInclude Include="..\Header\RoboBird.h" />
     <ClInclude Include="..\Header\Rub.h" />
     <ClInclude Include="..\Header\SandTile.h" />
     <ClInclude Include="..\Header\Sector.h" />
@@ -217,6 +220,7 @@
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
+    <ClCompile Include="..\Source\DoomBird.cpp" />
     <ClCompile Include="..\Source\Egg.cpp" />
     <ClCompile Include="..\Source\ElectricTile.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
@@ -230,12 +234,14 @@
     <ClCompile Include="..\Source\Monster.cpp" />
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
+    <ClCompile Include="..\Source\NubBoss.cpp" />
     <ClCompile Include="..\Source\Player.cpp" />
     <ClCompile Include="..\Source\PlayerBullet.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />
     <ClCompile Include="..\Source\Bub.cpp" />
     <ClCompile Include="..\Source\MainApp.cpp" />
     <ClCompile Include="..\Source\PlayerSpawn.cpp" />
+    <ClCompile Include="..\Source\RoboBird.cpp" />
     <ClCompile Include="..\Source\Rub.cpp" />
     <ClCompile Include="..\Source\SandTile.cpp" />
     <ClCompile Include="..\Source\Sector.cpp" />

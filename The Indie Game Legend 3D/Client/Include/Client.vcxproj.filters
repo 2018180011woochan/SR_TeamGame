@@ -193,6 +193,18 @@
     <Filter Include="97.Manager\01.SoundMananger">
       <UniqueIdentifier>{f5d8778e-f6fe-4a08-bf75-db8dcef7e6dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\00.Monster\09.NubBoss">
+      <UniqueIdentifier>{c3013dea-5393-414e-b860-b2486a6d128f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\10.TreeBoss">
+      <UniqueIdentifier>{36d85e09-af05-404b-836a-abf26d0ea8df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\10.TreeBoss\00.DoomBird">
+      <UniqueIdentifier>{5ea202ad-53da-4903-83bd-367c0c50fbd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\10.TreeBoss\01.RoboBird">
+      <UniqueIdentifier>{ea2a3bb8-9c05-4ebf-b0f9-405c501834a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -351,6 +363,15 @@
     <ClInclude Include="..\Header\WalkerBoss.h">
       <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\NubBoss.h">
+      <Filter>02.GameObject\00.Monster\09.NubBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RoboBird.h">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss\01.RoboBird</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoomBird.h">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss\00.DoomBird</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -490,6 +511,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Egg.cpp">
       <Filter>02.GameObject\00.Monster\07.Egg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\NubBoss.cpp">
+      <Filter>02.GameObject\00.Monster\09.NubBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RoboBird.cpp">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss\01.RoboBird</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\DoomBird.cpp">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss\00.DoomBird</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

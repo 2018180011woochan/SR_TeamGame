@@ -13,6 +13,9 @@
 #include "Egg.h"
 #include "WalkerBoss.h"
 #include "WalkBossBullet.h"
+#include "NubBoss.h"
+#include "Robobird.h"
+#include "DoomBird.h"
 #pragma endregion
 
 #include "FactoryManager.h"
@@ -62,6 +65,9 @@ HRESULT CStage::Awake()
 	AddPrototype(CEgg::Create());
 	AddPrototype(CWalkerBoss::Create());
 	AddPrototype(CWalkBossBullet::Create());
+	AddPrototype(CNubBoss::Create());
+	AddPrototype(CRoboBird::Create());
+	AddPrototype(CDoomBird::Create());
 
 	AddPrototype(CSandTile::Create());
 	AddPrototype(CElectricTile::Create());
@@ -87,12 +93,15 @@ HRESULT CStage::Awake()
 
 	//AddGameObject<CBub>();
 	//AddGameObject<CRub>();
-	AddGameObject<CsqrNub>();
+	//AddGameObject<CsqrNub>();
 	//AddGameObject<CTurret>();
-	AddGameObject<CWalker>();
+	//AddGameObject<CWalker>();
 	AddGameObject<CCryder>();
-	AddGameObject<CEgg>();
-	AddGameObject<CWalkerBoss>();
+	//AddGameObject<CEgg>();
+	//AddGameObject<CWalkerBoss>();
+	//AddGameObject<CNubBoss>();
+	//AddGameObject<CRoboBird>();
+	AddGameObject<CDoomBird>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
