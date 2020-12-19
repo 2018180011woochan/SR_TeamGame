@@ -100,7 +100,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../Reference/Library/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engine.lib;d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;d3d9.lib;d3dx9.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,7 +133,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../Reference/Library/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engine.lib;d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;d3d9.lib;d3dx9.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,6 +178,7 @@
     <ClInclude Include="..\Header\IntroBackGround.h" />
     <ClInclude Include="..\Header\KeyManager.h" />
     <ClInclude Include="..\Header\LavaTile.h" />
+    <ClInclude Include="..\Header\LightMananger.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Mouse.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
     <ClCompile Include="..\Source\KeyManager.cpp" />
     <ClCompile Include="..\Source\LavaTile.cpp" />
+    <ClCompile Include="..\Source\LightMananger.cpp" />
     <ClCompile Include="..\Source\Logo.cpp" />
     <ClCompile Include="..\Source\Monster.cpp" />
     <ClCompile Include="..\Source\Mouse.cpp" />

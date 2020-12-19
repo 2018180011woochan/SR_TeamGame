@@ -205,6 +205,9 @@
     <Filter Include="02.GameObject\00.Monster\10.TreeBoss\01.RoboBird">
       <UniqueIdentifier>{ea2a3bb8-9c05-4ebf-b0f9-405c501834a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Manager\02.LightManager">
+      <UniqueIdentifier>{b92e58a0-b4ad-46a2-a01b-3d17e9c541fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -371,6 +374,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\DoomBird.h">
       <Filter>02.GameObject\00.Monster\10.TreeBoss\00.DoomBird</Filter>
+    </ClInclude> 
+    <ClInclude Include="..\Header\LightMananger.h">
+      <Filter>97.Manager\02.LightManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\DoomBird.cpp">
       <Filter>02.GameObject\00.Monster\10.TreeBoss\00.DoomBird</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LightMananger.cpp">
+      <Filter>97.Manager\02.LightManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

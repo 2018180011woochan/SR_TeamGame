@@ -76,6 +76,14 @@ CGameObject * CGameObject::Clone()
 	return nullptr;
 }
 
+void CGameObject::OnCollision(CGameObject * _pGameObject)
+{
+}
+
+void CGameObject::OnTrigger(CGameObject * _pGameObject)
+{
+}
+
 void CGameObject::SetTag(const _int & _nTag)
 {
 	m_nTag = _nTag;

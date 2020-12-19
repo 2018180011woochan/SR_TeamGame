@@ -135,6 +135,9 @@ HRESULT CPlayerBullet::Awake()
 	m_eRenderID = ERenderID::Alpha;
 
 	m_fLiveTiem = 5.f;
+
+	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
+	pCollider->SetMesh(TEXT("SkyBox"));
 	return S_OK;
 }
 
@@ -192,3 +195,4 @@ CGameObject * CPlayerBullet::Clone()
 	CGameObject* pInstance = new CPlayerBullet(*this);
 	return pInstance;
 }
+

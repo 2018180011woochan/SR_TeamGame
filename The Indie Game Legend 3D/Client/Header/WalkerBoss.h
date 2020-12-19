@@ -26,6 +26,8 @@ private:
 	HRESULT Movement(float fDeltaTime);
 	void Dash(float _fDeltaTime);
 	bool isCloseToPlayer();
+	/**************************/
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 
 public:
 	virtual CGameObject * Clone() override;

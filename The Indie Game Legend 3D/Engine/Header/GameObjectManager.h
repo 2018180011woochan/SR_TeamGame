@@ -5,18 +5,21 @@
 
 BEGIN(Engine)
 class CGameObject;
+class CCollisionManager;
 class CGameObjectManager final : public CBase
 {
 	DECLARE_SINGLETON(CGameObjectManager)
 private:
 	typedef unordered_map<TSTRING, CGameObject*>		PROTOTYPE, *LPPROTOTYPE;
 	typedef unordered_map<size_t, list<CGameObject*>>	GAMEOBJECTS;
-	PROTOTYPE		m_Prototype;
-	GAMEOBJECTS		m_GameObjects;
+	PROTOTYPE			m_Prototype;
+	GAMEOBJECTS			m_GameObjects;
+	CCollisionManager*	m_pCollisionManager;
 private:
 	explicit CGameObjectManager();
 	virtual ~CGameObjectManager() = default;
-
+	// CBase을(를) 통해 상속됨
+	virtual void Free() override;
 public:
 	HRESULT Awake(const size_t _nSceneID);
 	HRESULT Start(const size_t _nSceneID);
@@ -33,8 +36,6 @@ public:
 	CGameObject*		FindGameObjectOfType(const size_t _nSceneID);
 	template<typename T>
 	list<CGameObject*>	FindGameObjectsOfType(const size_t _nSceneID);
-	// CBase을(를) 통해 상속됨
-	virtual void Free() override;
 };
 END
 #include "GameObjectManager.hpp"

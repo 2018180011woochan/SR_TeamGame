@@ -40,6 +40,9 @@ public:
 
 	virtual CGameObject*	Clone()									PURE;
 
+	virtual void			OnCollision(CGameObject* _pGameObject);
+	virtual void			OnTrigger(CGameObject* _pGameObject);
+
 	template<typename T>
 	CGameObject*			AddGameObject();
 	template<typename T> 

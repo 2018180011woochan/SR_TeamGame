@@ -1,5 +1,6 @@
 #include "..\Header\Collider.h"
 #include "MeshManager.h"
+#include "GameObject.h"
 USING(Engine)
 
 
@@ -9,7 +10,7 @@ CCollider::CCollider(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _
 	, m_pCollisionMesh(nullptr)
 {
 	SafeAddRef(m_pMeshManager);
-	ZeroMemory(&m_tBound, sizeof(BOUND));
+	ZeroMemory(&m_tBoundingBox, sizeof(BOUNDINGBOX));
 }
 
 void CCollider::Free()
@@ -43,12 +44,56 @@ HRESULT CCollider::SetMesh(const TSTRING & _sMesh)
 
 	if (nullptr == m_pCollisionMesh)
 		return E_FAIL;
-	//바운드 구조체 설정.
-	D3DXComputeBoundingSphere(
-		(D3DXVECTOR3*)(m_pCollisionMesh->GetVertices()), 
-		(DWORD)(m_pCollisionMesh->GetVertexCount()), 
-		sizeof(VERTEX), 
-		&(m_tBound.vCenter), 
-		&(m_tBound.fRadius));
+
+	//SafeAddRef(m_pCollisionMesh);
+
+	SetBound();
 	return S_OK;
+}
+
+HRESULT CCollider::Draw()
+{
+	if (nullptr == m_pCollisionMesh)
+		return E_FAIL;
+	return m_pCollisionMesh->Draw();
+}
+
+void CCollider::SetBound()
+{
+	if (nullptr == m_pCollisionMesh)
+		return;
+
+	LPVERTEX	pVertices = new VERTEX[m_pCollisionMesh->GetVertexCount()];
+	UINT		nVertexCount = m_pCollisionMesh->GetVertexCount();
+
+	memcpy(pVertices, m_pCollisionMesh->GetVertices(), sizeof(VERTEX) * nVertexCount);
+
+	D3DXMATRIX matScale;
+	D3DXVECTOR3 vScale = ((CTransform*)m_pGameObject->GetComponent<CTransform>())->Get_TransformDesc().vScale;
+
+	D3DXMatrixScaling(&matScale, vScale.x, vScale.y, vScale.z);
+
+
+	for (UINT i = 0; i < nVertexCount; ++i)
+	{
+		D3DXVec3TransformCoord(&(pVertices[i].Position), &(pVertices[i].Position), &matScale);
+	}
+
+	//바운딩 박스 구조체
+	D3DXComputeBoundingBox((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(VERTEX), &(m_tBoundingBox.vMin), &(m_tBoundingBox.vMax));
+
+	SafeDeleteArray(pVertices);
+}
+
+BOUNDINGBOX CCollider::GetBound()
+{
+	CTransform* pTransform = nullptr;
+
+	pTransform = (CTransform*)(m_pGameObject->GetComponent<CTransform>());
+
+	BOUNDINGBOX tBoundingBox = m_tBoundingBox;
+	tBoundingBox.vMin += pTransform->Get_Position();
+	tBoundingBox.vMax += pTransform->Get_Position();
+
+	return tBoundingBox;
 }

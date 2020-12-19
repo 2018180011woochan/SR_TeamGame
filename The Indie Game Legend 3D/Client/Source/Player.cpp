@@ -168,8 +168,8 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 	{
 		Move(m_fRunSpeed, _fDeltaTime);
 		m_fRunningTime += _fDeltaTime;
-		float fPer = 0.8f;
-		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 5.f);
+		float fPer = 0.9f;
+		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 10.f);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 		pCamera->SetHeghitPersent(fPer);
@@ -180,8 +180,8 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 		Move(m_fDashSpeed, _fDeltaTime);
 		m_fDashDurationTime += _fDeltaTime;
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
-		float fPer = 0.5f;
-		fPer += fabs(0.5f - m_fDashDurationTime / m_fDashDuration);
+		float fPer = 0.7f;
+		fPer += fabs(0.3f - m_fDashDurationTime / m_fDashDuration);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		pCamera->SetHeghitPersent(fPer);
 	}
@@ -345,7 +345,7 @@ HRESULT CPlayer::Awake()
 {
 	CGameObject::Awake();
 	m_pKeyMgr = CKeyManager::GetInstance();
-	m_pTransform->Set_Position(_vector(0, 0, 0));
+	m_pTransform->Set_Position(_vector(0, 10, 0));
 	m_eRenderID = ERenderID::Alpha;
 	m_fMoveSpeed = 30.f;
 	m_fRunSpeed = 45.f;
@@ -356,6 +356,11 @@ HRESULT CPlayer::Awake()
 	m_fDashDelay = 2.f;
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
+
+	m_pTransform->Set_Scale(D3DXVECTOR3(10.f, 10.f, 20.f));
+	m_pTransform->UpdateTransform();
+	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
+	pCollider->SetMesh(TEXT("SkyBox"));
 	return S_OK;
 }
 

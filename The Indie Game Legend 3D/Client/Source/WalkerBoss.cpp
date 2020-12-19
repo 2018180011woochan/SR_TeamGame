@@ -60,7 +60,8 @@ HRESULT CWalkerBoss::Start()
 	CMonster::Start();
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
-
+	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
+	pCollider->SetMesh(TEXT("Quad"));
 	return S_OK;
 }
 
@@ -115,6 +116,7 @@ HRESULT CWalkerBoss::Render()
 
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
+	//pCollider->Draw();
 	return S_OK;
 }
 
@@ -189,6 +191,11 @@ bool CWalkerBoss::isCloseToPlayer()
 		return true;
 
 	return false;
+}
+
+void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
+{
+	cout << typeid(*_pGameObject).name() << endl;
 }
 
 

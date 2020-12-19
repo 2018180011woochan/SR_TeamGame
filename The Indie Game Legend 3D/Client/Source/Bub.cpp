@@ -43,6 +43,7 @@ HRESULT CBub::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(4, 4, 4));
 	m_pTransform->Add_Position(_vector(0, -3, 0));
+
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	return S_OK;

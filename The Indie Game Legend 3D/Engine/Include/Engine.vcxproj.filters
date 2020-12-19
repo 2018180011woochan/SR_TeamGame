@@ -222,6 +222,9 @@
     <ClInclude Include="..\Header\SubSet.h">
       <Filter>01.Utility\07.Mesh\02.SubSet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CollisionManager.h">
+      <Filter>01.Utility\10.Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\SubSet.cpp">
       <Filter>01.Utility\07.Mesh\02.SubSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CollisionManager.cpp">
+      <Filter>01.Utility\10.Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

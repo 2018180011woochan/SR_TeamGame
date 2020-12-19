@@ -1,10 +1,35 @@
 #include "..\Header\GameObjectManager.h"
+#include "CollisionManager.h"
 #include "GameObject.h"
 USING(Engine)
 IMPLEMENT_SINGLETON(CGameObjectManager)
 
 CGameObjectManager::CGameObjectManager()
+	: m_pCollisionManager(CCollisionManager::GetInstance())
 {
+	SafeAddRef(m_pCollisionManager);
+}
+
+void CGameObjectManager::Free()
+{
+	SafeRelease(m_pCollisionManager);
+	CCollisionManager::DeleteInstance();
+	for (auto rPair : m_Prototype)
+	{
+		SafeRelease(rPair.second);
+	}
+	m_Prototype.clear();
+
+
+	for (auto rPair : m_GameObjects)
+	{
+		for (CGameObject* pGameObject : rPair.second)
+		{
+			SafeRelease(pGameObject);
+		}
+		rPair.second.clear();
+	}
+	m_GameObjects.clear();
 }
 
 HRESULT CGameObjectManager::Awake(const size_t _nSceneID)
@@ -96,6 +121,10 @@ UINT CGameObjectManager::LateUpdate(const size_t _nSceneID, const float _fDeltaT
 		return 0;
 	}
 
+	//충돌 체크
+	m_pCollisionManager->CollisionCheck(iter->second);
+
+	//충돌 체크이후 LateUpdate();
 	for (auto pGameObject : iter->second)
 	{
 		if (false == pGameObject->IsEnable())
@@ -164,22 +193,3 @@ CGameObject * CGameObjectManager::AddGameObject(const size_t _nSceneID, const TS
 	return pClone;
 }
 
-void CGameObjectManager::Free()
-{
-	for (auto rPair : m_Prototype)
-	{
-		SafeRelease(rPair.second);
-	}
-	m_Prototype.clear();
-
-
-	for (auto rPair : m_GameObjects)
-	{
-		for (CGameObject* pGameObject : rPair.second)
-		{
-			SafeRelease(pGameObject);
-		}
-		rPair.second.clear();
-	}
-	m_GameObjects.clear();
-}

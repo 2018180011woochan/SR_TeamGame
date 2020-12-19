@@ -6,6 +6,7 @@ USING(Engine)
 
 CRenderer::CRenderer(LPDIRECT3DDEVICE9 _pDevice)
 	: m_pDevice(_pDevice)
+	, m_bDrawCollider(true)
 {
 	SafeAddRef(_pDevice);
 }
@@ -40,7 +41,8 @@ HRESULT CRenderer::AddInRenderer(const ERenderID _eRenderID, CGameObject * const
 
 	m_GameObjects[(_int)_eRenderID].push_back(_pGameObject);
 	SafeAddRef(_pGameObject);
-
+	//Collider 그리기 전용.
+	m_ColliderObjects.push_back(_pGameObject);
 	return S_OK;
 }
 
@@ -103,7 +105,6 @@ HRESULT CRenderer::RenderUI()
 	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	m_pDevice->SetRenderState(D3DRS_ALPHAREF, 1); /*알파기준값*/
 	m_pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-
 	//Off Z-Buffer
 	m_pDevice->SetRenderState(D3DRS_ZENABLE, false);
 	//뷰 행렬을 항등행렬로 변환.
@@ -139,12 +140,37 @@ HRESULT CRenderer::RenderUI()
 	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	return S_OK;
 }
+
+HRESULT CRenderer::RenderCollider()
+{
+	CCollider* pCollider = nullptr;
+	CTransform* pTransform = nullptr;
+
+	m_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+	for (auto& pGameObject : m_ColliderObjects)
+	{
+		pCollider = (CCollider*)(pGameObject->GetComponent<CCollider>());
+		if (nullptr == pCollider)
+			continue;
+		pTransform = (CTransform*)(pGameObject->GetComponent<CTransform>());
+		m_pDevice->SetTransform(D3DTS_WORLD, &pTransform->Get_WorldMatrix());
+		pCollider->Draw();
+	}
+	m_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	return S_OK;
+}
  
 
 HRESULT CRenderer::Render(HWND _hWnd)
 {
 	m_pDevice->Clear(0, nullptr, D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(255, 0, 0, 255), 1.f, 0);
 	m_pDevice->BeginScene();
+
+	D3DXMATRIX matView, matProj;
+	m_pDevice->GetTransform(D3DTS_VIEW, &matView);
+	m_pDevice->GetTransform(D3DTS_PROJECTION, &matProj);
 
 	if (FAILED(RenderPriority()))
 		return E_FAIL;
@@ -157,6 +183,15 @@ HRESULT CRenderer::Render(HWND _hWnd)
 
 	if (FAILED(RenderUI()))
 		return E_FAIL;
+
+	if (true == m_bDrawCollider)
+	{
+		m_pDevice->SetTransform(D3DTS_VIEW, &matView);
+		m_pDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+		RenderCollider();
+	}
+
+	m_ColliderObjects.clear();
 
 	m_pDevice->EndScene();
 	m_pDevice->Present(nullptr, nullptr, _hWnd, nullptr);

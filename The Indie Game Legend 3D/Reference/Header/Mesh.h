@@ -55,6 +55,7 @@ public:
 public:
 	const LPVERTEX	GetVertices();
 	const UINT		GetVertexCount();
+	const UINT		GetFaceCount();
 	HRESULT SetTexture(const UINT _nSubSet, CTexture* const _pTexture);
 };
 END
