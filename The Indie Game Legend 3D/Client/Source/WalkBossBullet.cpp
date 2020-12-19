@@ -32,7 +32,7 @@ HRESULT CWalkBossBullet::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Energy"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Laser"));
 	SafeAddRef(m_pTexturePool);
 
 	m_fJumpPower = 15.f;
@@ -56,9 +56,10 @@ HRESULT CWalkBossBullet::Awake()
 HRESULT CWalkBossBullet::Start()
 {
 	CGameObject::Start();
-	m_pTransform->Set_Scale(_vector(10.f, 10.f, 10.f));
+
+	m_pTransform->Set_Scale(_vector(0.5f, 0.5f, 100.f));
 	// Test
-	//m_pTransform->Add_Position(_vector(0.f, 0.f, 0.f));
+	//m_pTransform->Add_Position(_vector(0.f, 0.f, 50.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	return S_OK;
@@ -71,7 +72,7 @@ UINT CWalkBossBullet::Update(const float _fDeltaTime)
 	m_fWalkDeltaTime += _fDeltaTime;
 	if (m_fWalkSpeed <= m_fWalkDeltaTime)
 	{
-		nIndex++;
+		//nIndex++;
 		if (nIndex >= 7)
 			nIndex = 0;
 		m_fWalkDeltaTime -= m_fWalkSpeed;
@@ -82,18 +83,8 @@ UINT CWalkBossBullet::Update(const float _fDeltaTime)
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
 
-	//m_fJumpDeltaTime += _fDeltaTime;
-	//if (m_fJumpSpeed <= m_fJumpDeltaTime)
-	//{
-	//	m_fJumpDeltaTime -= m_fJumpSpeed;
 
-	//	if (false == m_bJump)
-	//		m_bJump = true;
-
-	//	m_fYTest = 0;
-	//}
-	m_bJump = true;
-	Jumping(_fDeltaTime);
+	//Jumping(_fDeltaTime);
 	m_pTransform->UpdateTransform();
 
 	return _uint();
@@ -160,8 +151,11 @@ void CWalkBossBullet::SetWalkBossPos(const _vector _TurretPos)
 	vecTarget = ((CTransform*)pGameObject->GetComponent<CTransform>())->Get_Position();
 
 	m_vecDir = vecTarget - _TurretPos;
-	m_vecDir.y = 5.f;
+	m_vecDir.y = 0.f;
 	D3DXVec3Normalize(&m_vecDir, &m_vecDir);
+	//_vector vecLaserPos = _TurretPos + m_vecDir * 10.f;
+	//m_pTransform->Set_Position(vecLaserPos);
+
 }
 
 HRESULT CWalkBossBullet::IsBillboarding()

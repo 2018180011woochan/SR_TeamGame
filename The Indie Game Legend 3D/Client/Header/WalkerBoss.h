@@ -24,6 +24,8 @@ public:
 
 private:
 	HRESULT Movement(float fDeltaTime);
+	void Dash(float _fDeltaTime);
+	bool isCloseToPlayer();
 
 public:
 	virtual CGameObject * Clone() override;
@@ -38,6 +40,16 @@ private:
 	float			m_fFireDeltaTime;
 	float			m_fWalkSpeed;
 	float			m_fWalkDeltaTime;
+
+	float			m_fLightningSpeed;
+	float			m_FLightningDeltaTime;
+
+	bool			m_bisStop;
+	bool			m_bisDash;
+	int				iCnt = 0;
+	int				iDashCnt = 0;
+
+
 	float			m_fMoveSpeed;
 	UINT			nIndex = 0;
 };
