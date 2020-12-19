@@ -2,13 +2,11 @@
 #ifndef __COLLIDER_H__
 #include "Component.h"
 BEGIN(Engine)
-
-typedef struct tagBound
+typedef struct tagBoundBox
 {
-	D3DXVECTOR3 vCenter;
-	float		fRadius;
-}BOUND, *LPBOUND;
-
+	D3DXVECTOR3 vMin;
+	D3DXVECTOR3 vMax;
+}BOUNDINGBOX, *LPBOUNDINGBOX;
 class CMesh;
 class CMeshManager;
 class ENGINE_DLL CCollider final : public CComponent
@@ -16,7 +14,7 @@ class ENGINE_DLL CCollider final : public CComponent
 private:
 	CMeshManager*	m_pMeshManager;
 	CMesh*			m_pCollisionMesh;
-	BOUND			m_tBound;
+	BOUNDINGBOX		m_tBoundingBox;
 private:
 	explicit CCollider(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	virtual ~CCollider() = default;
@@ -33,7 +31,8 @@ public:
 	HRESULT Draw();
 private:
 	void SetBound();
-
+public:
+	BOUNDINGBOX GetBound();
 };
 END
 #define __COLLIDER_H__

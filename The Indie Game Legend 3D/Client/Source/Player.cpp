@@ -345,7 +345,7 @@ HRESULT CPlayer::Awake()
 {
 	CGameObject::Awake();
 	m_pKeyMgr = CKeyManager::GetInstance();
-	m_pTransform->Set_Position(_vector(0, 0, 0));
+	m_pTransform->Set_Position(_vector(0, 10, 0));
 	m_eRenderID = ERenderID::Alpha;
 	m_fMoveSpeed = 30.f;
 	m_fRunSpeed = 45.f;
@@ -356,6 +356,11 @@ HRESULT CPlayer::Awake()
 	m_fDashDelay = 2.f;
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
+
+	m_pTransform->Set_Scale(D3DXVECTOR3(10.f, 10.f, 20.f));
+	m_pTransform->UpdateTransform();
+	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
+	pCollider->SetMesh(TEXT("SkyBox"));
 	return S_OK;
 }
 

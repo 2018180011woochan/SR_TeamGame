@@ -203,6 +203,11 @@ bool CWalkerBoss::isCloseToPlayer()
 	return false;
 }
 
+void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
+{
+	cout << typeid(*_pGameObject).name() << endl;
+}
+
 
 CGameObject * CWalkerBoss::Clone()
 {

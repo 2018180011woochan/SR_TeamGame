@@ -342,6 +342,11 @@ const UINT CMesh::GetVertexCount()
 	return m_nVertexCount;
 }
 
+const UINT CMesh::GetFaceCount()
+{
+	return m_nFaceCount;
+}
+
 HRESULT CMesh::SetTexture(const UINT _nSubSet, CTexture* const _pTexture)
 {
 	if (m_Subset.size() <= _nSubSet)

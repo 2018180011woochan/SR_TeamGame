@@ -10,7 +10,7 @@ CCollider::CCollider(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _
 	, m_pCollisionMesh(nullptr)
 {
 	SafeAddRef(m_pMeshManager);
-	ZeroMemory(&m_tBound, sizeof(BOUND));
+	ZeroMemory(&m_tBoundingBox, sizeof(BOUNDINGBOX));
 }
 
 void CCollider::Free()
@@ -79,13 +79,21 @@ void CCollider::SetBound()
 		D3DXVec3TransformCoord(&(pVertices[i].Position), &(pVertices[i].Position), &matScale);
 	}
 
-	//바운드 구조체 설정.
-	D3DXComputeBoundingSphere(
-		(D3DXVECTOR3*)(pVertices),
-		(DWORD)(nVertexCount),
-		sizeof(VERTEX),
-		&(m_tBound.vCenter),
-		&(m_tBound.fRadius));
+	//바운딩 박스 구조체
+	D3DXComputeBoundingBox((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(VERTEX), &(m_tBoundingBox.vMin), &(m_tBoundingBox.vMax));
 
 	SafeDeleteArray(pVertices);
+}
+
+BOUNDINGBOX CCollider::GetBound()
+{
+	CTransform* pTransform = nullptr;
+
+	pTransform = (CTransform*)(m_pGameObject->GetComponent<CTransform>());
+
+	BOUNDINGBOX tBoundingBox = m_tBoundingBox;
+	tBoundingBox.vMin += pTransform->Get_Position();
+	tBoundingBox.vMax += pTransform->Get_Position();
+
+	return tBoundingBox;
 }
