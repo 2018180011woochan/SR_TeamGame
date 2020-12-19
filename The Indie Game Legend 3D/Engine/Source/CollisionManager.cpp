@@ -15,7 +15,7 @@ void CCollisionManager::Free()
 
 void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 {
-
+	
 	vector<CCollider*>	Collider;
 
 	CCollider* pCollider = nullptr;
@@ -47,7 +47,7 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 			//¿¹½Ã  : Collider[i]->GetGameObject()->OnCollision(Collider[j]->GetGameObject());
 		}
 	}
-
+	
 }
 
 bool CCollisionManager::AABB(CCollider * _pOrigin, CCollider * _pTarget)
