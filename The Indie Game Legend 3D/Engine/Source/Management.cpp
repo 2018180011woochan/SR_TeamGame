@@ -30,7 +30,6 @@ void CManagement::ReleaseEngine()
 	SafeRelease(m_pGraphicDevice);
 	SafeRelease(m_pTimeManager);
 	SafeRelease(m_pFrameManager);
-
 	if (CGraphicDevice::DeleteInstance())
 		PrintLog(L"Warning", L"Failed To Release CGraphicDevice");
 	if (CGameObjectManager::DeleteInstance())

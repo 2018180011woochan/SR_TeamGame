@@ -30,6 +30,10 @@ public:
 
 public:
 	HRESULT SetMesh(const TSTRING& _sMesh);
+	HRESULT Draw();
+private:
+	void SetBound();
+
 };
 END
 #define __COLLIDER_H__

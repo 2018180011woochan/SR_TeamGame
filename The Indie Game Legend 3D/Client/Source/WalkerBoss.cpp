@@ -40,6 +40,12 @@ HRESULT CWalkerBoss::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fWalkSpeed = 0.5f;
 
+	m_FLightningDeltaTime = 0.f;
+	m_fLightningSpeed = 1.f;
+
+	m_bisDash = false;
+	m_bisStop = false;
+
 	m_fMoveSpeed = 3.f;
 
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
@@ -54,7 +60,8 @@ HRESULT CWalkerBoss::Start()
 	CMonster::Start();
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
-
+	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
+	pCollider->SetMesh(TEXT("Quad"));
 	return S_OK;
 }
 
@@ -62,19 +69,10 @@ UINT CWalkerBoss::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
 
-	//원래 위치
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
-
-
 	if (m_pTransform->Get_Position().y > 5.f || m_pTransform->Get_Position().y < 3.f)
 	{
 		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 4.f, m_pTransform->Get_Position().z));
 	}
-
-
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
 
 	m_fWalkDeltaTime += _fDeltaTime;
 	if (m_fWalkSpeed <= m_fWalkDeltaTime)
@@ -87,13 +85,24 @@ UINT CWalkerBoss::Update(const float _fDeltaTime)
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	m_fFireDeltaTime += _fDeltaTime;
-	if (m_fFireSpeed <= m_fFireDeltaTime)
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
+
+
+
+	if (isCloseToPlayer())
 	{
-		m_fFireDeltaTime -= m_fFireSpeed;
-		BulletFire();
+		//m_fFireDeltaTime += _fDeltaTime;
+		//if (m_fFireSpeed <= m_fFireDeltaTime)
+		//{
+		//	m_fFireDeltaTime -= m_fFireSpeed;
+		//	Dash(_fDeltaTime);
+		//}
+		Dash(_fDeltaTime);
 	}
 
+	if (!isCloseToPlayer())
+		m_fMoveSpeed = 3.f;
 
 	m_pTransform->UpdateTransform();
 
@@ -113,6 +122,7 @@ HRESULT CWalkerBoss::Render()
 
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
+	//pCollider->Draw();
 	return S_OK;
 }
 
@@ -134,6 +144,63 @@ HRESULT CWalkerBoss::Movement(float fDeltaTime)
 	m_pTransform->Add_Position(vDir * fDeltaTime * m_fMoveSpeed);
 
 	return S_OK;
+}
+
+void CWalkerBoss::Dash(float _fDeltaTime)
+{
+	if (!m_bisDash)
+		m_bisStop = true;
+	while (m_bisStop)
+	{
+		iCnt++;
+		if (iCnt <= 500)
+		{
+			if (iCnt == 499)
+			{
+				m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[8]);
+			}
+			m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[8]);
+			m_fMoveSpeed = 0.f;
+			return;
+		}
+		if (iCnt > 500)
+		{
+			iCnt = 0;
+			m_bisDash = true;
+			m_bisStop = false;
+		}
+	}
+	while (m_bisDash)
+	{
+		if (iDashCnt < 50)
+		{
+			iDashCnt++;
+			m_fMoveSpeed = 50.f;
+			return;
+		}
+		if (iDashCnt >= 50)
+		{
+			iDashCnt = 0;
+			m_fMoveSpeed = 3.f;
+			m_bisDash = false;
+		}
+	}
+	
+}
+
+bool CWalkerBoss::isCloseToPlayer()
+{
+	_vector vecPlayerPos = m_pPlayerTransform->Get_Position();
+	float fDistance = 0.f;
+
+	float fWidth = abs(vecPlayerPos.x - m_pTransform->Get_Position().x);
+	float fHeight = abs(vecPlayerPos.z - m_pTransform->Get_Position().z);
+	fDistance = sqrt((fWidth * fWidth) + (fHeight * fHeight));
+
+	if (fDistance < 30.f)
+		return true;
+
+	return false;
 }
 
 
