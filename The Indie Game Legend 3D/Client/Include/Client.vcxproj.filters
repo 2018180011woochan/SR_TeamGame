@@ -482,11 +482,11 @@
     <ClCompile Include="..\Source\SoundMgr.cpp">
       <Filter>97.Manager\01.SoundMananger</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\WalkerBoss.cpp">
-      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\WalkBossBullet.cpp">
       <Filter>02.GameObject\00.Monster\08.WalkerBoss\00.WalkerBossBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WalkerBoss.cpp">
+      <Filter>02.GameObject\00.Monster\08.WalkerBoss</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Egg.cpp">
       <Filter>02.GameObject\00.Monster\07.Egg</Filter>
