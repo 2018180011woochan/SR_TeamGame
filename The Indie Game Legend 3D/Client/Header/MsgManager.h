@@ -10,6 +10,7 @@ private:
 	_vector		m_vClinetCenterPos;
 public:	
 	_vector Get_ClientCenterVector() { return m_vClinetCenterPos; };
+	RECT GetClientRc() { return m_tClinetRect; }
 	POINT	Get_ClientCenterPoint();
 	void ReSizeClient();
 private:

@@ -6,7 +6,6 @@ class CPlayerBullet final : public CBullet
 {
 private:
 	EWeaponType		m_eBulletType;
-	bool			m_bCollision;
 private:
 	explicit CPlayerBullet();
 	explicit CPlayerBullet(const CPlayerBullet& _rOther);
@@ -19,6 +18,8 @@ public:
 	virtual CGameObject * Clone() override;
 	virtual HRESULT Fire() override;
 	HRESULT	Fire(const _vector _Dir)override;
+private:
+	void RayPicking();
 public:
 	virtual HRESULT InitializePrototype() override;
 	virtual HRESULT Awake() override;
@@ -30,7 +31,6 @@ public:
 private:
 	virtual void Free();
 
-	virtual void OnCollision(CGameObject * _pGameObject) override;
 };
 #define __PLYAERBULLET_H__
 #endif

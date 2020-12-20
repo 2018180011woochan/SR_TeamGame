@@ -214,6 +214,9 @@
     <Filter Include="02.GameObject\00.Monster\11.WormBoss">
       <UniqueIdentifier>{15929005-3feb-481b-8ac6-84b0b1e86970}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Manager\97.PeekingManager">
+      <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -393,6 +396,7 @@
     <ClInclude Include="..\Header\WormBoss.h">
       <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PickingManger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -545,6 +549,7 @@
     <ClCompile Include="..\Source\LightMananger.cpp">
       <Filter>97.Manager\02.LightManager</Filter>
     </ClCompile>
+
     <ClCompile Include="..\Source\TreeBoss.cpp">
       <Filter>02.GameObject\00.Monster\10.TreeBoss</Filter>
     </ClCompile>
@@ -554,6 +559,7 @@
     <ClCompile Include="..\Source\WormBoss.cpp">
       <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\PickingManger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

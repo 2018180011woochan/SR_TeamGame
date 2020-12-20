@@ -110,12 +110,16 @@ HRESULT CPlayerBullet::Fire(const _vector _Dir)
 {
 	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
 	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
-
 	m_vDiraction = _Dir;
 	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
 	m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
 
 	return S_OK;
+}
+
+void CPlayerBullet::RayPicking()
+{
+
 }
 
 HRESULT CPlayerBullet::InitializePrototype()
