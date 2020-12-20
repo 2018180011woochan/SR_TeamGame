@@ -208,6 +208,12 @@
     <Filter Include="97.Manager\02.LightManager">
       <UniqueIdentifier>{b92e58a0-b4ad-46a2-a01b-3d17e9c541fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\00.Monster\10.TreeBoss\02.RootAttack">
+      <UniqueIdentifier>{19db4f16-21e4-4918-84c3-7b8cf9c4e64e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss">
+      <UniqueIdentifier>{15929005-3feb-481b-8ac6-84b0b1e86970}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -374,9 +380,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\DoomBird.h">
       <Filter>02.GameObject\00.Monster\10.TreeBoss\00.DoomBird</Filter>
-    </ClInclude> 
+    </ClInclude>
     <ClInclude Include="..\Header\LightMananger.h">
       <Filter>97.Manager\02.LightManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TreeBoss.h">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RootAttack.h">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss\02.RootAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBoss.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -529,6 +544,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\LightMananger.cpp">
       <Filter>97.Manager\02.LightManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TreeBoss.cpp">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RootAttack.cpp">
+      <Filter>02.GameObject\00.Monster\10.TreeBoss\02.RootAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBoss.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

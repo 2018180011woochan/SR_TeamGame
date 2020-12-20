@@ -16,6 +16,8 @@
 #include "NubBoss.h"
 #include "Robobird.h"
 #include "DoomBird.h"
+#include "TreeBoss.h"
+#include "RootAttack.h"
 #pragma endregion
 
 #include "FactoryManager.h"
@@ -68,6 +70,8 @@ HRESULT CStage::Awake()
 	AddPrototype(CNubBoss::Create());
 	AddPrototype(CRoboBird::Create());
 	AddPrototype(CDoomBird::Create());
+	AddPrototype(CTreeBoss::Create());
+	AddPrototype(CRootAttack::Create());
 
 	AddPrototype(CSandTile::Create());
 	AddPrototype(CElectricTile::Create());
@@ -101,7 +105,8 @@ HRESULT CStage::Awake()
 	//AddGameObject<CWalkerBoss>();
 	//AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
-	AddGameObject<CDoomBird>();
+	//AddGameObject<CDoomBird>();
+	AddGameObject<CTreeBoss>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");

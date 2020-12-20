@@ -37,7 +37,7 @@ HRESULT CRoboBird::Awake()
 
 	m_fJumpPower = 10.f;
 	m_fJumpTime = 0.f;
-	m_fMoveSpeed = 8.f;
+	m_fMoveSpeed = 15.f;
 	m_bJump = false;
 	nIndex = 0;
 

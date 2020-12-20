@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\PlayerSpawn.h" />
     <ClInclude Include="..\Header\RoboBird.h" />
+    <ClInclude Include="..\Header\RootAttack.h" />
     <ClInclude Include="..\Header\Rub.h" />
     <ClInclude Include="..\Header\SandTile.h" />
     <ClInclude Include="..\Header\Sector.h" />
@@ -203,12 +204,14 @@
     <ClInclude Include="..\Header\TexturePool.h" />
     <ClInclude Include="..\Header\TexturePoolManager.h" />
     <ClInclude Include="..\Header\Tile.h" />
+    <ClInclude Include="..\Header\TreeBoss.h" />
     <ClInclude Include="..\Header\Turret.h" />
     <ClInclude Include="..\Header\TurretBullet.h" />
     <ClInclude Include="..\Header\WalkBossBullet.h" />
     <ClInclude Include="..\Header\Walker.h" />
     <ClInclude Include="..\Header\WalkerBoss.h" />
     <ClInclude Include="..\Header\WalkerBullet.h" />
+    <ClInclude Include="..\Header\WormBoss.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -244,6 +247,7 @@
     <ClCompile Include="..\Source\MainApp.cpp" />
     <ClCompile Include="..\Source\PlayerSpawn.cpp" />
     <ClCompile Include="..\Source\RoboBird.cpp" />
+    <ClCompile Include="..\Source\RootAttack.cpp" />
     <ClCompile Include="..\Source\Rub.cpp" />
     <ClCompile Include="..\Source\SandTile.cpp" />
     <ClCompile Include="..\Source\Sector.cpp" />
@@ -257,12 +261,14 @@
     <ClCompile Include="..\Source\TexturePool.cpp" />
     <ClCompile Include="..\Source\TexturePoolManager.cpp" />
     <ClCompile Include="..\Source\Tile.cpp" />
+    <ClCompile Include="..\Source\TreeBoss.cpp" />
     <ClCompile Include="..\Source\Turret.cpp" />
     <ClCompile Include="..\Source\TurretBullet.cpp" />
     <ClCompile Include="..\Source\WalkBossBullet.cpp" />
     <ClCompile Include="..\Source\Walker.cpp" />
     <ClCompile Include="..\Source\WalkerBoss.cpp" />
     <ClCompile Include="..\Source\WalkerBullet.cpp" />
+    <ClCompile Include="..\Source\WormBoss.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

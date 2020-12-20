@@ -37,12 +37,12 @@ HRESULT CDoomBird::Awake()
 
 	m_fJumpPower = 10.f;
 	m_fJumpTime = 0.f;
-	m_fMoveSpeed = 8.f;
+	m_fMoveSpeed = 15.f;
 	m_bJump = false;
 	nIndex = 0;
 
 	m_fJumpDeltaTime = 0.f;
-	m_fJumpSpeed = 2.f;
+	m_fJumpSpeed = 0.6f;
 
 	m_fWalkSpeed = 0.1f;
 	m_fWalkDeltaTime = 0.f;
@@ -83,10 +83,19 @@ UINT CDoomBird::Update(const float _fDeltaTime)
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
 
-	m_bJump = true;
-	Jumping(_fDeltaTime);
-	m_pTransform->UpdateTransform();
+	m_fJumpDeltaTime += _fDeltaTime;
+	if (m_fJumpSpeed <= m_fJumpDeltaTime)
+	{
+		m_fJumpDeltaTime -= m_fJumpSpeed;
 
+		if (false == m_bJump)
+			m_bJump = true;
+
+		m_fYTest = m_pTransform->Get_Position().y;
+
+	}
+	m_pTransform->UpdateTransform();
+	Jumping(_fDeltaTime);
 	return _uint();
 }
 
@@ -132,13 +141,13 @@ void CDoomBird::Jumping(float fDeltaTime)
 			fY,
 			m_pTransform->Get_Position().z));
 
-		m_fJumpTime += 0.1f;
+		m_fJumpTime += 0.05f;
 
-		if (fY < 6.f)
+		if (fY < 8.f)
 		{
 			m_bJump = false;
 			m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
-				6.f,
+				8.f,
 				m_pTransform->Get_Position().z));
 			m_fJumpTime = 0.f;
 		}
