@@ -1,21 +1,20 @@
 #include "stdafx.h"
-#include "WalkerBoss.h"
+#include "NubBoss.h"
 #include "MeshRenderer.h"
 #include "Player.h"
-#include "WalkerBullet.h"
-#include "WalkBossBullet.h"
+#include "sqrNub.h"
 
-CWalkerBoss::CWalkerBoss()
+CNubBoss::CNubBoss()
 	: m_pTexturePool(nullptr)
 {
 }
 
-CWalkerBoss::CWalkerBoss(const CWalkerBoss & other)
+CNubBoss::CNubBoss(const CNubBoss & other)
 	: CMonster(other)
 {
 }
 
-HRESULT CWalkerBoss::InitializePrototype()
+HRESULT CNubBoss::InitializePrototype()
 {
 	if (FAILED(CMonster::InitializePrototype()))
 		return E_FAIL;
@@ -23,7 +22,7 @@ HRESULT CWalkerBoss::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CWalkerBoss::Awake()
+HRESULT CNubBoss::Awake()
 {
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
@@ -31,7 +30,7 @@ HRESULT CWalkerBoss::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("WallkerBoss"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("NubBoss"));
 	SafeAddRef(m_pTexturePool);
 
 	m_fFireDeltaTime = 0.f;
@@ -48,40 +47,33 @@ HRESULT CWalkerBoss::Awake()
 
 	m_fMoveSpeed = 8.f;
 
-	m_pTransform->Set_Scale(_vector(10, 10, 10));
+	m_pTransform->Set_Scale(_vector(20, 20, 20));
 	//m_pTransform->Add_Position(_vector(-5.f, 5.f, 10.f));
-	m_pTransform->Set_Position(_vector(-5.f, 5.f, 10.f));
+	m_pTransform->Set_Position(_vector(-5.f, 10.f, 10.f));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
 
-HRESULT CWalkerBoss::Start()
+HRESULT CNubBoss::Start()
 {
 	CMonster::Start();
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
-	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("SkyBox"));
-	pCollider->m_bIsRigid = true;
+
 	return S_OK;
 }
 
-UINT CWalkerBoss::Update(const float _fDeltaTime)
+UINT CNubBoss::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
-
-	if (m_pTransform->Get_Position().y > 5.f || m_pTransform->Get_Position().y < 3.f)
-	{
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 4.f, m_pTransform->Get_Position().z));
-	}
 
 	m_fWalkDeltaTime += _fDeltaTime;
 	if (m_fWalkSpeed <= m_fWalkDeltaTime)
 	{
-		m_fWalkDeltaTime -= m_fWalkSpeed;
-		if (nIndex >= 7)
-			nIndex = 0;
 		nIndex++;
+		m_fWalkDeltaTime -= m_fWalkSpeed;
+		if (nIndex >= 4)
+			nIndex = 0;
 	}
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
@@ -89,7 +81,13 @@ UINT CWalkerBoss::Update(const float _fDeltaTime)
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
 
-
+	// Nub생성인데 나중에 플레이어 총알 맞을때마다 하나씩 나오게 할까 생각중입니다!!!헤헤헤헤끌끌끌큭크루삥뽕빵
+	m_fFireDeltaTime += _fDeltaTime;
+	if (m_fFireSpeed <= m_fFireDeltaTime)
+	{
+		m_fFireDeltaTime -= m_fFireSpeed;
+		CreateBabyNub();
+	}
 
 	if (isCloseToPlayer())
 	{
@@ -104,30 +102,24 @@ UINT CWalkerBoss::Update(const float _fDeltaTime)
 	return _uint();
 }
 
-UINT CWalkerBoss::LateUpdate(const float _fDeltaTime)
+UINT CNubBoss::LateUpdate(const float _fDeltaTime)
 {
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
 
-HRESULT CWalkerBoss::Render()
+HRESULT CNubBoss::Render()
 {
 	if (FAILED(CMonster::Render()))
 		return E_FAIL;
 
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
-	//pCollider->Draw();
 	return S_OK;
 }
 
-void CWalkerBoss::BulletFire()
-{
-	CWalkBossBullet* pGameObject = (CWalkBossBullet*)AddGameObject<CWalkBossBullet>();
-	pGameObject->SetWalkBossPos(m_pTransform->Get_Position());
-}
 
-HRESULT CWalkerBoss::Movement(float fDeltaTime)
+HRESULT CNubBoss::Movement(float fDeltaTime)
 {
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 
@@ -141,7 +133,7 @@ HRESULT CWalkerBoss::Movement(float fDeltaTime)
 	return S_OK;
 }
 
-void CWalkerBoss::Dash(float _fDeltaTime)
+void CNubBoss::Dash(float _fDeltaTime)
 {
 	if (!m_bisDash)
 		m_bisStop = true;
@@ -150,7 +142,7 @@ void CWalkerBoss::Dash(float _fDeltaTime)
 		iCnt++;
 		if (iCnt <= 300)
 		{
-			m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[8]);
+			m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 			m_fMoveSpeed = 0.f;
 			return;
 		}
@@ -166,7 +158,7 @@ void CWalkerBoss::Dash(float _fDeltaTime)
 		if (iDashCnt < 50)
 		{
 			iDashCnt++;
-			m_fMoveSpeed = 50.f;
+			m_fMoveSpeed = 100.f;
 			return;
 		}
 		if (iDashCnt >= 50)
@@ -179,7 +171,7 @@ void CWalkerBoss::Dash(float _fDeltaTime)
 	
 }
 
-bool CWalkerBoss::isCloseToPlayer()
+bool CNubBoss::isCloseToPlayer()
 {
 	_vector vecPlayerPos = m_pPlayerTransform->Get_Position();
 	float fDistance = 0.f;
@@ -188,31 +180,32 @@ bool CWalkerBoss::isCloseToPlayer()
 	float fHeight = abs(vecPlayerPos.z - m_pTransform->Get_Position().z);
 	fDistance = sqrt((fWidth * fWidth) + (fHeight * fHeight));
 
-	if (fDistance < 30.f)
+	if (fDistance < 40.f)
 		return true;
 
 	return false;
 }
 
-void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
+void CNubBoss::CreateBabyNub()
 {
-
+	CsqrNub* pNubObject = (CsqrNub*)AddGameObject<CsqrNub>();
+	pNubObject->SetEggPos(m_pTransform->Get_Position());
 }
 
 
-CGameObject * CWalkerBoss::Clone()
+CGameObject * CNubBoss::Clone()
 {
-	CWalkerBoss* pClone = new CWalkerBoss(*this);
+	CNubBoss* pClone = new CNubBoss(*this);
 	return pClone;
 }
 
-CWalkerBoss * CWalkerBoss::Create()
+CNubBoss * CNubBoss::Create()
 {
-	CWalkerBoss* pInstance = new CWalkerBoss();
+	CNubBoss* pInstance = new CNubBoss();
 	return pInstance;
 }
 
-void CWalkerBoss::Free()
+void CNubBoss::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
