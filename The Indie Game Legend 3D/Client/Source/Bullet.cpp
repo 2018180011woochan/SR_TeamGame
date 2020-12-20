@@ -76,3 +76,7 @@ void CBullet::Free()
 {
 	CGameObject::Free();
 }
+
+void CBullet::OnCollision(CGameObject * _pGameObject)
+{
+}

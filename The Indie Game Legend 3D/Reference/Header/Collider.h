@@ -15,6 +15,8 @@ private:
 	CMeshManager*	m_pMeshManager;
 	CMesh*			m_pCollisionMesh;
 	BOUNDINGBOX		m_tBoundingBox;
+public:
+	bool			m_bIsRigid;
 private:
 	explicit CCollider(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	virtual ~CCollider() = default;
@@ -33,6 +35,8 @@ private:
 	void SetBound();
 public:
 	BOUNDINGBOX GetBound();
+
+	bool IsRayPicking(OUT D3DXVECTOR3& _pOut, const D3DXVECTOR3 _vRay);
 };
 END
 #define __COLLIDER_H__

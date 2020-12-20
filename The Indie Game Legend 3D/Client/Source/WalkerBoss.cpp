@@ -61,7 +61,8 @@ HRESULT CWalkerBoss::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("Quad"));
+	pCollider->SetMesh(TEXT("SkyBox"));
+	pCollider->m_bIsRigid = true;
 	return S_OK;
 }
 
@@ -205,7 +206,7 @@ bool CWalkerBoss::isCloseToPlayer()
 
 void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
 {
-	cout << typeid(*_pGameObject).name() << endl;
+
 }
 
 

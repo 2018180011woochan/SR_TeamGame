@@ -73,10 +73,10 @@ UINT CEgg::Update(const float _fDeltaTime)
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
 	// 알이 터지면은?!
-	//if (GetAsyncKeyState(VK_SPACE))
-	//{
-	//	EggDrop();
-	//}
+	if (GetAsyncKeyState(VK_SPACE))
+	{
+		EggDrop();
+	}
 
 	m_pTransform->UpdateTransform();
 

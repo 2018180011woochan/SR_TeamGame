@@ -8,6 +8,7 @@ CCollider::CCollider(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _
 	: CComponent(_pGameObject, _pDevice)
 	, m_pMeshManager(CMeshManager::GetInstance())
 	, m_pCollisionMesh(nullptr)
+	, m_bIsRigid(false)
 {
 	SafeAddRef(m_pMeshManager);
 	ZeroMemory(&m_tBoundingBox, sizeof(BOUNDINGBOX));
@@ -96,4 +97,12 @@ BOUNDINGBOX CCollider::GetBound()
 	tBoundingBox.vMax += pTransform->Get_Position();
 
 	return tBoundingBox;
+}
+
+bool CCollider::IsRayPicking(OUT D3DXVECTOR3 & _pOut, const D3DXVECTOR3 _vRay)
+{/*
+	LPVERTEX pVertices =  m_pCollisionMesh->GetVertices();
+
+	m_pGameObject->GetComponent<CTransform>()*/
+	return false;
 }

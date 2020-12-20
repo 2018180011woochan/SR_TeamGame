@@ -1,7 +1,8 @@
 #include "..\Header\CollisionManager.h"
 #include "GameObject.h"
 #include "Collider.h"
-
+#include <iostream>
+#include <time.h>
 USING(Engine)
 IMPLEMENT_SINGLETON(CCollisionManager)
 
@@ -15,7 +16,9 @@ void CCollisionManager::Free()
 
 void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 {
-	
+	//파싱 시간 측정
+	clock_t nStart = clock();
+
 	vector<CCollider*>	Collider;
 
 	CCollider* pCollider = nullptr;
@@ -34,20 +37,34 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 	}
 
 	UINT nSize = Collider.size();
-	bool bCollision;
+	bool bCollision = false;
+	int nCount = 0;
 	for (UINT i = 0; i < nSize; ++i)
 	{
 		for (UINT j = i + 1; j < nSize; ++j)
 		{
+			if (false == Collider[i]->m_bIsRigid && false == Collider[j]->m_bIsRigid)
+				continue;
+
 			bCollision = AABB(Collider[i], Collider[j]);
+
+			nCount++;
 			if (false == bCollision)
 				continue;
 			Collider[i]->GetGameObject()->OnCollision(Collider[j]->GetGameObject());
+			Collider[j]->GetGameObject()->OnCollision(Collider[i]->GetGameObject());
 			//옵션에 따라 밀어내기 및 GameObject의 함수 호출.
 			//예시  : Collider[i]->GetGameObject()->OnCollision(Collider[j]->GetGameObject());
 		}
 	}
+
 	
+	clock_t nEnd = clock();
+	int a = (1 + Collider.size()) * Collider.size() / 2;
+	cout << "Tile : " << nCount << "    /    Size() : " << Collider.size() <<"  For : "<< a << endl;
+
+	Collider.clear();
+
 }
 
 bool CCollisionManager::AABB(CCollider * _pOrigin, CCollider * _pTarget)

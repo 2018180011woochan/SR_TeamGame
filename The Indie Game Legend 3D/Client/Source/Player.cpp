@@ -200,7 +200,7 @@ void CPlayer::BulletFire()
 	};
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 	{
-		cout << "not ready" << endl;
+		//cout << "not ready" << endl;
 		return;
 	}
 
@@ -221,7 +221,7 @@ void CPlayer::BulletFire()
 			Fire(EWeaponType::Normal);
 			break;
 		default :
-			cout << " default  Input by BulletFire() of switch" << endl;
+			//cout << " default  Input by BulletFire() of switch" << endl;
 			break;
 		}
 
@@ -250,13 +250,13 @@ void CPlayer::ChangeWeaponUISetting()
 		switch (m_eCurWeaponType)
 		{
 		case EWeaponType::Multiple:
-			cout << "now Weapon is Multiple " << endl;
+			//cout << "now Weapon is Multiple " << endl;
 			break;
 		case EWeaponType::Big:
-			cout << "now Weapon is Big " << endl;
+			//cout << "now Weapon is Big " << endl;
 			break;
 		case EWeaponType::Rapid:
-			cout << "now Weapon is Rapid " << endl;
+			//cout << "now Weapon is Rapid " << endl;
 			break;
 		default:
 #ifdef _DEBUG
@@ -322,13 +322,13 @@ void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 	switch (_eWeaponType)
 	{
 	case EWeaponType::Multiple:
-		cout << "add Multiple Weapon" << endl;
+		//cout << "add Multiple Weapon" << endl;
 		break;
 	case EWeaponType::Big:
-		cout << "add Big Weapon" << endl;
+		//cout << "add Big Weapon" << endl;
 		break;
 	case EWeaponType::Rapid:
-		cout << "add Rapid Weapon" << endl;
+		//cout << "add Rapid Weapon" << endl;
 		break;
 	}
 
@@ -345,7 +345,7 @@ HRESULT CPlayer::Awake()
 {
 	CGameObject::Awake();
 	m_pKeyMgr = CKeyManager::GetInstance();
-	m_pTransform->Set_Position(_vector(0, 10, 0));
+	m_pTransform->Set_Position(_vector(0, 0, 0));
 	m_eRenderID = ERenderID::Alpha;
 	m_fMoveSpeed = 30.f;
 	m_fRunSpeed = 45.f;
@@ -357,9 +357,10 @@ HRESULT CPlayer::Awake()
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(10.f, 10.f, 20.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(20.f,20.f, 20.f));
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
+	pCollider->m_bIsRigid = true;
 	pCollider->SetMesh(TEXT("SkyBox"));
 	return S_OK;
 }
@@ -402,6 +403,8 @@ UINT CPlayer::LateUpdate(const float _fDeltaTime)
 		m_fDashDelayTime += _fDeltaTime;
 
 	m_pTransform->UpdateWorld();
+
+	CGameObject::LateUpdate(_fDeltaTime);
 	return OBJ_NOENVET;
 }
 

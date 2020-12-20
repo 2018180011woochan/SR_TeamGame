@@ -33,6 +33,7 @@ public:
 protected:
 	HRESULT IsBillboarding();
 	virtual void Free() override;
+	virtual void OnCollision(CGameObject * _pGameObject) override;
 };
 #define __BULLET_H__
 #endif
