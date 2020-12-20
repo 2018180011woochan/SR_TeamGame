@@ -182,6 +182,7 @@
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
+    <ClInclude Include="..\Header\PickingManger.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="..\Source\Monster.cpp" />
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
+    <ClCompile Include="..\Source\PickingManger.cpp" />
     <ClCompile Include="..\Source\Player.cpp" />
     <ClCompile Include="..\Source\PlayerBullet.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />

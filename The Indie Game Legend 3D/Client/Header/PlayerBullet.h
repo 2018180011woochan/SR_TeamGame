@@ -18,6 +18,8 @@ public:
 	virtual CGameObject * Clone() override;
 	virtual HRESULT Fire() override;
 	HRESULT	Fire(const _vector _Dir)override;
+private:
+	void RayPicking();
 public:
 	virtual HRESULT InitializePrototype() override;
 	virtual HRESULT Awake() override;
@@ -28,6 +30,7 @@ public:
 	static  CPlayerBullet* Create();
 private:
 	virtual void Free();
+
 };
 #define __PLYAERBULLET_H__
 #endif

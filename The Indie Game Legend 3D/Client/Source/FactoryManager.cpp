@@ -5,6 +5,20 @@
 IMPLEMENT_SINGLETON(CFactoryManager)
 HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 {
+	auto CheckPosition = [](vector<D3DXVECTOR3> _vecList) {
+		_vector vPos = vZero;
+		if (_vecList.size() == 4)
+		{
+			
+		}
+		else
+		{
+			return _vecList[4];
+		}
+		PrintLog(L"Error", L"not _veclist count 4 ,5 by CFactoryManager::LoadDataFile");
+		return vPos;
+	};
+
 	FILE* pFile = nullptr;
 
 	TSTRING sPath = TEXT("../../Data/");

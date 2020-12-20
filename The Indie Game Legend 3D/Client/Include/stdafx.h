@@ -37,6 +37,6 @@
 #else
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #endif
+#endif
 #include <iostream>
 using namespace std;
-#endif

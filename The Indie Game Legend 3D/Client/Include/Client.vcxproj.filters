@@ -196,6 +196,9 @@
     <Filter Include="97.Manager\02.LightManager">
       <UniqueIdentifier>{b92e58a0-b4ad-46a2-a01b-3d17e9c541fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Manager\97.PeekingManager">
+      <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -357,6 +360,7 @@
     <ClInclude Include="..\Header\LightMananger.h">
       <Filter>97.Manager\02.LightManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PickingManger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -500,6 +504,7 @@
     <ClCompile Include="..\Source\LightMananger.cpp">
       <Filter>97.Manager\02.LightManager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\PickingManger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
