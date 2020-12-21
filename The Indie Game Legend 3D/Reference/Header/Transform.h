@@ -27,6 +27,8 @@ public:
 	void Add_RotationY(const float& _rRotationY);
 	void Add_RotationZ(const float& _rRotationZ);
 
+	void Set_RotationZ(const float& _rRotationZ);
+
 	void Set_Revolution(const _vector& _rRevolution);
 	void Add_Revolution(const _vector& _rRevolution);
 	void Add_RevolutionX(const float& _rRevolutionX);

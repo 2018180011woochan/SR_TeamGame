@@ -5,14 +5,14 @@
 #include "BulletSpawn.h"
 
 CPlayerBullet::CPlayerBullet()
-	:m_eBulletType(EWeaponType::Normal), m_bCollision(false)
+	:m_eBulletType(EWeaponType::Normal)
 {
 }
 
 CPlayerBullet::CPlayerBullet(const CPlayerBullet & _rOther)
 	:CBullet(_rOther)
 	,m_eBulletType(_rOther.m_eBulletType)
-	, m_bCollision (false)
+
 {
 }
 
@@ -154,8 +154,6 @@ HRESULT CPlayerBullet::Start()
 
 UINT CPlayerBullet::Update(const float _fDeltaTime)
 {
-	if (m_bCollision)
-		return OBJ_DEAD;
 	//m_fTimeCheck += _fDeltaTime;
 	//if (m_fLiveTiem < m_fTimeCheck)
 	//{
@@ -201,9 +199,4 @@ CGameObject * CPlayerBullet::Clone()
 {
 	CGameObject* pInstance = new CPlayerBullet(*this);
 	return pInstance;
-}
-
-void CPlayerBullet::OnCollision(CGameObject * _pGameObject)
-{
-	//m_bCollision = true;
 }

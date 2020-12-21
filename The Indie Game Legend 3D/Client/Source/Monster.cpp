@@ -77,8 +77,22 @@ HRESULT CMonster::IsBillboarding()
 	D3DXMatrixInverse(&matBillY, 0, &matBillY);
 
 	_matrix matWorld = m_pTransform->Get_WorldMatrix();
+	
+	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
+	D3DXVECTOR3 vScale = m_pTransform->Get_TransformDesc().vScale;
+	D3DXVECTOR3 vRot = m_pTransform->Get_TransformDesc().vRotation;
 
-	_matrix NewWorld = matBillY * matWorld;
+	D3DXMATRIX matScale, matRX, matRY, matRZ, matTrans;
+
+	D3DXMatrixScaling(&matScale, vScale.x, vScale.y, vScale.z);
+	D3DXMatrixRotationX(&matRX, D3DXToRadian(vRot.x));
+	D3DXMatrixRotationY(&matRY, D3DXToRadian(vRot.y));
+	D3DXMatrixRotationZ(&matRZ, D3DXToRadian(vRot.z));
+	D3DXMatrixTranslation(&matTrans, vPos.x, vPos.y, vPos.z);
+
+
+
+	_matrix NewWorld = matScale * matRX * matRY * matRZ * matBillY * matTrans;
 	m_pTransform->Set_WorldMatrix(NewWorld);
 
 	return S_OK;

@@ -155,6 +155,10 @@ void CTransform::Add_RotationZ(const float & _rRotationZ)
 {
 	m_tTransformDesc.vRotation.z += _rRotationZ;
 }
+void CTransform::Set_RotationZ(const float & _rRotationZ)
+{
+	m_tTransformDesc.vRotation.z = _rRotationZ;
+}
 void CTransform::Set_Revolution(const _vector & _rRevolution)
 {
 	m_tTransformDesc.vRevolution = _rRevolution;

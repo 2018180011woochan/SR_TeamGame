@@ -1,14 +1,14 @@
 #pragma once
-#ifndef __WORMBOSS_H__
+#ifndef __WORMBOSSBODY_H__
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CWormBoss final : public CMonster
+class CWormBossBody final : public CMonster
 {
 private:
-	explicit CWormBoss();
-	explicit CWormBoss(const CWormBoss& other);
-	virtual ~CWormBoss() = default;
+	explicit CWormBossBody();
+	explicit CWormBossBody(const CWormBossBody& other);
+	virtual ~CWormBossBody() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -21,11 +21,10 @@ public:
 
 private:
 	HRESULT Movement(float fDeltaTime);
-	void Waving(float fDeltaTime);
 
 public:
 	virtual CGameObject * Clone() override;
-	static CWormBoss* Create();
+	static CWormBossBody* Create();
 private:
 	virtual void Free() override;
 
@@ -41,17 +40,9 @@ private:
 	_vector vRightDir;
 	_vector vLeftDir;
 
-	float				m_fJumpPower;
-	float				m_fJumpTime;
-	float				m_fYTest;
-	bool				m_bJump;
-
-	float				m_fJumpSpeed;
-	float				m_fJumpDeltaTime;
-
 	UINT nIndex;
 };
 
-#define __WORMBOSS_H__
-#endif // !__WORMBOSS_H__
+#define __WORMBOSSBODY_H__
+#endif // !__WORMBOSSBODY_H__
 
