@@ -130,26 +130,7 @@ HRESULT CStage::Awake()
 
 
 	//Light manager Test
-	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	//CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1, _vector(1, -1, 1), color * 0.5f,
-	//	color, color *0.5f);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
-
-	//CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2, _vector(-1, -1, -1), color * 0.5f,
-	//	color, color *0.5f);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
-
-
-	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::World3, _vector(0, 50, 0), color,
-	//	color, color);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World3, true);
-
-	CLightMananger::GetInstance()->CreateSpotlight(CLightMananger::Player,
-		_vector(0,40,0), _vector(0, -1, 0), color*1.f, color*0.7f, color*0.f, D3DXToRadian(15.f), D3DXToRadian(90.f));
-	CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
-	CLightMananger::GetInstance()->LightOn();
-
-
+	CLightMananger::GetInstance()->LightOff();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
@@ -183,7 +164,6 @@ UINT CStage::Update(float _fDeltaTime)
 	CScene::Update(_fDeltaTime);
 	//Test
 	static float fTestVolum = 1.f;
-	static bool  bTestLight = true;
 	if (GetAsyncKeyState('1') & 0x8000)
 	{
 		fTestVolum -= 0.01f;
@@ -193,24 +173,6 @@ UINT CStage::Update(float _fDeltaTime)
 		fTestVolum += 0.01f;
 	}
 	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
-
-	if (GetAsyncKeyState(VK_F5) & 0x0001)
-	{
-		bTestLight = !bTestLight;
-		if (!bTestLight)
-		{
-			CLightMananger::GetInstance()->LightOff();
-		}
-		else
-		{
-			CLightMananger::GetInstance()->LightOn();
-
-		}
-
-		//CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, bTestLight);
-
-	}
-
 
 	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, fTestVolum);
 	//Test
