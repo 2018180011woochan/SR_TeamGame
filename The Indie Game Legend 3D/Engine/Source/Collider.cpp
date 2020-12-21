@@ -103,7 +103,6 @@ BOUNDINGBOX CCollider::GetBound()
 	return tBoundingBox;
 }
 
-<<<<<<< HEAD
 const D3DXVECTOR3* CCollider::GetVertices()
 {
 	if (nullptr == m_pCollisionMesh)
@@ -118,57 +117,54 @@ const UINT CCollider::GetVertexCount()
 	return m_pCollisionMesh->GetVertexCount();
 }
 
-bool CCollider::IsRayPicking(OUT D3DXVECTOR3 & _pOut, const D3DXVECTOR3 _vRay)
-{/*
-=======
+
+
 bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DXVECTOR3 _vRayPv, const D3DXVECTOR3 _vRayDir)
 {
->>>>>>> faaa8c8f15aec23b00b89c8cdbeb155e7e6aea67
-	LPVERTEX pVertices =  m_pCollisionMesh->GetVertices();
-	CTransform* pTrans = (CTransform*)m_pGameObject->GetComponent<CTransform>();
-	_matrix matWorld = pTrans->Get_TransformDesc().matWorld;
-	_matrix matInvWorld = matWorld;
-	D3DXMatrixInverse(&matInvWorld, 0, &matInvWorld);
+	//LPVERTEX pVertices = m_pCollisionMesh->GetVertices();
+	//CTransform* pTrans = (CTransform*)m_pGameObject->GetComponent<CTransform>();
+	//_matrix matWorld = pTrans->Get_TransformDesc().matWorld;
+	//_matrix matInvWorld = matWorld;
+	//D3DXMatrixInverse(&matInvWorld, 0, &matInvWorld);
 
-	//월드 > 로컬
-	_vector vRayPv = _vRayPv;
-	_vector vRayDir = _vRayDir;
-	D3DXVec3TransformCoord(&vRayPv, &vRayPv, &matInvWorld);
-	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matInvWorld);
-	D3DXVec3Normalize(&vRayDir, &vRayDir);
-	
-	//test
-	cout << "\n		Local" << endl;
-	cout << "Raypv		:" << vRayPv.x << "," << vRayPv.y << "," << vRayPv.z << endl;
-	cout << "Raydir		:" << vRayDir.x << "," << vRayDir.y << "," << vRayDir.z << endl<< endl;
-	//test
+	////월드 > 로컬
+	//_vector vRayPv = _vRayPv;
+	//_vector vRayDir = _vRayDir;
+	//D3DXVec3TransformCoord(&vRayPv, &vRayPv, &matInvWorld);
+	//D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matInvWorld);
+	//D3DXVec3Normalize(&vRayDir, &vRayDir);
 
-	_uint nMaxCount = m_pCollisionMesh->GetVertexCount();
+	////test
+	//cout << "\n        Local" << endl;
+	//cout << "Raypv        :" << vRayPv.x << "," << vRayPv.y << "," << vRayPv.z << endl;
+	//cout << "Raydir        :" << vRayDir.x << "," << vRayDir.y << "," << vRayDir.z << endl << endl;
+	////test
 
-	float fU = 0.f, fV = 0.f;
-	_vector V1, V2, V3;
+	//_uint nMaxCount = m_pCollisionMesh->GetVertexCount();
 
-	for (_uint i = 0; i < nMaxCount; i += 3)
-	{
-		V1 = pVertices[i].Position;
-		V2 = pVertices[i+1].Position;
-		V3 = pVertices[i+2].Position;
-		if (D3DXIntersectTri(&V1,&V2,&V3,
-			&vRayPv,&vRayDir,&fU,&fV,&_Dis))
-		{
-			cout << "Dis : " << _Dis << endl;
-			if(_Dis < 1.f)
-				continue;
+	//float fU = 0.f, fV = 0.f;
+	//_vector V1, V2, V3;
 
-			cout << endl << "		[[[[picking]]]]]" << endl;
-			cout << "picking vertex Index : " << i<<", "<<i+1<<", "<< i+2 << endl;
-			// 교차점 = V1 + U(V2 - V1) + V(V3 - V1)
-			_pOut = V1 + fU * (V2 - V1) + fV * (V3 - V1);
-			D3DXVec3TransformCoord(&_pOut, &_pOut, &matWorld);//로컬 > 월드
-			return true;
-		}
+	//for (_uint i = 0; i < nMaxCount; i += 3)
+	//{
+	//	V1 = pVertices[i].Position;
+	//	V2 = pVertices[i + 1].Position;
+	//	V3 = pVertices[i + 2].Position;
+	//	if (D3DXIntersectTri(&V1, &V2, &V3,
+	//		&vRayPv, &vRayDir, &fU, &fV, &_Dis))
+	//	{
+	//		cout << "Dis : " << _Dis << endl;
+	//		if (_Dis < 1.f)
+	//			continue;
 
-	}
-	return false;*/
+	//		cout << endl << "        [[[[picking]]]]]" << endl;
+	//		cout << "picking vertex Index : " << i << ", " << i + 1 << ", " << i + 2 << endl;
+	//		// 교차점 = V1 + U(V2 - V1) + V(V3 - V1)
+	//		_pOut = V1 + fU * (V2 - V1) + fV * (V3 - V1);
+	//		D3DXVec3TransformCoord(&_pOut, &_pOut, &matWorld);//로컬 > 월드
+	//		return true;
+	//	}
+
+	//}
 	return false;
 }

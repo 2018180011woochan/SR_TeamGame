@@ -121,12 +121,12 @@ HRESULT CStage::Awake()
 	//AddGameObject<CTreeBoss>();
 
 	//컬링 테스트 
-	CGameObject* pObj = AddGameObject<CRoomTrigger>();
-	pObj->SetTag(0);
-	((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(30, 0, -30));
-	pObj = AddGameObject<CRoomTrigger>();
-	pObj->SetTag(1);
-	((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(-30, 0, -30));
+	//CGameObject* pObj = AddGameObject<CRoomTrigger>();
+	//pObj->SetTag(0);
+	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(30, 0, -30));
+	//pObj = AddGameObject<CRoomTrigger>();
+	//pObj->SetTag(1);
+	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(-30, 0, -30));
 
 
 	//Light manager Test
