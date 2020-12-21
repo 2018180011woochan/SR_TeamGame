@@ -103,7 +103,6 @@ BOUNDINGBOX CCollider::GetBound()
 	return tBoundingBox;
 }
 
-<<<<<<< HEAD
 const D3DXVECTOR3* CCollider::GetVertices()
 {
 	if (nullptr == m_pCollisionMesh)
@@ -118,13 +117,9 @@ const UINT CCollider::GetVertexCount()
 	return m_pCollisionMesh->GetVertexCount();
 }
 
-bool CCollider::IsRayPicking(OUT D3DXVECTOR3 & _pOut, const D3DXVECTOR3 _vRay)
-{/*
-=======
 bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DXVECTOR3 _vRayPv, const D3DXVECTOR3 _vRayDir)
 {
->>>>>>> faaa8c8f15aec23b00b89c8cdbeb155e7e6aea67
-	LPVERTEX pVertices =  m_pCollisionMesh->GetVertices();
+	const D3DXVECTOR3* pVertices =  m_pCollisionMesh->GetVertices();
 	CTransform* pTrans = (CTransform*)m_pGameObject->GetComponent<CTransform>();
 	_matrix matWorld = pTrans->Get_TransformDesc().matWorld;
 	_matrix matInvWorld = matWorld;
@@ -150,9 +145,9 @@ bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DX
 
 	for (_uint i = 0; i < nMaxCount; i += 3)
 	{
-		V1 = pVertices[i].Position;
-		V2 = pVertices[i+1].Position;
-		V3 = pVertices[i+2].Position;
+		V1 = pVertices[i];
+		V2 = pVertices[i+1];
+		V3 = pVertices[i+2];
 		if (D3DXIntersectTri(&V1,&V2,&V3,
 			&vRayPv,&vRayDir,&fU,&fV,&_Dis))
 		{
@@ -169,6 +164,5 @@ bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DX
 		}
 
 	}
-	return false;*/
 	return false;
 }
