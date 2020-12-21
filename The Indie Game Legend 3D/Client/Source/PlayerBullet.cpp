@@ -12,6 +12,7 @@ CPlayerBullet::CPlayerBullet()
 CPlayerBullet::CPlayerBullet(const CPlayerBullet & _rOther)
 	:CBullet(_rOther)
 	,m_eBulletType(_rOther.m_eBulletType)
+
 {
 }
 

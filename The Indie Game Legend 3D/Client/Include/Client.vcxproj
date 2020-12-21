@@ -214,6 +214,7 @@
     <ClInclude Include="..\Header\WalkerBullet.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WormBoss.h" />
+    <ClInclude Include="..\Header\WormBossBody.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="..\Source\WalkerBullet.cpp" />
     <ClCompile Include="..\Source\Wall.cpp" />
     <ClCompile Include="..\Source\WormBoss.cpp" />
+    <ClCompile Include="..\Source\WormBossBody.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

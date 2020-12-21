@@ -19,9 +19,6 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
-public:
-	void BulletFire();
-
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Dash(float _fDeltaTime);

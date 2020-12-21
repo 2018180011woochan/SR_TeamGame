@@ -18,6 +18,8 @@
 #include "DoomBird.h"
 #include "TreeBoss.h"
 #include "RootAttack.h"
+#include "WormBoss.h"
+#include "WormBossBody.h"
 #pragma endregion
 
 #include "FactoryManager.h"
@@ -72,6 +74,8 @@ HRESULT CStage::Awake()
 	AddPrototype(CDoomBird::Create());
 	AddPrototype(CTreeBoss::Create());
 	AddPrototype(CRootAttack::Create());
+	AddPrototype(CWormBoss::Create());
+	AddPrototype(CWormBossBody::Create());
 
 	AddPrototype(CSandTile::Create());
 	AddPrototype(CElectricTile::Create());
@@ -100,13 +104,15 @@ HRESULT CStage::Awake()
 	//AddGameObject<CsqrNub>();
 	//AddGameObject<CTurret>();
 	//AddGameObject<CWalker>();
-	AddGameObject<CCryder>();
+	//AddGameObject<CCryder>();
 	//AddGameObject<CEgg>();
-	AddGameObject<CWalkerBoss>();
-	//AddGameObject<CNubBoss>();
+	//AddGameObject<CWalkerBoss>();
+	AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
-	//AddGameObject<CTreeBoss>();
+	AddGameObject<CTreeBoss>();
+	//AddGameObject<CWormBoss>();
+	//AddGameObject<CWormBossBody>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");

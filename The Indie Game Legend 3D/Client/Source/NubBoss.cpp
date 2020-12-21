@@ -49,7 +49,7 @@ HRESULT CNubBoss::Awake()
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 	//m_pTransform->Add_Position(_vector(-5.f, 5.f, 10.f));
-	m_pTransform->Set_Position(_vector(-5.f, 10.f, 10.f));
+	m_pTransform->Set_Position(_vector(-5.f, 10.f, 50.f));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
