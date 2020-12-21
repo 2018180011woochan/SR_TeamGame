@@ -35,6 +35,8 @@ private:
 	void SetBound();
 public:
 	BOUNDINGBOX GetBound();
+	const D3DXVECTOR3*	GetVertices();
+	const UINT			GetVertexCount();
 
 	bool IsRayPicking(OUT D3DXVECTOR3& _pOut, const D3DXVECTOR3 _vRay);
 };

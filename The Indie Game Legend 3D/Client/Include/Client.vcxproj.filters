@@ -217,6 +217,15 @@
     <Filter Include="97.Manager\97.PeekingManager">
       <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\98.Collider">
+      <UniqueIdentifier>{58a8a365-70c5-44d5-8bd8-afdad690e1ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\98.Collider\00.Floor">
+      <UniqueIdentifier>{bb9488e4-0a8d-4eb0-b943-0add604479d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\98.Collider\01.Wall">
+      <UniqueIdentifier>{ee5652e1-6be2-47da-91fb-ab7ef2709099}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -396,7 +405,12 @@
     <ClInclude Include="..\Header\WormBoss.h">
       <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PickingManger.h" />
+    <ClInclude Include="..\Header\Floor.h">
+      <Filter>02.GameObject\98.Collider\00.Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Wall.h">
+      <Filter>02.GameObject\98.Collider\01.Wall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -549,7 +563,6 @@
     <ClCompile Include="..\Source\LightMananger.cpp">
       <Filter>97.Manager\02.LightManager</Filter>
     </ClCompile>
-
     <ClCompile Include="..\Source\TreeBoss.cpp">
       <Filter>02.GameObject\00.Monster\10.TreeBoss</Filter>
     </ClCompile>
@@ -559,7 +572,12 @@
     <ClCompile Include="..\Source\WormBoss.cpp">
       <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\PickingManger.cpp" />
+    <ClCompile Include="..\Source\Floor.cpp">
+      <Filter>02.GameObject\98.Collider\00.Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Wall.cpp">
+      <Filter>02.GameObject\98.Collider\01.Wall</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

@@ -14,7 +14,7 @@ typedef struct tagVertex
 
 typedef struct tagVertices : public CBase
 {
-	VERTEX* pVertices;
+	D3DXVECTOR3* pVertices;
 private:
 	explicit tagVertices();
 	// CBase을(를) 통해 상속됨
@@ -53,9 +53,9 @@ public:
 	HRESULT DrawSubSet(const UINT _nSubSet);
 
 public:
-	const LPVERTEX	GetVertices();
-	const UINT		GetVertexCount();
-	const UINT		GetFaceCount();
+	const D3DXVECTOR3*	GetVertices();
+	const UINT			GetVertexCount();
+	const UINT			GetFaceCount();
 	HRESULT SetTexture(const UINT _nSubSet, CTexture* const _pTexture);
 };
 END

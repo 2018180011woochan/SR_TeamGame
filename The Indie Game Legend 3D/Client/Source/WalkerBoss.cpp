@@ -117,7 +117,6 @@ HRESULT CWalkerBoss::Render()
 
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
-	//pCollider->Draw();
 	return S_OK;
 }
 
@@ -196,7 +195,7 @@ bool CWalkerBoss::isCloseToPlayer()
 
 void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
 {
-
+	wcout << GetTypeName<CWalkerBoss>().c_str() << " Collide with " << typeid(*_pGameObject).name() << endl;
 }
 
 

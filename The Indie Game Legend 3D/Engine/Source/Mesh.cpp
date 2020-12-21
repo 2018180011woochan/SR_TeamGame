@@ -223,8 +223,11 @@ HRESULT CMesh::LoadMesh(const TSTRING & _sFileName)
 	m_pVertexBuffer->Unlock();
 	//충돌 및 픽킹을 위한 버텍스 데이터 저장.
 	m_pVertices = VERTICES::Create();
-	m_pVertices->pVertices = new VERTEX[vecVertices.size()];
-	memcpy(m_pVertices->pVertices, &vecVertices[0], sizeof(VERTEX) * vecVertices.size());
+	m_pVertices->pVertices = new D3DXVECTOR3[vecVertices.size()];
+	for (UINT i = 0; i < vecVertices.size(); ++i)
+	{
+		m_pVertices->pVertices[i] = vecVertices[i].Position;
+	}
 	vecVertices.clear();
 	vecVertices.shrink_to_fit();
 
@@ -332,7 +335,7 @@ HRESULT CMesh::DrawSubSet(const UINT _nSubSet)
 	return m_Subset[_nSubSet]->DrawSubSet();
 }
 
-const LPVERTEX CMesh::GetVertices()
+const D3DXVECTOR3* CMesh::GetVertices()
 {
 	return m_pVertices->pVertices;
 }

@@ -99,6 +99,20 @@ BOUNDINGBOX CCollider::GetBound()
 	return tBoundingBox;
 }
 
+const D3DXVECTOR3* CCollider::GetVertices()
+{
+	if (nullptr == m_pCollisionMesh)
+		return nullptr;
+	return m_pCollisionMesh->GetVertices();
+}
+
+const UINT CCollider::GetVertexCount()
+{
+	if (nullptr == m_pCollisionMesh)
+		return 0;
+	return m_pCollisionMesh->GetVertexCount();
+}
+
 bool CCollider::IsRayPicking(OUT D3DXVECTOR3 & _pOut, const D3DXVECTOR3 _vRay)
 {/*
 	LPVERTEX pVertices =  m_pCollisionMesh->GetVertices();

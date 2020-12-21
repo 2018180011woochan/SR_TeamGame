@@ -102,11 +102,11 @@ HRESULT CStage::Awake()
 	//AddGameObject<CWalker>();
 	AddGameObject<CCryder>();
 	//AddGameObject<CEgg>();
-	//AddGameObject<CWalkerBoss>();
+	AddGameObject<CWalkerBoss>();
 	//AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
-	AddGameObject<CTreeBoss>();
+	//AddGameObject<CTreeBoss>();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");

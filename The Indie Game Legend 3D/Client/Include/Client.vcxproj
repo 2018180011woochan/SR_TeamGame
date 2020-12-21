@@ -172,6 +172,7 @@
     <ClInclude Include="..\Header\Egg.h" />
     <ClInclude Include="..\Header\ElectricTile.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
+    <ClInclude Include="..\Header\Floor.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="..\Header\Walker.h" />
     <ClInclude Include="..\Header\WalkerBoss.h" />
     <ClInclude Include="..\Header\WalkerBullet.h" />
+    <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WormBoss.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -228,6 +230,7 @@
     <ClCompile Include="..\Source\Egg.cpp" />
     <ClCompile Include="..\Source\ElectricTile.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
+    <ClCompile Include="..\Source\Floor.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
@@ -268,6 +271,7 @@
     <ClCompile Include="..\Source\Walker.cpp" />
     <ClCompile Include="..\Source\WalkerBoss.cpp" />
     <ClCompile Include="..\Source\WalkerBullet.cpp" />
+    <ClCompile Include="..\Source\Wall.cpp" />
     <ClCompile Include="..\Source\WormBoss.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
