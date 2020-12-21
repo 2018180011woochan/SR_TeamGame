@@ -13,6 +13,9 @@ protected:
 	//testm_vDiraction
 	float			m_fLiveTiem;
 	float			m_fTimeCheck;
+
+	//test			
+	bool			m_bDead =false;
 public:
 	explicit CBullet();
 	explicit CBullet(const CBullet& _rOther);

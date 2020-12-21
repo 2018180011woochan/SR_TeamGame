@@ -9,7 +9,7 @@ class CLightMananger final : public CBase
 public:
 	enum LightID 
 	{
-		Player, World1, World2, End
+		Player, World1, World2,World3, End
 	};
 	// 이넘버전이 
 	D3DLIGHT9*	m_pLightChannel[(_uint)LightID::End]; 

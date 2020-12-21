@@ -49,6 +49,8 @@ public:
 	CGameObject*		FindGameObjectOfType(const size_t _nSceneID);
 	template<typename T>
 	list<CGameObject*>	FindGameObjectsOfType(const size_t _nSceneID);
+	template<typename T>
+	list<CGameObject*>	FindGameObjectsOfBaseType(const size_t _nSceneID);
 #pragma endregion
 
 #pragma region GRAPHICDEVICE

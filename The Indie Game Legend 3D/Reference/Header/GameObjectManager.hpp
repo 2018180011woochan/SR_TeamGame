@@ -142,6 +142,31 @@ list<CGameObject*> CGameObjectManager::FindGameObjectsOfType(const size_t _nScen
 
 	return gameObjects;
 }
+template<typename T>
+inline list<CGameObject*> CGameObjectManager::FindGameObjectsOfBaseType(const size_t _nSceneID)
+{
+	auto iter_GameObjects = m_GameObjects.find(_nSceneID);
+
+	list<CGameObject*> gameObjects;
+
+	if (m_GameObjects.end() == iter_GameObjects)
+	{
+		TCHAR szBuf[128] = TEXT("");
+		_stprintf_s(szBuf, 128, TEXT("Failed to Find GameObject of Type. %d container does not exist."), _nSceneID);
+		PrintLog(TEXT("Warning"), szBuf);
+		return gameObjects;
+	}
+
+	for (CGameObject* pGameObject : iter_GameObjects->second)
+	{
+		if (nullptr != dynamic_cast<T*>(pGameObject))
+		{
+			gameObjects.push_back(pGameObject);
+		}
+	}
+
+	return gameObjects;
+}
 END
 
 #define __GAMEOBJECT_MANAGER_HPP__

@@ -5,6 +5,7 @@
 #include "FactoryManager.h"
 #include "Intro.h"
 #include "SoundMgr.h"
+#include "LightMananger.h"
 CMainApp::CMainApp()
 	: m_pManagement(CManagement::GetInstance())
 {
@@ -13,6 +14,7 @@ CMainApp::CMainApp()
 
 void CMainApp::Free()
 {
+	CLightMananger::DeleteInstance();//Device use
 	m_pTexturePoolManager->Release();
 	SafeRelease(m_pDevice);
     SafeRelease(m_pManagement);
@@ -49,35 +51,7 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 	}
 
-	//Test
-	D3DLIGHT9 light;
-
-	ZeroMemory(&light, sizeof(D3DLIGHT9));
-	light.Diffuse.r = 1.f;
-	light.Diffuse.g = 1.f;
-	light.Diffuse.b = 1.f;
-	light.Type = D3DLIGHT_DIRECTIONAL;
-
-	_vector dir = _vector(1, -1, 1);
-	D3DXVec3Normalize((_vector*)&light.Direction, &dir);
-	m_pDevice->SetLight(0, &light);
-	m_pDevice->LightEnable(0, TRUE);
-
-	D3DLIGHT9 light2;
-	ZeroMemory(&light, sizeof(D3DLIGHT9));
-	light2.Diffuse.r = 1.f;
-	light2.Diffuse.g = 1.f;
-	light2.Diffuse.b = 1.f;
-	light2.Type = D3DLIGHT_DIRECTIONAL;
-
-	dir = _vector(-1, -1, -1);
-	D3DXVec3Normalize((_vector*)&light2.Direction, &dir);
-	m_pDevice->SetLight(1, &light2);
-	m_pDevice->LightEnable(1, TRUE);
-
 	m_pDevice->SetRenderState(D3DRS_LIGHTING, false);
-	m_pDevice->SetRenderState(D3DRS_AMBIENT, 0x00808080);
-	//Test
 	return S_OK;
 }
 

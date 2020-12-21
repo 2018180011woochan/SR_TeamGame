@@ -127,7 +127,6 @@ void CHeartManager::SetHeartCount(const UINT _nHeartCount)
 			m_pHeart[i]->SetEnable(true);
 		else
 			m_pHeart[i]->SetEnable(false);
-
 	}
 }
 

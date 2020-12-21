@@ -3,6 +3,7 @@
 #include "Camera.h"
 
 CMonster::CMonster()
+	
 {
 }
 
@@ -15,6 +16,8 @@ HRESULT CMonster::InitializePrototype()
 {
 	if (FAILED(CGameObject::InitializePrototype()))
 		return E_FAIL;
+
+	m_sName = L"Monster";
 
 	return S_OK;
 }
@@ -82,5 +85,9 @@ HRESULT CMonster::IsBillboarding()
 	m_pTransform->Set_WorldMatrix(NewWorld);
 
 	return S_OK;
+}
+
+void CMonster::OnCollision(CGameObject * _pGameObject)
+{
 }
 

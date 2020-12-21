@@ -19,7 +19,6 @@ public:
 	virtual HRESULT Fire() override;
 	HRESULT	Fire(const _vector _Dir)override;
 private:
-	void RayPicking();
 public:
 	virtual HRESULT InitializePrototype() override;
 	virtual HRESULT Awake() override;
@@ -28,6 +27,8 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 	static  CPlayerBullet* Create();
+
+	virtual void OnCollision(CGameObject * _pGameObject) override;
 private:
 	virtual void Free();
 

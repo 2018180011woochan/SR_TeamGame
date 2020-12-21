@@ -3,16 +3,16 @@
 #include "MeshRenderer.h"
 #include "PlayerCamera.h"
 #include "BulletSpawn.h"
+#include "PickingManger.h"
 
 CPlayerBullet::CPlayerBullet()
-	:m_eBulletType(EWeaponType::Normal), m_bCollision(false)
+	:m_eBulletType(EWeaponType::Normal)
 {
 }
 
 CPlayerBullet::CPlayerBullet(const CPlayerBullet & _rOther)
 	:CBullet(_rOther)
 	,m_eBulletType(_rOther.m_eBulletType)
-	, m_bCollision (false)
 {
 }
 
@@ -32,7 +32,9 @@ void CPlayerBullet::Set_Type(const EWeaponType & _eBulletType)
 	case EWeaponType::Normal:
 		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("NormalBullet"))[0]);
-		m_fMoveSpeed = 100.f;
+//		m_fMoveSpeed = 100.f;
+		//test
+		m_fMoveSpeed = 30.f;
 		break;
 	case EWeaponType::Multiple:
 		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
@@ -60,12 +62,31 @@ HRESULT CPlayerBullet::Fire()
 	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
 	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
+	_vector vBulletPos = pSpawnTrans->Get_WorldPosition();
 	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
 
 	//Test
 	//CameraDesc.vAt -> 피킹 지점으로 바꿔야함 
-	m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
+	_vector PickPos;
+	if (CPickingManger::CrossHairPicking(m_nSceneID, PickPos))
+	{
+
+		m_vDiraction = PickPos - pSpawnTrans->Get_WorldPosition();
+		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	}
+	else
+	{
+		m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
+		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	}
+
 	m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
+
+	//Test
+	cout << endl << "=========bullet=========" << endl;
+	cout << "bulletPos	:  " << vBulletPos.x << "," << vBulletPos.y << "," << vBulletPos.z << endl;
+	cout << "bulletDir	:  " << m_vDiraction.x << "," << m_vDiraction.y << "," << m_vDiraction.z << endl;
+	cout << endl << "=========bullet=========" << endl;
 
 	switch (m_eBulletType)
 	{
@@ -100,7 +121,6 @@ HRESULT CPlayerBullet::Fire()
 		break;
 	}
 
-	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
 
 
 	return S_OK;
@@ -117,10 +137,6 @@ HRESULT CPlayerBullet::Fire(const _vector _Dir)
 	return S_OK;
 }
 
-void CPlayerBullet::RayPicking()
-{
-
-}
 
 HRESULT CPlayerBullet::InitializePrototype()
 {
@@ -143,6 +159,8 @@ HRESULT CPlayerBullet::Awake()
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->SetMesh(TEXT("SkyBox"));
+
+	m_sName = L"PlayerBullet";
 	return S_OK;
 }
 
@@ -154,13 +172,14 @@ HRESULT CPlayerBullet::Start()
 
 UINT CPlayerBullet::Update(const float _fDeltaTime)
 {
-	if (m_bCollision)
+	if (m_bDead)
 		return OBJ_DEAD;
-	//m_fTimeCheck += _fDeltaTime;
-	//if (m_fLiveTiem < m_fTimeCheck)
-	//{
-	//	return OBJ_DEAD;
-	//}
+
+	m_fTimeCheck += _fDeltaTime;
+	if (m_fLiveTiem < m_fTimeCheck)
+	{
+		return OBJ_DEAD;
+	}
 	m_pTransform->Add_Position(m_vDiraction* m_fMoveSpeed * _fDeltaTime);
 	m_pTransform->UpdateTransform();
 	m_pTransform->UpdateWorld();
@@ -191,6 +210,15 @@ CPlayerBullet * CPlayerBullet::Create()
 	return pInstance;
 }
 
+void CPlayerBullet::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"Monster" == _pGameObject->GetName())
+	{
+		m_bDead = true;
+	}
+
+}
+
 void CPlayerBullet::Free()
 {
 	SafeRelease(m_pTexturePool);
@@ -201,9 +229,4 @@ CGameObject * CPlayerBullet::Clone()
 {
 	CGameObject* pInstance = new CPlayerBullet(*this);
 	return pInstance;
-}
-
-void CPlayerBullet::OnCollision(CGameObject * _pGameObject)
-{
-	//m_bCollision = true;
 }

@@ -9,6 +9,7 @@ CGameObject::CGameObject()
 	, m_nTag(-1)
 	, m_eRenderID(ERenderID::End)
 	, m_bEnable(true)
+	, m_sName(L"")
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);
@@ -21,6 +22,7 @@ CGameObject::CGameObject(const CGameObject & _rOther)
 	, m_nTag(_rOther.m_nTag)
 	, m_eRenderID(_rOther.m_eRenderID)
 	, m_bEnable(true)
+	, m_sName(_rOther.m_sName)
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);
@@ -68,6 +70,11 @@ HRESULT CGameObject::Render()
 {
 	if (nullptr == m_pManagement)
 		return E_FAIL;
+
+	//Test
+	if (IsEnable() == false)
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -89,9 +96,16 @@ void CGameObject::SetTag(const _int & _nTag)
 	m_nTag = _nTag;
 }
 
+
+
 _int CGameObject::GetTage()
 {
 	return m_nTag;
+}
+
+TSTRING CGameObject::GetName()
+{
+	return m_sName;
 }
 
 CComponent * CGameObject::GetComponent(const TSTRING & _sTypeName)

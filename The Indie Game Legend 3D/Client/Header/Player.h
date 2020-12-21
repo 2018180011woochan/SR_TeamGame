@@ -41,11 +41,6 @@ private:
 	 float				m_fAmmo;
 	 float				m_fAmmoMax;
 	 _uint				m_nAmmoDecrease;
-	 /*
-	 그 변수명 다른분들 뭐로 하시는 궁금해서 물어보는건데
-	 지금 데쉬 딜레이 판정 변수 두개 만드는데 
-		delay 변수랑 시간 누적해서딜레이랑 비교하는 변수 이름 뭐로 하세요 보통?
-	 */
 	 //Test
 	 Image*				m_pAmmobar = nullptr;
 	 //Action
@@ -66,6 +61,7 @@ private:
 	void	BulletFire();
 	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
 	void    ChangeWeapon();// 관련 세팅값 설정
+	void	UpdateLight();
 public:
 	//Getter Setter
 	const float& GetAmmo() { return m_fAmmo; }
@@ -84,6 +80,8 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 	virtual CGameObject * Clone() override;
+
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 public:
 	static CPlayer* Create();
 private:

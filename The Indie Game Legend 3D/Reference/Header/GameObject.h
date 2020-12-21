@@ -19,6 +19,8 @@ protected:
 	_int				m_nTag;
 
 	bool				m_bEnable;
+	//Test
+	TSTRING				m_sName;
 protected:
 	explicit CGameObject();
 	explicit CGameObject(const CGameObject& _rOther);
@@ -30,6 +32,8 @@ protected:
 public:
 	void			SetTag(const _int& _nTag);
 	_int			GetTage();
+	TSTRING			GetName();
+
 public:
 	virtual HRESULT			InitializePrototype()					PURE;
 	virtual HRESULT			Awake()									PURE;

@@ -45,6 +45,16 @@ inline list<CGameObject*> CManagement::FindGameObjectsOfType(const size_t _nScen
 	}
 	return m_pGameObjectManager->FindGameObjectsOfType<T>(_nSceneID);
 }
+template<typename T>
+inline list<CGameObject*> CManagement::FindGameObjectsOfBaseType(const size_t _nSceneID)
+{
+	if (nullptr == m_pGameObjectManager)
+	{
+		PrintLog(TEXT("Warning"), TEXT("Failed to find gameobjects. m_pGameObjectManager is nullptr."));
+		return list<CGameObject*>();
+	}
+	return m_pGameObjectManager->FindGameObjectsOfBaseType<T>(_nSceneID);
+}
 #pragma endregion
 END
 #endif // !__MANAGEMENT_HPP__

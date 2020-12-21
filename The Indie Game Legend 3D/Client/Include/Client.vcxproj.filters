@@ -109,9 +109,6 @@
     <Filter Include="02.GameObject\99.Trigger">
       <UniqueIdentifier>{b2d4931d-f887-4fc3-831b-70b26ddeb176}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\99.Trigger\00.PlayerSpawn">
-      <UniqueIdentifier>{0c15ffeb-e1e5-476e-9d89-76457ca9c176}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\04.Bullet">
       <UniqueIdentifier>{37d58b97-5d68-4628-b3a4-6eb877924076}</UniqueIdentifier>
     </Filter>
@@ -120,9 +117,6 @@
     </Filter>
     <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet">
       <UniqueIdentifier>{6ac1f5d0-c9c5-4beb-8503-fe75932c46e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\99.Trigger\01.BulletSpawn">
-      <UniqueIdentifier>{84291075-3e58-4e64-8013-b1df7d15e855}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\04.UI\03.Ammo">
       <UniqueIdentifier>{75108c0d-c752-453e-a185-f06d938b8c52}</UniqueIdentifier>
@@ -217,6 +211,21 @@
     <Filter Include="97.Manager\97.PeekingManager">
       <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\98.Gizmo">
+      <UniqueIdentifier>{7abbe298-8efa-4661-8fe5-6b2a1597fc81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\98.Gizmo\00.PlayerSpawn">
+      <UniqueIdentifier>{0c15ffeb-e1e5-476e-9d89-76457ca9c176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\98.Gizmo\01.BulletSpawn">
+      <UniqueIdentifier>{84291075-3e58-4e64-8013-b1df7d15e855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\99.Trigger\00.Base">
+      <UniqueIdentifier>{d102a459-870f-4f24-936e-fa4649a1bf6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\99.Trigger\01.RoomTrigger">
+      <UniqueIdentifier>{9b80813f-ef7b-40ad-9d8d-f622faef8a47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -283,7 +292,7 @@
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerSpawn.h">
-      <Filter>02.GameObject\99.Trigger\00.PlayerSpawn</Filter>
+      <Filter>02.GameObject\98.Gizmo\00.PlayerSpawn</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02.GameObject\04.Bullet\00.Base</Filter>
@@ -292,7 +301,7 @@
       <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BulletSpawn.h">
-      <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
+      <Filter>02.GameObject\98.Gizmo\01.BulletSpawn</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Intro.h">
       <Filter>03.Scene\01.Intro</Filter>
@@ -396,7 +405,15 @@
     <ClInclude Include="..\Header\WormBoss.h">
       <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PickingManger.h" />
+    <ClInclude Include="..\Header\PickingManger.h">
+      <Filter>97.Manager\97.PeekingManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Trigger.h">
+      <Filter>02.GameObject\99.Trigger\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RoomTrigger.h">
+      <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -445,7 +462,7 @@
       <Filter>02.GameObject\00.Monster\00.Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\PlayerSpawn.cpp">
-      <Filter>02.GameObject\99.Trigger\00.PlayerSpawn</Filter>
+      <Filter>02.GameObject\98.Gizmo\00.PlayerSpawn</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Bullet.cpp">
       <Filter>02.GameObject\04.Bullet\00.Base</Filter>
@@ -454,7 +471,7 @@
       <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\BulletSpawn.cpp">
-      <Filter>02.GameObject\99.Trigger\01.BulletSpawn</Filter>
+      <Filter>02.GameObject\98.Gizmo\01.BulletSpawn</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Intro.cpp">
       <Filter>03.Scene\01.Intro</Filter>
@@ -549,7 +566,6 @@
     <ClCompile Include="..\Source\LightMananger.cpp">
       <Filter>97.Manager\02.LightManager</Filter>
     </ClCompile>
-
     <ClCompile Include="..\Source\TreeBoss.cpp">
       <Filter>02.GameObject\00.Monster\10.TreeBoss</Filter>
     </ClCompile>
@@ -559,7 +575,15 @@
     <ClCompile Include="..\Source\WormBoss.cpp">
       <Filter>02.GameObject\00.Monster\11.WormBoss</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\PickingManger.cpp" />
+    <ClCompile Include="..\Source\PickingManger.cpp">
+      <Filter>97.Manager\97.PeekingManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Trigger.cpp">
+      <Filter>02.GameObject\99.Trigger\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RoomTrigger.cpp">
+      <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

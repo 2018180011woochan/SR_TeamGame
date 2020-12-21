@@ -51,6 +51,8 @@ HRESULT CRub::Awake()
 	nIndex = 0;
 
 	m_eRenderID = ERenderID::Alpha;
+
+	
 	return S_OK;
 }
 
@@ -58,15 +60,28 @@ HRESULT CRub::Start()
 {
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	// Test
-	m_pTransform->Add_Position(_vector(0.f, -3.f, 0.f));
-	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pTransform->Add_Position(_vector(0.f, -3.f, 0.f));
+	//Test
+	m_pTransform->Set_Position(_vector(15.f, 2.f, 0.f));
+
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
+	
+	//test
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+
+	//Test
+	m_nTag = 0;
 	return S_OK;
 }
 
 UINT CRub::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -80,21 +95,21 @@ UINT CRub::Update(const float _fDeltaTime)
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
 
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
+	//if (FAILED(Movement(_fDeltaTime)))
+	//	return 0;
 
 
-	m_fJumpDeltaTime += _fDeltaTime;
-	if (m_fJumpSpeed <= m_fJumpDeltaTime)
-	{
-		m_fJumpDeltaTime -= m_fJumpSpeed;
+	//m_fJumpDeltaTime += _fDeltaTime;
+	//if (m_fJumpSpeed <= m_fJumpDeltaTime)
+	//{
+	//	m_fJumpDeltaTime -= m_fJumpSpeed;
 
-		if (false == m_bJump)
-			m_bJump = true;
+	//	if (false == m_bJump)
+	//		m_bJump = true;
 
-		m_fYTest = m_pTransform->Get_Position().y;
+	//	m_fYTest = m_pTransform->Get_Position().y;
 
-	}
+	//}
 
 	Jumping(_fDeltaTime);
 	m_pTransform->UpdateTransform();
@@ -117,6 +132,15 @@ HRESULT CRub::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CRub::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		cout << "Rub Hit" << endl;
+		m_bDead = true;
+	}
 }
 
 

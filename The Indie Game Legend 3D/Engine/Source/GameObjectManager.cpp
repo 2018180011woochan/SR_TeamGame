@@ -84,10 +84,6 @@ UINT CGameObjectManager::Update(const size_t _nSceneID, const float _fDeltaTime)
 		return 0;
 	}
 
-	//for (auto pGameObject : iter->second)
-	//{
-	//	pGameObject->Update(_fDeltaTime);
-	//}
 	auto iter_Obj = iter->second.begin();
 	for (; iter_Obj != iter->second.end(); )
 	{

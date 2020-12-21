@@ -5,6 +5,8 @@
 #include "PlayerBullet.h"
 #include "PlayerCamera.h"
 #include "AmmoGauge.h"
+#include "PickingManger.h"
+#include "LightMananger.h"
 USING(Engine)
 
 
@@ -199,10 +201,7 @@ void CPlayer::BulletFire()
 		pBullet->Fire();
 	};
 	if (m_fBulletFireTime < m_fBulletFireDelay)
-	{
-		//cout << "not ready" << endl;
 		return;
-	}
 
 	// 현재 저 조건 아니면 발사 했다는 경우이니 초기화
 	m_fBulletFireTime = 0.f;
@@ -304,6 +303,51 @@ void CPlayer::ChangeWeapon()
 
 }
 
+void CPlayer::UpdateLight()
+{
+	static float a1 = 0.0001f;
+	static float a2 = 0.0001f;
+	static float a3 = 0.0001f;
+
+	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Position =
+		m_pTransform->Get_Position();
+	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Position.y = 50.f;
+	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation0 = a1;
+	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation1 = a2;
+	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation2 = a3;
+
+	CLightMananger::GetInstance()->SetLight(CLightMananger::Player);
+
+	if (GetAsyncKeyState('Z') & 0x8000)
+	{
+		a1 -= 0.0001f;
+	}
+	if (GetAsyncKeyState('X') & 0x8000)
+	{
+		a1 += 0.0001f;
+	}
+	if (GetAsyncKeyState('C') & 0x8000)
+	{
+		a2 -= 0.0001f;
+	}
+	if (GetAsyncKeyState('V') & 0x8000)
+	{
+		a2 += 0.0001f;
+	}
+	if (GetAsyncKeyState('B') & 0x8000)
+	{
+		a3 -= 0.0001f;
+	}
+	if (GetAsyncKeyState('N') & 0x8000)
+	{
+		a3 += 0.0001f;
+	}
+
+	a1 = CLAMP(a1, 0.00000001f, 0.01f);
+	a2 = CLAMP(a2, 0.00000001f, 0.1f);
+	a3 = CLAMP(a3, 0.00000001f, 0.01f);
+}
+
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 {
 	for (auto& eType : m_vecWeapons)
@@ -357,11 +401,12 @@ HRESULT CPlayer::Awake()
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(20.f,20.f, 20.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(10.f,10.f, 10.f));
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
 	pCollider->SetMesh(TEXT("SkyBox"));
+
 	return S_OK;
 }
 
@@ -370,6 +415,9 @@ HRESULT CPlayer::Start()
 	//Test
 	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
 	//SafeAddRef(m_pAmmobar);
+
+	//Test player spawn 찾아서 룸아디 대입받는걸로 
+	m_nTag = 0;
 
 	return S_OK;
 }
@@ -380,6 +428,7 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	KeyInput(_fDeltaTime);
 	m_pTransform->UpdateTransform();
 	UpdateState(_fDeltaTime);
+	UpdateLight();
 
 	return OBJ_NOENVET;
 }
@@ -418,6 +467,17 @@ CGameObject * CPlayer::Clone()
 	CPlayer* pClone = new CPlayer(*this);
 	
 	return pClone;
+}
+
+void CPlayer::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"RoomTrigger" == _pGameObject->GetName() && m_nTag != _pGameObject->GetTage())
+	{
+		m_nTag = _pGameObject->GetTage();
+		system("cls");
+		cout << "Change RoomID : " <<m_nTag << endl;
+		CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
+	}
 }
 
 CPlayer * CPlayer::Create()

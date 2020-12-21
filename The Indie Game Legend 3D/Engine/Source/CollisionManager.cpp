@@ -61,7 +61,7 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 	
 	clock_t nEnd = clock();
 	int a = (1 + Collider.size()) * Collider.size() / 2;
-	cout << "Tile : " << nCount << "    /    Size() : " << Collider.size() <<"  For : "<< a << endl;
+	//cout << "Tile : " << nCount << "    /    Size() : " << Collider.size() <<"  For : "<< a << endl;
 
 	Collider.clear();
 
