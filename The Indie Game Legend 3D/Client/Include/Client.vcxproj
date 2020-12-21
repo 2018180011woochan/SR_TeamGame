@@ -185,12 +185,14 @@
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
     <ClInclude Include="..\Header\NubBoss.h" />
+    <ClInclude Include="..\Header\PickingManger.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\PlayerSpawn.h" />
     <ClInclude Include="..\Header\RoboBird.h" />
+    <ClInclude Include="..\Header\RoomTrigger.h" />
     <ClInclude Include="..\Header\RootAttack.h" />
     <ClInclude Include="..\Header\Rub.h" />
     <ClInclude Include="..\Header\SandTile.h" />
@@ -206,6 +208,7 @@
     <ClInclude Include="..\Header\TexturePoolManager.h" />
     <ClInclude Include="..\Header\Tile.h" />
     <ClInclude Include="..\Header\TreeBoss.h" />
+    <ClInclude Include="..\Header\Trigger.h" />
     <ClInclude Include="..\Header\Turret.h" />
     <ClInclude Include="..\Header\TurretBullet.h" />
     <ClInclude Include="..\Header\WalkBossBullet.h" />
@@ -244,6 +247,7 @@
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
     <ClCompile Include="..\Source\NubBoss.cpp" />
+    <ClCompile Include="..\Source\PickingManger.cpp" />
     <ClCompile Include="..\Source\Player.cpp" />
     <ClCompile Include="..\Source\PlayerBullet.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />
@@ -251,6 +255,7 @@
     <ClCompile Include="..\Source\MainApp.cpp" />
     <ClCompile Include="..\Source\PlayerSpawn.cpp" />
     <ClCompile Include="..\Source\RoboBird.cpp" />
+    <ClCompile Include="..\Source\RoomTrigger.cpp" />
     <ClCompile Include="..\Source\RootAttack.cpp" />
     <ClCompile Include="..\Source\Rub.cpp" />
     <ClCompile Include="..\Source\SandTile.cpp" />
@@ -266,6 +271,7 @@
     <ClCompile Include="..\Source\TexturePoolManager.cpp" />
     <ClCompile Include="..\Source\Tile.cpp" />
     <ClCompile Include="..\Source\TreeBoss.cpp" />
+    <ClCompile Include="..\Source\Trigger.cpp" />
     <ClCompile Include="..\Source\Turret.cpp" />
     <ClCompile Include="..\Source\TurretBullet.cpp" />
     <ClCompile Include="..\Source\WalkBossBullet.cpp" />

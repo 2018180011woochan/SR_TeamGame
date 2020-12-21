@@ -27,7 +27,7 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	_matrix matRotAxis;
 	/*Eye*/
 	m_tCameraDesc.vEye = pPlayerTransFomr->Get_Position();
-	m_tCameraDesc.vEye.y =/* m_fCameraHeight*/m_fValue; //점프 없을거라고 봄
+	m_tCameraDesc.vEye.y = m_fCameraHeight;//점프 없을거라고 봄
 	
 	/*At . RotY */
 	memcpy(&vPlayerLook, &PlayerTransFormDesc.matWorld.m[2][0], sizeof(_vector));
@@ -104,14 +104,6 @@ UINT CPlayerCamera::Update(const float _fDeltaTime)
 	if (FAILED(UpdateMove(_fDeltaTime)))
 		return OBJ_NOENVET;
 
-	if (GetAsyncKeyState(VK_NUMPAD8) & 0x8000)
-	{
-		m_fValue += 1.0f;
-	}
-	else if (GetAsyncKeyState(VK_NUMPAD5) & 0x8000)
-	{
-		m_fValue -= 1.0f;
-	}
 	return OBJ_NOENVET;
 }
 

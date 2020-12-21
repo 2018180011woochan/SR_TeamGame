@@ -20,6 +20,7 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Jumping(float fDeltaTime);
@@ -36,6 +37,7 @@ private:
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
+	CCollider*		m_pCollider;
 
 	float				m_fMoveSpeed;
 

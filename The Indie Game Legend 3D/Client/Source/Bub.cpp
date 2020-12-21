@@ -26,12 +26,12 @@ HRESULT CBub::InitializePrototype()
 
 HRESULT CBub::Awake()
 {
+
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
-
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bub"));
 	SafeAddRef(m_pTexturePool);
 	m_eRenderID = ERenderID::Alpha;
@@ -43,19 +43,31 @@ HRESULT CBub::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(4, 4, 4));
 	m_pTransform->Add_Position(_vector(0, -3, 0));
+	m_pTransform->Set_Position(_vector(-15.f, 0.f, 0.f));
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
+	//Test
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
 
+	//Test
+	m_nTag = 0;
 	return S_OK;
 }
 
 UINT CBub::Update(const float _fDeltaTime)
 {
+	//test
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
-	if (m_pTransform->Get_Position().y > m_fMaxJump || m_pTransform->Get_Position().y < 3.f)
+	//3.f->2.f 이거 통일 필요 
+	if (m_pTransform->Get_Position().y > m_fMaxJump || m_pTransform->Get_Position().y < 2.f)
 	{
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
+		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 2.f, m_pTransform->Get_Position().z));
 	}
 
 	m_fJumpingCnt++;
@@ -64,16 +76,16 @@ UINT CBub::Update(const float _fDeltaTime)
 		nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
+	//Test
+	//if (m_fJumpingCnt / 100.f > 1.f)
+	//{
+	//	Jumping(_fDeltaTime);
+	//	++nIndex;
+	//	m_fJumpingCnt = 0.f;
+	//}
 
-	if (m_fJumpingCnt / 100.f > 1.f)
-	{
-		Jumping(_fDeltaTime);
-		++nIndex;
-		m_fJumpingCnt = 0.f;
-	}
-
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
+	//if (FAILED(Movement(_fDeltaTime)))
+	//	return 0;
 
 
 	m_pTransform->UpdateTransform();
@@ -84,6 +96,7 @@ UINT CBub::Update(const float _fDeltaTime)
 
 UINT CBub::LateUpdate(const float _fDeltaTime)
 {
+
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
@@ -97,6 +110,16 @@ HRESULT CBub::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CBub::OnCollision(CGameObject * _pGameObject)
+{
+	//if (-1 == lstrcmp(L"PlayerBullet", _pGameObject->GetName().c_str()))
+	if (L"PlayerBullet" ==  _pGameObject->GetName())
+	{
+		cout << "bub Hit" << endl;
+		m_bDead = true;
+	}
 }
 
 

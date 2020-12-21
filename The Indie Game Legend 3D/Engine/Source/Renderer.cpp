@@ -101,6 +101,9 @@ HRESULT CRenderer::RenderAlpha()
 
 HRESULT CRenderer::RenderUI()
 {
+
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, false);
+
 	/*알파 테스팅 */
 	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	m_pDevice->SetRenderState(D3DRS_ALPHAREF, 1); /*알파기준값*/
@@ -138,6 +141,9 @@ HRESULT CRenderer::RenderUI()
 	m_pDevice->SetRenderState(D3DRS_ZENABLE, true);
 
 	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, true);
+
 	return S_OK;
 }
 

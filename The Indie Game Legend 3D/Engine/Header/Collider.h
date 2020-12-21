@@ -38,7 +38,7 @@ public:
 	const D3DXVECTOR3*	GetVertices();
 	const UINT			GetVertexCount();
 
-	bool IsRayPicking(OUT D3DXVECTOR3& _pOut, const D3DXVECTOR3 _vRay);
+	bool IsRayPicking(OUT D3DXVECTOR3& _pOut,OUT float& _Dis, const D3DXVECTOR3 _vRayPv, const D3DXVECTOR3 _vRayDir);
 };
 END
 #define __COLLIDER_H__

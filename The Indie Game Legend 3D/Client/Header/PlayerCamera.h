@@ -14,7 +14,6 @@ private:
 	class CPlayer* m_pPlayer;
 	class CMouse*  m_pMouse;
 
-	float m_fValue = 10.f;
 private:
 	HRESULT UpdateMove(float _fDeletaTime);
 private:

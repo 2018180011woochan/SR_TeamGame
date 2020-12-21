@@ -56,10 +56,12 @@ HRESULT CCryder::Start()
 {
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	// Test
 	m_pTransform->Add_Position(_vector(0.f, 2.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	//Test
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
 	return S_OK;
 }
 

@@ -31,6 +31,7 @@ private:
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
+	CCollider*		m_pCollider;
 	DWORD		   m_dwFireTime;
 	float		   m_fFireSpeed;
 	float		   m_fFireDeltaTime;
