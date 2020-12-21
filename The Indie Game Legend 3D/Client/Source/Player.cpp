@@ -305,47 +305,7 @@ void CPlayer::ChangeWeapon()
 
 void CPlayer::UpdateLight()
 {
-	static float a1 = 0.0001f;
-	static float a2 = 0.0001f;
-	static float a3 = 0.0001f;
-
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Position =
-		m_pTransform->Get_Position();
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Position.y = 50.f;
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation0 = a1;
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation1 = a2;
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation2 = a3;
-
-	CLightMananger::GetInstance()->SetLight(CLightMananger::Player);
-
-	if (GetAsyncKeyState('Z') & 0x8000)
-	{
-		a1 -= 0.0001f;
-	}
-	if (GetAsyncKeyState('X') & 0x8000)
-	{
-		a1 += 0.0001f;
-	}
-	if (GetAsyncKeyState('C') & 0x8000)
-	{
-		a2 -= 0.0001f;
-	}
-	if (GetAsyncKeyState('V') & 0x8000)
-	{
-		a2 += 0.0001f;
-	}
-	if (GetAsyncKeyState('B') & 0x8000)
-	{
-		a3 -= 0.0001f;
-	}
-	if (GetAsyncKeyState('N') & 0x8000)
-	{
-		a3 += 0.0001f;
-	}
-
-	a1 = CLAMP(a1, 0.00000001f, 0.01f);
-	a2 = CLAMP(a2, 0.00000001f, 0.1f);
-	a3 = CLAMP(a3, 0.00000001f, 0.01f);
+	
 }
 
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)

@@ -119,7 +119,7 @@ const UINT CCollider::GetVertexCount()
 
 bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DXVECTOR3 _vRayPv, const D3DXVECTOR3 _vRayDir)
 {
-	const D3DXVECTOR3* pVertices =  m_pCollisionMesh->GetVertices();
+	const D3DXVECTOR3* pVertices =  GetVertices();
 	CTransform* pTrans = (CTransform*)m_pGameObject->GetComponent<CTransform>();
 	_matrix matWorld = pTrans->Get_TransformDesc().matWorld;
 	_matrix matInvWorld = matWorld;
