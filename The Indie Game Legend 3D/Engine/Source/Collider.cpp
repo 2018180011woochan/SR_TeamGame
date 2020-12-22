@@ -90,6 +90,7 @@ void CCollider::SetBound()
 	SafeDeleteArray(pVertices);
 }
 
+
 BOUNDINGBOX CCollider::GetBound()
 {
 	CTransform* pTransform = nullptr;
