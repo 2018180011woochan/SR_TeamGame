@@ -87,6 +87,8 @@ HRESULT CPlayerCamera::Awake()
 	m_fCameraAngleX = 0.f;
 	m_fDistanceToAt = 500.f;
 	m_fCameraAngleSpeed = 200.f;
+
+	m_fCameraHeight = 8.f;
 	return S_OK;
 }
 

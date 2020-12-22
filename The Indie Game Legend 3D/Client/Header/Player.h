@@ -17,6 +17,18 @@ enum class EState : _uint
 	Hit,
 	End
 };
+enum class ESoundID :_uint
+{
+	NormalFire,
+	BigFire,
+	Hit,
+	AddHeart,
+	AddCoin,
+	Dash,
+
+	Run,
+
+};
 class CPlayer final: public CGameObject
 {
 private:
@@ -47,9 +59,9 @@ private:
 
 
 	 //State
-	 _uint						m_nHp = 0;
-	 _uint						m_nHpMax = 0;
-	 _uint						m_nCoin = 0;
+	 _int						m_nHp = 0;
+	 _int						m_nHpMax = 0;
+	 _int						m_nCoin = 0;
 
 	 float						m_fHitDelay = 0.f;
 	 float						m_fHitDelayTime = 0.f;
@@ -78,6 +90,8 @@ private:
 	void    ChangeWeapon();// 관련 세팅값 설정
 	void	UpdateLight();
 	void	AddHp(_int _nHp);
+
+	void	SoundPlayer(const ESoundID& _eID);
 public:
 	//Getter Setter
 	const float& GetAmmo() { return m_fAmmo; }

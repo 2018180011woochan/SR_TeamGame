@@ -31,6 +31,8 @@ HRESULT CElectricTile::InitializePrototype()
 HRESULT CElectricTile::Awake()
 {
 	CTile::Awake();
+
+	m_sName = L"Electric";
 	return S_OK;
 }
 
@@ -74,7 +76,6 @@ HRESULT CElectricTile::Render()
 {
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
-	m_pCollider->Draw();
 
 	return S_OK;
 }

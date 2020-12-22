@@ -50,7 +50,6 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 				{
 					Collider[i]->GetGameObject()->OnCollision(Collider[j]->GetGameObject());
 					Collider[j]->GetGameObject()->OnCollision(Collider[i]->GetGameObject());
-					cout << "Ãæµ¹" << endl;
 				}
 			}
 

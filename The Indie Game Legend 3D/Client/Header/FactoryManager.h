@@ -16,6 +16,7 @@ public:
 	HRESULT LoadScene( CScene* const _pScene);
 private:
 	void ClearData();
+	HRESULT AddObject(CScene* const _pScene, _uint _nIndex);
 private:
 	explicit CFactoryManager();
 	virtual ~CFactoryManager() = default;

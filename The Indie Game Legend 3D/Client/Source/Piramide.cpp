@@ -29,13 +29,14 @@ HRESULT CPiramide::Start()
 	m_pMeshRenderer->SetMesh(TEXT("Pyramid_Level1"));
 	m_eRenderID = ERenderID::NoAlpha;
 
-	m_pTransform->Set_Scale(_vector(5, 5, 5));
-	m_pTransform->Set_Position(_vector(15, 0, 0));
+	m_pTransform->Set_Scale(_vector(1, 1, 1));
+	m_pTransform->Set_Position(_vector(40, 0, 0));
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("SkyBox"));
 	m_pCollider->m_bIsRigid = true;
 
+	m_pTransform->UpdateTransform();
 	return S_OK;
 }
 

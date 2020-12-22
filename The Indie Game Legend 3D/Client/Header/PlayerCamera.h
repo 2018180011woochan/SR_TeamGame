@@ -10,7 +10,7 @@ private:
 	float	m_fDistanceToAt = 10.f;
 	float	m_fCameraAngleX = 0.f;
 	float	m_fCameraAngleSpeed = 1.f;
-	float	m_fCameraHeight = 10.f;
+	float	m_fCameraHeight = 0.f;
 	class CPlayer* m_pPlayer;
 	class CMouse*  m_pMouse;
 

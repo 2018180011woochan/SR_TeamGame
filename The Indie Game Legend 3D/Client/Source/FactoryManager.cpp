@@ -79,11 +79,12 @@ HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 
 	CManagement* pManagement = CManagement::GetInstance();
 	CGameObject* pGameObject = nullptr;
+
 	_int nSize = m_vecSaveDataRoomID.size();
 	for (size_t i = 0; i < m_vecSaveDataRoomID.size(); ++i)
 	{
-
-		TSTRING TypeID =  L"C" + m_vecSaveDataType[i];
+		AddObject(_pScene, i);
+	/*	TSTRING TypeID = L"C" + m_vecSaveDataType[i];
 		pGameObject = _pScene->AddGameObject(TypeID);
 
 		if (nullptr == pGameObject)
@@ -93,7 +94,7 @@ HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 		}
 		pGameObject->Awake();
 		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[i]);
-		pGameObject->SetTag(m_vecSaveDataRoomID[i]);
+		pGameObject->SetTag(m_vecSaveDataRoomID[i]);*/
 	}
 	return S_OK;
 }
@@ -106,6 +107,42 @@ void CFactoryManager::ClearData()
 	m_vecSaveDataType.shrink_to_fit();
 	m_vecSaveDataRoomID.clear();
 	m_vecSaveDataRoomID.shrink_to_fit();
+}
+
+HRESULT CFactoryManager::AddObject(CScene* const _pScene , _uint _nIndex)
+{
+	TSTRING TypeID = L"C" + m_vecSaveDataType[_nIndex];
+	CGameObject* pGameObject = nullptr;
+
+
+	if (L"CRoomTriggerH" == TypeID)
+	{
+		pGameObject = _pScene->AddGameObject(L"CRoomTrigger");
+		if (nullptr == pGameObject)
+		{
+			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
+			return E_FAIL;
+		}
+		pGameObject->Awake();
+		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[_nIndex]);
+		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Rotation(_vector(0, 90, 0));
+		pGameObject->SetTag(m_vecSaveDataRoomID[_nIndex]);
+	}
+	else
+	{
+		pGameObject = _pScene->AddGameObject(TypeID);
+
+		if (nullptr == pGameObject)
+		{
+			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
+			return E_FAIL;
+		}
+		pGameObject->Awake();
+		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[_nIndex]);
+		pGameObject->SetTag(m_vecSaveDataRoomID[_nIndex]);
+	}
+	return S_OK;
+
 }
 
 CFactoryManager::CFactoryManager()

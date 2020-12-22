@@ -99,6 +99,30 @@ HRESULT CRenderer::RenderAlpha()
 
 }
 
+HRESULT CRenderer::RenderAlphaCullNone()
+{
+	m_pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	m_pDevice->SetRenderState(D3DRS_ALPHAREF, 1); /*알파기준값*/
+	m_pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	for (auto& pObject : m_GameObjects[(_int)ERenderID::AlphaCullNone])
+	{
+		if (FAILED(pObject->Render()))
+			return E_FAIL;
+
+		SafeRelease(pObject);
+	}
+
+	m_GameObjects[(_int)ERenderID::AlphaCullNone].clear();
+
+	m_pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	m_pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	return S_OK;
+}
+
 HRESULT CRenderer::RenderUI()
 {
 	//uiw 조명 off
@@ -185,6 +209,9 @@ HRESULT CRenderer::Render(HWND _hWnd)
 		return E_FAIL;
 
 	if (FAILED(RenderAlpha()))
+		return E_FAIL;
+
+	if (FAILED(RenderAlphaCullNone()))
 		return E_FAIL;
 
 	if (FAILED(RenderUI()))

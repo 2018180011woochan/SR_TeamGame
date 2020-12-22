@@ -18,35 +18,16 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	vViewPortPt.y = 1.f - vCenter.y / (nWinCY * 0.5f);
 	vViewPortPt.z = pCamaer->Get_Camera().fNear; //  근평면 near
 
-	//Test
-	system("cls");
-	cout << "=============picking info============" << endl;
-	cout << "	Proj" << endl;
-	cout << "vViewPortPt	 :  " << vViewPortPt.x << "," << vViewPortPt.y << "," << vViewPortPt.z << endl;
-	//Test
-
 	/* 투영 > 뷰  */
-
 	_matrix matInvProj = pCamaer->Get_Camera().matProj;
 	D3DXMatrixInverse(&matInvProj, 0, &matInvProj);
 	D3DXVec3TransformCoord(&vViewPortPt, &vViewPortPt, &matInvProj);
 	
-	//Test
-	cout << "	View" << endl;
-	cout << "vViewPortPt	:  " << vViewPortPt.x << "," << vViewPortPt.y << "," << vViewPortPt.z << endl;
-	//Test
-
 
 	//Ray setting
 	_vector vRayPivot = vZero;
 	_vector vRayDirection = vViewPortPt - vRayPivot;
 	D3DXVec3Normalize(&vRayDirection, &vRayDirection);
-
-	//Test
-	cout << "	RaySetting" << endl;
-	cout << "rayPos		:  " << vRayPivot.x << "," << vRayPivot.y << "," << vRayPivot.z << endl;
-	cout << "rayDir		 :  " << vRayDirection.x << "," << vRayDirection.y << "," << vRayDirection.z << endl;
-	//Test
 
 	/* 뷰 > 월드 */
 	_matrix matInvView = pCamaer->Get_Camera().matView;
@@ -54,14 +35,6 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	D3DXVec3TransformCoord(&vRayPivot, &vRayPivot, &matInvView);
 	D3DXVec3TransformNormal(&vRayDirection, &vRayDirection, &matInvView);
 	D3DXVec3Normalize(&vRayDirection, &vRayDirection);
-
-	//Test
-	cout << "	World" << endl;
-	cout << "rayPos		:  " << vRayPivot.x << "," << vRayPivot.y << "," << vRayPivot.z << endl;
-	cout << "rayDir		:  " << vRayDirection.x << "," << vRayDirection.y << "," << vRayDirection.z << endl;
-	//Test
-
-
 
 	list<CGameObject*> CollisionList;
 	//충돌시킬 물체 추가 ..
@@ -96,12 +69,6 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 		}
 	}
 	_vPickingPos = vResultPos;
-	if (bIsPicking)
-	{
-		cout << "pickrPos	:  " << _vPickingPos.x << "," << _vPickingPos.y << "," << _vPickingPos.z << endl;
-	}
-
-	cout << "=============picking info============" << endl;
 
 	return bIsPicking;
 }

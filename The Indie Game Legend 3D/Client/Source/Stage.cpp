@@ -109,8 +109,8 @@ HRESULT CStage::Awake()
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
-	AddGameObject<CBub>();
-	AddGameObject<CRub>();
+	//AddGameObject<CBub>();
+	//AddGameObject<CRub>();
 	//AddGameObject<CsqrNub>();
 	//AddGameObject<CTurret>();
 	//AddGameObject<CWalker>();
@@ -121,7 +121,7 @@ HRESULT CStage::Awake()
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
 
-	AddGameObject<CTreeBoss>();
+	//AddGameObject<CTreeBoss>();
 	//AddGameObject<CWormBoss>();
 	//AddGameObject<CWormBossBody>();
 
@@ -133,11 +133,15 @@ HRESULT CStage::Awake()
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
-		_vector(0, -10, 0), color*0.5f, color, color*0.f);
+		_vector(1, -1, 1), color*0.5f, color, color*0.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
-	CLightMananger::GetInstance()->LightOn();
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
+		_vector(-1, -1, -1), color*0.5f, color, color*0.f);
+
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
+	CLightMananger::GetInstance()->LightOff();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
@@ -158,8 +162,8 @@ HRESULT CStage::Awake()
 
 HRESULT CStage::Start()
 {
-	//CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
-	//CFactoryManager::GetInstance()->LoadScene(this);
+	CFactoryManager::GetInstance()->LoadDataFile(L"RoomTriggerTest");
+	CFactoryManager::GetInstance()->LoadScene(this);
 
 	CScene::Start();
 

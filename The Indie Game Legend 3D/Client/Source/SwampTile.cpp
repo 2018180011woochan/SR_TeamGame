@@ -32,6 +32,9 @@ HRESULT CSwampTile::InitializePrototype()
 HRESULT CSwampTile::Awake()
 {
 	CTile::Awake();
+
+	m_sName = L"Swamp";
+
 	return S_OK;
 }
 

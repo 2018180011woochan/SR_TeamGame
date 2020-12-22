@@ -9,6 +9,7 @@
 #include "LightMananger.h"
 #include "HeartManager.h"
 #include "Item.h"
+#include "SoundMgr.h"
 USING(Engine)
 
 
@@ -342,9 +343,28 @@ void CPlayer::AddHp(_int _nHp)
 	m_nHp += _nHp;
 	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
 
+	cout << m_nHp << endl;
 	if (m_nHp < 1)
 	{
 		//Dead
+	}
+}
+
+void CPlayer::SoundPlayer(const ESoundID & _eID)
+{
+	switch (_eID)
+	{
+	case ESoundID::NormalFire:
+		//CSoundMgr::GetInstance()->
+		break;
+	case ESoundID::BigFire:
+		break;
+	case ESoundID::Hit:
+		break;
+	case ESoundID::Run:
+		break;
+	default:
+		break;
 	}
 }
 
@@ -512,13 +532,15 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	{
 		m_eState = EState::Hit;
 		m_fHitDelayTime = 0.f;
-		cout << "hit" << endl;
+		cout << "eeee" << endl;
 		AddHp(-1);
 	}
 	else if (L"Swamp" == _pGameObject->GetName())
 	{
 		m_eState = EState::Hit;
 		m_bIsDeBuff = true;
+		cout << "sssss" << endl;
+
 		m_fHitDelayTime = 0.f;
 		AddHp(-1);
 	}
