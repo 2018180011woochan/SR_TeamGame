@@ -188,7 +188,7 @@ UINT CStage::Update(float _fDeltaTime)
 	}
 	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
 
-	if (GetAsyncKeyState(VK_F5) & 0x0001)
+	if (GetAsyncKeyState(VK_F5) & 0x8000)
 	{
 		bLight = !bLight;
 		if (bLight)
