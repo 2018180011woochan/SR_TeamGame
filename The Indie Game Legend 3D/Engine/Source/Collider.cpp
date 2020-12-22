@@ -68,10 +68,10 @@ void CCollider::SetBound()
 	if (nullptr == m_pCollisionMesh)
 		return;
 
-	LPVERTEX	pVertices = new VERTEX[m_pCollisionMesh->GetVertexCount()];
-	UINT		nVertexCount = m_pCollisionMesh->GetVertexCount();
+	UINT      nVertexCount = m_pCollisionMesh->GetVertexCount();
+	D3DXVECTOR3*   pVertices = new D3DXVECTOR3[nVertexCount];
 
-	memcpy(pVertices, m_pCollisionMesh->GetVertices(), sizeof(VERTEX) * nVertexCount);
+	memcpy(pVertices, m_pCollisionMesh->GetVertices(), sizeof(D3DXVECTOR3) * nVertexCount);
 
 	D3DXMATRIX matScale;
 	D3DXVECTOR3 vScale = ((CTransform*)m_pGameObject->GetComponent<CTransform>())->Get_TransformDesc().vScale;
@@ -81,11 +81,11 @@ void CCollider::SetBound()
 
 	for (UINT i = 0; i < nVertexCount; ++i)
 	{
-		D3DXVec3TransformCoord(&(pVertices[i].Position), &(pVertices[i].Position), &matScale);
+		D3DXVec3TransformCoord(&(pVertices[i]), &(pVertices[i]), &matScale);
 	}
 
 	//바운딩 박스 구조체
-	D3DXComputeBoundingBox((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(VERTEX), &(m_tBoundingBox.vMin), &(m_tBoundingBox.vMax));
+	D3DXComputeBoundingBox((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(D3DXVECTOR3), &(m_tBoundingBox.vMin), &(m_tBoundingBox.vMax));
 
 	SafeDeleteArray(pVertices);
 }
@@ -132,12 +132,6 @@ bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DX
 	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matInvWorld);
 	D3DXVec3Normalize(&vRayDir, &vRayDir);
 	
-	//test
-	cout << "\n		Local" << endl;
-	cout << "Raypv		:" << vRayPv.x << "," << vRayPv.y << "," << vRayPv.z << endl;
-	cout << "Raydir		:" << vRayDir.x << "," << vRayDir.y << "," << vRayDir.z << endl<< endl;
-	//test
-
 	_uint nMaxCount = m_pCollisionMesh->GetVertexCount();
 
 	float fU = 0.f, fV = 0.f;
@@ -151,12 +145,9 @@ bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DX
 		if (D3DXIntersectTri(&V1,&V2,&V3,
 			&vRayPv,&vRayDir,&fU,&fV,&_Dis))
 		{
-			cout << "Dis : " << _Dis << endl;
 			if(_Dis < 1.f)
 				continue;
 
-			cout << endl << "		[[[[picking]]]]]" << endl;
-			cout << "picking vertex Index : " << i<<", "<<i+1<<", "<< i+2 << endl;
 			// 교차점 = V1 + U(V2 - V1) + V(V3 - V1)
 			_pOut = V1 + fU * (V2 - V1) + fV * (V3 - V1);
 			D3DXVec3TransformCoord(&_pOut, &_pOut, &matWorld);//로컬 > 월드

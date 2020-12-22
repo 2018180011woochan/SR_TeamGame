@@ -17,5 +17,13 @@ enum class EWeaponType : unsigned int
 	End
 };
 
+enum class EItemID : unsigned int
+{
+	Heart,
+	Ammo,
+	sprCoin,
+	sprBigCoin,
+	End
+};
 #define  __CLIENTENUM_H__
 #endif // !__CLIENTENUM_H__

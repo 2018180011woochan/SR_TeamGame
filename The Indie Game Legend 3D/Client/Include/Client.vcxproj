@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\HeartManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
     <ClInclude Include="..\Header\IntroBackGround.h" />
+    <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\KeyManager.h" />
     <ClInclude Include="..\Header\LavaTile.h" />
     <ClInclude Include="..\Header\LightMananger.h" />
@@ -185,7 +186,9 @@
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
     <ClInclude Include="..\Header\NubBoss.h" />
+    <ClInclude Include="..\Header\Obstacle.h" />
     <ClInclude Include="..\Header\PickingManger.h" />
+    <ClInclude Include="..\Header\Piramide.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
@@ -239,6 +242,7 @@
     <ClCompile Include="..\Source\HeartManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
+    <ClCompile Include="..\Source\Item.cpp" />
     <ClCompile Include="..\Source\KeyManager.cpp" />
     <ClCompile Include="..\Source\LavaTile.cpp" />
     <ClCompile Include="..\Source\LightMananger.cpp" />
@@ -247,7 +251,9 @@
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
     <ClCompile Include="..\Source\NubBoss.cpp" />
+    <ClCompile Include="..\Source\Obstacle.cpp" />
     <ClCompile Include="..\Source\PickingManger.cpp" />
+    <ClCompile Include="..\Source\Piramide.cpp" />
     <ClCompile Include="..\Source\Player.cpp" />
     <ClCompile Include="..\Source\PlayerBullet.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />

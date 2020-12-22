@@ -114,7 +114,6 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-	//if (-1 == lstrcmp(L"PlayerBullet", _pGameObject->GetName().c_str()))
 	if (L"PlayerBullet" ==  _pGameObject->GetName())
 	{
 		cout << "bub Hit" << endl;

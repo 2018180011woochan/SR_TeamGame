@@ -211,7 +211,6 @@
     <Filter Include="97.Manager\97.PeekingManager">
       <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
     </Filter>
-
     <Filter Include="02.GameObject\98.Collider">
       <UniqueIdentifier>{58a8a365-70c5-44d5-8bd8-afdad690e1ff}</UniqueIdentifier>
     </Filter>
@@ -238,6 +237,18 @@
     </Filter>
     <Filter Include="02.GameObject\99.Trigger\01.RoomTrigger">
       <UniqueIdentifier>{9b80813f-ef7b-40ad-9d8d-f622faef8a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Objstacle">
+      <UniqueIdentifier>{1403aea3-afc2-4c34-9859-eb2b782f80c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Objstacle\00.Base">
+      <UniqueIdentifier>{56a0b881-2444-4695-a7f0-710b63b4f147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Objstacle\01.Piramid">
+      <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\09.Item">
+      <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -436,6 +447,15 @@
     <ClInclude Include="..\Header\RoomTrigger.h">
       <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Obstacle.h">
+      <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Piramide.h">
+      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02.GameObject\09.Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -614,6 +634,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\RoomTrigger.cpp">
       <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Obstacle.cpp">
+      <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Piramide.cpp">
+      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Item.cpp">
+      <Filter>02.GameObject\09.Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
