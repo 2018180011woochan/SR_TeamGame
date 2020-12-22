@@ -16,9 +16,6 @@ void CCollisionManager::Free()
 
 void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 {
-	//충돌 검사 시간 측정
-	//clock_t nStart = clock();
-
 	vector<CCollider*>	Collider;
 
 	CCollider* pCollider = nullptr;
@@ -38,7 +35,7 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 
 	UINT nSize = Collider.size();
 	bool bCollision = false;
-	int nCount = 0;
+
 	for (UINT i = 0; i < nSize; ++i)
 	{
 		for (UINT j = i + 1; j < nSize; ++j)
@@ -46,25 +43,20 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 			if (false == Collider[i]->m_bIsRigid && false == Collider[j]->m_bIsRigid)
 				continue;
 
-			bCollision = AABB(Collider[i], Collider[j]);
+			if (true == AABB(Collider[i], Collider[j]))
+			{
+				D3DXVECTOR3 vPenetration = D3DXVECTOR3(0.f, 0.f, 0.f);
+				if (true == PolygonCollision(Collider[i], Collider[j], vPenetration))
+				{
+					Collider[i]->GetGameObject()->OnCollision(Collider[j]->GetGameObject());
+					Collider[j]->GetGameObject()->OnCollision(Collider[i]->GetGameObject());
+					cout << "충돌" << endl;
+				}
+			}
 
-			nCount++;
-			if (false == bCollision)
-				continue;
-			Collider[i]->GetGameObject()->OnCollision(Collider[j]->GetGameObject());
-			Collider[j]->GetGameObject()->OnCollision(Collider[i]->GetGameObject());
-			//옵션에 따라 밀어내기 및 GameObject의 함수 호출.
-			//예시  : Collider[i]->GetGameObject()->OnCollision(Collider[j]->GetGameObject());
 		}
 	}
-
-	
-	//clock_t nEnd = clock();
-	//int a = (1 + Collider.size()) * Collider.size() / 2;
-	//cout << "Tile : " << nCount << "    /    Size() : " << Collider.size() <<"  For : "<< a << endl;
-
 	Collider.clear();
-
 }
 
 bool CCollisionManager::AABB(CCollider * _pOrigin, CCollider * _pTarget)
@@ -119,12 +111,69 @@ bool CCollisionManager::IntersectingPoint(OUT D3DXVECTOR3 & _vPoint, const D3DXV
 	return true;
 }
 
-bool CCollisionManager::LineIntersectPolygon(const D3DXVECTOR3 _vLineStart, const D3DXVECTOR3 _vLineEnd, const D3DXVECTOR3 * _pVertices, const UINT _nVertexCount, D3DXVECTOR3 & _vPenetration)
+bool CCollisionManager::PointInPolygon(const D3DXVECTOR3 _vPoint, const D3DXVECTOR3 _vPolyPointA, const D3DXVECTOR3 _vPolyPointB, const D3DXVECTOR3 _vPolyPointC)
 {
+	float fRadian = 0.f;
+	float fDotResult = 0.f;
+	D3DXVECTOR3 vPolyPoint[3] = { _vPolyPointA, _vPolyPointB,_vPolyPointC };
+
+	D3DXVECTOR3 vOperandA = D3DXVECTOR3(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vOperandB = D3DXVECTOR3(0.f, 0.f, 0.f);
+
+	for (UINT i = 0; i < 3; ++i)
+	{
+		vOperandA = vPolyPoint[i] - _vPoint;
+		vOperandB = vPolyPoint[((i + 1) % 3)] - _vPoint;
+
+		D3DXVec3Normalize(&vOperandA, &vOperandA);
+		D3DXVec3Normalize(&vOperandB, &vOperandB);
+
+		fDotResult = D3DXVec3Dot(&vOperandA, &vOperandB);
+
+		fRadian += acosf(fDotResult);
+	}
+
+	if (fRadian >= (D3DXToRadian(36.0f)))
+		return true;
+
 	return false;
 }
 
-bool CCollisionManager::PolygonCollision(CCollider * _pOrigin, CCollider * _pTarget)
+bool CCollisionManager::LineIntersectPolygon(const D3DXVECTOR3 _vLineStart, const D3DXVECTOR3 _vLineEnd, const D3DXVECTOR3 * _pVertices, const UINT _nVertexCount, D3DXVECTOR3 & _vPenetration)
+{
+	D3DXPLANE tPlane;
+	ZeroMemory(&tPlane, sizeof(D3DXPLANE));
+	D3DXVECTOR3 vPoint = D3DXVECTOR3(0.f, 0.f, 0.f);
+
+	for (UINT i = 0; i < _nVertexCount; i += 3)
+	{
+		D3DXPlaneFromPoints(&tPlane, &_pVertices[i], &_pVertices[i + 1], &_pVertices[i + 2]);
+
+		if (false == LineCrossPlane(_vLineStart, _vLineEnd, tPlane))
+			continue;
+
+		if (false == IntersectingPoint(vPoint, _vLineStart, _vLineEnd, tPlane))
+			continue;
+
+		if (true == PointInPolygon(vPoint, _pVertices[i], _pVertices[i + 1], _pVertices[i + 2]))
+		{
+			D3DXVECTOR3 vToEnd = _vLineEnd - vPoint;
+			D3DXVECTOR3 vToStart = _vLineStart - vPoint;
+			D3DXVECTOR3 vPlaneNorm = D3DXVECTOR3(tPlane.a, tPlane.b, tPlane.c);
+
+			if (D3DXVec3Dot(&vToStart, &vPlaneNorm) >= 0.f)
+				_vPenetration = vToEnd;
+			else
+				_vPenetration = vToStart;
+			return true;
+		}
+
+	}
+
+	return false;
+}
+
+bool CCollisionManager::PolygonCollision(CCollider * _pOrigin, CCollider * _pTarget, D3DXVECTOR3& _vPenetration)
 {
 	D3DXVECTOR3* pOriginVertices = nullptr;
 	D3DXVECTOR3* pTargetVertices = nullptr;
@@ -169,16 +218,43 @@ bool CCollisionManager::PolygonCollision(CCollider * _pOrigin, CCollider * _pTar
 		}
 	}
 
-	D3DXVECTOR3 vPenetration = D3DXVECTOR3(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vLineStart = D3DXVECTOR3(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vLineEnd = D3DXVECTOR3(0.f, 0.f, 0.f);
+	UINT nStartIndex = 0;
+	UINT nEndIndex = 0;
 
 	for (UINT i = 0; i < nOriginVertexCount; ++i)
 	{
+		nStartIndex = i;
+		nEndIndex = ((i / 3) * 3) + ((i + 1) % 3);
+		vLineStart = pOriginVertices[nStartIndex];
+		vLineEnd = pOriginVertices[nEndIndex];
 
+		if (LineIntersectPolygon(vLineStart, vLineEnd, pTargetVertices, nTargetVertexCount, _vPenetration))
+		{
+			SafeDeleteArray(pOriginVertices);
+			SafeDeleteArray(pTargetVertices);
+			return true;
+		}
 	}
 
+	for (UINT i = 0; i < nTargetVertexCount; ++i)
+	{
+		nStartIndex = i;
+		nEndIndex = ((i / 3) * 3) + ((i + 1) % 3);
+		vLineStart = pTargetVertices[nStartIndex];
+		vLineEnd = pTargetVertices[nEndIndex];
+
+		if (LineIntersectPolygon(vLineStart, vLineEnd, pOriginVertices, nOriginVertexCount, _vPenetration))
+		{
+			SafeDeleteArray(pOriginVertices);
+			SafeDeleteArray(pTargetVertices);
+			return true;
+		}
+	}
 
 	SafeDeleteArray(pOriginVertices);
 	SafeDeleteArray(pTargetVertices);
-	return true;
+	return false;
 }
 
