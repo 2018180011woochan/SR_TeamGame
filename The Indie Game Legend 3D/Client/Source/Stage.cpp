@@ -139,8 +139,8 @@ HRESULT CStage::Awake()
 	//Light manager Test
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	CLightMananger::GetInstance()->CreatePoint(CLightMananger::World1,
-		_vector(0, 20, 0), color*0.5f, color, color*0.f);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
+		_vector(0, -10, 0), color*0.5f, color, color*0.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 

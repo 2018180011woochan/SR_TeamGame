@@ -27,7 +27,7 @@ HRESULT CPiramide::Start()
 	CObstacle::Start();
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Pyramid_Level1"));
-	m_eRenderID = ERenderID::Alpha;
+	m_eRenderID = ERenderID::NoAlpha;
 
 	m_pTransform->Set_Scale(_vector(5, 5, 5));
 	m_pTransform->Set_Position(_vector(15, 0, 0));
@@ -52,6 +52,7 @@ UINT CPiramide::LateUpdate(const float _fDeltaTime)
 
 HRESULT CPiramide::Render()
 {
+	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
 }
