@@ -85,20 +85,10 @@ UINT CHeartManager::Update(const float _fDeltaTime)
 	{
 		nMax--;
 	}
-	if (GetAsyncKeyState('J') & 0x0001)
-	{
-		nHP++;
-
-	}
-	else if (GetAsyncKeyState('H') & 0x0001)
-	{
-		nHP--;
-	}
+	
 	nHP = CLAMP(nHP,12, 24);
 	nMax = CLAMP(nMax, 3, 6);
-
 	SetHeartCount(nMax);
-	SetGauge(nHP);
 	return 0;
 }
 

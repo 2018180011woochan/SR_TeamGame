@@ -52,6 +52,8 @@
 #include "SoundMgr.h"
 #include "RoomTrigger.h"
 #include "LightMananger.h"
+#include "Piramide.h"
+#include "Item.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -59,6 +61,7 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
+	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
 	AddPrototype(CRub::Create());
 	AddPrototype(CsqrNub::Create());
@@ -94,11 +97,15 @@ HRESULT CStage::Awake()
 	AddPrototype(CSector::Create());
 	AddPrototype(CPlayerBullet::Create());
 	AddPrototype(CBulletSpawn::Create());
+	AddPrototype(CPiramide::Create());
+
 	AddGameObject<CPlayer>();
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+	AddGameObject<CPiramide>();
 
+	CItem* pObj = (CItem*)AddGameObject<CItem>();
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
@@ -114,8 +121,8 @@ HRESULT CStage::Awake()
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
 
-	AddGameObject<CTreeBoss>();
-	AddGameObject<CWormBoss>();
+	//AddGameObject<CTreeBoss>();
+	//AddGameObject<CWormBoss>();
 	//AddGameObject<CWormBossBody>();
 
 	//AddGameObject<CTreeBoss>();
@@ -130,7 +137,14 @@ HRESULT CStage::Awake()
 
 
 	//Light manager Test
-	CLightMananger::GetInstance()->LightOff();
+	//D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
+
+	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::World1,
+	//	_vector(0, 20, 0), color*0.5f, color, color*0.5f);
+
+	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
+
+	//CLightMananger::GetInstance()->LightOn();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
@@ -143,14 +157,13 @@ HRESULT CStage::Awake()
 #pragma endregion
 	CScene::Awake();
 
-	CSoundMgr::GetInstance()->Initialize();
-	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
+	//CSoundMgr::GetInstance()->Initialize();
+	//CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
-
 	CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
 	CFactoryManager::GetInstance()->LoadScene(this);
 
@@ -164,6 +177,7 @@ UINT CStage::Update(float _fDeltaTime)
 	CScene::Update(_fDeltaTime);
 	//Test
 	static float fTestVolum = 1.f;
+	static bool bLight = false;
 	if (GetAsyncKeyState('1') & 0x8000)
 	{
 		fTestVolum -= 0.01f;
@@ -174,7 +188,17 @@ UINT CStage::Update(float _fDeltaTime)
 	}
 	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
 
-	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, fTestVolum);
+	if (GetAsyncKeyState(VK_F5) & 0x0001)
+	{
+		bLight = !bLight;
+		if (bLight)
+			CLightMananger::GetInstance()->LightOn();
+		else
+			CLightMananger::GetInstance()->LightOff();
+
+	}
+
+
 	//Test
 	return 0;
 }
