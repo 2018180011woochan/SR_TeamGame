@@ -18,12 +18,12 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	vViewPortPt.y = 1.f - vCenter.y / (nWinCY * 0.5f);
 	vViewPortPt.z = pCamaer->Get_Camera().fNear; //  ±ÙÆò¸é near
 
-	//Test
-	system("cls");
-	cout << "=============picking info============" << endl;
-	cout << "	Proj" << endl;
-	cout << "vViewPortPt	 :  " << vViewPortPt.x << "," << vViewPortPt.y << "," << vViewPortPt.z << endl;
-	//Test
+	////Test
+	//system("cls");
+	//cout << "=============picking info============" << endl;
+	//cout << "	Proj" << endl;
+	//cout << "vViewPortPt	 :  " << vViewPortPt.x << "," << vViewPortPt.y << "," << vViewPortPt.z << endl;
+	////Test
 
 	/* Åõ¿µ > ºä  */
 
@@ -31,10 +31,10 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	D3DXMatrixInverse(&matInvProj, 0, &matInvProj);
 	D3DXVec3TransformCoord(&vViewPortPt, &vViewPortPt, &matInvProj);
 	
-	//Test
-	cout << "	View" << endl;
-	cout << "vViewPortPt	:  " << vViewPortPt.x << "," << vViewPortPt.y << "," << vViewPortPt.z << endl;
-	//Test
+	////Test
+	//cout << "	View" << endl;
+	//cout << "vViewPortPt	:  " << vViewPortPt.x << "," << vViewPortPt.y << "," << vViewPortPt.z << endl;
+	////Test
 
 
 	//Ray setting
@@ -42,11 +42,11 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	_vector vRayDirection = vViewPortPt - vRayPivot;
 	D3DXVec3Normalize(&vRayDirection, &vRayDirection);
 
-	//Test
-	cout << "	RaySetting" << endl;
-	cout << "rayPos		:  " << vRayPivot.x << "," << vRayPivot.y << "," << vRayPivot.z << endl;
-	cout << "rayDir		 :  " << vRayDirection.x << "," << vRayDirection.y << "," << vRayDirection.z << endl;
-	//Test
+	////Test
+	//cout << "	RaySetting" << endl;
+	//cout << "rayPos		:  " << vRayPivot.x << "," << vRayPivot.y << "," << vRayPivot.z << endl;
+	//cout << "rayDir		 :  " << vRayDirection.x << "," << vRayDirection.y << "," << vRayDirection.z << endl;
+	////Test
 
 	/* ºä > ¿ùµå */
 	_matrix matInvView = pCamaer->Get_Camera().matView;
@@ -55,11 +55,11 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	D3DXVec3TransformNormal(&vRayDirection, &vRayDirection, &matInvView);
 	D3DXVec3Normalize(&vRayDirection, &vRayDirection);
 
-	//Test
-	cout << "	World" << endl;
-	cout << "rayPos		:  " << vRayPivot.x << "," << vRayPivot.y << "," << vRayPivot.z << endl;
-	cout << "rayDir		:  " << vRayDirection.x << "," << vRayDirection.y << "," << vRayDirection.z << endl;
-	//Test
+	////Test
+	//cout << "	World" << endl;
+	//cout << "rayPos		:  " << vRayPivot.x << "," << vRayPivot.y << "," << vRayPivot.z << endl;
+	//cout << "rayDir		:  " << vRayDirection.x << "," << vRayDirection.y << "," << vRayDirection.z << endl;
+	////Test
 
 
 
@@ -98,10 +98,10 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	_vPickingPos = vResultPos;
 	if (bIsPicking)
 	{
-		cout << "pickrPos	:  " << _vPickingPos.x << "," << _vPickingPos.y << "," << _vPickingPos.z << endl;
+		//cout << "pickrPos	:  " << _vPickingPos.x << "," << _vPickingPos.y << "," << _vPickingPos.z << endl;
 	}
 
-	cout << "=============picking info============" << endl;
+	//cout << "=============picking info============" << endl;
 
 	return bIsPicking;
 }

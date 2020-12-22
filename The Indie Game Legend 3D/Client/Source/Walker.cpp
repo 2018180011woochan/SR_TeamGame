@@ -3,6 +3,9 @@
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "WalkerBullet.h"
+#include "Item.h"
+#include "Blood.h"
+#include "SmallExlode.h"
 
 CWalker::CWalker()
 	: m_pTexturePool(nullptr)
@@ -44,6 +47,9 @@ HRESULT CWalker::Awake()
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
 	//m_pTransform->Add_Position(_vector(-5.f, 5.f, 10.f));
 	m_pTransform->Set_Position(_vector(-5.f, 5.f, 10.f));
+
+	m_iHP = 10;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -54,11 +60,19 @@ HRESULT CWalker::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+	m_nTag = 0;
+
 	return S_OK;
 }
 
 UINT CWalker::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	//원래 위치
@@ -113,6 +127,34 @@ HRESULT CWalker::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CWalker::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+
+		int iRandX = rand() % 5;
+		int iRandY = rand() % 5;
+		int iRandZ = rand() % 5;
+
+		CSmallExlode* pSmallExlode = (CSmallExlode*)AddGameObject<CSmallExlode>();
+		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+			m_pTransform->Get_Position().y + iRandY
+			, m_pTransform->Get_Position().z + iRandZ));
+	}
+	if (m_iHP <= 0)
+	{
+		CItem* pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
+
+		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemType(EItemID::sprCoin);
+		m_bDead = true;
+	}
 }
 
 void CWalker::BulletFire()

@@ -19,6 +19,7 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 public:
 	void BulletFire();
 
@@ -27,7 +28,7 @@ private:
 	void Dash(float _fDeltaTime);
 	bool isCloseToPlayer();
 	/**************************/
-	virtual void OnCollision(CGameObject* _pGameObject) override;
+
 
 public:
 	virtual CGameObject * Clone() override;

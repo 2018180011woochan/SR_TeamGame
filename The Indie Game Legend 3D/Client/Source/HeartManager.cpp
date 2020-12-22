@@ -54,6 +54,13 @@ HRESULT CHeartManager::InitializePrototype()
 HRESULT CHeartManager::Awake()
 {
 	CGameObject::Awake();
+
+	return S_OK;
+}
+
+HRESULT CHeartManager::Start()
+{
+	CGameObject::Start();
 	m_pHeart = new CHeart*[m_nMaxHeart];
 	for (UINT i = 0; i < m_nMaxHeart; ++i)
 	{
@@ -62,12 +69,6 @@ HRESULT CHeartManager::Awake()
 		((CTransform*)(m_pHeart[i]->GetComponent<CTransform>()))->Set_Position(D3DXVECTOR3(-575.f + 59.5f * i, 302.5f, 0.f));
 		((CTransform*)(m_pHeart[i]->GetComponent<CTransform>()))->UpdateTransform();
 	}
-	return S_OK;
-}
-
-HRESULT CHeartManager::Start()
-{
-	CGameObject::Start();
 	return S_OK;
 }
 

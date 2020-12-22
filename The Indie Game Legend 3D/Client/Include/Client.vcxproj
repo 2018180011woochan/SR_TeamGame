@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\AmmoFrame.h" />
     <ClInclude Include="..\Header\AmmoGauge.h" />
+    <ClInclude Include="..\Header\Blood.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
@@ -171,6 +172,8 @@
     <ClInclude Include="..\Header\DoomBird.h" />
     <ClInclude Include="..\Header\Egg.h" />
     <ClInclude Include="..\Header\ElectricTile.h" />
+    <ClInclude Include="..\Header\Explosion.h" />
+    <ClInclude Include="..\Header\ExplosionBlue.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
     <ClInclude Include="..\Header\Floor.h" />
     <ClInclude Include="..\Header\Heart.h" />
@@ -202,6 +205,7 @@
     <ClInclude Include="..\Header\Sector.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Slider.h" />
+    <ClInclude Include="..\Header\SmallExlode.h" />
     <ClInclude Include="..\Header\SoundMgr.h" />
     <ClInclude Include="..\Header\sqrNub.h" />
     <ClInclude Include="..\Header\Stage.h" />
@@ -229,6 +233,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\AmmoFrame.cpp" />
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
+    <ClCompile Include="..\Source\Blood.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\CrossHair.cpp" />
@@ -236,6 +241,8 @@
     <ClCompile Include="..\Source\DoomBird.cpp" />
     <ClCompile Include="..\Source\Egg.cpp" />
     <ClCompile Include="..\Source\ElectricTile.cpp" />
+    <ClCompile Include="..\Source\Explosion.cpp" />
+    <ClCompile Include="..\Source\ExplosionBlue.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
     <ClCompile Include="..\Source\Floor.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
@@ -268,6 +275,7 @@
     <ClCompile Include="..\Source\Sector.cpp" />
     <ClCompile Include="..\Source\SkyBox.cpp" />
     <ClCompile Include="..\Source\Slider.cpp" />
+    <ClCompile Include="..\Source\SmallExlode.cpp" />
     <ClCompile Include="..\Source\SoundMgr.cpp" />
     <ClCompile Include="..\Source\sqrNub.cpp" />
     <ClCompile Include="..\Source\Stage.cpp" />

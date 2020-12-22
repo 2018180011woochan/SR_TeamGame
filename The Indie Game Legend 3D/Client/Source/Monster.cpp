@@ -2,6 +2,7 @@
 #include "..\Header\Monster.h"
 #include "Camera.h"
 
+
 CMonster::CMonster()
 	
 {
@@ -42,6 +43,7 @@ UINT CMonster::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	
+
 
 
 	return _uint();
