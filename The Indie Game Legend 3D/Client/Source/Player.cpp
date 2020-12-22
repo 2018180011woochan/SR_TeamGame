@@ -7,6 +7,7 @@
 #include "AmmoGauge.h"
 #include "PickingManger.h"
 #include "LightMananger.h"
+#include "HeartManager.h"
 USING(Engine)
 
 
@@ -193,6 +194,23 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 	}
 }
 
+void CPlayer::InteractionItem(const EItemID & _eID)
+{
+	switch (_eID)
+	{
+	case EItemID::Heart:
+		break;
+	case EItemID::Ammo:
+		break;
+	case EItemID::sprCoin:
+		break;
+	case EItemID::sprBigCoin:
+		break;
+	case EItemID::End:
+		break;
+	}
+}
+
 void CPlayer::BulletFire()
 {
 	auto Fire = [&](const EWeaponType& _Type){
@@ -305,47 +323,7 @@ void CPlayer::ChangeWeapon()
 
 void CPlayer::UpdateLight()
 {
-	static float a1 = 0.0001f;
-	static float a2 = 0.0001f;
-	static float a3 = 0.0001f;
-
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Position =
-		m_pTransform->Get_Position();
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Position.y = 50.f;
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation0 = a1;
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation1 = a2;
-	CLightMananger::GetInstance()->GetLight(CLightMananger::Player)->Attenuation2 = a3;
-
-	CLightMananger::GetInstance()->SetLight(CLightMananger::Player);
-
-	if (GetAsyncKeyState('Z') & 0x8000)
-	{
-		a1 -= 0.0001f;
-	}
-	if (GetAsyncKeyState('X') & 0x8000)
-	{
-		a1 += 0.0001f;
-	}
-	if (GetAsyncKeyState('C') & 0x8000)
-	{
-		a2 -= 0.0001f;
-	}
-	if (GetAsyncKeyState('V') & 0x8000)
-	{
-		a2 += 0.0001f;
-	}
-	if (GetAsyncKeyState('B') & 0x8000)
-	{
-		a3 -= 0.0001f;
-	}
-	if (GetAsyncKeyState('N') & 0x8000)
-	{
-		a3 += 0.0001f;
-	}
-
-	a1 = CLAMP(a1, 0.00000001f, 0.01f);
-	a2 = CLAMP(a2, 0.00000001f, 0.1f);
-	a3 = CLAMP(a3, 0.00000001f, 0.01f);
+	
 }
 
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
@@ -401,6 +379,9 @@ HRESULT CPlayer::Awake()
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
 
+	//State
+	m_nHp = 8;
+
 	m_pTransform->Set_Scale(D3DXVECTOR3(10.f,10.f, 10.f));
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
@@ -418,6 +399,11 @@ HRESULT CPlayer::Start()
 
 	//Test player spawn 찾아서 룸아디 대입받는걸로 
 	m_nTag = 0;
+	m_sName = L"Player";
+	//Reference Setting
+	//할당 순서 때문에 작업 미완
+	//m_pHearManager = (CHeartManager*)FindGameObjectOfType<CAmmoGauge>(); 
+	//m_pHearManager->SetGauge(m_nHp);
 
 	return S_OK;
 }

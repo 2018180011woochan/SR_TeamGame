@@ -42,7 +42,13 @@ private:
 	 float				m_fAmmoMax;
 	 _uint				m_nAmmoDecrease;
 	 //Test
-	 Image*				m_pAmmobar = nullptr;
+	 Image*						m_pAmmobar = nullptr;
+	 class CHeartManager*		m_pHearManager = nullptr;
+
+
+	 //State
+	 _uint						m_nHp = 0;
+
 	 //Action
 	 EState				m_eState;
 	 float				m_fRunningTime = 0.f;
@@ -57,7 +63,8 @@ private:
 	HRESULT MoveCheck();
 	void	Move(const float& _fSpeed , const float _fDeltaTime);
 	void	UpdateState(const float _fDeltaTime);
-
+	
+	void	InteractionItem(const EItemID& _eID);
 	void	BulletFire();
 	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
 	void    ChangeWeapon();// 관련 세팅값 설정

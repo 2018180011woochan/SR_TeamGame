@@ -147,11 +147,27 @@ void CWormBoss::Waving(float fDeltaTime)
 			m_fJumpTime = 0.f;
 		}
 
-		if (fY > -5.f && fY < 5.f)
+		if (m_fJumpPower == 0.f)
 		{
-			m_pTransform->Set_RotationZ(45.f);
-			//m_pTransform->Add_RotationZ(45.f);
+			if (fY > 10.f && fY < 20.f)
+				m_pTransform->Set_RotationZ(0.f);
+			if (fY > 5.f && fY < 10.f)
+				m_pTransform->Set_RotationZ(-45.f);
+			if (fY > 0.f && fY < 5.f)
+				m_pTransform->Set_RotationZ(-90.f);
 		}
+
+		if (m_fJumpPower == 10.f)
+		{
+			if (fY > -5.f && fY < 5.f)
+				m_pTransform->Set_RotationZ(90.f);
+			if (fY > 5.f && fY < 10.f)
+				m_pTransform->Set_RotationZ(45.f);
+			if (fY > 10.f && fY < 20.f)
+				m_pTransform->Set_RotationZ(0.f);
+		}
+
+
 		if (fY > 20.f)
 		{
 			m_fJumpPower = 0.f;

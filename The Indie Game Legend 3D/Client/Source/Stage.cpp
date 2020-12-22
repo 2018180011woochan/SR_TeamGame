@@ -52,6 +52,8 @@
 #include "SoundMgr.h"
 #include "RoomTrigger.h"
 #include "LightMananger.h"
+#include "Piramide.h"
+#include "Item.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -59,6 +61,7 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
+	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
 	AddPrototype(CRub::Create());
 	AddPrototype(CsqrNub::Create());
@@ -94,62 +97,54 @@ HRESULT CStage::Awake()
 	AddPrototype(CSector::Create());
 	AddPrototype(CPlayerBullet::Create());
 	AddPrototype(CBulletSpawn::Create());
+	AddPrototype(CPiramide::Create());
+
 	AddGameObject<CPlayer>();
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+	AddGameObject<CPiramide>();
 
+	CItem* pObj = (CItem*)AddGameObject<CItem>();
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
-	AddGameObject<CBub>();
-	AddGameObject<CRub>();
+	//AddGameObject<CBub>();
+	//AddGameObject<CRub>();
 	//AddGameObject<CsqrNub>();
-	AddGameObject<CTurret>();
+	//AddGameObject<CTurret>();
 	//AddGameObject<CWalker>();
 	//AddGameObject<CCryder>();
 	//AddGameObject<CEgg>();
 	//AddGameObject<CWalkerBoss>();
-	AddGameObject<CNubBoss>();
+	//AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
 
-	AddGameObject<CTreeBoss>();
+	//AddGameObject<CTreeBoss>();
 	//AddGameObject<CWormBoss>();
 	//AddGameObject<CWormBossBody>();
 
 	//AddGameObject<CTreeBoss>();
 
 	//컬링 테스트 
-	CGameObject* pObj = AddGameObject<CRoomTrigger>();
-	pObj->SetTag(0);
-	((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(30, 0, -30));
-	pObj = AddGameObject<CRoomTrigger>();
-	pObj->SetTag(1);
-	((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(-30, 0, -30));
+	//CGameObject* pObj = AddGameObject<CRoomTrigger>();
+	//pObj->SetTag(0);
+	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(30, 0, -30));
+	//pObj = AddGameObject<CRoomTrigger>();
+	//pObj->SetTag(1);
+	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(-30, 0, -30));
 
 
 	//Light manager Test
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	//CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1, _vector(1, -1, 1), color * 0.5f,
-	//	color, color *0.5f);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
-	//CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2, _vector(-1, -1, -1), color * 0.5f,
-	//	color, color *0.5f);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
+	CLightMananger::GetInstance()->CreatePoint(CLightMananger::World1,
+		_vector(0, 20, 0), color*0.5f, color, color*0.f);
 
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
-	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::World3, _vector(0, 50, 0), color,
-	//	color, color);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World3, true);
-
-	CLightMananger::GetInstance()->CreateSpotlight(CLightMananger::Player,
-		_vector(0,40,0), _vector(0, -1, 0), color*1.f, color*0.7f, color*0.f, D3DXToRadian(15.f), D3DXToRadian(90.f));
-	CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
 	CLightMananger::GetInstance()->LightOn();
-
-
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
@@ -162,14 +157,13 @@ HRESULT CStage::Awake()
 #pragma endregion
 	CScene::Awake();
 
-	CSoundMgr::GetInstance()->Initialize();
-	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
+	//CSoundMgr::GetInstance()->Initialize();
+	//CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
-
 	CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
 	CFactoryManager::GetInstance()->LoadScene(this);
 
@@ -183,7 +177,7 @@ UINT CStage::Update(float _fDeltaTime)
 	CScene::Update(_fDeltaTime);
 	//Test
 	static float fTestVolum = 1.f;
-	static bool  bTestLight = true;
+	static bool bLight = false;
 	if (GetAsyncKeyState('1') & 0x8000)
 	{
 		fTestVolum -= 0.01f;
@@ -196,23 +190,15 @@ UINT CStage::Update(float _fDeltaTime)
 
 	if (GetAsyncKeyState(VK_F5) & 0x8000)
 	{
-		bTestLight = !bTestLight;
-		if (!bTestLight)
-		{
-			CLightMananger::GetInstance()->LightOff();
-		}
-		else
-		{
+		bLight = !bLight;
+		if (bLight)
 			CLightMananger::GetInstance()->LightOn();
-
-		}
-
-		//CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, bTestLight);
+		else
+			CLightMananger::GetInstance()->LightOff();
 
 	}
 
 
-	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, fTestVolum);
 	//Test
 	return 0;
 }
