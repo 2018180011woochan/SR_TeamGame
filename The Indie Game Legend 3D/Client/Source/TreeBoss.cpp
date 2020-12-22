@@ -108,14 +108,15 @@ void CTreeBoss::YukPoongHyul(float _fDeltaTime)
 {
 	if (nIndex == 6)
 	{
+		int iNum = rand() % 5;
 		m_fCreateDeltaTime += _fDeltaTime;
 		if (m_fCreateSpeed <= m_fCreateDeltaTime)
 		{
 			CRoboBird* pRoboBird = (CRoboBird*)AddGameObject<CRoboBird>();
-			pRoboBird->SetEggPos(m_pTransform->Get_Position());
+			pRoboBird->SetEggPos(_vector(m_pTransform->Get_Position().x + iNum, m_pTransform->Get_Position().y, m_pTransform->Get_Position().z));
 
 			CDoomBird* pDoomBird = (CDoomBird*)AddGameObject<CDoomBird>();
-			pDoomBird->SetEggPos(m_pTransform->Get_Position());
+			pDoomBird->SetEggPos(_vector(m_pTransform->Get_Position().x - iNum, m_pTransform->Get_Position().y, m_pTransform->Get_Position().z));
 
 			m_fCreateDeltaTime -= m_fCreateSpeed;
 		}

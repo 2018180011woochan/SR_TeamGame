@@ -31,8 +31,8 @@ HRESULT CRootAttack::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTransform->Set_Scale(_vector(8, 8, 8));
-	m_fBulletSpeed = 50.f;
+	m_pTransform->Set_Scale(_vector(10.f, 10.f, 10.f));
+	m_fBulletSpeed = 20.f;
 
 	m_fWalkSpeed = 0.3f;
 	m_fWalkDeltaTime = 0.f;

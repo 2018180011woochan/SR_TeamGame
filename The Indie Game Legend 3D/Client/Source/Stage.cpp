@@ -102,20 +102,20 @@ HRESULT CStage::Awake()
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
-	AddGameObject<CBub>();
-	AddGameObject<CRub>();
+	//AddGameObject<CBub>();
+	//AddGameObject<CRub>();
 	//AddGameObject<CsqrNub>();
-	AddGameObject<CTurret>();
+	//AddGameObject<CTurret>();
 	//AddGameObject<CWalker>();
 	//AddGameObject<CCryder>();
 	//AddGameObject<CEgg>();
 	//AddGameObject<CWalkerBoss>();
-	AddGameObject<CNubBoss>();
+	//AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
 
 	AddGameObject<CTreeBoss>();
-	//AddGameObject<CWormBoss>();
+	AddGameObject<CWormBoss>();
 	//AddGameObject<CWormBossBody>();
 
 	//AddGameObject<CTreeBoss>();
