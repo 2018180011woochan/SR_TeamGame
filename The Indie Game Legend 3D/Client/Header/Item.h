@@ -21,7 +21,7 @@ private:
 public:
 	void    SetItemType(const EItemID& _eID);
 
-private:
+public:
 	const EItemID& GetItemID() { return m_eType; }
 
 public:

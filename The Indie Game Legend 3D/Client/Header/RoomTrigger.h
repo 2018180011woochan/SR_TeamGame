@@ -21,7 +21,7 @@ public:
 public:
 	//Test
 	CMeshRenderer* m_pMeshRenderer = nullptr;
-
+	class CTexturePool* m_pTexturePool = nullptr;
 	static CRoomTrigger* Create();
 	virtual void Free() override;
 };

@@ -68,6 +68,7 @@ HRESULT CItem::BillBord()
 	return S_OK;
 }
 
+
 void CItem::SetItemType(const EItemID & _eID)
 {
 	m_eType = _eID;
@@ -80,10 +81,10 @@ void CItem::SetItemType(const EItemID & _eID)
 		m_sTextureName = L"Ammo";
 		break;
 	case EItemID::sprCoin:
-		m_sTextureName = L"sprCoint";
+		m_sTextureName = L"sprCoin";
 		break;
 	case EItemID::sprBigCoin:
-		m_sTextureName = L"sprBigCoint";
+		m_sTextureName = L"sprBigCoin";
 		break;
 	case EItemID::End:
 		break;
@@ -122,7 +123,6 @@ HRESULT CItem::Start()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Item"));
-	//m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Heart"))[0]);
 	if (nullptr == m_pTexturePool)
 	{
 		PrintLog(L"Error", L"pTexturePool is null by CElectricTile::Start()");
@@ -136,7 +136,6 @@ HRESULT CItem::Start()
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	//Test	
 	m_pTransform->Set_Position(_vector(-25, 3, 10));
-	SetItemType(EItemID::Heart);
 	//Test	
 
 

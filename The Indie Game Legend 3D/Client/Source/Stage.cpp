@@ -105,7 +105,7 @@ HRESULT CStage::Awake()
 	AddGameObject<CMouse>();
 	AddGameObject<CPiramide>();
 
-	CItem* pObj = (CItem*)AddGameObject<CItem>();
+
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
@@ -128,14 +128,7 @@ HRESULT CStage::Awake()
 	//AddGameObject<CTreeBoss>();
 
 	//컬링 테스트 
-	//CGameObject* pObj = AddGameObject<CRoomTrigger>();
-	//pObj->SetTag(0);
-	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(30, 0, -30));
-	//pObj = AddGameObject<CRoomTrigger>();
-	//pObj->SetTag(1);
-	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(-30, 0, -30));
-
-
+	
 	//Light manager Test
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
@@ -149,7 +142,8 @@ HRESULT CStage::Awake()
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
 
-	AddUIObject();
+	
+	//AddUIObject();
 
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
@@ -164,8 +158,8 @@ HRESULT CStage::Awake()
 
 HRESULT CStage::Start()
 {
-	CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
-	CFactoryManager::GetInstance()->LoadScene(this);
+	//CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
+	//CFactoryManager::GetInstance()->LoadScene(this);
 
 	CScene::Start();
 

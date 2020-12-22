@@ -35,7 +35,7 @@ HRESULT CDoomBird::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Doombird"));
 	SafeAddRef(m_pTexturePool);
 
-	float fNum = rand() % 5;
+	float fNum = float(rand() % 5);
 
 	m_fJumpPower = 10.f;
 	m_fJumpTime = 0.f;

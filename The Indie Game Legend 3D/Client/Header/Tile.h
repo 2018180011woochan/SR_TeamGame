@@ -9,7 +9,7 @@ class CTile abstract: public CGameObject
 protected:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool = nullptr;
-
+	CCollider*	   m_pCollider = nullptr;
 protected:
 	explicit CTile();
 	explicit CTile(const CTile& _rOther);

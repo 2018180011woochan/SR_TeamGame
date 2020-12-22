@@ -66,7 +66,6 @@ HRESULT CPlayerBullet::Fire()
 	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
 
 	//Test
-	//CameraDesc.vAt -> 피킹 지점으로 바꿔야함 
 	_vector PickPos;
 	if (CPickingManger::CrossHairPicking(m_nSceneID, PickPos))
 	{
@@ -81,12 +80,6 @@ HRESULT CPlayerBullet::Fire()
 	}
 
 	m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
-
-	//Test
-	cout << endl << "=========bullet=========" << endl;
-	cout << "bulletPos	:  " << vBulletPos.x << "," << vBulletPos.y << "," << vBulletPos.z << endl;
-	cout << "bulletDir	:  " << m_vDiraction.x << "," << m_vDiraction.y << "," << m_vDiraction.z << endl;
-	cout << endl << "=========bullet=========" << endl;
 
 	switch (m_eBulletType)
 	{

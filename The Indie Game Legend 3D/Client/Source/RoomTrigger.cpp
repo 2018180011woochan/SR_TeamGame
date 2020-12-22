@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\RoomTrigger.h"
+#include "TexturePoolManager.h"
 
 
 CRoomTrigger::CRoomTrigger()
@@ -21,7 +22,8 @@ HRESULT CRoomTrigger::Awake()
 	CGameObject::Awake();
 	m_sName = L"RoomTrigger";
 	//Test
-	m_pTransform->Set_Scale(_vector(4, 4, 4));
+	m_pTransform->Set_Position(_vector(25, 5, 5));
+	m_pTransform->Set_Scale(_vector(10, 20, 0.1f));
 
 
 	m_pTransform->UpdateTransform();
@@ -33,6 +35,12 @@ HRESULT CRoomTrigger::Awake()
 
 HRESULT CRoomTrigger::Start()
 {
+	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
+	m_pMeshRenderer->SetMesh(TEXT("Quad"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Object"));
+	SafeAddRef(m_pTexturePool);
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("RoomTirgger"))[0]);
+
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(L"SkyBox");
@@ -55,6 +63,7 @@ UINT CRoomTrigger::LateUpdate(const float _fDeltaTime)
 HRESULT CRoomTrigger::Render()
 {
 	m_pTransform->UpdateWorld();
+	m_pMeshRenderer->Render();
 	m_pCollider->Draw();
 	return S_OK;
 }
@@ -77,5 +86,6 @@ CRoomTrigger * CRoomTrigger::Create()
 
 void CRoomTrigger::Free()
 {
-	CGameObject::Free();
+	SafeRelease(m_pTexturePool);
+	CTrigger::Free();
 }

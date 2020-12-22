@@ -8,6 +8,7 @@
 #include "PickingManger.h"
 #include "LightMananger.h"
 #include "HeartManager.h"
+#include "Item.h"
 USING(Engine)
 
 
@@ -59,8 +60,6 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 
 HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 {
-	if (m_eState == EState::Hurt)
-		return S_OK;
 
 	//Move Code
 	MoveCheck();
@@ -189,22 +188,34 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 		pCamera->SetHeghitPersent(fPer);
 	}
 		break;
+	case EState::Hit:
+		m_fHitDelayTime += _fDeltaTime;
+		//Camera 흔들림 코드 
+		if(m_bIsDeBuff)
+			Move(m_fMoveSpeed/2.f, _fDeltaTime);
+		else
+			Move(m_fMoveSpeed, _fDeltaTime);
+
+		break;
 	default:
 		break;
 	}
 }
 
-void CPlayer::InteractionItem(const EItemID & _eID)
+void CPlayer::TakeItem(const EItemID & _eID)
 {
 	switch (_eID)
 	{
 	case EItemID::Heart:
+		AddHp(1);
 		break;
 	case EItemID::Ammo:
 		break;
 	case EItemID::sprCoin:
+		++m_nCoin;
 		break;
 	case EItemID::sprBigCoin:
+		m_nCoin += 10;
 		break;
 	case EItemID::End:
 		break;
@@ -326,6 +337,17 @@ void CPlayer::UpdateLight()
 	
 }
 
+void CPlayer::AddHp(_int _nHp)
+{
+	m_nHp += _nHp;
+	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
+
+	if (m_nHp < 1)
+	{
+		//Dead
+	}
+}
+
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 {
 	for (auto& eType : m_vecWeapons)
@@ -381,8 +403,11 @@ HRESULT CPlayer::Awake()
 
 	//State
 	m_nHp = 8;
+	m_nHpMax = 12;
+	m_fHitDelay = 0.5f;
+	m_fHitDelayTime = 0.f;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(10.f,10.f, 10.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(5.f,5.f,5.f));
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
@@ -394,7 +419,7 @@ HRESULT CPlayer::Awake()
 HRESULT CPlayer::Start()
 {
 	//Test
-	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
+	//m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
 	//SafeAddRef(m_pAmmobar);
 
 	//Test player spawn 찾아서 룸아디 대입받는걸로 
@@ -434,6 +459,13 @@ UINT CPlayer::LateUpdate(const float _fDeltaTime)
 	if(m_eState == EState::Run && !m_pKeyMgr->Key_Press(KEY_LSHIFT))
 		m_eState = EState::Move;
 
+	if (m_eState == EState::Hit && m_fHitDelay < m_fHitDelayTime)
+	{
+		//임시 
+		m_bIsDeBuff = false;
+		m_eState = EState::Move;
+	}
+
 	if(m_fDashDelayTime < m_fDashDelay)
 		m_fDashDelayTime += _fDeltaTime;
 
@@ -460,10 +492,37 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	if (L"RoomTrigger" == _pGameObject->GetName() && m_nTag != _pGameObject->GetTage())
 	{
 		m_nTag = _pGameObject->GetTage();
-		system("cls");
 		cout << "Change RoomID : " <<m_nTag << endl;
 		CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
 	}
+
+	if (L"Item" == _pGameObject->GetName())
+	{
+		TakeItem(((CItem*)(_pGameObject))->GetItemID());
+	}
+
+	//Dmg 
+	if (L"Monster" == _pGameObject->GetName())
+	{
+		m_eState = EState::Hit;
+		m_fHitDelayTime = 0.f;
+		AddHp(-1);
+	}
+	else if (L"Electric" == _pGameObject->GetName())
+	{
+		m_eState = EState::Hit;
+		m_fHitDelayTime = 0.f;
+		cout << "hit" << endl;
+		AddHp(-1);
+	}
+	else if (L"Swamp" == _pGameObject->GetName())
+	{
+		m_eState = EState::Hit;
+		m_bIsDeBuff = true;
+		m_fHitDelayTime = 0.f;
+		AddHp(-1);
+	}
+
 }
 
 CPlayer * CPlayer::Create()
