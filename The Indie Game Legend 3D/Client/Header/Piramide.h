@@ -25,6 +25,9 @@ public:
 public:
 	static CPiramide* Create();
 
+private:
+	bool		m_bDead;
+
 };
 #define __Piramide_H__
 #endif // !__Piramide_H__

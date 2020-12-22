@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\Piramide.h"
-
+#include "Item.h"
 
 CPiramide::CPiramide()
 {
@@ -19,6 +19,7 @@ HRESULT CPiramide::InitializePrototype()
 HRESULT CPiramide::Awake()
 {
 	CObstacle::Awake();
+	m_bDead = false;
 	return S_OK;
 }
 
@@ -42,6 +43,9 @@ HRESULT CPiramide::Start()
 
 UINT CPiramide::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	return OBJ_NOENVET;
 }
 
@@ -73,7 +77,17 @@ void CPiramide::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
+		m_bDead = true;
+	}
+	if (m_bDead)
+	{
+		CItem* pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
 
+		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemType(EItemID::sprCoin);
 	}
 }
 
