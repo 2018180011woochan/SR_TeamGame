@@ -137,14 +137,14 @@ HRESULT CStage::Awake()
 
 
 	//Light manager Test
-	//D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::World1,
-	//	_vector(0, 20, 0), color*0.5f, color, color*0.5f);
+	CLightMananger::GetInstance()->CreatePoint(CLightMananger::World1,
+		_vector(0, 20, 0), color*0.5f, color, color*0.f);
 
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
-	//CLightMananger::GetInstance()->LightOn();
+	CLightMananger::GetInstance()->LightOn();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
