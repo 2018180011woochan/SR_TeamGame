@@ -48,6 +48,8 @@ HRESULT CExplosion::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
+	m_bDead = false;
+
 	nIndex = 0;
 
 	m_eRenderID = ERenderID::Alpha;

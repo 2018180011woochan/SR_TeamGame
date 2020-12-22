@@ -141,11 +141,11 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 	}
 	if (m_iHP <= 0)
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			int iRandX = rand() % 7;
-			int iRandY = rand() % 7;
-			int iRandZ = rand() % 7;
+			int iRandX = rand() % 10;
+			int iRandY = rand() % 10;
+			int iRandZ = rand() % 10;
 
 			CExplosion* pExplosion1 = (CExplosion*)AddGameObject<CExplosion>();
 			pExplosion1->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
@@ -154,11 +154,11 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 
 		}
 
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			int iRandX = rand() % 7;
-			int iRandY = rand() % 7;
-			int iRandZ = rand() % 7;
+			int iRandX = rand() % 10;
+			int iRandY = rand() % 10;
+			int iRandZ = rand() % 10;
 
 			CExplosionBlue* pExplosion3 = (CExplosionBlue*)AddGameObject<CExplosionBlue>();
 			pExplosion3->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
