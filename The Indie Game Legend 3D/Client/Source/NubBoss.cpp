@@ -38,7 +38,7 @@ HRESULT CNubBoss::Awake()
 	SafeAddRef(m_pTexturePool);
 
 	m_fFireDeltaTime = 0.f;
-	m_fFireSpeed = 3.f;
+	m_fFireSpeed = 30.f;
 
 	m_fWalkDeltaTime = 0.f;
 	m_fWalkSpeed = 0.5f;

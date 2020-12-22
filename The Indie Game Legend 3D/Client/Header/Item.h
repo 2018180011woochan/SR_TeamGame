@@ -29,7 +29,9 @@ public:
 	// Mady by KWC
 	void	SetPos(const _vector _vPos);
 	void	Bounce(float _fDeltaTime);
-private:
+
+public:
+	//getter
 	const EItemID& GetItemID() { return m_eType; }
 
 public:

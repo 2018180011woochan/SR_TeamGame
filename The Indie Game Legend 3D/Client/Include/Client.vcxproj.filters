@@ -265,6 +265,9 @@
     <Filter Include="02.GameObject\10.Effect\03.ExplosionBlue">
       <UniqueIdentifier>{86c19cbb-63a1-4083-90d2-4a6119e82e5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\10.Effect\04.BulletSpark">
+      <UniqueIdentifier>{cfdf14c4-dcef-4919-bcac-26a9209ac4e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -483,6 +486,7 @@
     <ClInclude Include="..\Header\ExplosionBlue.h">
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BulletSpark.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -683,6 +687,7 @@
     <ClCompile Include="..\Source\ExplosionBlue.cpp">
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\BulletSpark.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

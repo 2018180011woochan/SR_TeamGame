@@ -5,6 +5,8 @@
 #include "BulletSpawn.h"
 #include "PickingManger.h"
 
+//effect
+#include "BulletSpark.h"
 CPlayerBullet::CPlayerBullet()
 	:m_eBulletType(EWeaponType::Normal)
 {
@@ -26,7 +28,7 @@ void CPlayerBullet::Set_Type(const EWeaponType & _eBulletType)
 	case EWeaponType::Big:
 		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("BigBullet"))[0]);
-		m_fMoveSpeed = 40.f;
+		m_fMoveSpeed = 60.f;
 		m_pTransform->Set_Scale(_vector(2, 2, 2));
 		break;
 	case EWeaponType::Normal:
@@ -34,7 +36,7 @@ void CPlayerBullet::Set_Type(const EWeaponType & _eBulletType)
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("NormalBullet"))[0]);
 //		m_fMoveSpeed = 100.f;
 		//test
-		m_fMoveSpeed = 30.f;
+		m_fMoveSpeed = 100.f;
 		break;
 	case EWeaponType::Multiple:
 		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
@@ -207,6 +209,8 @@ void CPlayerBullet::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Monster" == _pGameObject->GetName())
 	{
+		CBulletSpark* pBlood = (CBulletSpark*)AddGameObject<CBulletSpark>();
+		pBlood->SetPosition(m_pTransform->Get_Position());
 		m_bDead = true;
 	}
 

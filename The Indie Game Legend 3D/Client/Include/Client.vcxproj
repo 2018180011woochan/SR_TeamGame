@@ -162,6 +162,7 @@
     <ClInclude Include="..\Header\Blood.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
+    <ClInclude Include="..\Header\BulletSpark.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
     <ClInclude Include="..\Header\ClientDefine.h" />
     <ClInclude Include="..\Header\ClientEnum.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
     <ClCompile Include="..\Source\Blood.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
+    <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />

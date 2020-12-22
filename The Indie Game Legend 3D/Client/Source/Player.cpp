@@ -343,7 +343,6 @@ void CPlayer::AddHp(_int _nHp)
 	m_nHp += _nHp;
 	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
 
-	cout << m_nHp << endl;
 	if (m_nHp < 1)
 	{
 		//Dead

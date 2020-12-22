@@ -44,7 +44,7 @@ HRESULT CExplosionBlue::Awake()
 	m_bJump = false;
 	nIndex = 0;
 
-	m_fWalkSpeed = 0.3f;
+	m_fWalkSpeed = 0.1f;
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
@@ -52,7 +52,8 @@ HRESULT CExplosionBlue::Awake()
 
 	m_eRenderID = ERenderID::Alpha;
 
-	
+	m_bDead = false;
+
 	return S_OK;
 }
 

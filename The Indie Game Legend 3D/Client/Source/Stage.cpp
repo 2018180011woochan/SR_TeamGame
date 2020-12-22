@@ -61,6 +61,7 @@
 #include "LightMananger.h"
 #include "Piramide.h"
 #include "Item.h"
+#include "BulletSpark.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -106,6 +107,8 @@ HRESULT CStage::Awake()
 	AddPrototype(CPlayer::Create());
 	AddPrototype(CPlayerCamera::Create());
 	AddPrototype(CMouse::Create());
+	AddPrototype(CBulletSpark::Create());
+
 	AddPrototype(CSector::Create());
 	AddPrototype(CPlayerBullet::Create());
 	AddPrototype(CBulletSpawn::Create());
