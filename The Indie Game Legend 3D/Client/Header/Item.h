@@ -15,13 +15,21 @@ private:
 	TSTRING						m_sTextureName;
 	bool						m_bDelete = false;
 	EItemID						m_eType;
+
+	// Made in KimWooChan
+	float						m_fJumpPower;
+	float						m_fJumpTime;
+	float						m_fYTest;
+	bool						m_bJump;
 private:
 	HRESULT Animate(const float _fDeltaTime);
 	HRESULT	BillBord();
 public:
 	void    SetItemType(const EItemID& _eID);
-
-public:
+	// Mady by KWC
+	void	SetPos(const _vector _vPos);
+	void	Bounce(float _fDeltaTime);
+private:
 	const EItemID& GetItemID() { return m_eType; }
 
 public:

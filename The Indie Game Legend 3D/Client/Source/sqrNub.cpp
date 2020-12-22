@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Item.h"
+#include "Blood.h"
 
 CsqrNub::CsqrNub()
 	:m_pTexturePool(nullptr)
@@ -48,6 +50,8 @@ HRESULT CsqrNub::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
+	m_iHP = 3;
+
 	nIndex = 0;
 
 
@@ -64,11 +68,18 @@ HRESULT CsqrNub::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+
 	return S_OK;
 }
 
 UINT CsqrNub::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -121,6 +132,26 @@ HRESULT CsqrNub::Render()
 	return S_OK;
 }
 
+void CsqrNub::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	if (m_iHP <= 0)
+	{
+		CItem* pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
+
+		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemType(EItemID::sprCoin);
+		m_bDead = true;
+	}
+}
 
 HRESULT CsqrNub::Movement(float fDeltaTime)
 {

@@ -22,6 +22,13 @@
 #include "WormBossBody.h"
 #pragma endregion
 
+#pragma region EFFECT
+#include "Blood.h"
+#include "SmallExlode.h"
+#include "Explosion.h"
+#include "ExplosionBlue.h"
+#pragma endregion
+
 #include "FactoryManager.h"
 #include "Player.h"
 #include "PlayerCamera.h"
@@ -61,6 +68,11 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
+	AddPrototype(CBlood::Create());
+	AddPrototype(CSmallExlode::Create());
+	AddPrototype(CExplosion::Create());
+	AddPrototype(CExplosionBlue::Create());
+
 	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
 	AddPrototype(CRub::Create());
@@ -117,7 +129,7 @@ HRESULT CStage::Awake()
 	//AddGameObject<CCryder>();
 	//AddGameObject<CEgg>();
 	//AddGameObject<CWalkerBoss>();
-	//AddGameObject<CNubBoss>();
+	AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
 

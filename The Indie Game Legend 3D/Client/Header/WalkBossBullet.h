@@ -44,7 +44,7 @@ private:
 
 	float				m_fWalkSpeed;
 	float				m_fWalkDeltaTime;
-
+	CCollider*			m_pCollider;
 	float				m_fJumpPower;
 	float				m_fJumpTime;
 	float				m_fYTest;

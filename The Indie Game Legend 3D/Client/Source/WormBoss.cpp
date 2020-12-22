@@ -60,6 +60,11 @@ HRESULT CWormBoss::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("FaceSide"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+	m_nTag = 0;
+
 	m_fFrameSpeed = 0.5;
 	m_fFrameDeltaTime = 0.f;
 
@@ -109,6 +114,10 @@ HRESULT CWormBoss::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CWormBoss::OnCollision(CGameObject * _pGameObject)
+{
 }
 
 HRESULT CWormBoss::Movement(float fDeltaTime)

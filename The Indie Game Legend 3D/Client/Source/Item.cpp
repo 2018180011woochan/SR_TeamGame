@@ -68,7 +68,6 @@ HRESULT CItem::BillBord()
 	return S_OK;
 }
 
-
 void CItem::SetItemType(const EItemID & _eID)
 {
 	m_eType = _eID;
@@ -96,6 +95,40 @@ void CItem::SetItemType(const EItemID & _eID)
 	m_fAnimateSpeed = (m_nMaxFrame + 1) / 1.f * m_fAnimateOneCycleTime;
 }
 
+void CItem::SetPos(const _vector _vPos)
+{
+	m_pTransform->Set_Position(_vPos);
+}
+
+void CItem::Bounce(float _fDeltaTime)
+{
+	float fY = 0.f;
+
+	_vector vRandDir = _vector(float(rand() % 3), float(rand() % 3), float(rand() % 3));
+	D3DXVec3Normalize(&vRandDir, &vRandDir);
+	if (m_bJump)
+	{
+		fY = m_fYTest + (m_fJumpPower * m_fJumpTime - 9.8f * m_fJumpTime * m_fJumpTime * 0.5f);
+		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+			fY,
+			m_pTransform->Get_Position().z));
+
+		m_pTransform->Add_Position(vRandDir * _fDeltaTime * 40.f);
+
+		m_fJumpTime += 0.05f;
+
+		if (fY < 2.f)
+		{
+			m_bJump = false;
+			m_fJumpPower = 0.f;
+			m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+				2.f,
+				m_pTransform->Get_Position().z));
+			m_fJumpTime = 0.f;
+		}
+	}
+}
+
 
 HRESULT CItem::InitializePrototype()
 {
@@ -111,7 +144,11 @@ HRESULT CItem::Awake()
 	m_sTextureName = L"";
 	m_sName = L"Item";
 
-
+	// Prod By Woochan
+	m_fJumpPower = 10.f;
+	m_fJumpTime = 0.f;
+	m_fYTest = 3.f;
+	m_bJump = true;
 	return S_OK;
 }
 
@@ -123,6 +160,7 @@ HRESULT CItem::Start()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Item"));
+	//m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Heart"))[0]);
 	if (nullptr == m_pTexturePool)
 	{
 		PrintLog(L"Error", L"pTexturePool is null by CElectricTile::Start()");
@@ -135,7 +173,8 @@ HRESULT CItem::Start()
 
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	//Test	
-	m_pTransform->Set_Position(_vector(-25, 3, 10));
+	//m_pTransform->Set_Position(_vector(-25, 3, 10));
+	//SetItemType(EItemID::Heart);
 	//Test	
 
 
@@ -153,6 +192,8 @@ UINT CItem::Update(const float _fDeltaTime)
 
 	if (FAILED(Animate(_fDeltaTime)))
 		return OBJ_NOENVET;
+
+	Bounce(_fDeltaTime);
 
 	return OBJ_NOENVET;
 }

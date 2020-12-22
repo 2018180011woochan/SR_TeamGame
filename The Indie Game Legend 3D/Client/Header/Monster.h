@@ -31,10 +31,11 @@ protected:
 	const CTransform*	m_pPlayerTransform;
 	class CVIBuffer*	m_pVIBufferCom = nullptr;
 	class CTexture*		m_pTextureCom = nullptr;
-
+	CCollider*			m_pCollider;
 	_vector				m_vecInitPos;
 	//wjm test
 	bool				m_bDead = false;
+	int					m_iHP;
 };
 
 #define __MONSTER_H__
