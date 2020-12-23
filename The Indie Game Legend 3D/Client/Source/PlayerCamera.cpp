@@ -17,7 +17,16 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 		PrintLog(L"Error", L"m_pPlayer nullptr");
 		return E_FAIL;
 	}
+	static float h = 0.f;
 
+	if (GetAsyncKeyState('7') & 0x0001)
+	{
+		h = 0.f ;
+	}
+	if (GetAsyncKeyState('8') & 0x0001)
+	{
+		h += 1.f;
+	}
 	m_fCameraAngleX += m_pMouse->Get_MouseDir().y  * m_fCameraAngleSpeed * _fDeletaTime;
 
 	CTransform* pPlayerTransFomr = (CTransform*)(m_pPlayer->GetComponent<CTransform>());
@@ -27,7 +36,7 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	_matrix matRotAxis;
 	/*Eye*/
 	m_tCameraDesc.vEye = pPlayerTransFomr->Get_Position();
-	m_tCameraDesc.vEye.y = m_fCameraHeight;//점프 없을거라고 봄
+	m_tCameraDesc.vEye.y = m_fCameraHeight+  h;// m_fCameraHeight;//점프 없을거라고 봄
 	
 	/*At . RotY */
 	memcpy(&vPlayerLook, &PlayerTransFormDesc.matWorld.m[2][0], sizeof(_vector));

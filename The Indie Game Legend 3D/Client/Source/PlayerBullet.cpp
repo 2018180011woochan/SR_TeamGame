@@ -7,6 +7,8 @@
 
 //effect
 #include "BulletSpark.h"
+#include "Explosion.h"
+#include "ExplosionBlue.h"
 CPlayerBullet::CPlayerBullet()
 	:m_eBulletType(EWeaponType::Normal)
 {
@@ -156,6 +158,8 @@ HRESULT CPlayerBullet::Awake()
 	pCollider->SetMesh(TEXT("SkyBox"));
 
 	m_sName = L"PlayerBullet";
+
+
 	return S_OK;
 }
 
@@ -207,11 +211,26 @@ CPlayerBullet * CPlayerBullet::Create()
 
 void CPlayerBullet::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"Monster" == _pGameObject->GetName())
+	if (L"Monster" == _pGameObject->GetName()
+		|| L"Obstacle" == _pGameObject->GetName())
 	{
-		CBulletSpark* pBlood = (CBulletSpark*)AddGameObject<CBulletSpark>();
-		pBlood->SetPosition(m_pTransform->Get_Position());
-		m_bDead = true;
+
+		if (m_eBulletType == EWeaponType::Big)
+		{
+			CExplosionBlue* pEffect = nullptr;
+			pEffect = (CExplosionBlue*)AddGameObject<CExplosionBlue>();
+			pEffect->SetPos(m_pTransform->Get_Position());
+			m_bDead = true;
+		}
+		else
+		{
+			CBulletSpark* pEffect = nullptr;
+			pEffect = (CBulletSpark*)AddGameObject<CBulletSpark>();
+			pEffect->SetPosition(m_pTransform->Get_Position());
+			m_bDead = true;
+			
+		}
+
 	}
 
 }

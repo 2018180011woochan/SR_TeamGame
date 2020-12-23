@@ -108,7 +108,7 @@ HRESULT CTexturePoolManager::Load(const TSTRING & _sPath)
 
 			if (FAILED(AddTexturePool(sFullPath, sObjectKey, sStateKey, nFileCount)))
 			{
-				PrintLog(TEXT("Warning"), TEXT("Failed to create CTexturePool"));
+				PrintLog(TEXT("Warning"), TEXT("Failed to Load Texture"));
 				return E_FAIL;
 			}
 			break;

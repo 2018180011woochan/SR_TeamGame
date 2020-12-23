@@ -56,6 +56,7 @@ private:
 	 //Test
 	 Image*						m_pAmmobar = nullptr;
 	 class CHeartManager*		m_pHearManager = nullptr;
+	 class CWeaponHUD*			m_pWeaponHud = nullptr;
 
 
 	 //State

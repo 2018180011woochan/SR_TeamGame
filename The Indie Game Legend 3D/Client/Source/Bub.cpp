@@ -54,8 +54,6 @@ HRESULT CBub::Start()
 	m_pCollider->SetMesh(TEXT("SkyBox"));
 	m_pCollider->m_bIsRigid = true;
 
-	//Test
-	m_nTag = 0;
 	return S_OK;
 }
 
@@ -79,15 +77,15 @@ UINT CBub::Update(const float _fDeltaTime)
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
 	//Test
-	//if (m_fJumpingCnt / 100.f > 1.f)
-	//{
-	//	Jumping(_fDeltaTime);
-	//	++nIndex;
-	//	m_fJumpingCnt = 0.f;
-	//}
+	if (m_fJumpingCnt / 100.f > 1.f)
+	{
+		Jumping(_fDeltaTime);
+		++nIndex;
+		m_fJumpingCnt = 0.f;
+	}
 
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
 
 
 	m_pTransform->UpdateTransform();

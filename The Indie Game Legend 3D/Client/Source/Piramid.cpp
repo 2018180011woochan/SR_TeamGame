@@ -1,29 +1,29 @@
 #include "stdafx.h"
-#include "..\Header\Piramide.h"
+#include "..\Header\Piramid.h"
 #include "Item.h"
 
-CPiramide::CPiramide()
+CPiramid::CPiramid()
 {
 }
 
-CPiramide::CPiramide(const CPiramide & _rOther)
+CPiramid::CPiramid(const CPiramid & _rOther)
 	:CObstacle(_rOther)
 {
 }
 
-HRESULT CPiramide::InitializePrototype()
+HRESULT CPiramid::InitializePrototype()
 {
 	return S_OK;
 }
 
-HRESULT CPiramide::Awake()
+HRESULT CPiramid::Awake()
 {
 	CObstacle::Awake();
 	m_bDead = false;
 	return S_OK;
 }
 
-HRESULT CPiramide::Start()
+HRESULT CPiramid::Start()
 {
 	CObstacle::Start();
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
@@ -31,17 +31,17 @@ HRESULT CPiramide::Start()
 	m_eRenderID = ERenderID::NoAlpha;
 
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_pTransform->Set_Position(_vector(40, 0, 0));
+
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Pyramid_Level1"));
 	m_pCollider->m_bIsRigid = true;
 
 	m_pTransform->UpdateTransform();
 	return S_OK;
 }
 
-UINT CPiramide::Update(const float _fDeltaTime)
+UINT CPiramid::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
@@ -49,31 +49,31 @@ UINT CPiramide::Update(const float _fDeltaTime)
 	return OBJ_NOENVET;
 }
 
-UINT CPiramide::LateUpdate(const float _fDeltaTime)
+UINT CPiramid::LateUpdate(const float _fDeltaTime)
 {
 	CObstacle::LateUpdate(_fDeltaTime);
 	return OBJ_NOENVET;
 }
 
-HRESULT CPiramide::Render()
+HRESULT CPiramid::Render()
 {
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
 }
 
-CGameObject * CPiramide::Clone()
+CGameObject * CPiramid::Clone()
 {
-	CGameObject* pInstance = new CPiramide(*this);
+	CGameObject* pInstance = new CPiramid(*this);
 	return pInstance;
 }
 
-void CPiramide::Free()
+void CPiramid::Free()
 {
 	CObstacle::Free();
 }
 
-void CPiramide::OnCollision(CGameObject * _pGameObject)
+void CPiramid::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
@@ -91,9 +91,9 @@ void CPiramide::OnCollision(CGameObject * _pGameObject)
 	}
 }
 
-CPiramide * CPiramide::Create()
+CPiramid * CPiramid::Create()
 {
-	CPiramide* pInstance = new CPiramide();
+	CPiramid* pInstance = new CPiramid();
 	return pInstance;
 }
 

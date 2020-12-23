@@ -224,8 +224,7 @@ void CItem::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Player" == _pGameObject->GetName())
 	{
-		//m_bDelete = true;
-		cout << "Ãæµ¹" << endl;
+		m_bDelete = true;
 	}
 }
 

@@ -46,6 +46,7 @@ HRESULT CBulletSpark::Animate(const float _fDeltaTime)
 		m_bDead = true;
 		return S_OK;
 	}
+	cout << (int)m_fTextureIndex << endl;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("BulletSpark"))[(_int)m_fTextureIndex]);
 	return S_OK;
 }
@@ -92,7 +93,7 @@ HRESULT CBulletSpark::Start()
 
 	m_fTextureIndex = 0.f;
 	m_fAnimateOneCycleTime = 3.f;
-	m_fAnimateSpeed = (m_nMaxFrame + 1) / 1.f * m_fAnimateOneCycleTime;
+	m_fAnimateSpeed = (m_nMaxFrame) / 1.f * m_fAnimateOneCycleTime;
 
 	m_pTransform->Set_Scale(_vector(4, 4, 4));
 
@@ -107,6 +108,7 @@ UINT CBulletSpark::Update(const float _fDeltaTime)
 
 	if (FAILED(Animate(_fDeltaTime)))
 		return OBJ_NOENVET;
+	m_pTransform->UpdateTransform();
 
 	return OBJ_NOENVET;
 }

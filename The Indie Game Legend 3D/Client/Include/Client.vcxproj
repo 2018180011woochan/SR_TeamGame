@@ -192,7 +192,8 @@
     <ClInclude Include="..\Header\NubBoss.h" />
     <ClInclude Include="..\Header\Obstacle.h" />
     <ClInclude Include="..\Header\PickingManger.h" />
-    <ClInclude Include="..\Header\Piramide.h" />
+    <ClInclude Include="..\Header\Piramid.h" />
+    <ClInclude Include="..\Header\PiramidUnBrake.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="..\Header\WalkerBoss.h" />
     <ClInclude Include="..\Header\WalkerBullet.h" />
     <ClInclude Include="..\Header\Wall.h" />
+    <ClInclude Include="..\Header\WeaponHUD.h" />
     <ClInclude Include="..\Header\WormBoss.h" />
     <ClInclude Include="..\Header\WormBossBody.h" />
     <ClInclude Include="Client.h" />
@@ -262,7 +264,8 @@
     <ClCompile Include="..\Source\NubBoss.cpp" />
     <ClCompile Include="..\Source\Obstacle.cpp" />
     <ClCompile Include="..\Source\PickingManger.cpp" />
-    <ClCompile Include="..\Source\Piramide.cpp" />
+    <ClCompile Include="..\Source\Piramid.cpp" />
+    <ClCompile Include="..\Source\PiramidUnBrake.cpp" />
     <ClCompile Include="..\Source\Player.cpp" />
     <ClCompile Include="..\Source\PlayerBullet.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />
@@ -295,6 +298,7 @@
     <ClCompile Include="..\Source\WalkerBoss.cpp" />
     <ClCompile Include="..\Source\WalkerBullet.cpp" />
     <ClCompile Include="..\Source\Wall.cpp" />
+    <ClCompile Include="..\Source\WeaponHUD.cpp" />
     <ClCompile Include="..\Source\WormBoss.cpp" />
     <ClCompile Include="..\Source\WormBossBody.cpp" />
     <ClCompile Include="Client.cpp" />

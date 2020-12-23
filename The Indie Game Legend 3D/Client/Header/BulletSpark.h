@@ -12,8 +12,8 @@ private:
 	float	m_fTextureIndex = 0.f;
 	float	m_fAnimateSpeed = 0.f;
 	float	m_fAnimateOneCycleTime = 0.f; // 한번 순회하는데 몇초로 설정할거냐
-	bool	m_bDead = false;
 	_int	m_nMaxFrame = 0;
+	bool	m_bDead = false;
 private:
 	void IsBillBording();
 	HRESULT Animate(const float _fDeltaTime);

@@ -10,6 +10,8 @@
 #include "HeartManager.h"
 #include "Item.h"
 #include "SoundMgr.h"
+#include "PlayerSpawn.h"
+#include "WeaponHUD.h"
 USING(Engine)
 
 
@@ -140,7 +142,7 @@ HRESULT CPlayer::MoveCheck()
 		m_vMoveDir += (m_pTransform->Get_Right());
 	}
 
-	if (m_pKeyMgr->Key_Press(KEY_LSHIFT))
+	if (m_eState != EState::Hit &&  m_pKeyMgr->Key_Press(KEY_LSHIFT))
 		m_eState = EState::Run;
 
 	if (m_pKeyMgr->Key_Down(KEY_SPACE) && m_fDashDelay <= m_fDashDelayTime)
@@ -213,10 +215,16 @@ void CPlayer::TakeItem(const EItemID & _eID)
 	case EItemID::Ammo:
 		break;
 	case EItemID::sprCoin:
-		++m_nCoin;
+		++m_fAmmo;
+		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
+		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
+		//++m_nCoin;
 		break;
 	case EItemID::sprBigCoin:
-		m_nCoin += 10;
+		//m_nCoin += 10;
+		m_fAmmo += 3;
+		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
+		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
 		break;
 	case EItemID::End:
 		break;
@@ -276,23 +284,24 @@ void CPlayer::ChangeWeaponUISetting()
 	//중복콜 방지용
 	if (m_ePreWeaponType != m_eCurWeaponType)
 	{
-		switch (m_eCurWeaponType)
-		{
-		case EWeaponType::Multiple:
-			//cout << "now Weapon is Multiple " << endl;
-			break;
-		case EWeaponType::Big:
-			//cout << "now Weapon is Big " << endl;
-			break;
-		case EWeaponType::Rapid:
-			//cout << "now Weapon is Rapid " << endl;
-			break;
-		default:
-#ifdef _DEBUG
-			cout << " default Input by ChangeWeaponSetting() of switch" << endl;
-#endif
-			break;
-		}
+		m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
+//		switch (m_eCurWeaponType)
+//		{
+//		case EWeaponType::Multiple:
+//			//cout << "now Weapon is Multiple " << endl;
+//			break;
+//		case EWeaponType::Big:
+//			//cout << "now Weapon is Big " << endl;
+//			break;
+//		case EWeaponType::Rapid:
+//			//cout << "now Weapon is Rapid " << endl;
+//			break;
+//		default:
+//#ifdef _DEBUG
+//			cout << " default Input by ChangeWeaponSetting() of switch" << endl;
+//#endif
+//			break;
+//		}
 		m_ePreWeaponType = m_eCurWeaponType;
 	}
 	ChangeWeapon();
@@ -438,16 +447,42 @@ HRESULT CPlayer::Awake()
 HRESULT CPlayer::Start()
 {
 	//Test
-	//m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
+	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
+	m_pWeaponHud = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
+	m_pHearManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
+
+	if (nullptr == m_pWeaponHud || nullptr == m_pHearManager)
+	{
+		return E_FAIL;
+	}
 	//SafeAddRef(m_pAmmobar);
 
 	//Test player spawn 찾아서 룸아디 대입받는걸로 
 	m_nTag = 0;
 	m_sName = L"Player";
+
+	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
+	 _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
+	 m_pTransform->Set_Position(vPosition);
+
+	 m_nTag = pSpawn->GetTage();
+
+	 CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
 	//Reference Setting
 	//할당 순서 때문에 작업 미완
-	//m_pHearManager = (CHeartManager*)FindGameObjectOfType<CAmmoGauge>(); 
-	//m_pHearManager->SetGauge(m_nHp);
+	 //m_pHearManager = (CHeartManager*)FindGameObjectOfType<CAmmoGauge>();
+	 //m_pHearManager->SetGauge(m_nHp);
+
+	 AddWeapon(EWeaponType::Big);
+	 AddWeapon(EWeaponType::Multiple);
+	 AddWeapon(EWeaponType::Rapid);
+	 
+	 
+	 //------------
+	 m_nHp = 8;
+	 m_nHpMax = 12;
+	 //m_pHearManager->SetHeartCount(m_nHpMax);
+	 //m_pHearManager->SetGauge(m_nHp);
 
 	return S_OK;
 }
