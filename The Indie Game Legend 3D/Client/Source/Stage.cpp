@@ -153,12 +153,12 @@ HRESULT CStage::Awake()
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
-		_vector(1, -1, 1), color*0.9f, color, color*0.f);
+		_vector(1, -1, 1), color*0.9f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
-		_vector(-1, -1, -1), color*0.9f, color, color*0.f);
+		_vector(-1, -1, -1), color*0.9f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
 	CLightMananger::GetInstance()->LightOff();
@@ -257,6 +257,14 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CWeaponHUD::Create());
 
 	AddGameObject<CWeaponHUD>();
+
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
 
 	AddGameObject<CHeartManager>();
 	return S_OK;
