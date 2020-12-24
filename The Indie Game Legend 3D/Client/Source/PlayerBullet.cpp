@@ -158,7 +158,7 @@ HRESULT CPlayerBullet::Awake()
 	m_fLiveTiem = 5.f;
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("SkyBox"));
+	pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 
 	m_sName = L"PlayerBullet";
 	return S_OK;

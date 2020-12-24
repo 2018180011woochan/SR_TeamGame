@@ -61,7 +61,7 @@ HRESULT CCryder::Start()
 
 	//Test
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	return S_OK;
 }
 

@@ -61,7 +61,7 @@ HRESULT CWalkerBoss::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("SkyBox"));
+	pCollider->SetMesh(TEXT("SkyBox"),BOUND::BOUNDTYPE::SPHERE);
 	pCollider->m_bIsRigid = true;
 	return S_OK;
 }

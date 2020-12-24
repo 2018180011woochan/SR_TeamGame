@@ -250,6 +250,9 @@
     <Filter Include="02.GameObject\09.Item">
       <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\07.WeaponHUD">
+      <UniqueIdentifier>{cc457026-7e59-4bd1-ad24-cb21731176ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -456,6 +459,9 @@
     <ClInclude Include="..\Header\Item.h">
       <Filter>02.GameObject\09.Item</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponHUD.h">
+      <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -643,6 +649,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Item.cpp">
       <Filter>02.GameObject\09.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponHUD.cpp">
+      <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

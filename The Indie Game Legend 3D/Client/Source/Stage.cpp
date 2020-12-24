@@ -36,6 +36,7 @@
 #include "HeartManager.h"
 #include "Heart.h"
 #include "CrossHair.h"
+#include "WeaponHUD.h"
 #pragma endregion
 #include "SkyBox.h"
 
@@ -222,10 +223,18 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CHeart::Create());
 	AddPrototype(CHeartManager::Create());
 	AddPrototype(CCrossHair::Create());
+	AddPrototype(CWeaponHUD::Create());
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
 	AddGameObject<CHeartManager>();
+	AddGameObject<CHeart>();
+	AddGameObject<CHeart>();
+	AddGameObject<CHeart>();
+	AddGameObject<CHeart>();
+	AddGameObject<CHeart>();
+	AddGameObject<CHeart>();
 	AddGameObject<CCrossHair>();
+	AddGameObject<CWeaponHUD>();
 	return S_OK;
 }
 

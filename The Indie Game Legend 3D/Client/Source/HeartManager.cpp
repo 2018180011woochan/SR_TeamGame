@@ -4,12 +4,14 @@
 
 CHeartManager::CHeartManager()
 	: m_nMaxHeart(6)
+	, m_nHeartCount(3)
 	, m_pHeart(nullptr)
 {
 }
 
 CHeartManager::CHeartManager(const CHeartManager & _rOther)
 	:CGameObject(_rOther)
+	, m_nHeartCount(3)
 	,m_nMaxHeart(6)
 {
 }
@@ -55,9 +57,19 @@ HRESULT CHeartManager::Awake()
 {
 	CGameObject::Awake();
 	m_pHeart = new CHeart*[m_nMaxHeart];
+	list<CGameObject*> heartList = FindGameObjectsOfType<CHeart>();
+
+	UINT nIndex = 0;
+	for (auto pHeart : heartList)
+	{
+		m_pHeart[nIndex] = (CHeart*)pHeart;
+		++nIndex;
+
+		if (nIndex >= m_nMaxHeart)
+			break;
+	}
 	for (UINT i = 0; i < m_nMaxHeart; ++i)
 	{
-		m_pHeart[i] = (CHeart*)(AddGameObject<CHeart>());
 		SafeAddRef(m_pHeart[i]);
 		((CTransform*)(m_pHeart[i]->GetComponent<CTransform>()))->Set_Position(D3DXVECTOR3(-575.f + 59.5f * i, 302.5f, 0.f));
 		((CTransform*)(m_pHeart[i]->GetComponent<CTransform>()))->UpdateTransform();

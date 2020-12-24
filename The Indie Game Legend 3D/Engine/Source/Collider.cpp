@@ -12,15 +12,17 @@ CCollider::CCollider(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _
 	: CComponent(_pGameObject, _pDevice)
 	, m_pMeshManager(CMeshManager::GetInstance())
 	, m_pCollisionMesh(nullptr)
+	, m_pDrawMesh(nullptr)
 	, m_bIsRigid(false)
 {
 	SafeAddRef(m_pMeshManager);
-	ZeroMemory(&m_tBoundingBox, sizeof(BOUNDINGBOX));
+	ZeroMemory(&m_tBound, sizeof(BOUND));
 }
 
 void CCollider::Free()
 {
 	CComponent::Free();
+	SafeRelease(m_pDrawMesh);
 	SafeRelease(m_pCollisionMesh);
 	SafeRelease(m_pMeshManager);
 }
@@ -41,8 +43,8 @@ HRESULT CCollider::Initialize()
 	return S_OK;
 }
 
-HRESULT CCollider::SetMesh(const TSTRING & _sMesh)
-{	//기존 메쉬 릴리즈
+HRESULT CCollider::SetMesh(const TSTRING & _sMesh, const BOUND::BOUNDTYPE _eBoundType)
+{
 	SafeRelease(m_pCollisionMesh);
 
 	m_pCollisionMesh = m_pMeshManager->Clone(_sMesh);
@@ -50,17 +52,32 @@ HRESULT CCollider::SetMesh(const TSTRING & _sMesh)
 	if (nullptr == m_pCollisionMesh)
 		return E_FAIL;
 
-	//SafeAddRef(m_pCollisionMesh);
-
+	m_tBound.eType = _eBoundType;
 	SetBound();
 	return S_OK;
 }
 
 HRESULT CCollider::Draw()
 {
-	if (nullptr == m_pCollisionMesh)
+	if (nullptr == m_pDrawMesh)
 		return E_FAIL;
-	return m_pCollisionMesh->Draw();
+	CTransform* pTransform = ((CTransform*)GetGameObject()->GetComponent<CTransform>());
+	D3DXVECTOR3 vPosition = pTransform->Get_Position();
+	D3DXMATRIX matScale;
+	D3DXMATRIX matTrans;
+	D3DXMATRIX matWorld;
+	if (BOUND::BOUNDTYPE::BOX == m_tBound.eType)
+		D3DXMatrixScaling(&matScale, m_tBound.fLength, m_tBound.fHeight, m_tBound.fDepth);
+	else
+		D3DXMatrixScaling(&matScale, m_tBound.fRadius, m_tBound.fRadius, m_tBound.fRadius);
+
+	D3DXMatrixTranslation(&matTrans, vPosition.x, vPosition.y, vPosition.z);
+
+	matWorld = matScale * matTrans;
+
+	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
+
+	return m_pDrawMesh->Draw();
 }
 
 void CCollider::SetBound()
@@ -85,22 +102,43 @@ void CCollider::SetBound()
 	}
 
 	//바운딩 박스 구조체
-	D3DXComputeBoundingBox((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(D3DXVECTOR3), &(m_tBoundingBox.vMin), &(m_tBoundingBox.vMax));
-
+	if (BOUND::BOUNDTYPE::BOX == m_tBound.eType)
+	{
+		D3DXComputeBoundingBox((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(D3DXVECTOR3), &(m_tBound.vMin), &(m_tBound.vMax));
+		m_tBound.fLength = m_tBound.vMax.x - m_tBound.vMin.x;
+		m_tBound.fHeight = m_tBound.vMax.y - m_tBound.vMin.y;
+		m_tBound.fDepth = m_tBound.vMax.z - m_tBound.vMin.z;
+		m_pDrawMesh = m_pMeshManager->Clone(TEXT("Cube"));
+	}
+	else
+	{
+		D3DXComputeBoundingSphere((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(D3DXVECTOR3), &(m_tBound.vCenter), &(m_tBound.fRadius));
+		m_pDrawMesh = m_pMeshManager->Clone(TEXT("Sphere"));
+	}
 	SafeDeleteArray(pVertices);
 }
 
-BOUNDINGBOX CCollider::GetBound()
+BOUND CCollider::GetBound()
 {
 	CTransform* pTransform = nullptr;
-
+	BOUND tBound;
 	pTransform = (CTransform*)(m_pGameObject->GetComponent<CTransform>());
 
-	BOUNDINGBOX tBoundingBox = m_tBoundingBox;
-	tBoundingBox.vMin += pTransform->Get_Position();
-	tBoundingBox.vMax += pTransform->Get_Position();
+	//바운딩 박스 구조체
+	if (BOUND::BOUNDTYPE::BOX == m_tBound.eType)
+	{
+		tBound = m_tBound;
+		tBound.vCenter = pTransform->Get_Position();
+		tBound.vMin += pTransform->Get_Position();
+		tBound.vMax += pTransform->Get_Position();
+	}
+	else
+	{
+		tBound = m_tBound;
+		tBound.vCenter = pTransform->Get_Position();
+	}
 
-	return tBoundingBox;
+	return tBound;
 }
 
 const D3DXVECTOR3* CCollider::GetVertices()

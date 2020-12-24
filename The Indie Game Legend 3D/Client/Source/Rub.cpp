@@ -69,7 +69,7 @@ HRESULT CRub::Start()
 	
 	//test
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 
 	//Test

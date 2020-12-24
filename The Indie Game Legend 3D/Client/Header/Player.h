@@ -58,6 +58,8 @@ private:
 	 float				m_fDashDelayTime;
 	 float				m_fDashDuration;
 	 float				m_fDashDurationTime;
+
+	 class CWeaponHUD* m_pWeaponHUD;
 private:
 	HRESULT KeyInput(const float _fDeltaTime);
 	HRESULT MoveCheck();

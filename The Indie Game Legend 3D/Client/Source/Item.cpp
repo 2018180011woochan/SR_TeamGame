@@ -139,11 +139,11 @@ HRESULT CItem::Start()
 	SetItemType(EItemID::Heart);
 	//Test	
 
+	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Cube"),BOUND::BOUNDTYPE::BOX);
 
-	m_pTransform->UpdateTransform();
 	return S_OK;
 }
 

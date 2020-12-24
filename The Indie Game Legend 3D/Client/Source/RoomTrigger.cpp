@@ -35,7 +35,7 @@ HRESULT CRoomTrigger::Start()
 {
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(L"SkyBox");
+	m_pCollider->SetMesh(TEXT("Cube"), BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
 	return S_OK;

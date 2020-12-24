@@ -8,6 +8,8 @@
 #include "PickingManger.h"
 #include "LightMananger.h"
 #include "HeartManager.h"
+
+#include "WeaponHUD.h"
 USING(Engine)
 
 
@@ -104,6 +106,9 @@ HRESULT CPlayer::MoveCheck()
 {
 	if (m_eState == EState::Dash)
 		return S_OK;
+	static UINT nIndex = 0;
+	if (nIndex >= 3)
+		nIndex = 0;
 
 	m_vMoveDir = vZero;
 
@@ -134,6 +139,8 @@ HRESULT CPlayer::MoveCheck()
 	else if (m_pKeyMgr->Key_Press(KEY_A))
 	{
 		m_vMoveDir += -(m_pTransform->Get_Right());
+		++nIndex;
+		m_pWeaponHUD->ChangeWeapon(nIndex);
 	}
 	else if (m_pKeyMgr->Key_Press(KEY_D))
 	{
@@ -378,15 +385,15 @@ HRESULT CPlayer::Awake()
 	m_fDashDelay = 2.f;
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
-
+		
 	//State
 	m_nHp = 8;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(10.f,10.f, 10.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(4.f,4.f, 4.f));
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(TEXT("SkyBox"));
+	pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 
 	return S_OK;
 }
@@ -402,9 +409,9 @@ HRESULT CPlayer::Start()
 	m_sName = L"Player";
 	//Reference Setting
 	//할당 순서 때문에 작업 미완
-	//m_pHearManager = (CHeartManager*)FindGameObjectOfType<CAmmoGauge>(); 
-	//m_pHearManager->SetGauge(m_nHp);
-
+	m_pHearManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
+	m_pHearManager->SetGauge(m_nHp);
+	m_pWeaponHUD = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
 	return S_OK;
 }
 

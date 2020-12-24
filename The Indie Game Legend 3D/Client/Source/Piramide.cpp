@@ -26,14 +26,14 @@ HRESULT CPiramide::Start()
 {
 	CObstacle::Start();
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
-	m_pMeshRenderer->SetMesh(TEXT("Pyramid_Level1"));
+	m_pMeshRenderer->SetMesh(TEXT("TestWall"));
 	m_eRenderID = ERenderID::Alpha;
 
-	m_pTransform->Set_Scale(_vector(5, 5, 5));
-	m_pTransform->Set_Position(_vector(15, 0, 0));
-
+	m_pTransform->Set_Scale(_vector(1, 1, 1));
+	m_pTransform->Set_Position(_vector(0,12, 0));
+	m_pTransform->UpdateTransform();
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("TestWall"), BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
 	return S_OK;
@@ -52,6 +52,7 @@ UINT CPiramide::LateUpdate(const float _fDeltaTime)
 
 HRESULT CPiramide::Render()
 {
+	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
 	m_pMeshRenderer->Render();
 	return S_OK;
 }
