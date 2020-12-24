@@ -22,7 +22,7 @@ HRESULT CRoomTrigger::Awake()
 	CGameObject::Awake();
 	m_sName = L"RoomTrigger";
 	//Test
-	m_pTransform->Set_Scale(_vector(9.f, 24.f, 0.1f));
+	m_pTransform->Set_Scale(_vector(8.f, 24.f, 0.1f));
 
 
 	m_eRenderID = ERenderID::AlphaCullNone;
@@ -40,7 +40,7 @@ HRESULT CRoomTrigger::Start()
 
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(L"SkyBox");
+	m_pCollider->SetMesh(TEXT("Cube"), BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
 	m_pTransform->UpdateTransform();

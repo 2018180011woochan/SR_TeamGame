@@ -2,11 +2,18 @@
 #ifndef __COLLIDER_H__
 #include "Component.h"
 BEGIN(Engine)
-typedef struct tagBoundBox
+typedef struct tagBound
 {
+	enum BOUNDTYPE { BOX, SPHERE };
+	BOUNDTYPE	eType;
 	D3DXVECTOR3 vMin;
 	D3DXVECTOR3 vMax;
-}BOUNDINGBOX, *LPBOUNDINGBOX;
+	D3DXVECTOR3 vCenter;
+	float		fRadius;
+	float		fLength;
+	float		fHeight;
+	float		fDepth;
+}BOUND, *LPBOUND;
 class CMesh;
 class CMeshManager;
 class ENGINE_DLL CCollider final : public CComponent
@@ -14,7 +21,8 @@ class ENGINE_DLL CCollider final : public CComponent
 private:
 	CMeshManager*	m_pMeshManager;
 	CMesh*			m_pCollisionMesh;
-	BOUNDINGBOX		m_tBoundingBox;
+	CMesh*			m_pDrawMesh;
+	BOUND			m_tBound;
 public:
 	bool			m_bIsRigid;
 private:
@@ -29,12 +37,13 @@ public:
 	virtual HRESULT Initialize() override;
 
 public:
-	HRESULT SetMesh(const TSTRING& _sMesh);
+	HRESULT SetMesh(const TSTRING& _sMesh, const BOUND::BOUNDTYPE _eBoundType);
 	HRESULT Draw();
 private:
 	void SetBound();
 public:
-	BOUNDINGBOX GetBound();
+	//BOUNDINGBOX GetBound();
+	BOUND				GetBound();
 	const D3DXVECTOR3*	GetVertices();
 	const UINT			GetVertexCount();
 

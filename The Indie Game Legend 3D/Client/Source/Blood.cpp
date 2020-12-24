@@ -54,7 +54,8 @@ HRESULT CBlood::Awake()
 
 	m_eRenderID = ERenderID::Alpha;
 
-	
+	m_bDead = false;
+
 	return S_OK;
 }
 

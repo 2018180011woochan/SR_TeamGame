@@ -136,7 +136,7 @@ list<CGameObject*> CGameObjectManager::FindGameObjectsOfType(const size_t _nScen
 	{
 		if (nullptr != dynamic_cast<T*>(pGameObject))
 		{
-			gameObjects.emplace(pGameObject);
+			gameObjects.push_back(pGameObject);
 		}
 	}
 

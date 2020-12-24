@@ -73,7 +73,7 @@ HRESULT CRub::Start()
 	
 	//test
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 
 	//Test
@@ -99,21 +99,21 @@ UINT CRub::Update(const float _fDeltaTime)
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
 
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
 
 
-	//m_fJumpDeltaTime += _fDeltaTime;
-	//if (m_fJumpSpeed <= m_fJumpDeltaTime)
-	//{
-	//	m_fJumpDeltaTime -= m_fJumpSpeed;
+	m_fJumpDeltaTime += _fDeltaTime;
+	if (m_fJumpSpeed <= m_fJumpDeltaTime)
+	{
+		m_fJumpDeltaTime -= m_fJumpSpeed;
 
-	//	if (false == m_bJump)
-	//		m_bJump = true;
+		if (false == m_bJump)
+			m_bJump = true;
 
-	//	m_fYTest = m_pTransform->Get_Position().y;
+		m_fYTest = m_pTransform->Get_Position().y;
 
-	//}
+	}
 
 	Jumping(_fDeltaTime);
 	m_pTransform->UpdateTransform();

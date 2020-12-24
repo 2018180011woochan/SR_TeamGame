@@ -56,6 +56,7 @@ private:
 	 //Test
 	 Image*						m_pAmmobar = nullptr;
 	 class CHeartManager*		m_pHearManager = nullptr;
+	 class CWeaponHUD*			m_pWeaponHud = nullptr;
 
 
 	 //State
@@ -78,6 +79,8 @@ private:
 	 float				m_fDashDelayTime;
 	 float				m_fDashDuration;
 	 float				m_fDashDurationTime;
+
+	 class CWeaponHUD* m_pWeaponHUD;
 private:
 	HRESULT KeyInput(const float _fDeltaTime);
 	HRESULT MoveCheck();

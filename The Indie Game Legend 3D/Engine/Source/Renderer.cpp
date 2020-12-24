@@ -6,7 +6,7 @@ USING(Engine)
 
 CRenderer::CRenderer(LPDIRECT3DDEVICE9 _pDevice)
 	: m_pDevice(_pDevice)
-	, m_bDrawCollider(true)
+	, m_bDrawCollider(false)
 {
 	SafeAddRef(_pDevice);
 }
@@ -183,8 +183,6 @@ HRESULT CRenderer::RenderCollider()
 		pCollider = (CCollider*)(pGameObject->GetComponent<CCollider>());
 		if (nullptr == pCollider)
 			continue;
-		pTransform = (CTransform*)(pGameObject->GetComponent<CTransform>());
-		m_pDevice->SetTransform(D3DTS_WORLD, &pTransform->Get_WorldMatrix());
 		pCollider->Draw();
 	}
 	m_pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);

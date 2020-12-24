@@ -36,6 +36,13 @@ HRESULT CExplosionBlue::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("ExplosionBlue"));
 	SafeAddRef(m_pTexturePool);
 
+	//animate
+	m_nMaxFrame = m_pTexturePool->GetTexture(TEXT("Idle")).size();
+	m_fTextureIndex = 0.f;
+	m_fAnimateOneCycleTime = 3.f;
+	m_fAnimateSpeed = (m_nMaxFrame) / 1.f * m_fAnimateOneCycleTime;
+	//animate
+
 	m_pTransform->Set_Scale(_vector(7.f, 7.f, 7.f));
 
 	m_fJumpPower = 10.f;
@@ -44,7 +51,7 @@ HRESULT CExplosionBlue::Awake()
 	m_bJump = false;
 	nIndex = 0;
 
-	m_fWalkSpeed = 0.3f;
+	m_fWalkSpeed = 0.1f;
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
@@ -54,7 +61,8 @@ HRESULT CExplosionBlue::Awake()
 
 	m_eRenderID = ERenderID::Alpha;
 
-	
+	m_bDead = false;
+
 	return S_OK;
 }
 
@@ -75,17 +83,13 @@ UINT CExplosionBlue::Update(const float _fDeltaTime)
 
 	CGameObject::Update(_fDeltaTime);
 
-	m_fWalkDeltaTime += _fDeltaTime;
-	if (m_fWalkSpeed <= m_fWalkDeltaTime)
+	m_fTextureIndex += _fDeltaTime * m_fAnimateSpeed;
+	if (m_nMaxFrame <= m_fTextureIndex)
 	{
-		nIndex++;
-		if (nIndex >= 4)
-			m_bDead = true;
-		if (nIndex >= 4)
-			nIndex = 0;
-		m_fWalkDeltaTime -= m_fWalkSpeed;
+		m_bDead = true;
+		return OBJ_DEAD;
 	}
-	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[(_int)m_fTextureIndex]);
 
 	m_pTransform->UpdateTransform();
 

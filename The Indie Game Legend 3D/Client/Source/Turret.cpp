@@ -38,7 +38,6 @@ HRESULT CTurret::Awake()
 	m_fFireDeltaTime = 0;
 	m_fFireSpeed = 3;
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
-	//m_pTransform->Set_Position(_vector(-5.f, 5.f, 10.f));
 
 
 	m_iHP = 3;
@@ -53,17 +52,16 @@ HRESULT CTurret::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 
-	m_nTag = 0;
 	return S_OK;
 }
 
 UINT CTurret::Update(const float _fDeltaTime)
 {
-	//if (m_bDead)
-	//	return OBJ_DEAD;
+	if (m_bDead)
+		return OBJ_DEAD;
 
 	CMonster::Update(_fDeltaTime);
 
@@ -106,7 +104,6 @@ HRESULT CTurret::Render()
 
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
-	m_pCollider->Draw();
 	return S_OK;
 }
 

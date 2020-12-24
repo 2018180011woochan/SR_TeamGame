@@ -63,8 +63,13 @@
 #include "SoundMgr.h"
 #include "RoomTrigger.h"
 #include "LightMananger.h"
-#include "Piramide.h"
+#include "Piramid.h"
 #include "Item.h"
+#include "BulletSpark.h"
+#include "PlayerSpawn.h"
+#include "PiramidUnBrake.h"
+#include "KeyManager.h"
+#include "WeaponHUD.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -100,28 +105,31 @@ HRESULT CStage::Awake()
 	AddPrototype(CWormBossBody::Create());
 
 	AddPrototype(CSandTile::Create());
+	AddPrototype(CPiramid::Create());
+
 	AddPrototype(CElectricTile::Create());
 	AddPrototype(CLavaTile::Create());
 	AddPrototype(CSwampTile::Create());
+	AddPrototype(CPiramidUnBrake::Create());
 
 	AddPrototype(CSlider::Create());
 	AddPrototype(CRoomTrigger::Create());
 
-
-
 	AddPrototype(CPlayer::Create());
 	AddPrototype(CPlayerCamera::Create());
 	AddPrototype(CMouse::Create());
+	AddPrototype(CBulletSpark::Create());
+
 	AddPrototype(CSector::Create());
+	AddPrototype(CPlayerSpawn::Create());
+
 	AddPrototype(CPlayerBullet::Create());
 	AddPrototype(CBulletSpawn::Create());
-	AddPrototype(CPiramide::Create());
 
 	AddGameObject<CPlayer>();
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
-	AddGameObject<CPiramide>();
 
 
 	// Test용으로 추가함
@@ -153,12 +161,12 @@ HRESULT CStage::Awake()
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
-		_vector(1, -1, 1), color*0.5f, color, color*0.f);
+		_vector(1, -1, 1), color*0.9f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
-		_vector(-1, -1, -1), color*0.5f, color, color*0.f);
+		_vector(-1, -1, -1), color*0.9f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
 	CLightMananger::GetInstance()->LightOff();
@@ -167,7 +175,7 @@ HRESULT CStage::Awake()
 	pSector->SetSectorName(L"Sector1");
 
 	
-	//AddUIObject();
+	AddUIObject();
 
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
@@ -175,15 +183,18 @@ HRESULT CStage::Awake()
 #pragma endregion
 	CScene::Awake();
 
-	//CSoundMgr::GetInstance()->Initialize();
-	//CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
+	CSoundMgr::GetInstance()->Initialize();
+	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
+
+	CFactoryManager::GetInstance()->LoadDataFile(L"s1");
+	CFactoryManager::GetInstance()->LoadScene(this);
+
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
-	CFactoryManager::GetInstance()->LoadDataFile(L"RoomTriggerTest");
-	CFactoryManager::GetInstance()->LoadScene(this);
+
 
 	CScene::Start();
 
@@ -206,13 +217,20 @@ UINT CStage::Update(float _fDeltaTime)
 	}
 	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
 
-	if (GetAsyncKeyState(VK_F5) & 0x8000)
+	if (CKeyManager::GetInstance()->Key_Down(KEY_F))
 	{
 		bLight = !bLight;
+
 		if (bLight)
+		{
 			CLightMananger::GetInstance()->LightOn();
+
+		}
 		else
+		{
 			CLightMananger::GetInstance()->LightOff();
+
+		}
 
 	}
 
@@ -242,8 +260,21 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CCrossHair::Create());
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
-	AddGameObject<CHeartManager>();
 	AddGameObject<CCrossHair>();
+
+	AddPrototype(CWeaponHUD::Create());
+
+	AddGameObject<CWeaponHUD>();
+
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+
+	AddGameObject<CHeartManager>();
 	return S_OK;
 }
 

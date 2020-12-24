@@ -51,12 +51,14 @@ HRESULT CPlayerSpawn::Render()
 
 CGameObject * CPlayerSpawn::Clone()
 {
-	return nullptr;
+	CGameObject* pInstance = new CPlayerSpawn(*this);
+	return pInstance;
 }
 
 CPlayerSpawn * CPlayerSpawn::Create()
 {
-	return nullptr;
+	CPlayerSpawn* pInstance = new CPlayerSpawn();
+	return pInstance;
 }
 
 void CPlayerSpawn::Free()
