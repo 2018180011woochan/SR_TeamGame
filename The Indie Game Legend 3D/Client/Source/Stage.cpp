@@ -22,6 +22,13 @@
 #include "WormBossBody.h"
 #pragma endregion
 
+#pragma region EFFECT
+#include "Blood.h"
+#include "SmallExlode.h"
+#include "Explosion.h"
+#include "ExplosionBlue.h"
+#pragma endregion
+
 #include "FactoryManager.h"
 #include "Player.h"
 #include "PlayerCamera.h"
@@ -36,7 +43,6 @@
 #include "HeartManager.h"
 #include "Heart.h"
 #include "CrossHair.h"
-#include "WeaponHUD.h"
 #pragma endregion
 #include "SkyBox.h"
 
@@ -53,8 +59,13 @@
 #include "SoundMgr.h"
 #include "RoomTrigger.h"
 #include "LightMananger.h"
-#include "Piramide.h"
+#include "Piramid.h"
 #include "Item.h"
+#include "BulletSpark.h"
+#include "PlayerSpawn.h"
+#include "PiramidUnBrake.h"
+#include "KeyManager.h"
+#include "WeaponHUD.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -62,6 +73,11 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
+	AddPrototype(CBlood::Create());
+	AddPrototype(CSmallExlode::Create());
+	AddPrototype(CExplosion::Create());
+	AddPrototype(CExplosionBlue::Create());
+
 	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
 	AddPrototype(CRub::Create());
@@ -83,30 +99,33 @@ HRESULT CStage::Awake()
 	AddPrototype(CWormBossBody::Create());
 
 	AddPrototype(CSandTile::Create());
+	AddPrototype(CPiramid::Create());
+
 	AddPrototype(CElectricTile::Create());
 	AddPrototype(CLavaTile::Create());
 	AddPrototype(CSwampTile::Create());
+	AddPrototype(CPiramidUnBrake::Create());
 
 	AddPrototype(CSlider::Create());
 	AddPrototype(CRoomTrigger::Create());
 
-
-
 	AddPrototype(CPlayer::Create());
 	AddPrototype(CPlayerCamera::Create());
 	AddPrototype(CMouse::Create());
+	AddPrototype(CBulletSpark::Create());
+
 	AddPrototype(CSector::Create());
+	AddPrototype(CPlayerSpawn::Create());
+
 	AddPrototype(CPlayerBullet::Create());
 	AddPrototype(CBulletSpawn::Create());
-	AddPrototype(CPiramide::Create());
 
 	AddGameObject<CPlayer>();
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
-	AddGameObject<CPiramide>();
 
-	CItem* pObj = (CItem*)AddGameObject<CItem>();
+
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
@@ -129,27 +148,25 @@ HRESULT CStage::Awake()
 	//AddGameObject<CTreeBoss>();
 
 	//컬링 테스트 
-	//CGameObject* pObj = AddGameObject<CRoomTrigger>();
-	//pObj->SetTag(0);
-	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(30, 0, -30));
-	//pObj = AddGameObject<CRoomTrigger>();
-	//pObj->SetTag(1);
-	//((CTransform*)(pObj->GetComponent<CTransform>()))->Set_Position(_vector(-30, 0, -30));
-
-
+	
 	//Light manager Test
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	CLightMananger::GetInstance()->CreatePoint(CLightMananger::World1,
-		_vector(0, 20, 0), color*0.5f, color, color*0.f);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
+		_vector(1, -1, 1), color*0.9f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
-	CLightMananger::GetInstance()->LightOn();
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
+		_vector(-1, -1, -1), color*0.9f, color, color*1.f);
+
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
+	CLightMananger::GetInstance()->LightOff();
 
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
 
+	
 	AddUIObject();
 
 #pragma region SKYBOX
@@ -158,15 +175,18 @@ HRESULT CStage::Awake()
 #pragma endregion
 	CScene::Awake();
 
-	//CSoundMgr::GetInstance()->Initialize();
-	//CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
+	CSoundMgr::GetInstance()->Initialize();
+	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
+
+	CFactoryManager::GetInstance()->LoadDataFile(L"s1");
+	CFactoryManager::GetInstance()->LoadScene(this);
+
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
-	CFactoryManager::GetInstance()->LoadDataFile(L"TileTest");
-	CFactoryManager::GetInstance()->LoadScene(this);
+
 
 	CScene::Start();
 
@@ -189,13 +209,20 @@ UINT CStage::Update(float _fDeltaTime)
 	}
 	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
 
-	if (GetAsyncKeyState(VK_F5) & 0x8000)
+	if (CKeyManager::GetInstance()->Key_Down(KEY_F))
 	{
 		bLight = !bLight;
+
 		if (bLight)
+		{
 			CLightMananger::GetInstance()->LightOn();
+
+		}
 		else
+		{
 			CLightMananger::GetInstance()->LightOff();
+
+		}
 
 	}
 
@@ -223,18 +250,23 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CHeart::Create());
 	AddPrototype(CHeartManager::Create());
 	AddPrototype(CCrossHair::Create());
-	AddPrototype(CWeaponHUD::Create());
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
-	AddGameObject<CHeartManager>();
-	AddGameObject<CHeart>();
-	AddGameObject<CHeart>();
-	AddGameObject<CHeart>();
-	AddGameObject<CHeart>();
-	AddGameObject<CHeart>();
-	AddGameObject<CHeart>();
 	AddGameObject<CCrossHair>();
+
+	AddPrototype(CWeaponHUD::Create());
+
 	AddGameObject<CWeaponHUD>();
+
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+
+	AddGameObject<CHeartManager>();
 	return S_OK;
 }
 

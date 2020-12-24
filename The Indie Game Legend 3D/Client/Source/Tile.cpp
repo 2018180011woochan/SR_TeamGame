@@ -26,6 +26,9 @@ HRESULT CTile::Awake()
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
+
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(L"SkyBox");
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -50,6 +53,7 @@ UINT CTile::LateUpdate(const float _fDeltaTime)
 
 HRESULT CTile::Render()
 {
+
 	return S_OK;
 }
 

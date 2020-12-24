@@ -3,6 +3,10 @@
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "sqrNub.h"
+#include "Item.h"
+#include "Blood.h"
+#include "Explosion.h"
+#include "ExplosionBlue.h"
 
 CNubBoss::CNubBoss()
 	: m_pTexturePool(nullptr)
@@ -34,7 +38,7 @@ HRESULT CNubBoss::Awake()
 	SafeAddRef(m_pTexturePool);
 
 	m_fFireDeltaTime = 0.f;
-	m_fFireSpeed = 3.f;
+	m_fFireSpeed = 30.f;
 
 	m_fWalkDeltaTime = 0.f;
 	m_fWalkSpeed = 0.5f;
@@ -48,8 +52,10 @@ HRESULT CNubBoss::Awake()
 	m_fMoveSpeed = 8.f;
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
-	//m_pTransform->Add_Position(_vector(-5.f, 5.f, 10.f));
-	m_pTransform->Set_Position(_vector(-5.f, 10.f, 50.f));
+
+
+	m_iHP = 10;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -60,11 +66,19 @@ HRESULT CNubBoss::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+
+	m_pTransform->Add_Position(_vector(0, 10.f, 0));
 	return S_OK;
 }
 
 UINT CNubBoss::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -116,6 +130,43 @@ HRESULT CNubBoss::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CNubBoss::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+	}
+	if (m_iHP <= 0)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 10;
+			int iRandY = rand() % 10;
+			int iRandZ = rand() % 10;
+
+			CExplosion* pExplosion1 = (CExplosion*)AddGameObject<CExplosion>();
+			pExplosion1->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 10;
+			int iRandY = rand() % 10;
+			int iRandZ = rand() % 10;
+
+			CExplosionBlue* pExplosion3 = (CExplosionBlue*)AddGameObject<CExplosionBlue>();
+			pExplosion3->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+		}
+
+		m_bDead = true;
+	}
 }
 
 

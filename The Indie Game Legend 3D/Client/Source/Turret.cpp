@@ -3,6 +3,8 @@
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "TurretBullet.h"
+#include "Item.h"
+#include "SmallExlode.h"
 
 CTurret::CTurret()
 	: m_pTexturePool(nullptr)
@@ -36,7 +38,10 @@ HRESULT CTurret::Awake()
 	m_fFireDeltaTime = 0;
 	m_fFireSpeed = 3;
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
-	//m_pTransform->Set_Position(_vector(-5.f, 5.f, 10.f));
+
+
+	m_iHP = 3;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -49,12 +54,15 @@ HRESULT CTurret::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
+
 	return S_OK;
 }
 
 UINT CTurret::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	/*
@@ -67,14 +75,16 @@ UINT CTurret::Update(const float _fDeltaTime)
 		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
 	}
 
-	//off Test
-	/*m_fFireDeltaTime += _fDeltaTime;
-	if (m_fFireSpeed <= m_fFireDeltaTime)
+	if (!m_bDead)
 	{
-		m_fFireDeltaTime -= m_fFireSpeed;
-		BulletFire();
-	}*/
-
+		//off Test
+		/*m_fFireDeltaTime += _fDeltaTime;
+		if (m_fFireSpeed <= m_fFireDeltaTime)
+		{
+			m_fFireDeltaTime -= m_fFireSpeed;
+			BulletFire();
+		}*/
+	}
 
 	m_pTransform->UpdateTransform();
 
@@ -94,8 +104,29 @@ HRESULT CTurret::Render()
 
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
-	m_pCollider->Draw();
 	return S_OK;
+}
+
+void CTurret::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+
+		int iRandX = rand() % 5;
+		int iRandY = rand() % 5;
+		int iRandZ = rand() % 5;
+
+		CSmallExlode* pSmallExlode = (CSmallExlode*)AddGameObject<CSmallExlode>();
+		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+			m_pTransform->Get_Position().y + iRandY
+			, m_pTransform->Get_Position().z + iRandZ));
+	}
+	if (m_iHP <= 0)
+	{
+		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
+		m_bDead = true;
+	}
 }
 
 void CTurret::BulletFire()

@@ -1,15 +1,15 @@
 #pragma once
-#ifndef __Piramide_H__
-
-
+#ifndef __PIRAMIDUNBREAKE_H__
 #include "Obstacle.h"
-USING(Engine)
-class CPiramide final: public CObstacle
+class CPiramidUnBrake final	: public CObstacle
 {
+private:
+	bool		m_bDead = false;
+
 public:
-	explicit CPiramide();
-	explicit CPiramide(const CPiramide& _rOther);
-	virtual ~CPiramide() = default;
+	explicit CPiramidUnBrake();
+	explicit CPiramidUnBrake(const CPiramidUnBrake& _rOther);
+	virtual ~CPiramidUnBrake() = default;
 
 	// CObstacle을(를) 통해 상속됨
 	virtual HRESULT InitializePrototype() override;
@@ -19,12 +19,12 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 	virtual CGameObject * Clone() override;
-	
-	virtual void Free() override;
 	virtual void OnCollision(CGameObject* _pGameObject) override;
-public:
-	static CPiramide* Create();
 
+public:
+	static CPiramidUnBrake* Create();
+	virtual void Free() override;
 };
-#define __Piramide_H__
-#endif // !__Piramide_H__
+
+#define __PIRAMIDUNBREAKE_H__
+#endif

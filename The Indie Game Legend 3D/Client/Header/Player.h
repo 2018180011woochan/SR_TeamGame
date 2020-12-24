@@ -14,8 +14,20 @@ enum class EState : _uint
 	Move,
 	Dash,
 	Run,
-	Hurt,
+	Hit,
 	End
+};
+enum class ESoundID :_uint
+{
+	NormalFire,
+	BigFire,
+	Hit,
+	AddHeart,
+	AddCoin,
+	Dash,
+
+	Run,
+
 };
 class CPlayer final: public CGameObject
 {
@@ -44,10 +56,19 @@ private:
 	 //Test
 	 Image*						m_pAmmobar = nullptr;
 	 class CHeartManager*		m_pHearManager = nullptr;
+	 class CWeaponHUD*			m_pWeaponHud = nullptr;
 
 
 	 //State
-	 _uint						m_nHp = 0;
+	 _int						m_nHp = 0;
+	 _int						m_nHpMax = 0;
+	 _int						m_nCoin = 0;
+
+	 float						m_fHitDelay = 0.f;
+	 float						m_fHitDelayTime = 0.f;
+	 float						m_fDebuffDuration = 0.f;
+	 float						m_fDebuffDurationTime = 0.f;
+	 bool						m_bIsDeBuff = false;
 
 	 //Action
 	 EState				m_eState;
@@ -66,11 +87,14 @@ private:
 	void	Move(const float& _fSpeed , const float _fDeltaTime);
 	void	UpdateState(const float _fDeltaTime);
 	
-	void	InteractionItem(const EItemID& _eID);
+	void	TakeItem(const EItemID& _eID);
 	void	BulletFire();
 	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
 	void    ChangeWeapon();// 관련 세팅값 설정
 	void	UpdateLight();
+	void	AddHp(_int _nHp);
+
+	void	SoundPlayer(const ESoundID& _eID);
 public:
 	//Getter Setter
 	const float& GetAmmo() { return m_fAmmo; }

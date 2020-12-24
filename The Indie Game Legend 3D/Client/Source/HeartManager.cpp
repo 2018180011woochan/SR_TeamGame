@@ -12,7 +12,7 @@ CHeartManager::CHeartManager()
 CHeartManager::CHeartManager(const CHeartManager & _rOther)
 	:CGameObject(_rOther)
 	, m_nHeartCount(3)
-	,m_nMaxHeart(6)
+	, m_nMaxHeart(6)
 {
 }
 
@@ -97,8 +97,8 @@ UINT CHeartManager::Update(const float _fDeltaTime)
 	{
 		nMax--;
 	}
-	
-	nHP = CLAMP(nHP,12, 24);
+
+	nHP = CLAMP(nHP, 12, 24);
 	nMax = CLAMP(nMax, 3, 6);
 	SetHeartCount(nMax);
 	return 0;

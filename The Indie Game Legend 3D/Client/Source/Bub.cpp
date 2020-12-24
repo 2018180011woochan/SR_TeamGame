@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Item.h"
+#include "Blood.h"
 
 CBub::CBub()
 	:m_pTexturePool(nullptr)
@@ -34,6 +36,7 @@ HRESULT CBub::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bub"));
 	SafeAddRef(m_pTexturePool);
+	m_iHP = 3;
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -51,14 +54,11 @@ HRESULT CBub::Start()
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 
-	//Test
-	m_nTag = 0;
 	return S_OK;
 }
 
 UINT CBub::Update(const float _fDeltaTime)
 {
-	//test
 	if (m_bDead)
 		return OBJ_DEAD;
 
@@ -77,15 +77,15 @@ UINT CBub::Update(const float _fDeltaTime)
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
 	//Test
-	//if (m_fJumpingCnt / 100.f > 1.f)
-	//{
-	//	Jumping(_fDeltaTime);
-	//	++nIndex;
-	//	m_fJumpingCnt = 0.f;
-	//}
+	if (m_fJumpingCnt / 100.f > 1.f)
+	{
+		Jumping(_fDeltaTime);
+		++nIndex;
+		m_fJumpingCnt = 0.f;
+	}
 
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
 
 
 	m_pTransform->UpdateTransform();
@@ -114,9 +114,21 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" ==  _pGameObject->GetName())
+	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
-		cout << "bub Hit" << endl;
+		m_iHP--;
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	if (m_iHP <= 0)
+	{
+		CItem* pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
+
+		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemType(EItemID::sprCoin);
 		m_bDead = true;
 	}
 }

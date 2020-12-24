@@ -80,10 +80,10 @@ void CItem::SetItemType(const EItemID & _eID)
 		m_sTextureName = L"Ammo";
 		break;
 	case EItemID::sprCoin:
-		m_sTextureName = L"sprCoint";
+		m_sTextureName = L"sprCoin";
 		break;
 	case EItemID::sprBigCoin:
-		m_sTextureName = L"sprBigCoint";
+		m_sTextureName = L"sprBigCoin";
 		break;
 	case EItemID::End:
 		break;
@@ -93,6 +93,40 @@ void CItem::SetItemType(const EItemID & _eID)
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureName).size();
 	m_fAnimateOneCycleTime = 1.f;
 	m_fAnimateSpeed = (m_nMaxFrame + 1) / 1.f * m_fAnimateOneCycleTime;
+}
+
+void CItem::SetPos(const _vector _vPos)
+{
+	m_pTransform->Set_Position(_vPos);
+}
+
+void CItem::Bounce(float _fDeltaTime)
+{
+	float fY = 0.f;
+
+	_vector vRandDir = _vector(float(rand() % 3), float(rand() % 3), float(rand() % 3));
+	D3DXVec3Normalize(&vRandDir, &vRandDir);
+	if (m_bJump)
+	{
+		fY = m_fYTest + (m_fJumpPower * m_fJumpTime - 9.8f * m_fJumpTime * m_fJumpTime * 0.5f);
+		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+			fY,
+			m_pTransform->Get_Position().z));
+
+		m_pTransform->Add_Position(vRandDir * _fDeltaTime * 40.f);
+
+		m_fJumpTime += 0.05f;
+
+		if (fY < 2.f)
+		{
+			m_bJump = false;
+			m_fJumpPower = 0.f;
+			m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
+				2.f,
+				m_pTransform->Get_Position().z));
+			m_fJumpTime = 0.f;
+		}
+	}
 }
 
 
@@ -110,7 +144,11 @@ HRESULT CItem::Awake()
 	m_sTextureName = L"";
 	m_sName = L"Item";
 
-
+	// Prod By Woochan
+	m_fJumpPower = 10.f;
+	m_fJumpTime = 0.f;
+	m_fYTest = 3.f;
+	m_bJump = true;
 	return S_OK;
 }
 
@@ -135,8 +173,8 @@ HRESULT CItem::Start()
 
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	//Test	
-	m_pTransform->Set_Position(_vector(-25, 3, 10));
-	SetItemType(EItemID::Heart);
+	//m_pTransform->Set_Position(_vector(-25, 3, 10));
+	//SetItemType(EItemID::Heart);
 	//Test	
 
 	m_pTransform->UpdateTransform();
@@ -154,6 +192,8 @@ UINT CItem::Update(const float _fDeltaTime)
 
 	if (FAILED(Animate(_fDeltaTime)))
 		return OBJ_NOENVET;
+
+	Bounce(_fDeltaTime);
 
 	return OBJ_NOENVET;
 }
@@ -184,8 +224,7 @@ void CItem::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Player" == _pGameObject->GetName())
 	{
-		//m_bDelete = true;
-		cout << "Ãæµ¹" << endl;
+		m_bDelete = true;
 	}
 }
 

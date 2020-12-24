@@ -23,6 +23,8 @@ private:
 	HRESULT RenderPriority();
 	HRESULT	RenderNoAlpha();
 	HRESULT RenderAlpha();
+	HRESULT RenderAlphaCullNone();
+
 	HRESULT RenderUI();
 	HRESULT RenderCollider();
 public:

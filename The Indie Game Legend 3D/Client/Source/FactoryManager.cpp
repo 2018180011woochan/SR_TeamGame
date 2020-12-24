@@ -47,11 +47,16 @@ HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 		}
 		else if (0 == _tcscmp(TEXT("o"), szWord))
 		{
-			m_vecSaveDataPosition.push_back(vecPosition[4]);
-			vecPosition.clear();
+			if (vecPosition.size() != 5)
+			{
+				int a = 0;
+			}
+
 			_int nRoomID;
 			_ftscanf_s(pFile, TEXT("%d\n"), &nRoomID);
 			m_vecSaveDataRoomID.push_back(nRoomID);
+			m_vecSaveDataPosition.push_back(vecPosition[4]);
+			vecPosition.clear();
 		}
 		else if (0 == _tcscmp(TEXT("usemtl"), szWord))
 		{
@@ -68,7 +73,7 @@ HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 {
 	/*3데이터의 사이즈가 다르면 로드실패*/
-	//if (m_vecSaveDataRoomID.size() != m_vecSaveDataPosition.size() != m_vecSaveDataType.size())
+	//if (m_vecSaveDataRoomID.size() != m_vecSaveDataPosition.size()  && m_vecSaveDataPosition.size()  != m_vecSaveDataType.size())
 	//{
 	//	PrintLog(L"Error", L"Failed Load Data");
 	//	int a = m_vecSaveDataRoomID.size();
@@ -79,12 +84,12 @@ HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 
 	CManagement* pManagement = CManagement::GetInstance();
 	CGameObject* pGameObject = nullptr;
+
 	_int nSize = m_vecSaveDataRoomID.size();
 	for (size_t i = 0; i < m_vecSaveDataRoomID.size(); ++i)
 	{
-
-		TSTRING TypeID =  L"C" + m_vecSaveDataType[i];
-
+		AddObject(_pScene, i);
+	/*	TSTRING TypeID = L"C" + m_vecSaveDataType[i];
 		pGameObject = _pScene->AddGameObject(TypeID);
 
 		if (nullptr == pGameObject)
@@ -94,7 +99,7 @@ HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 		}
 		pGameObject->Awake();
 		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[i]);
-		pGameObject->SetTag(m_vecSaveDataRoomID[i]);
+		pGameObject->SetTag(m_vecSaveDataRoomID[i]);*/
 	}
 	return S_OK;
 }
@@ -107,6 +112,42 @@ void CFactoryManager::ClearData()
 	m_vecSaveDataType.shrink_to_fit();
 	m_vecSaveDataRoomID.clear();
 	m_vecSaveDataRoomID.shrink_to_fit();
+}
+
+HRESULT CFactoryManager::AddObject(CScene* const _pScene , _uint _nIndex)
+{
+	TSTRING TypeID = L"C" + m_vecSaveDataType[_nIndex];
+	CGameObject* pGameObject = nullptr;
+
+
+	if (L"CRoomTriggerH" == TypeID)
+	{
+		pGameObject = _pScene->AddGameObject(L"CRoomTrigger");
+		if (nullptr == pGameObject)
+		{
+			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
+			return E_FAIL;
+		}
+		pGameObject->Awake();
+		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[_nIndex]);
+		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Rotation(_vector(0, 90, 0));
+		pGameObject->SetTag(m_vecSaveDataRoomID[_nIndex]);
+	}
+	else
+	{
+		pGameObject = _pScene->AddGameObject(TypeID);
+
+		if (nullptr == pGameObject)
+		{
+			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
+			return E_FAIL;
+		}
+		pGameObject->Awake();
+		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[_nIndex]);
+		pGameObject->SetTag(m_vecSaveDataRoomID[_nIndex]);
+	}
+	return S_OK;
+
 }
 
 CFactoryManager::CFactoryManager()

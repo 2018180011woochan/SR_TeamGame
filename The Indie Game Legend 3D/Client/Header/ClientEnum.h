@@ -12,8 +12,8 @@ enum class EWeaponType : unsigned int
 {
 	Big,
 	Multiple,
-	Normal,
 	Rapid,
+	Normal,
 	End
 };
 

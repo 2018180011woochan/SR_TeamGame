@@ -19,6 +19,7 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 public:
 	void YukPoongHyul(float _fDeltaTime);
 	void RootAttack(float _fDeltaTime);

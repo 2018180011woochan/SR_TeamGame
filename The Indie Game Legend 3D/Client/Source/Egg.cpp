@@ -3,6 +3,8 @@
 #include "Bub.h"
 #include "sqrNub.h"
 #include "Rub.h"
+#include "Item.h"
+#include "Blood.h"
 
 CEgg::CEgg()
 	: m_pTexturePool(nullptr)
@@ -37,8 +39,8 @@ HRESULT CEgg::Awake()
 	m_fBreathDeltaTime = 0;
 	m_fBreathSpeed = 1;
 	m_pTransform->Set_Scale(_vector(15, 15, 15));
-	m_pTransform->Set_Position(_vector(-5.f, 7.f, 10.f));
-	nIndex = 0;
+
+	m_iHP = 10;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -50,11 +52,19 @@ HRESULT CEgg::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+	m_nTag = 0;
+
 	return S_OK;
 }
 
 UINT CEgg::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	if (m_pTransform->Get_Position().y > 5.f || m_pTransform->Get_Position().y < 3.f)
@@ -72,15 +82,9 @@ UINT CEgg::Update(const float _fDeltaTime)
 	}
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	// 알이 터지면은?!
-	if (GetAsyncKeyState(VK_SPACE))
-	{
-		EggDrop();
-	}
-
 	m_pTransform->UpdateTransform();
 
-	return _uint();
+	return OBJ_NOENVET;
 }
 
 UINT CEgg::LateUpdate(const float _fDeltaTime)
@@ -97,6 +101,21 @@ HRESULT CEgg::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CEgg::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	if (m_iHP <= 0)
+	{
+		EggDrop();
+		m_bDead = true;
+	}
 }
 
 void CEgg::EggDrop()

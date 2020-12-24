@@ -39,7 +39,7 @@ private:
 	CMeshRenderer*			m_pMeshRenderer = nullptr;
 	CTexturePool*			m_pTexturePool;
 	D3DXVECTOR3				m_vecDir;
-
+	CCollider*				m_pCollider;
 	UINT					nIndex = 0;
 	float					m_fBulletSpeed;
 

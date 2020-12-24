@@ -8,7 +8,9 @@
 #include "PickingManger.h"
 #include "LightMananger.h"
 #include "HeartManager.h"
-
+#include "Item.h"
+#include "SoundMgr.h"
+#include "PlayerSpawn.h"
 #include "WeaponHUD.h"
 USING(Engine)
 
@@ -61,8 +63,6 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 
 HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 {
-	if (m_eState == EState::Hurt)
-		return S_OK;
 
 	//Move Code
 	MoveCheck();
@@ -106,9 +106,6 @@ HRESULT CPlayer::MoveCheck()
 {
 	if (m_eState == EState::Dash)
 		return S_OK;
-	static UINT nIndex = 0;
-	if (nIndex >= 3)
-		nIndex = 0;
 
 	m_vMoveDir = vZero;
 
@@ -139,15 +136,13 @@ HRESULT CPlayer::MoveCheck()
 	else if (m_pKeyMgr->Key_Press(KEY_A))
 	{
 		m_vMoveDir += -(m_pTransform->Get_Right());
-		++nIndex;
-		m_pWeaponHUD->ChangeWeapon(nIndex);
 	}
 	else if (m_pKeyMgr->Key_Press(KEY_D))
 	{
 		m_vMoveDir += (m_pTransform->Get_Right());
 	}
 
-	if (m_pKeyMgr->Key_Press(KEY_LSHIFT))
+	if (m_eState != EState::Hit &&  m_pKeyMgr->Key_Press(KEY_LSHIFT))
 		m_eState = EState::Run;
 
 	if (m_pKeyMgr->Key_Down(KEY_SPACE) && m_fDashDelay <= m_fDashDelayTime)
@@ -196,22 +191,40 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 		pCamera->SetHeghitPersent(fPer);
 	}
 		break;
+	case EState::Hit:
+		m_fHitDelayTime += _fDeltaTime;
+		//Camera 흔들림 코드 
+		if(m_bIsDeBuff)
+			Move(m_fMoveSpeed/2.f, _fDeltaTime);
+		else
+			Move(m_fMoveSpeed, _fDeltaTime);
+
+		break;
 	default:
 		break;
 	}
 }
 
-void CPlayer::InteractionItem(const EItemID & _eID)
+void CPlayer::TakeItem(const EItemID & _eID)
 {
 	switch (_eID)
 	{
 	case EItemID::Heart:
+		AddHp(1);
 		break;
 	case EItemID::Ammo:
 		break;
 	case EItemID::sprCoin:
+		++m_fAmmo;
+		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
+		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
+		//++m_nCoin;
 		break;
 	case EItemID::sprBigCoin:
+		//m_nCoin += 10;
+		m_fAmmo += 3;
+		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
+		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
 		break;
 	case EItemID::End:
 		break;
@@ -271,23 +284,24 @@ void CPlayer::ChangeWeaponUISetting()
 	//중복콜 방지용
 	if (m_ePreWeaponType != m_eCurWeaponType)
 	{
-		switch (m_eCurWeaponType)
-		{
-		case EWeaponType::Multiple:
-			//cout << "now Weapon is Multiple " << endl;
-			break;
-		case EWeaponType::Big:
-			//cout << "now Weapon is Big " << endl;
-			break;
-		case EWeaponType::Rapid:
-			//cout << "now Weapon is Rapid " << endl;
-			break;
-		default:
-#ifdef _DEBUG
-			cout << " default Input by ChangeWeaponSetting() of switch" << endl;
-#endif
-			break;
-		}
+		m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
+//		switch (m_eCurWeaponType)
+//		{
+//		case EWeaponType::Multiple:
+//			//cout << "now Weapon is Multiple " << endl;
+//			break;
+//		case EWeaponType::Big:
+//			//cout << "now Weapon is Big " << endl;
+//			break;
+//		case EWeaponType::Rapid:
+//			//cout << "now Weapon is Rapid " << endl;
+//			break;
+//		default:
+//#ifdef _DEBUG
+//			cout << " default Input by ChangeWeaponSetting() of switch" << endl;
+//#endif
+//			break;
+//		}
 		m_ePreWeaponType = m_eCurWeaponType;
 	}
 	ChangeWeapon();
@@ -331,6 +345,35 @@ void CPlayer::ChangeWeapon()
 void CPlayer::UpdateLight()
 {
 	
+}
+
+void CPlayer::AddHp(_int _nHp)
+{
+	m_nHp += _nHp;
+	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
+
+	if (m_nHp < 1)
+	{
+		//Dead
+	}
+}
+
+void CPlayer::SoundPlayer(const ESoundID & _eID)
+{
+	switch (_eID)
+	{
+	case ESoundID::NormalFire:
+		//CSoundMgr::GetInstance()->
+		break;
+	case ESoundID::BigFire:
+		break;
+	case ESoundID::Hit:
+		break;
+	case ESoundID::Run:
+		break;
+	default:
+		break;
+	}
 }
 
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
@@ -385,15 +428,18 @@ HRESULT CPlayer::Awake()
 	m_fDashDelay = 2.f;
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
-		
+
 	//State
 	m_nHp = 8;
+	m_nHpMax = 12;
+	m_fHitDelay = 0.5f;
+	m_fHitDelayTime = 0.f;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(4.f,4.f, 4.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(5.f,5.f,5.f));
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	pCollider->SetMesh(TEXT("SkyBox"));
 
 	return S_OK;
 }
@@ -402,16 +448,41 @@ HRESULT CPlayer::Start()
 {
 	//Test
 	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
+	m_pWeaponHud = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
+	m_pHearManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
+
+	if (nullptr == m_pWeaponHud || nullptr == m_pHearManager)
+	{
+		return E_FAIL;
+	}
 	//SafeAddRef(m_pAmmobar);
 
 	//Test player spawn 찾아서 룸아디 대입받는걸로 
 	m_nTag = 0;
 	m_sName = L"Player";
+
+	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
+	 _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
+	 m_pTransform->Set_Position(vPosition);
+
+	 m_nTag = pSpawn->GetTage();
+
+	 CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
 	//Reference Setting
 	//할당 순서 때문에 작업 미완
-	m_pHearManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
-	m_pHearManager->SetGauge(m_nHp);
-	m_pWeaponHUD = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
+
+
+	 AddWeapon(EWeaponType::Big);
+	 AddWeapon(EWeaponType::Multiple);
+	 AddWeapon(EWeaponType::Rapid);
+	 
+	 
+	 //------------
+	 m_nHp = 8;
+	 m_nHpMax = 12;
+	 m_pHearManager->SetHeartCount(m_nHpMax);
+	 m_pHearManager->SetGauge(m_nHp);
+
 	return S_OK;
 }
 
@@ -441,6 +512,13 @@ UINT CPlayer::LateUpdate(const float _fDeltaTime)
 	if(m_eState == EState::Run && !m_pKeyMgr->Key_Press(KEY_LSHIFT))
 		m_eState = EState::Move;
 
+	if (m_eState == EState::Hit && m_fHitDelay < m_fHitDelayTime)
+	{
+		//임시 
+		m_bIsDeBuff = false;
+		m_eState = EState::Move;
+	}
+
 	if(m_fDashDelayTime < m_fDashDelay)
 		m_fDashDelayTime += _fDeltaTime;
 
@@ -467,10 +545,39 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	if (L"RoomTrigger" == _pGameObject->GetName() && m_nTag != _pGameObject->GetTage())
 	{
 		m_nTag = _pGameObject->GetTage();
-		system("cls");
 		cout << "Change RoomID : " <<m_nTag << endl;
 		CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
 	}
+
+	if (L"Item" == _pGameObject->GetName())
+	{
+		TakeItem(((CItem*)(_pGameObject))->GetItemID());
+	}
+
+	//Dmg 
+	if (L"Monster" == _pGameObject->GetName())
+	{
+		m_eState = EState::Hit;
+		m_fHitDelayTime = 0.f;
+		AddHp(-1);
+	}
+	else if (L"Electric" == _pGameObject->GetName())
+	{
+		m_eState = EState::Hit;
+		m_fHitDelayTime = 0.f;
+		cout << "eeee" << endl;
+		AddHp(-1);
+	}
+	else if (L"Swamp" == _pGameObject->GetName())
+	{
+		m_eState = EState::Hit;
+		m_bIsDeBuff = true;
+		cout << "sssss" << endl;
+
+		m_fHitDelayTime = 0.f;
+		AddHp(-1);
+	}
+
 }
 
 CPlayer * CPlayer::Create()

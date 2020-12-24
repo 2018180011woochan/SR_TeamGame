@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Item.h"
+#include "Blood.h"
 
 CRub::CRub()
 	:m_pTexturePool(nullptr)
@@ -47,6 +49,8 @@ HRESULT CRub::Awake()
 	m_fWalkSpeed = 0.5f;
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
+
+	m_iHP = 3;
 
 	nIndex = 0;
 
@@ -95,21 +99,21 @@ UINT CRub::Update(const float _fDeltaTime)
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
 
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
 
 
-	//m_fJumpDeltaTime += _fDeltaTime;
-	//if (m_fJumpSpeed <= m_fJumpDeltaTime)
-	//{
-	//	m_fJumpDeltaTime -= m_fJumpSpeed;
+	m_fJumpDeltaTime += _fDeltaTime;
+	if (m_fJumpSpeed <= m_fJumpDeltaTime)
+	{
+		m_fJumpDeltaTime -= m_fJumpSpeed;
 
-	//	if (false == m_bJump)
-	//		m_bJump = true;
+		if (false == m_bJump)
+			m_bJump = true;
 
-	//	m_fYTest = m_pTransform->Get_Position().y;
+		m_fYTest = m_pTransform->Get_Position().y;
 
-	//}
+	}
 
 	Jumping(_fDeltaTime);
 	m_pTransform->UpdateTransform();
@@ -138,7 +142,19 @@ void CRub::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
-		cout << "Rub Hit" << endl;
+		m_iHP--;
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	if (m_iHP <= 0)
+	{
+		CItem* pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
+		
+		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemType(EItemID::sprCoin);
 		m_bDead = true;
 	}
 }

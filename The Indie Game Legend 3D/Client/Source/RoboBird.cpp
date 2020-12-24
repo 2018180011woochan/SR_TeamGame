@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Item.h"
+#include "Blood.h"
 
 CRoboBird::CRoboBird()
 	:m_pTexturePool(nullptr)
@@ -35,7 +37,7 @@ HRESULT CRoboBird::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Robobird"));
 	SafeAddRef(m_pTexturePool);
 
-	float fNum = rand() % 5;
+	float fNum = float(rand() % 5);
 
 	m_fJumpPower = 10.f;
 	m_fJumpTime = 0.f;
@@ -52,6 +54,8 @@ HRESULT CRoboBird::Awake()
 
 	nIndex = 0;
 
+	m_iHP = 2;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -64,11 +68,19 @@ HRESULT CRoboBird::Start()
 	m_pTransform->Set_Position(_vector(0.f, 10.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+	m_nTag = 0;
+
 	return S_OK;
 }
 
 UINT CRoboBird::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -106,6 +118,21 @@ HRESULT CRoboBird::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CRoboBird::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	if (m_iHP <= 0)
+	{
+
+		m_bDead = true;
+	}
 }
 
 

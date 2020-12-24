@@ -5,6 +5,10 @@
 #include "RoboBird.h"
 #include "DoomBird.h"
 #include "RootAttack.h"
+#include "Item.h"
+#include "Blood.h"
+#include "Explosion.h"
+#include "ExplosionBlue.h"
 
 CTreeBoss::CTreeBoss()
 	: m_pTexturePool(nullptr)
@@ -38,7 +42,6 @@ HRESULT CTreeBoss::Awake()
 	m_fFireDeltaTime = 0.f;
 	m_fFireSpeed = 7.f;
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
-	m_pTransform->Set_Position(_vector(-5.f, 10.f, 10.f));
 
 	m_fWinckDeltaTime = 0.f;
 	m_fWinckSpeed = 2.5f;
@@ -53,6 +56,9 @@ HRESULT CTreeBoss::Awake()
 
 	nIndex = 0;
 	nCreateIndex = 0;
+
+	m_iHP = 30;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -63,11 +69,20 @@ HRESULT CTreeBoss::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->m_bIsRigid = true;
+
+	m_pTransform->Add_Position(_vector(0, 10, 0));
+
 	return S_OK;
 }
 
 UINT CTreeBoss::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	m_fWinckDeltaTime += _fDeltaTime;
@@ -102,6 +117,43 @@ HRESULT CTreeBoss::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CTreeBoss::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+	}
+	if (m_iHP <= 0)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 10;
+			int iRandY = rand() % 10;
+			int iRandZ = rand() % 10;
+
+			CExplosion* pExplosion1 = (CExplosion*)AddGameObject<CExplosion>();
+			pExplosion1->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 10;
+			int iRandY = rand() % 10;
+			int iRandZ = rand() % 10;
+
+			CExplosionBlue* pExplosion3 = (CExplosionBlue*)AddGameObject<CExplosionBlue>();
+			pExplosion3->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+		}
+
+		m_bDead = true;
+	}
 }
 
 void CTreeBoss::YukPoongHyul(float _fDeltaTime)

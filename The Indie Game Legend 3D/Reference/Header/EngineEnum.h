@@ -15,6 +15,7 @@ enum class ERenderID
 	Priority,
 	NoAlpha,
 	Alpha,
+	AlphaCullNone,
 	UI,
 	End
 };

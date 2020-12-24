@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Item.h"
+#include "Blood.h"
 
 CCryder::CCryder()
 	:m_pTexturePool(nullptr)
@@ -48,6 +50,8 @@ HRESULT CCryder::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
+	m_iHP = 2;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -67,6 +71,9 @@ HRESULT CCryder::Start()
 
 UINT CCryder::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -119,6 +126,27 @@ HRESULT CCryder::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CCryder::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	if (m_iHP <= 0)
+	{
+		CItem* pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
+
+		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemType(EItemID::sprCoin);
+		m_bDead = true;
+	}
 }
 
 

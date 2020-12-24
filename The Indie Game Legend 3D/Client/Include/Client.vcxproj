@@ -159,8 +159,10 @@
   <ItemGroup>
     <ClInclude Include="..\Header\AmmoFrame.h" />
     <ClInclude Include="..\Header\AmmoGauge.h" />
+    <ClInclude Include="..\Header\Blood.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
+    <ClInclude Include="..\Header\BulletSpark.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
     <ClInclude Include="..\Header\ClientDefine.h" />
     <ClInclude Include="..\Header\ClientEnum.h" />
@@ -171,6 +173,8 @@
     <ClInclude Include="..\Header\DoomBird.h" />
     <ClInclude Include="..\Header\Egg.h" />
     <ClInclude Include="..\Header\ElectricTile.h" />
+    <ClInclude Include="..\Header\Explosion.h" />
+    <ClInclude Include="..\Header\ExplosionBlue.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
     <ClInclude Include="..\Header\Floor.h" />
     <ClInclude Include="..\Header\Heart.h" />
@@ -188,7 +192,8 @@
     <ClInclude Include="..\Header\NubBoss.h" />
     <ClInclude Include="..\Header\Obstacle.h" />
     <ClInclude Include="..\Header\PickingManger.h" />
-    <ClInclude Include="..\Header\Piramide.h" />
+    <ClInclude Include="..\Header\Piramid.h" />
+    <ClInclude Include="..\Header\PiramidUnBrake.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
@@ -202,6 +207,7 @@
     <ClInclude Include="..\Header\Sector.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Slider.h" />
+    <ClInclude Include="..\Header\SmallExlode.h" />
     <ClInclude Include="..\Header\SoundMgr.h" />
     <ClInclude Include="..\Header\sqrNub.h" />
     <ClInclude Include="..\Header\Stage.h" />
@@ -219,6 +225,7 @@
     <ClInclude Include="..\Header\WalkerBoss.h" />
     <ClInclude Include="..\Header\WalkerBullet.h" />
     <ClInclude Include="..\Header\Wall.h" />
+    <ClInclude Include="..\Header\WeaponHUD.h" />
     <ClInclude Include="..\Header\WormBoss.h" />
     <ClInclude Include="..\Header\WormBossBody.h" />
     <ClInclude Include="Client.h" />
@@ -230,13 +237,17 @@
   <ItemGroup>
     <ClCompile Include="..\Source\AmmoFrame.cpp" />
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
+    <ClCompile Include="..\Source\Blood.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
+    <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
     <ClCompile Include="..\Source\DoomBird.cpp" />
     <ClCompile Include="..\Source\Egg.cpp" />
     <ClCompile Include="..\Source\ElectricTile.cpp" />
+    <ClCompile Include="..\Source\Explosion.cpp" />
+    <ClCompile Include="..\Source\ExplosionBlue.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
     <ClCompile Include="..\Source\Floor.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
@@ -254,7 +265,8 @@
     <ClCompile Include="..\Source\NubBoss.cpp" />
     <ClCompile Include="..\Source\Obstacle.cpp" />
     <ClCompile Include="..\Source\PickingManger.cpp" />
-    <ClCompile Include="..\Source\Piramide.cpp" />
+    <ClCompile Include="..\Source\Piramid.cpp" />
+    <ClCompile Include="..\Source\PiramidUnBrake.cpp" />
     <ClCompile Include="..\Source\Player.cpp" />
     <ClCompile Include="..\Source\PlayerBullet.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />
@@ -269,6 +281,7 @@
     <ClCompile Include="..\Source\Sector.cpp" />
     <ClCompile Include="..\Source\SkyBox.cpp" />
     <ClCompile Include="..\Source\Slider.cpp" />
+    <ClCompile Include="..\Source\SmallExlode.cpp" />
     <ClCompile Include="..\Source\SoundMgr.cpp" />
     <ClCompile Include="..\Source\sqrNub.cpp" />
     <ClCompile Include="..\Source\Stage.cpp" />
@@ -286,6 +299,7 @@
     <ClCompile Include="..\Source\WalkerBoss.cpp" />
     <ClCompile Include="..\Source\WalkerBullet.cpp" />
     <ClCompile Include="..\Source\Wall.cpp" />
+    <ClCompile Include="..\Source\WeaponHUD.cpp" />
     <ClCompile Include="..\Source\WormBoss.cpp" />
     <ClCompile Include="..\Source\WormBossBody.cpp" />
     <ClCompile Include="Client.cpp" />
