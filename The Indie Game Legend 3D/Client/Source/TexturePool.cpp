@@ -61,7 +61,7 @@ HRESULT CTexturePool::AddTexture(const TSTRING & _sFilePath, const TSTRING _sSta
 
 CTexturePool * CTexturePool::Create()
 {
-	CTexturePool* pInstance = new CTexturePool;
+	CTexturePool* pInstance = new CTexturePool();
 	if (nullptr == pInstance)
 	{
 		PrintLog(TEXT("Error"), TEXT("Failed to create CTexturePool"));

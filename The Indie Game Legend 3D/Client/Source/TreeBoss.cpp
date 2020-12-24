@@ -42,7 +42,6 @@ HRESULT CTreeBoss::Awake()
 	m_fFireDeltaTime = 0.f;
 	m_fFireSpeed = 7.f;
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
-	m_pTransform->Set_Position(_vector(-5.f, 10.f, 10.f));
 
 	m_fWinckDeltaTime = 0.f;
 	m_fWinckSpeed = 2.5f;
@@ -73,7 +72,8 @@ HRESULT CTreeBoss::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("SkyBox"));
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
+
+	m_pTransform->Add_Position(_vector(0, 10, 0));
 
 	return S_OK;
 }

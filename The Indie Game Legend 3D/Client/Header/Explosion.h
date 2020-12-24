@@ -45,6 +45,7 @@ private:
 	float				m_fJumpTime;
 	float				m_fYTest;
 	bool				m_bJump;
+
 	bool				m_bDead;
 
 	UINT nIndex;

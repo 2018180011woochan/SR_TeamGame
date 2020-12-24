@@ -39,8 +39,6 @@ HRESULT CEgg::Awake()
 	m_fBreathDeltaTime = 0;
 	m_fBreathSpeed = 1;
 	m_pTransform->Set_Scale(_vector(15, 15, 15));
-	m_pTransform->Set_Position(_vector(-5.f, 7.f, 10.f));
-	nIndex = 0;
 
 	m_iHP = 10;
 
@@ -84,15 +82,9 @@ UINT CEgg::Update(const float _fDeltaTime)
 	}
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 
-	//// 알이 터지면은?!
-	//if (GetAsyncKeyState(VK_SPACE))
-	//{
-	//	EggDrop();
-	//}
-
 	m_pTransform->UpdateTransform();
 
-	return _uint();
+	return OBJ_NOENVET;
 }
 
 UINT CEgg::LateUpdate(const float _fDeltaTime)

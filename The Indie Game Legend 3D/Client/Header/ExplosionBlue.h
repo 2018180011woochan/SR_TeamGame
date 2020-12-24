@@ -36,6 +36,14 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 
+
+
+	float	m_fTextureIndex = 0.f;
+	float	m_fAnimateSpeed = 0.f;
+	float	m_fAnimateOneCycleTime = 0.f; 
+	_int	m_nMaxFrame = 0;
+
+
 	float				m_fMoveSpeed;
 
 	float				m_fWalkSpeed;

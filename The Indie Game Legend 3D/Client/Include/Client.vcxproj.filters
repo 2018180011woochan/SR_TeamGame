@@ -270,6 +270,14 @@
     </Filter>
     <Filter Include="02.GameObject\11.Npc\00.Phubans">
       <UniqueIdentifier>{1b3a349e-bde7-4a48-bdea-feb7ee75a8ff}</UniqueIdentifier>
+    <Filter Include="02.GameObject\10.Effect\04.BulletSpark">
+      <UniqueIdentifier>{cfdf14c4-dcef-4919-bcac-26a9209ac4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Objstacle\02.PiramidUnbreak">
+      <UniqueIdentifier>{770120dd-2c36-4539-9cfe-5ba3d13d60dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\07.WeaponHUD">
+      <UniqueIdentifier>{8a7424f0-12ea-477b-b5ba-60cae37285ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -471,9 +479,6 @@
     <ClInclude Include="..\Header\Obstacle.h">
       <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Piramide.h">
-      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Item.h">
       <Filter>02.GameObject\09.Item</Filter>
     </ClInclude>
@@ -491,6 +496,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\Phubans.h">
       <Filter>02.GameObject\11.Npc\00.Phubans</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PiramidUnBrake.h">
+      <Filter>02.GameObject\08.Objstacle\02.PiramidUnbreak</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BulletSpark.h">
+      <Filter>02.GameObject\10.Effect\04.BulletSpark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Piramid.h">
+      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WeaponHUD.h">
+      <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -674,9 +691,6 @@
     <ClCompile Include="..\Source\Obstacle.cpp">
       <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Piramide.cpp">
-      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Item.cpp">
       <Filter>02.GameObject\09.Item</Filter>
     </ClCompile>
@@ -694,6 +708,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\Phubans.cpp">
       <Filter>02.GameObject\11.Npc\00.Phubans</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PiramidUnBrake.cpp">
+      <Filter>02.GameObject\08.Objstacle\02.PiramidUnbreak</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BulletSpark.cpp">
+      <Filter>02.GameObject\10.Effect\04.BulletSpark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Piramid.cpp">
+      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WeaponHUD.cpp">
+      <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

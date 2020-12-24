@@ -5,6 +5,10 @@
 #include "BulletSpawn.h"
 #include "PickingManger.h"
 
+//effect
+#include "BulletSpark.h"
+#include "Explosion.h"
+#include "ExplosionBlue.h"
 CPlayerBullet::CPlayerBullet()
 	:m_eBulletType(EWeaponType::Normal)
 {
@@ -26,7 +30,7 @@ void CPlayerBullet::Set_Type(const EWeaponType & _eBulletType)
 	case EWeaponType::Big:
 		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("BigBullet"))[0]);
-		m_fMoveSpeed = 40.f;
+		m_fMoveSpeed = 60.f;
 		m_pTransform->Set_Scale(_vector(2, 2, 2));
 		break;
 	case EWeaponType::Normal:
@@ -34,7 +38,7 @@ void CPlayerBullet::Set_Type(const EWeaponType & _eBulletType)
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("NormalBullet"))[0]);
 //		m_fMoveSpeed = 100.f;
 		//test
-		m_fMoveSpeed = 30.f;
+		m_fMoveSpeed = 100.f;
 		break;
 	case EWeaponType::Multiple:
 		m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
@@ -151,9 +155,11 @@ HRESULT CPlayerBullet::Awake()
 	m_fLiveTiem = 5.f;
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("SkyBox"));
+	pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 
 	m_sName = L"PlayerBullet";
+
+
 	return S_OK;
 }
 
@@ -205,9 +211,26 @@ CPlayerBullet * CPlayerBullet::Create()
 
 void CPlayerBullet::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"Monster" == _pGameObject->GetName())
+	if (L"Monster" == _pGameObject->GetName()
+		|| L"Obstacle" == _pGameObject->GetName())
 	{
-		m_bDead = true;
+
+		if (m_eBulletType == EWeaponType::Big)
+		{
+			CExplosionBlue* pEffect = nullptr;
+			pEffect = (CExplosionBlue*)AddGameObject<CExplosionBlue>();
+			pEffect->SetPos(m_pTransform->Get_Position());
+			m_bDead = true;
+		}
+		else
+		{
+			CBulletSpark* pEffect = nullptr;
+			pEffect = (CBulletSpark*)AddGameObject<CBulletSpark>();
+			pEffect->SetPosition(m_pTransform->Get_Position());
+			m_bDead = true;
+			
+		}
+
 	}
 
 }

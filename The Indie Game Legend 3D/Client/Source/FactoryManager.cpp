@@ -47,11 +47,16 @@ HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 		}
 		else if (0 == _tcscmp(TEXT("o"), szWord))
 		{
-			m_vecSaveDataPosition.push_back(vecPosition[4]);
-			vecPosition.clear();
+			if (vecPosition.size() != 5)
+			{
+				int a = 0;
+			}
+
 			_int nRoomID;
 			_ftscanf_s(pFile, TEXT("%d\n"), &nRoomID);
 			m_vecSaveDataRoomID.push_back(nRoomID);
+			m_vecSaveDataPosition.push_back(vecPosition[4]);
+			vecPosition.clear();
 		}
 		else if (0 == _tcscmp(TEXT("usemtl"), szWord))
 		{

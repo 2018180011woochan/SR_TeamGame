@@ -20,6 +20,7 @@ HRESULT CObstacle::Awake()
 {
 	CGameObject::Awake();
 
+	m_sName = L"Obstacle";
 	return S_OK;
 }
 

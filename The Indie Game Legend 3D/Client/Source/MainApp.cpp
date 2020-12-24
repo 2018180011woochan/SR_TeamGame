@@ -15,10 +15,10 @@ CMainApp::CMainApp()
 void CMainApp::Free()
 {
 	CLightMananger::DeleteInstance();//Device use
-	m_pTexturePoolManager->Release();
 	SafeRelease(m_pDevice);
     SafeRelease(m_pManagement);
 	CManagement::GetInstance()->ReleaseEngine();
+	m_pTexturePoolManager->Release();
 	CFactoryManager::DeleteInstance();
 	CKeyManager::DeleteInstance();
 	CMsgManager::DeleteInstance();

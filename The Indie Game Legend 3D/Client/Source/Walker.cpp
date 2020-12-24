@@ -45,8 +45,6 @@ HRESULT CWalker::Awake()
 	m_fMoveSpeed = 3.f;
 
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
-	//m_pTransform->Add_Position(_vector(-5.f, 5.f, 10.f));
-	m_pTransform->Set_Position(_vector(-5.f, 5.f, 10.f));
 
 	m_iHP = 10;
 
@@ -63,7 +61,6 @@ HRESULT CWalker::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("SkyBox"));
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
 
 	return S_OK;
 }
@@ -76,8 +73,8 @@ UINT CWalker::Update(const float _fDeltaTime)
 	CMonster::Update(_fDeltaTime);
 
 	//원래 위치
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
+	if (FAILED(Movement(_fDeltaTime)))
+		return 0;
 
 
 	if (m_pTransform->Get_Position().y > 5.f || m_pTransform->Get_Position().y < 3.f)
