@@ -265,6 +265,12 @@
     <Filter Include="02.GameObject\10.Effect\03.ExplosionBlue">
       <UniqueIdentifier>{86c19cbb-63a1-4083-90d2-4a6119e82e5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\11.Npc">
+      <UniqueIdentifier>{30cb7abd-9784-44b5-824d-d975a6f80eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\11.Npc\00.Phubans">
+      <UniqueIdentifier>{1b3a349e-bde7-4a48-bdea-feb7ee75a8ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -483,6 +489,9 @@
     <ClInclude Include="..\Header\ExplosionBlue.h">
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Phubans.h">
+      <Filter>02.GameObject\11.Npc\00.Phubans</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -682,6 +691,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\ExplosionBlue.cpp">
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Phubans.cpp">
+      <Filter>02.GameObject\11.Npc\00.Phubans</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
