@@ -16,6 +16,11 @@
 #define KEY_SPACE   0x00000001 << 9
 #define KEY_LSHIFT  0x00000001 << 10
 
+#define KEY_Z		0x00000001 << 11
+#define KEY_X		0x00000001 << 12
+#define KEY_C		0x00000001 << 13
+
+
 USING(Engine)
 class CKeyManager : public CBase
 {

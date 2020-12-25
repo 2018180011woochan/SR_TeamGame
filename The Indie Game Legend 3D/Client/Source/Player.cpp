@@ -344,6 +344,8 @@ void CPlayer::AddHp(_int _nHp)
 	{
 		//Dead
 	}
+
+	m_pHeartManager->SetGauge(m_nHp);
 }
 
 void CPlayer::SoundPlayer(const ESoundID & _eID)
@@ -437,9 +439,9 @@ HRESULT CPlayer::Start()
 	//Test
 	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
 	m_pWeaponHud = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
-	m_pHearManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
+	m_pHeartManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
 
-	if (nullptr == m_pWeaponHud || nullptr == m_pHearManager)
+	if (nullptr == m_pWeaponHud || nullptr == m_pHeartManager)
 	{
 		return E_FAIL;
 	}
@@ -468,9 +470,9 @@ HRESULT CPlayer::Start()
 	 
 	 //------------
 	 m_nHp = 8;
-	 m_nHpMax = 12;
-	 m_pHearManager->SetHeartCount(m_nHpMax);
-	 m_pHearManager->SetGauge(m_nHp);
+	 m_nHpMax = 20;
+	 m_pHeartManager->SetHeartCount(m_nHpMax);
+	 m_pHeartManager->SetGauge(m_nHp);
 
 	return S_OK;
 }
@@ -483,6 +485,15 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	UpdateState(_fDeltaTime);
 	UpdateLight();
 
+	
+	if (m_pKeyMgr->Key_Down(KEY_Z))
+	{
+		AddHp(-1);
+	}
+	if (m_pKeyMgr->Key_Down(KEY_X))
+	{
+		AddHp(1);
+	}
 	return OBJ_NOENVET;
 }
 

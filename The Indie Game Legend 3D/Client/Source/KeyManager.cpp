@@ -83,6 +83,14 @@ void CKeyManager::Update_KeyManager()
 		m_dwKeyState |= KEY_SPACE;
 	if (GetAsyncKeyState(VK_LSHIFT) & 0x8000)
 		m_dwKeyState |= KEY_LSHIFT;
+
+
+	if (GetAsyncKeyState('Z') & 0x8000)
+		m_dwKeyState |= KEY_Z;
+	if (GetAsyncKeyState('X') & 0x8000)
+		m_dwKeyState |= KEY_X;
+	if (GetAsyncKeyState('C') & 0x8000)
+		m_dwKeyState |= KEY_C;
 }
 
 void CKeyManager::Free()

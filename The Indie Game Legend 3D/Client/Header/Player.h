@@ -55,7 +55,7 @@ private:
 	 _uint				m_nAmmoDecrease;
 	 //Test
 	 Image*						m_pAmmobar = nullptr;
-	 class CHeartManager*		m_pHearManager = nullptr;
+	 class CHeartManager*		m_pHeartManager = nullptr;
 	 class CWeaponHUD*			m_pWeaponHud = nullptr;
 
 
