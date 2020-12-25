@@ -3,23 +3,6 @@
 #include "Component.h"
 BEGIN(Engine)
 class CTexture;
-typedef struct tagVertexRect
-{
-	D3DXVECTOR3 Position;
-	D3DXVECTOR2 UV;
-	static const DWORD FVF;
-}VERTEXRECT, *LPVERTEXRECT;
-typedef struct tagIndex16
-{
-	WORD _1;
-	WORD _2;
-	WORD _3;
-}INDEX16, *LPINDEX16;
-typedef struct tagPivot
-{
-	float fX;
-	float fY;
-}PIVOT, *LPPIVOT;
 class ENGINE_DLL Image final : public CComponent
 {
 public:
@@ -46,6 +29,9 @@ private:
 
 	float					m_fWidth;
 	float					m_fHeight;
+
+	D3DXVECTOR2				m_vOffset;
+	D3DXVECTOR2				m_vTiling;
 private:
 	explicit Image(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	virtual ~Image() = default;
@@ -68,9 +54,14 @@ public:
 
 	//
 	void	SetPivot(const float _fX, const float _fY);
+	void	SetOffset(const D3DXVECTOR2 _vOffset);
+	void	SetTiling(const D3DXVECTOR2 _vTiling);
+
+	void	SetWidth(const float _fWidth);
+	void	SetHeight(const float _fHeihgt);
 private:
 	HRESULT CreateBuffer();
-
+	HRESULT UpdateBuffer();
 	HRESULT FillHorizontal();
 };
 END

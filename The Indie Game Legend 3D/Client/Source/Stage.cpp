@@ -46,6 +46,7 @@
 #include "GemIcon.h"
 #include "DiscIcon.h"
 #include "MiniMapFrame.h"
+#include "CardinalPoint.h"
 #pragma endregion
 
 #pragma region Collider
@@ -273,6 +274,7 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CGemIcon::Create());
 	AddPrototype(CDiscIcon::Create());
 	AddPrototype(CMiniMapFrame::Create());
+	AddPrototype(CCardinalPoint::Create());
 
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
@@ -292,6 +294,7 @@ HRESULT CStage::AddUIObject()
 
 	AddGameObject<CGemIcon>();
 	AddGameObject<CDiscIcon>();
+	AddGameObject<CCardinalPoint>();
 	AddGameObject<CMiniMapFrame>();
 	return S_OK;
 }

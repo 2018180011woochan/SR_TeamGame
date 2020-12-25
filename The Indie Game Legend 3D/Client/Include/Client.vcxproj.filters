@@ -295,6 +295,9 @@
     <Filter Include="02.GameObject\04.UI\10.MiniMap\00.Frame">
       <UniqueIdentifier>{45555c0d-4555-4099-8ebc-d0e2751dddc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap\01.CardinalPoint">
+      <UniqueIdentifier>{516d9051-051a-40c1-9ae3-c902a393ec45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -531,6 +534,9 @@
     <ClInclude Include="..\Header\MiniMapFrame.h">
       <Filter>02.GameObject\04.UI\10.MiniMap\00.Frame</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CardinalPoint.h">
+      <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -748,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\MiniMapFrame.cpp">
       <Filter>02.GameObject\04.UI\10.MiniMap\00.Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CardinalPoint.cpp">
+      <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

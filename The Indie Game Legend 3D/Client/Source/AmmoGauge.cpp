@@ -66,6 +66,7 @@ HRESULT CAmmoGauge::Start()
 	SafeAddRef(m_pTexturePool);
 
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
+
 	return S_OK;
 }
 

@@ -34,7 +34,7 @@ const _uint FVF_VTXCUBE_TEXTURE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE
 typedef struct tagIndex16
 {
 	WORD _1, _2, _3;
-}INDEX16;
+}INDEX16, *LPINDEX16;;
 
 typedef struct tagIndex32
 {
@@ -50,6 +50,18 @@ typedef struct tagTransformDesc
 	_vector vParent;
 	_matrix matWorld;
 }TRANSFORM_DESC;
+
+typedef struct tagVertexRect
+{
+	D3DXVECTOR3 Position;
+	D3DXVECTOR2 UV;
+	static const DWORD FVF;
+}VERTEXRECT, *LPVERTEXRECT;
+typedef struct tagPivot
+{
+	float fX;
+	float fY;
+}PIVOT, *LPPIVOT;
 
 #define __ENGINE_STRUCT_H__
 #endif // !__ENGINE_STRUCT_H__
