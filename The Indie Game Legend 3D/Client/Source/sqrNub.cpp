@@ -69,7 +69,7 @@ HRESULT CsqrNub::Start()
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 
 	return S_OK;

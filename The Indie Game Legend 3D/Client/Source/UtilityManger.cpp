@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "PickingManger.h"
+#include "UtilityManger.h"
 #include "MsgManager.h"
 #include "PlayerCamera.h"
 
 #include "Monster.h"
 #include "Tile.h"
 #include "Obstacle.h"
-bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos/*,const _uint _nRoomID*/)
+bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos/*,const _uint _nRoomID*/)
 {
 	_vector vCenter = CMsgManager::GetInstance()->Get_ClientCenterVector();
 	RECT tClientRC = CMsgManager::GetInstance()->GetClientRc();
@@ -75,7 +75,7 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	return bIsPicking;
 }
 
-void CPickingManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
+void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 {
 	list<CGameObject*> CullingList;
 	//컬링 리스트 추가할것

@@ -34,8 +34,12 @@
 #include "PlayerCamera.h"
 #include "Mouse.h"
 #include "Sector.h"
-#include "PlayerBullet.h"
 #include "BulletSpawn.h"
+
+//bullet
+#include "NormalBullet.h"
+#include "BigBullet.h"
+#include "TripleBullet.h"
 
 #pragma region INCLUDE_UI
 #include "AmmoGauge.h"
@@ -117,7 +121,10 @@ HRESULT CStage::Awake()
 	AddPrototype(CSector::Create());
 	AddPrototype(CPlayerSpawn::Create());
 
-	AddPrototype(CPlayerBullet::Create());
+	AddPrototype(CNormalBullet::Create());
+	AddPrototype(CBigBullet::Create());
+	AddPrototype(CTripleBullet::Create());
+
 	AddPrototype(CBulletSpawn::Create());
 
 	AddGameObject<CPlayer>();
@@ -163,23 +170,23 @@ HRESULT CStage::Awake()
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
 	CLightMananger::GetInstance()->LightOff();
 
+	//Sector
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
 
 	
 	AddUIObject();
-
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();
 #pragma endregion
 	CScene::Awake();
 
-	CSoundMgr::GetInstance()->Initialize();
-	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
+	CSoundMgr::GetInstance()->PlayBGM(L"Sector1.wav");
+	CSoundMgr::GetInstance()->StopAll();
 
-	CFactoryManager::GetInstance()->LoadDataFile(L"s1");
-	CFactoryManager::GetInstance()->LoadScene(this);
+	//CFactoryManager::GetInstance()->LoadDataFile(L"s1");
+	//CFactoryManager::GetInstance()->LoadScene(this);
 
 	return S_OK;
 }

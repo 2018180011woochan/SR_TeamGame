@@ -17,6 +17,8 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 		PrintLog(L"Error", L"m_pPlayer nullptr");
 		return E_FAIL;
 	}
+
+	//Cheat
 	static float h = 0.f;
 
 	if (GetAsyncKeyState('7') & 0x0001)
@@ -27,6 +29,8 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	{
 		h += 1.f;
 	}
+	//Cheat
+
 	m_fCameraAngleX += m_pMouse->Get_MouseDir().y  * m_fCameraAngleSpeed * _fDeletaTime;
 
 	CTransform* pPlayerTransFomr = (CTransform*)(m_pPlayer->GetComponent<CTransform>());

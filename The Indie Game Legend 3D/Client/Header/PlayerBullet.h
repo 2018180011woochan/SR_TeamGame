@@ -17,7 +17,6 @@ public:
 	// CBullet을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 	virtual HRESULT Fire() override;
-	HRESULT	Fire(const _vector _Dir)override;
 private:
 public:
 	virtual HRESULT InitializePrototype() override;

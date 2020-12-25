@@ -48,7 +48,7 @@ HRESULT CTurretBullet::Start()
 
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 
 	return S_OK;

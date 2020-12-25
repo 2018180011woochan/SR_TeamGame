@@ -4,6 +4,8 @@
 #include "Star.h"
 #include "Logo.h"
 #include "Stage.h"
+
+#include "SoundMgr.h"
 CIntro::CIntro()
 	:CScene(GetTypeHashCode<CIntro>())
 {
@@ -72,6 +74,9 @@ HRESULT CIntro::Awake()
 HRESULT CIntro::Start()
 {
 	CScene::Start();
+
+	CSoundMgr::GetInstance()->Initialize();
+	//CSoundMgr::GetInstance()->PlayBGM(L"Title.wav");
 	return S_OK;
 }
 

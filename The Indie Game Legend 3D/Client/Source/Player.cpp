@@ -2,19 +2,21 @@
 #include "Player.h"
 #include "KeyManager.h"
 #include "Mouse.h"
-#include "PlayerBullet.h"
+
 #include "PlayerCamera.h"
 #include "AmmoGauge.h"
-#include "PickingManger.h"
+#include "UtilityManger.h"
 #include "LightMananger.h"
 #include "HeartManager.h"
 #include "Item.h"
 #include "SoundMgr.h"
 #include "PlayerSpawn.h"
 #include "WeaponHUD.h"
+
+#include "BigBullet.h"
+#include "TripleBullet.h"
+#include "NormalBullet.h"
 USING(Engine)
-
-
 
 CPlayer::CPlayer()
 	:CGameObject()
@@ -233,29 +235,28 @@ void CPlayer::TakeItem(const EItemID & _eID)
 
 void CPlayer::BulletFire()
 {
-	auto Fire = [&](const EWeaponType& _Type){
-		CPlayerBullet* pBullet = (CPlayerBullet*)AddGameObject<CPlayerBullet>();
-		pBullet->Set_Type(_Type);
-		pBullet->Fire();
-	};
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 		return;
 
 	// 현재 저 조건 아니면 발사 했다는 경우이니 초기화
 	m_fBulletFireTime = 0.f;
+	CBullet* pBullet = nullptr;
 
 	if (m_bUseWeapon)
 	{
 		switch (m_eCurWeaponType)
 		{
 		case EWeaponType::Multiple:
-			Fire(EWeaponType::Multiple);
+			pBullet = (CTripleBullet*)AddGameObject<CTripleBullet>();
+			pBullet->Fire();
 			break;
 		case EWeaponType::Big:
-			Fire(EWeaponType::Big);
+			 pBullet = (CBigBullet*)AddGameObject<CBigBullet>();
+			pBullet->Fire();
 			break;
 		case EWeaponType::Rapid:
-			Fire(EWeaponType::Normal);
+			 pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
+			pBullet->Fire();
 			break;
 		default :
 			//cout << " default  Input by BulletFire() of switch" << endl;
@@ -265,10 +266,14 @@ void CPlayer::BulletFire()
 		m_fAmmo -= m_nAmmoDecrease;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
 		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
+		cout << "fire" << endl;
+
 	}
 	else
 	{
-		Fire(EWeaponType::Normal);
+		CNormalBullet* pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
+		pBullet->Fire();
+		cout << "fire" << endl;
 	}
 }
 
@@ -285,23 +290,6 @@ void CPlayer::ChangeWeaponUISetting()
 	if (m_ePreWeaponType != m_eCurWeaponType)
 	{
 		m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
-//		switch (m_eCurWeaponType)
-//		{
-//		case EWeaponType::Multiple:
-//			//cout << "now Weapon is Multiple " << endl;
-//			break;
-//		case EWeaponType::Big:
-//			//cout << "now Weapon is Big " << endl;
-//			break;
-//		case EWeaponType::Rapid:
-//			//cout << "now Weapon is Rapid " << endl;
-//			break;
-//		default:
-//#ifdef _DEBUG
-//			cout << " default Input by ChangeWeaponSetting() of switch" << endl;
-//#endif
-//			break;
-//		}
 		m_ePreWeaponType = m_eCurWeaponType;
 	}
 	ChangeWeapon();
@@ -439,7 +427,7 @@ HRESULT CPlayer::Awake()
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(TEXT("SkyBox"));
+	pCollider->SetMesh(L"Cube",BOUND::BOX);
 
 	return S_OK;
 }
@@ -462,12 +450,13 @@ HRESULT CPlayer::Start()
 	m_sName = L"Player";
 
 	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
-	 _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
-	 m_pTransform->Set_Position(vPosition);
 
-	 m_nTag = pSpawn->GetTage();
 
-	 CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
+// 	 _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
+// 	 m_pTransform->Set_Position(vPosition);
+// 	 m_nTag = pSpawn->GetTage();
+
+	 CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 	//Reference Setting
 	//할당 순서 때문에 작업 미완
 
@@ -546,7 +535,7 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	{
 		m_nTag = _pGameObject->GetTage();
 		cout << "Change RoomID : " <<m_nTag << endl;
-		CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
+		CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 	}
 
 	if (L"Item" == _pGameObject->GetName())
