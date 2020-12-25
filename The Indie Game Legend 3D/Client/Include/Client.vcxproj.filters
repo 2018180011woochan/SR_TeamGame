@@ -298,6 +298,9 @@
     <Filter Include="02.GameObject\04.UI\10.MiniMap\01.CardinalPoint">
       <UniqueIdentifier>{516d9051-051a-40c1-9ae3-c902a393ec45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap\02.MiniMap">
+      <UniqueIdentifier>{f81d022d-29c2-442a-a157-bde99e449940}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">

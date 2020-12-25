@@ -132,7 +132,7 @@ void CCardinalPoint::SetOffset()
 		return;
 
 	D3DXVECTOR2 vOffSet = D3DXVECTOR2(0.f, 0.f);
-	vOffSet.x = fDegree / 360.f;
+	vOffSet.x = -fDegree / 360.f;
 
 	m_pImage->SetOffset(vOffSet);
 

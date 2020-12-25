@@ -198,6 +198,7 @@
     <ClInclude Include="..\Header\MeshRenderer.h" />
     <ClInclude Include="..\Header\RectTransform.h" />
     <ClInclude Include="..\Header\Renderer.h" />
+    <ClInclude Include="..\Header\RenderTexture.h" />
     <ClInclude Include="..\Header\Scene.h" />
     <ClInclude Include="..\Header\Scene.hpp" />
     <ClInclude Include="..\Header\SceneManager.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="..\Source\MeshRenderer.cpp" />
     <ClCompile Include="..\Source\RectTransform.cpp" />
     <ClCompile Include="..\Source\Renderer.cpp" />
+    <ClCompile Include="..\Source\RenderTexture.cpp" />
     <ClCompile Include="..\Source\Scene.cpp" />
     <ClCompile Include="..\Source\SceneManager.cpp" />
     <ClCompile Include="..\Source\SubSet.cpp" />

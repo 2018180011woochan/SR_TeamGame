@@ -43,13 +43,13 @@ HRESULT CFloor::InitializePrototype()
 HRESULT CFloor::Awake()
 {
 	CGameObject::Awake();
-	//m_pTransform->Set_Scale(D3DXVECTOR3(112.f, 0.f, 96.f));
-	//m_pTransform->UpdateTransform();
-	//m_pCollider = (CCollider*)AddComponent<CCollider>();
-	//m_pCollider->SetMesh(TEXT("Floor"), BOUND::BOUNDTYPE::BOX);
-	//m_pCollider->m_bIsRigid = true;
+	m_pTransform->Set_Scale(D3DXVECTOR3(112.f, 0.f, 96.f));
+	m_pTransform->UpdateTransform();
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Floor"), BOUND::BOUNDTYPE::BOX);
+	m_pCollider->m_bIsRigid = true;
 
-	//m_sName = TEXT("Floor");
+	m_sName = TEXT("Floor");
 	m_eRenderID = ERenderID::UI;
 	return S_OK;
 }
@@ -67,7 +67,7 @@ UINT CFloor::Update(const float _fDeltaTime)
 
 UINT CFloor::LateUpdate(const float _fDeltaTime)
 {
-	//CGameObject::LateUpdate(_fDeltaTime);
+	CGameObject::LateUpdate(_fDeltaTime);
 	return 0;
 }
 
