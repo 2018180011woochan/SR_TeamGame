@@ -5,7 +5,11 @@ USING(Engine)
 class CWall : public CGameObject
 {
 public:
-	enum WallType { Wall, Door };
+	enum Direction {Top, Bottom, Left, Right};
+private:
+	TSTRING		m_sMesh;
+	Direction	m_eDirection;
+	CCollider*	m_pCollider;
 
 private:
 	explicit CWall();
@@ -25,6 +29,9 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
+
+	void SetMesh(const TSTRING& _sMesh);
+	void SetDirection(const TSTRING& _sDirection);
 };
 #define __WALL_H__
 #endif // !__WALL_H__

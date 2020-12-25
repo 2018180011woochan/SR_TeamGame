@@ -1,7 +1,6 @@
 #include "..\Header\CollisionManager.h"
 #include "GameObject.h"
 #include <iostream>
-
 USING(Engine)
 IMPLEMENT_SINGLETON(CCollisionManager)
 
@@ -14,7 +13,7 @@ void CCollisionManager::Free()
 }
 
 void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
-{
+{	
 	vector<CCollider*>	Collider;
 
 	CCollider* pCollider = nullptr;
@@ -47,7 +46,10 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 			BOUND tTarget = Collider[j]->GetBound();
 
 			if (BOUND::BOUNDTYPE::BOX == tOrigin.eType &&BOUND::BOUNDTYPE::BOX == tTarget.eType)
-				bCollision = AABBToAABB(tOrigin, tTarget);
+			{
+				cout << "continue" << endl;
+				continue;
+			}
 			else if (BOUND::BOUNDTYPE::SPHERE == tOrigin.eType &&BOUND::BOUNDTYPE::SPHERE == tTarget.eType)
 				bCollision = SphereToSphere(tOrigin, tTarget);
 			else
@@ -56,13 +58,21 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 				{
 					bCollision = AABBToSphere(tOrigin, tTarget, vPenetration);
 					if (true == bCollision && true == Collider[j]->m_bIsRigid)
+					{
 						((CTransform*)(Collider[j]->GetGameObject()->GetComponent<CTransform>()))->Add_Position(vPenetration);
+						wcout << Collider[i]->GetGameObject()->GetName().c_str() << "  /  " << Collider[j]->GetGameObject()->GetName().c_str() << "  /  " << endl;
+						cout << vPenetration.x << " / " << vPenetration.y << " / " << vPenetration.z << " / " << endl;
+					}
 				}
 				else
 				{
 					bCollision = AABBToSphere(tTarget, tOrigin, vPenetration);
-					if (true == bCollision && true == Collider[i]->m_bIsRigid)
+					if (true == bCollision && true == Collider[i]->m_bIsRigid && true == Collider[j]->m_bIsRigid)
+					{
 						((CTransform*)(Collider[i]->GetGameObject()->GetComponent<CTransform>()))->Add_Position(vPenetration);
+						wcout << Collider[i]->GetGameObject()->GetName().c_str() << "  /  " << Collider[j]->GetGameObject()->GetName().c_str() << "  /  " << endl;
+						cout << vPenetration.x << " / " << vPenetration.y << " / " << vPenetration.z << " / " << endl;
+					}
 
 				}
 			}
@@ -74,7 +84,6 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 			}
 		}
 	}
-	Collider.clear();
 }
 
 bool CCollisionManager::AABBToAABB(BOUND _tOriginBound, BOUND _tTargetBound)
@@ -92,27 +101,27 @@ bool CCollisionManager::AABBToSphere(BOUND _tAABB, BOUND _tSphere, D3DXVECTOR3& 
 {
 	D3DXVECTOR3 vBoxPoint;
 
-	if (_tSphere.vCenter.x < _tAABB.vCenter.x - _tAABB.fLength * 0.5f)
+	if (_tSphere.vCenter.x <= _tAABB.vCenter.x - _tAABB.fLength * 0.5f)
 		vBoxPoint.x = _tAABB.vCenter.x - _tAABB.fLength * 0.5f;
-	else if (_tSphere.vCenter.x > _tAABB.vCenter.x + _tAABB.fLength * 0.5f)
+	else if (_tSphere.vCenter.x >= _tAABB.vCenter.x + _tAABB.fLength * 0.5f)
 		vBoxPoint.x = _tAABB.vCenter.x + _tAABB.fLength * 0.5f;
 	else
 		vBoxPoint.x = _tSphere.vCenter.x;
 
-	if (_tSphere.vCenter.y < _tAABB.vCenter.y - _tAABB.fHeight * 0.5f)
+	if (_tSphere.vCenter.y <= _tAABB.vCenter.y - _tAABB.fHeight * 0.5f)
 		vBoxPoint.y = _tAABB.vCenter.y - _tAABB.fHeight * 0.5f;
-	else if (_tSphere.vCenter.y > _tAABB.vCenter.y + _tAABB.fHeight * 0.5f)
+	else if (_tSphere.vCenter.y >= _tAABB.vCenter.y + _tAABB.fHeight * 0.5f)
 		vBoxPoint.y = _tAABB.vCenter.y + _tAABB.fHeight * 0.5f;
 	else
 		vBoxPoint.y = _tSphere.vCenter.y;
 
-	if (_tSphere.vCenter.z < _tAABB.vCenter.z - _tAABB.fDepth * 0.5f)
+	if (_tSphere.vCenter.z <= _tAABB.vCenter.z - _tAABB.fDepth * 0.5f)
 		vBoxPoint.z = _tAABB.vCenter.z - _tAABB.fDepth * 0.5f;
-	else if (_tSphere.vCenter.z > _tAABB.vCenter.z + _tAABB.fDepth * 0.5f)
+	else if (_tSphere.vCenter.z >= _tAABB.vCenter.z + _tAABB.fDepth * 0.5f)
 		vBoxPoint.z = _tAABB.vCenter.z + _tAABB.fDepth * 0.5f;
 	else
 		vBoxPoint.z = _tSphere.vCenter.z;
-
+	
 	D3DXVECTOR3 vCenterToBox = vBoxPoint - _tSphere.vCenter;
 	float fLength = D3DXVec3Length(&vCenterToBox);
 

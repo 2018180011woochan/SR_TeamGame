@@ -44,6 +44,13 @@
 #include "Heart.h"
 #include "CrossHair.h"
 #pragma endregion
+
+#pragma region Collider
+#include "Wall.h"
+#include "Floor.h"
+#pragma endregion
+
+
 #include "SkyBox.h"
 
 //tile
@@ -173,13 +180,22 @@ HRESULT CStage::Awake()
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();
 #pragma endregion
-	CScene::Awake();
+
+#pragma region Collider
+	AddPrototype(CWall::Create());
+	AddPrototype(CFloor::Create());
+#pragma endregion
+
 
 	CSoundMgr::GetInstance()->Initialize();
 	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
 
 	CFactoryManager::GetInstance()->LoadDataFile(L"s1");
 	CFactoryManager::GetInstance()->LoadScene(this);
+	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
+
+	CScene::Awake();
+	
 
 	return S_OK;
 }

@@ -31,13 +31,13 @@ HRESULT CPiramid::Start()
 	m_eRenderID = ERenderID::NoAlpha;
 
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
-
+	m_pTransform->Add_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
+	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Pyramid_Level1"));
+	m_pCollider->SetMesh(TEXT("Pyramid_Level1"),BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
-	m_pTransform->UpdateTransform();
 	return S_OK;
 }
 

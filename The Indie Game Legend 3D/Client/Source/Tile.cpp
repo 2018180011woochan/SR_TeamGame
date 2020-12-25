@@ -28,7 +28,7 @@ HRESULT CTile::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(L"SkyBox");
+	m_pCollider->SetMesh(L"Quad",BOUND::BOUNDTYPE::BOX);
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }

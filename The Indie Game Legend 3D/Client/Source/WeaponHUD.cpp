@@ -54,6 +54,12 @@ HRESULT CWeaponHUD::Awake()
 	m_pTransform->Set_Position(D3DXVECTOR3(-575.5f, -285.f, 0.f));
 	m_pTransform->UpdateTransform();
 	//Set RenderID
+
+	//m_pTransform->Set_Scale(D3DXVECTOR3(1.f, 1.f, 1.f));
+	//m_pImage->SetPivot(0.5f, 1.f);
+	//m_pTransform->Set_Position(D3DXVECTOR3(0.f, -360.f, 0.f));
+	//m_pTransform->UpdateTransform();
+
 	m_eRenderID = ERenderID::UI;
 
 	return S_OK;

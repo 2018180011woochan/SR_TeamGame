@@ -67,7 +67,7 @@ HRESULT CNubBoss::Start()
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("SkyBox"));
+	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
 	m_pTransform->Add_Position(_vector(0, 10.f, 0));

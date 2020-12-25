@@ -83,10 +83,10 @@ UINT CSkyBox::LateUpdate(const float _fDeltaTime)
 HRESULT CSkyBox::Render()
 {
 	CGameObject::Render();
-	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
-	m_pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	m_pMeshRenderer->Render();
-	m_pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
+	//m_pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	//m_pMeshRenderer->Render();
+	//m_pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
 	return S_OK;
 }

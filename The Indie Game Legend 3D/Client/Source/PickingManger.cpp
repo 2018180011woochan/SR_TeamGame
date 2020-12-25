@@ -6,6 +6,9 @@
 #include "Monster.h"
 #include "Tile.h"
 #include "Obstacle.h"
+
+#include "Wall.h"
+#include "Floor.h"
 bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos/*,const _uint _nRoomID*/)
 {
 	_vector vCenter = CMsgManager::GetInstance()->Get_ClientCenterVector();
@@ -82,7 +85,8 @@ void CPickingManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 	CullingList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CMonster>(_nSceneID);
 	CullingList.splice(CullingList.end(),CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID));
 	CullingList.splice(CullingList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
-
+	CullingList.splice(CullingList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CWall>(_nSceneID));
+	CullingList.splice(CullingList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
 	for (auto& pGameObject : CullingList)
 	{
 		if (pGameObject->GetTage() != _nTag)
