@@ -14,6 +14,8 @@ public:
 	HRESULT LoadDataFile(const TSTRING& _sFileName);
 	/*저장한 대이터를 순회하면서 생성*/
 	HRESULT LoadScene( CScene* const _pScene);
+
+	HRESULT LoadCollider(CScene* _pScene, const TSTRING& _sFileName);
 private:
 	void ClearData();
 	HRESULT AddObject(CScene* const _pScene, _uint _nIndex);

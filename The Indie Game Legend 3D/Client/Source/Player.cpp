@@ -439,7 +439,7 @@ HRESULT CPlayer::Awake()
 	m_pTransform->UpdateTransform();
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(TEXT("SkyBox"));
+	pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 
 	return S_OK;
 }
@@ -461,11 +461,13 @@ HRESULT CPlayer::Start()
 	m_nTag = 0;
 	m_sName = L"Player";
 
-	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
-	 _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
-	 m_pTransform->Set_Position(vPosition);
+	//CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
+	// _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
+	// m_pTransform->Set_Position(vPosition);
 
-	 m_nTag = pSpawn->GetTage();
+	// m_nTag = pSpawn->GetTage();
+
+	m_pTransform->Set_Position(D3DXVECTOR3(0.f,2.5f,0.f));
 
 	 CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
 	//Reference Setting

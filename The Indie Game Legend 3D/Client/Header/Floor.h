@@ -5,6 +5,8 @@ USING(Engine)
 class CFloor : public CGameObject
 {
 private:
+	CCollider* m_pCollider;
+private:
 	explicit CFloor();
 	explicit CFloor(const CFloor& _rOther);
 	virtual ~CFloor() = default;

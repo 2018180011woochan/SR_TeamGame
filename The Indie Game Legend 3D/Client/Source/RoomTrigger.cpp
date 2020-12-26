@@ -38,12 +38,12 @@ HRESULT CRoomTrigger::Start()
 	SafeAddRef(m_pTexturePool);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("RoomTirgger"))[0]);
 
+	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Cube"), BOUND::BOUNDTYPE::BOX);
-	m_pCollider->m_bIsRigid = true;
+	m_pCollider->m_bIsRigid = false;
 
-	m_pTransform->UpdateTransform();
 	m_pTransform->UpdateWorld();
 	return S_OK;
 }

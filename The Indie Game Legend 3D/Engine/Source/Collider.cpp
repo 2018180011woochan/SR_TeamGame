@@ -62,7 +62,7 @@ HRESULT CCollider::Draw()
 	if (nullptr == m_pDrawMesh)
 		return E_FAIL;
 	CTransform* pTransform = ((CTransform*)GetGameObject()->GetComponent<CTransform>());
-	D3DXVECTOR3 vPosition = pTransform->Get_Position();
+	D3DXVECTOR3 vPosition = m_tBound.vCenter + pTransform->Get_Position();
 	D3DXMATRIX matScale;
 	D3DXMATRIX matTrans;
 	D3DXMATRIX matWorld;
@@ -90,21 +90,26 @@ void CCollider::SetBound()
 
 	memcpy(pVertices, m_pCollisionMesh->GetVertices(), sizeof(D3DXVECTOR3) * nVertexCount);
 
-	D3DXMATRIX matScale;
+	D3DXMATRIX matScale, matRX, matRY, matRZ, matWorld;
 	D3DXVECTOR3 vScale = ((CTransform*)m_pGameObject->GetComponent<CTransform>())->Get_TransformDesc().vScale;
-
+	D3DXVECTOR3 vRotation = ((CTransform*)m_pGameObject->GetComponent<CTransform>())->Get_TransformDesc().vRotation;
 	D3DXMatrixScaling(&matScale, vScale.x, vScale.y, vScale.z);
+	D3DXMatrixRotationX(&matRX, vRotation.x);
+	D3DXMatrixRotationY(&matRY, vRotation.y);
+	D3DXMatrixRotationZ(&matRZ, vRotation.z);
 
+	matWorld = matScale * matRX * matRY * matRZ;
 
 	for (UINT i = 0; i < nVertexCount; ++i)
 	{
-		D3DXVec3TransformCoord(&(pVertices[i]), &(pVertices[i]), &matScale);
+		D3DXVec3TransformCoord(&(pVertices[i]), &(pVertices[i]), &matWorld);
 	}
 
 	//바운딩 박스 구조체
 	if (BOUND::BOUNDTYPE::BOX == m_tBound.eType)
 	{
 		D3DXComputeBoundingBox((D3DXVECTOR3*)(pVertices), nVertexCount, sizeof(D3DXVECTOR3), &(m_tBound.vMin), &(m_tBound.vMax));
+		m_tBound.vCenter = (m_tBound.vMax + m_tBound.vMin) * 0.5f;
 		m_tBound.fLength = m_tBound.vMax.x - m_tBound.vMin.x;
 		m_tBound.fHeight = m_tBound.vMax.y - m_tBound.vMin.y;
 		m_tBound.fDepth = m_tBound.vMax.z - m_tBound.vMin.z;
@@ -128,7 +133,8 @@ BOUND CCollider::GetBound()
 	if (BOUND::BOUNDTYPE::BOX == m_tBound.eType)
 	{
 		tBound = m_tBound;
-		tBound.vCenter = pTransform->Get_Position();
+
+		tBound.vCenter = m_tBound.vCenter + pTransform->Get_Position();
 		tBound.vMin += pTransform->Get_Position();
 		tBound.vMax += pTransform->Get_Position();
 	}

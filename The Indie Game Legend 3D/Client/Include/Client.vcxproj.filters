@@ -280,6 +280,33 @@
     <Filter Include="02.GameObject\04.UI\07.WeaponHUD">
       <UniqueIdentifier>{8a7424f0-12ea-477b-b5ba-60cae37285ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\08.Gem">
+      <UniqueIdentifier>{a70696be-9887-47de-9cb3-3fe334ed997c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\08.Gem\00.Icon">
+      <UniqueIdentifier>{4d4c3641-347b-4d93-888b-789dbd461ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\08.Gem\01.Text">
+      <UniqueIdentifier>{ceeeac3f-a8c0-45e4-bdf1-e285eafa7fe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\09.Disc">
+      <UniqueIdentifier>{5d4b1b5b-277f-4d23-a695-fa4ce08307f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\09.Disc\00.Icon">
+      <UniqueIdentifier>{d2090282-6334-4379-99d6-7df4998ec0ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap">
+      <UniqueIdentifier>{6cc35703-5194-40a1-9ec1-f268831f7897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap\00.Frame">
+      <UniqueIdentifier>{45555c0d-4555-4099-8ebc-d0e2751dddc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap\01.CardinalPoint">
+      <UniqueIdentifier>{516d9051-051a-40c1-9ae3-c902a393ec45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap\02.MiniMap">
+      <UniqueIdentifier>{f81d022d-29c2-442a-a157-bde99e449940}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -510,6 +537,18 @@
     <ClInclude Include="..\Header\WeaponHUD.h">
       <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\GemIcon.h">
+      <Filter>02.GameObject\04.UI\08.Gem\00.Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DiscIcon.h">
+      <Filter>02.GameObject\04.UI\09.Disc\00.Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMapFrame.h">
+      <Filter>02.GameObject\04.UI\10.MiniMap\00.Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CardinalPoint.h">
+      <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -721,6 +760,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\WeaponHUD.cpp">
       <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GemIcon.cpp">
+      <Filter>02.GameObject\04.UI\08.Gem\00.Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\DiscIcon.cpp">
+      <Filter>02.GameObject\04.UI\09.Disc\00.Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MiniMapFrame.cpp">
+      <Filter>02.GameObject\04.UI\10.MiniMap\00.Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CardinalPoint.cpp">
+      <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

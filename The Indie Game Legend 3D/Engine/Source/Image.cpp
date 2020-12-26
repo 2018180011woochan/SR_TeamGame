@@ -21,6 +21,8 @@ Image::Image(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 	, m_tPivot{ 0.5f, 0.5f }
 	, m_fWidth(100.f)
 	, m_fHeight(100.f)
+	, m_vOffset(0.f, 0.f)
+	, m_vTiling(1.f, 1.f)
 {
 }
 
@@ -95,12 +97,8 @@ HRESULT Image::SetNativeSize()
 	m_fWidth = float(tImageDesc.Width);
 	m_fHeight = float(tImageDesc.Height);
 
-	m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
-	pVertices[0].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, -m_fHeight * (1.f - m_tPivot.fY), 0.f);
-	pVertices[1].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, m_fHeight * m_tPivot.fY, 0.f);
-	pVertices[2].Position = D3DXVECTOR3(m_fWidth * (1.f - m_tPivot.fX), m_fHeight * m_tPivot.fY, 0.f);
-	pVertices[3].Position = D3DXVECTOR3(m_fWidth * (1.f - m_tPivot.fX), -m_fHeight * (1.f - m_tPivot.fY), 0.f);
-	m_pVertexBuffer->Unlock();
+
+	UpdateBuffer();
 
 	return S_OK;
 }
@@ -121,9 +119,9 @@ HRESULT Image::SetFillAmount(const float _fValue)
 	m_fFillAmount = _fValue;
 
 	if (0 > m_fFillAmount)
-		m_fFillAmount = 0;
+		m_fFillAmount = 0.f;
 	else if (1 < m_fFillAmount)
-		m_fFillAmount = 1;
+		m_fFillAmount = 1.f;
 
 	switch (m_eFillMethod)
 	{
@@ -141,26 +139,31 @@ void Image::SetPivot(const float _fX, const float _fY)
 	m_tPivot.fX = _fX;
 	m_tPivot.fY = _fY;
 
-	LPVERTEXRECT pVertices = nullptr;
+	UpdateBuffer();
+}
 
-	/*
-	1--------2
-	|		 |
-	|		 |
-	|		 |
-	0--------3
-	*/
-	if (ImageType::Simple == m_eImageType)
-	{
-		m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
-		pVertices[0].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, -m_fHeight * (1.f - m_tPivot.fY), 0.f);
-		pVertices[1].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, m_fHeight * m_tPivot.fY, 0.f);
-		pVertices[2].Position = D3DXVECTOR3(m_fWidth * (1.f - m_tPivot.fX), m_fHeight * m_tPivot.fY, 0.f);
-		pVertices[3].Position = D3DXVECTOR3(m_fWidth * (1.f - m_tPivot.fX), -m_fHeight * (1.f - m_tPivot.fY), 0.f);
-		m_pVertexBuffer->Unlock();
-	}
-	else
-		SetFillAmount(m_fFillAmount);
+void Image::SetOffset(const D3DXVECTOR2 _vOffset)
+{
+	m_vOffset = _vOffset;
+	UpdateBuffer();
+}
+
+void Image::SetTiling(const D3DXVECTOR2 _vTiling)
+{
+	m_vTiling = _vTiling;
+	UpdateBuffer();
+}
+
+void Image::SetWidth(const float _fWidth)
+{
+	m_fWidth = _fWidth;
+	UpdateBuffer();
+}
+
+void Image::SetHeight(const float _fHeihgt)
+{
+	m_fHeight = _fHeihgt;
+	UpdateBuffer();
 }
 
 HRESULT Image::CreateBuffer()
@@ -214,6 +217,46 @@ HRESULT Image::CreateBuffer()
 	return S_OK;
 }
 
+HRESULT Image::UpdateBuffer()
+{
+
+	/*
+	1--------2
+	|		 |
+	|		 |
+	|		 |
+	0--------3
+	*/
+	
+	LPVERTEXRECT pVertices = nullptr;
+	
+	if (ImageType::Simple == m_eImageType)
+	{
+		m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
+		pVertices[0].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, -m_fHeight * (1.f - m_tPivot.fY), 0.f);
+		pVertices[0].UV = D3DXVECTOR2(m_vOffset.x, m_vOffset.y + m_vTiling.y);
+		pVertices[1].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, m_fHeight * m_tPivot.fY, 0.f);
+		pVertices[1].UV = D3DXVECTOR2(m_vOffset.x, m_vOffset.y);
+		pVertices[2].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX + m_fFillAmount * m_fWidth, m_fHeight * m_tPivot.fY, 0.f);
+		pVertices[2].UV = D3DXVECTOR2(m_vOffset.x + m_vTiling.x, m_vOffset.y);
+		pVertices[3].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX + m_fFillAmount * m_fWidth, -m_fHeight * (1.f - m_tPivot.fY), 0.f);
+		pVertices[3].UV = D3DXVECTOR2(m_vOffset.x + m_vTiling.x, m_vOffset.y + m_vTiling.y);
+		m_pVertexBuffer->Unlock();
+	}
+	else
+	{
+		switch (m_eFillMethod)
+		{
+		case Engine::Image::Horizontal:
+			FillHorizontal();
+			break;
+		default:
+			break;
+		}
+	}
+	return S_OK;
+}
+
 HRESULT Image::FillHorizontal()
 {
 	D3DXIMAGE_INFO tImageDesc = m_pTexture->GetDesc();
@@ -225,11 +268,13 @@ HRESULT Image::FillHorizontal()
 	{
 	case Engine::Image::Left:
 		pVertices[0].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, -m_fHeight * (1.f - m_tPivot.fY), 0.f);
+		pVertices[0].UV = D3DXVECTOR2(m_vOffset.x, m_vOffset.y + m_vTiling.y);
 		pVertices[1].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX, m_fHeight * m_tPivot.fY, 0.f);
+		pVertices[1].UV = D3DXVECTOR2(m_vOffset.x, m_vOffset.y);
 		pVertices[2].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX + m_fFillAmount * m_fWidth, m_fHeight * m_tPivot.fY, 0.f);
-		pVertices[2].UV = D3DXVECTOR2(m_fFillAmount, 0.f);
+		pVertices[2].UV = D3DXVECTOR2(m_vOffset.x +  (m_vTiling.x * m_fFillAmount), m_vOffset.y);
 		pVertices[3].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX + m_fFillAmount * m_fWidth, -m_fHeight * (1.f - m_tPivot.fY), 0.f);
-		pVertices[3].UV = D3DXVECTOR2(m_fFillAmount, 1.f);
+		pVertices[3].UV = D3DXVECTOR2(m_vOffset.x + (m_vTiling.x * m_fFillAmount), m_vOffset.y + m_vTiling.y);
 		break;
 	case Engine::Image::Right:
 		break;

@@ -47,7 +47,18 @@
 #include "HeartManager.h"
 #include "Heart.h"
 #include "CrossHair.h"
+#include "GemIcon.h"
+#include "DiscIcon.h"
+#include "MiniMapFrame.h"
+#include "CardinalPoint.h"
 #pragma endregion
+
+#pragma region Collider
+#include "Wall.h"
+#include "Floor.h"
+#pragma endregion
+
+
 #include "SkyBox.h"
 
 //tile
@@ -181,13 +192,22 @@ HRESULT CStage::Awake()
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();
 #pragma endregion
-	CScene::Awake();
+
+#pragma region Collider
+	AddPrototype(CWall::Create());
+	AddPrototype(CFloor::Create());
+#pragma endregion
+
 
 	CSoundMgr::GetInstance()->Initialize();
 	CSoundMgr::GetInstance()->PlayBGM(L"BGM_Test.mp3");
 
 	CFactoryManager::GetInstance()->LoadDataFile(L"s1");
 	CFactoryManager::GetInstance()->LoadScene(this);
+	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
+
+	CScene::Awake();
+	
 
 	return S_OK;
 }
@@ -258,23 +278,32 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CHeart::Create());
 	AddPrototype(CHeartManager::Create());
 	AddPrototype(CCrossHair::Create());
+	AddPrototype(CWeaponHUD::Create());
+	AddPrototype(CGemIcon::Create());
+	AddPrototype(CDiscIcon::Create());
+	AddPrototype(CMiniMapFrame::Create());
+	AddPrototype(CCardinalPoint::Create());
+
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
-	AddGameObject<CCrossHair>();
 
-	AddPrototype(CWeaponHUD::Create());
+	AddGameObject<CCrossHair>();
 
 	AddGameObject<CWeaponHUD>();
 
 	AddGameObject< CHeart>();
 	AddGameObject< CHeart>();
 	AddGameObject< CHeart>();
-
 	AddGameObject< CHeart>();
 	AddGameObject< CHeart>();
 	AddGameObject< CHeart>();
 
 	AddGameObject<CHeartManager>();
+
+	AddGameObject<CGemIcon>();
+	AddGameObject<CDiscIcon>();
+	AddGameObject<CCardinalPoint>();
+	AddGameObject<CMiniMapFrame>();
 	return S_OK;
 }
 

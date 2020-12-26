@@ -27,6 +27,7 @@ void CMainApp::Free()
 
 HRESULT CMainApp::Initialize()
 {
+	
 	if (FAILED(m_pManagement->Initialize(g_hWnd, 1280, 720, EDisplayMode::Window,120.f)))
 	{
 		PrintLog(TEXT("Error"), TEXT("Failed to ready engine."));
@@ -51,7 +52,7 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 	}
 
-	m_pDevice->SetRenderState(D3DRS_LIGHTING, false);
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, true);
 	return S_OK;
 }
 

@@ -1,28 +1,28 @@
 #include "stdafx.h"
-#include "WeaponHUD.h"
+#include "..\Header\MiniMapFrame.h"
 #include "TexturePoolManager.h"
 
-CWeaponHUD::CWeaponHUD()
+CMiniMapFrame::CMiniMapFrame()
 	: m_pImage(nullptr)
 	, m_pTexturePool(nullptr)
 	, m_sTextureKey(TEXT(""))
 {
 }
 
-CWeaponHUD::CWeaponHUD(const CWeaponHUD & _rOther)
-	:CGameObject(_rOther)
+CMiniMapFrame::CMiniMapFrame(const CMiniMapFrame & _rOther)
+	: CGameObject(_rOther)
 {
 }
 
-void CWeaponHUD::Free()
+void CMiniMapFrame::Free()
 {
 	CGameObject::Free();
 	SafeRelease(m_pTexturePool);
 }
 
-CWeaponHUD * CWeaponHUD::Create()
+CMiniMapFrame * CMiniMapFrame::Create()
 {
-	CWeaponHUD* pInstance = new CWeaponHUD;
+	CMiniMapFrame* pInstance = new CMiniMapFrame;
 	if (FAILED(pInstance->InitializePrototype()))
 	{
 		SafeRelease(pInstance);
@@ -31,74 +31,57 @@ CWeaponHUD * CWeaponHUD::Create()
 	return pInstance;
 }
 
-CGameObject * CWeaponHUD::Clone()
+CGameObject * CMiniMapFrame::Clone()
 {
-	CWeaponHUD* pClone = new CWeaponHUD(*this);
+	CMiniMapFrame* pClone = new CMiniMapFrame(*this);
 	return pClone;
 }
 
-HRESULT CWeaponHUD::InitializePrototype()
+HRESULT CMiniMapFrame::InitializePrototype()
 {
 	CGameObject::InitializePrototype();
 	return S_OK;
 }
 
-HRESULT CWeaponHUD::Awake()
+HRESULT CMiniMapFrame::Awake()
 {
 	CGameObject::Awake();
-
 	m_pImage = (Image*)AddComponent<Image>();
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(5.f, 5.f, 1.f));
-	m_pImage->SetPivot(0.f, 0.5f);
-	m_pTransform->Set_Position(D3DXVECTOR3(-575.5f, -285.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(520.f, -225.f, 0.f));
 	m_pTransform->UpdateTransform();
-	//Set RenderID
 	m_eRenderID = ERenderID::UI;
-
 	return S_OK;
 }
 
-HRESULT CWeaponHUD::Start()
+HRESULT CMiniMapFrame::Start()
 {
 	CGameObject::Start();
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
 	SafeAddRef(m_pTexturePool);
-
-	m_sTextureKey = TEXT("WeaponHUD");
-
-	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
+	m_sTextureKey = TEXT("MiniMapFrame");
 
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
 	return S_OK;
 }
 
-UINT CWeaponHUD::Update(const float _fDeltaTime)
+UINT CMiniMapFrame::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	return 0;
 }
 
-UINT CWeaponHUD::LateUpdate(const float _fDeltaTime)
+UINT CMiniMapFrame::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 	return 0;
 }
 
-HRESULT CWeaponHUD::Render()
+HRESULT CMiniMapFrame::Render()
 {
 	CGameObject::Render();
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
 	m_pImage->Render();
 	return S_OK;
 }
-
-void CWeaponHUD::ChangeWeapon(const UINT _nWeaponID)
-{
-	if (_nWeaponID >= m_nMaxFrame)
-		return;
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[_nWeaponID]);
-}
-
-
-

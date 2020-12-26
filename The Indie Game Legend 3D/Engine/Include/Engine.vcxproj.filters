@@ -103,6 +103,9 @@
     <Filter Include="01.Utility\10.Collision">
       <UniqueIdentifier>{ddb51973-3ced-43bb-877e-61f5a0a5f0a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\05.Component\06.RenderTexture">
+      <UniqueIdentifier>{2e674069-890d-4614-9229-4c39536e4f8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineInclude.h">
@@ -225,6 +228,9 @@
     <ClInclude Include="..\Header\CollisionManager.h">
       <Filter>01.Utility\10.Collision</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RenderTexture.h">
+      <Filter>01.Utility\05.Component\06.RenderTexture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp">
@@ -304,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\CollisionManager.cpp">
       <Filter>01.Utility\10.Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RenderTexture.cpp">
+      <Filter>01.Utility\05.Component\06.RenderTexture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
