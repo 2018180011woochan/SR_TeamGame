@@ -52,7 +52,7 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 	}
 
-	m_pDevice->SetRenderState(D3DRS_LIGHTING, true);
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, false);
 	return S_OK;
 }
 

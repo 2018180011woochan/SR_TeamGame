@@ -98,7 +98,7 @@ void CGameObject::SetTag(const _int & _nTag)
 
 
 
-_int CGameObject::GetTage()
+_int CGameObject::GetTag()
 {
 	return m_nTag;
 }

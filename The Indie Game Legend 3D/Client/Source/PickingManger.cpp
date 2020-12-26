@@ -89,7 +89,7 @@ void CPickingManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 	CullingList.splice(CullingList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
 	for (auto& pGameObject : CullingList)
 	{
-		if (pGameObject->GetTage() != _nTag)
+		if (pGameObject->GetTag() != _nTag)
 			pGameObject->SetEnable(false);
 		else
 			pGameObject->SetEnable(true);

@@ -301,6 +301,12 @@
     <Filter Include="02.GameObject\04.UI\10.MiniMap\02.MiniMap">
       <UniqueIdentifier>{f81d022d-29c2-442a-a157-bde99e449940}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap\03.MiniMapRenderer">
+      <UniqueIdentifier>{b77a6856-00a3-42e5-9fc5-deb16db71c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\10.MiniMap\02.MiniMap\00.Partial">
+      <UniqueIdentifier>{8f202af6-aa3e-4bdb-8ce0-d6084ce6edb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -540,6 +546,12 @@
     <ClInclude Include="..\Header\CardinalPoint.h">
       <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MiniMapRenderer.h">
+      <Filter>02.GameObject\04.UI\10.MiniMap\03.MiniMapRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMapPartial.h">
+      <Filter>02.GameObject\04.UI\10.MiniMap\02.MiniMap\00.Partial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -760,6 +772,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\CardinalPoint.cpp">
       <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MiniMapRenderer.cpp">
+      <Filter>02.GameObject\04.UI\10.MiniMap\03.MiniMapRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MiniMapPartial.cpp">
+      <Filter>02.GameObject\04.UI\10.MiniMap\02.MiniMap\00.Partial</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

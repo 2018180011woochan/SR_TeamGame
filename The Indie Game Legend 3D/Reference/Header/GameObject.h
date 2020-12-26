@@ -31,7 +31,7 @@ protected:
 
 public:
 	void			SetTag(const _int& _nTag);
-	_int			GetTage();
+	_int			GetTag();
 	TSTRING			GetName();
 
 public:

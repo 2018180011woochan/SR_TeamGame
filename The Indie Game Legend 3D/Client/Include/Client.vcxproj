@@ -193,6 +193,8 @@
     <ClInclude Include="..\Header\LightMananger.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MiniMapFrame.h" />
+    <ClInclude Include="..\Header\MiniMapPartial.h" />
+    <ClInclude Include="..\Header\MiniMapRenderer.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
@@ -269,6 +271,8 @@
     <ClCompile Include="..\Source\LightMananger.cpp" />
     <ClCompile Include="..\Source\Logo.cpp" />
     <ClCompile Include="..\Source\MiniMapFrame.cpp" />
+    <ClCompile Include="..\Source\MiniMapPartial.cpp" />
+    <ClCompile Include="..\Source\MiniMapRenderer.cpp" />
     <ClCompile Include="..\Source\Monster.cpp" />
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
