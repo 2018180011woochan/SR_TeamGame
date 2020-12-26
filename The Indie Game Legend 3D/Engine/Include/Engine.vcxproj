@@ -203,6 +203,7 @@
     <ClInclude Include="..\Header\Scene.hpp" />
     <ClInclude Include="..\Header\SceneManager.h" />
     <ClInclude Include="..\Header\SubSet.h" />
+    <ClInclude Include="..\Header\Text.h" />
     <ClInclude Include="..\Header\Texture.h" />
     <ClInclude Include="..\Header\TimeManager.h" />
     <ClInclude Include="..\Header\Transform.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="..\Source\Scene.cpp" />
     <ClCompile Include="..\Source\SceneManager.cpp" />
     <ClCompile Include="..\Source\SubSet.cpp" />
+    <ClCompile Include="..\Source\Text.cpp" />
     <ClCompile Include="..\Source\Texture.cpp" />
     <ClCompile Include="..\Source\TimeManager.cpp" />
     <ClCompile Include="..\Source\Transform.cpp" />

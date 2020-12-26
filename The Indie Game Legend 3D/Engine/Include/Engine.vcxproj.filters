@@ -106,6 +106,9 @@
     <Filter Include="01.Utility\05.Component\06.RenderTexture">
       <UniqueIdentifier>{2e674069-890d-4614-9229-4c39536e4f8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\05.Component\07.Text">
+      <UniqueIdentifier>{9641240f-02bb-4b1c-bf22-da0cb879c2ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineInclude.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="..\Header\RenderTexture.h">
       <Filter>01.Utility\05.Component\06.RenderTexture</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Text.h">
+      <Filter>01.Utility\05.Component\07.Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp">
@@ -313,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\RenderTexture.cpp">
       <Filter>01.Utility\05.Component\06.RenderTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Text.cpp">
+      <Filter>01.Utility\05.Component\07.Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

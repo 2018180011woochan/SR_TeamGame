@@ -223,7 +223,7 @@ void CMiniMapRenderer::DrawPartialMap()
 		tRect.right = m_nPartialCX - nDelta;
 		vPosition.x = float(nDelta);
 	}
-	else if (tRect.right > m_nX * m_nCX)
+	else if (tRect.right > LONG(m_nX * m_nCX))
 	{
 		nDelta = tRect.right - LONG(m_nX * m_nCX);
 		tRect.right = LONG(m_nX * m_nCX);
@@ -236,7 +236,7 @@ void CMiniMapRenderer::DrawPartialMap()
 		tRect.bottom = m_nPartialCY - nDelta;
 		vPosition.y = float(nDelta);
 	}
-	else if (tRect.bottom > m_nY * m_nCY)
+	else if (tRect.bottom > LONG(m_nY * m_nCY))
 	{
 		nDelta = tRect.bottom - LONG(m_nY * m_nCY);
 		tRect.bottom = LONG(m_nY * m_nCY);
