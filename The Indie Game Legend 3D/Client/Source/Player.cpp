@@ -625,9 +625,9 @@ CGameObject * CPlayer::Clone()
 
 void CPlayer::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"RoomTrigger" == _pGameObject->GetName() && m_nTag != _pGameObject->GetTage())
+	if (L"RoomTrigger" == _pGameObject->GetName() && m_nTag != _pGameObject->GetTag())
 	{
-		m_nTag = _pGameObject->GetTage();
+		m_nTag = _pGameObject->GetTag();
 		cout << "Change RoomID : " <<m_nTag << endl;
 		CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 	}

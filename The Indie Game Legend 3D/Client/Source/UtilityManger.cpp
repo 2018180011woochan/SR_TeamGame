@@ -89,7 +89,7 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 
 	for (auto& pGameObject : CullingList)
 	{
-		if (pGameObject->GetTage() != _nTag)
+		if (pGameObject->GetTag() != _nTag)
 			pGameObject->SetEnable(false);
 		else
 			pGameObject->SetEnable(true);

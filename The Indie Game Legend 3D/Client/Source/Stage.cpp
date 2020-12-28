@@ -182,7 +182,7 @@ HRESULT CStage::Awake()
 	//AddGameObject<CDoomBird>();
 
 	//AddGameObject<CTreeBoss>();
-	AddGameObject<CWormBoss>();
+	//AddGameObject<CWormBoss>();
 
 	//AddGameObject<CTreeBoss>();
 
