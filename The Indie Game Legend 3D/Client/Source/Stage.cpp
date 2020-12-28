@@ -29,6 +29,10 @@
 #include "ExplosionBlue.h"
 #pragma endregion
 
+#pragma region NPC
+#include "Phubans.h"
+#pragma endregion
+
 #include "FactoryManager.h"
 #include "Player.h"
 #include "PlayerCamera.h"
@@ -90,6 +94,8 @@ HRESULT CStage::Awake()
 	AddPrototype(CSmallExlode::Create());
 	AddPrototype(CExplosion::Create());
 	AddPrototype(CExplosionBlue::Create());
+
+	AddPrototype(CPhubans::Create());
 
 	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
@@ -159,6 +165,8 @@ HRESULT CStage::Awake()
 	//AddGameObject<CWormBossBody>();
 
 	//AddGameObject<CTreeBoss>();
+
+	AddGameObject<CPhubans>();
 
 	//컬링 테스트 
 	
