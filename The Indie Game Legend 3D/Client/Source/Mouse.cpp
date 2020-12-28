@@ -31,6 +31,7 @@ void CMouse::UpdateMouseDir()
 	_vector vMousePos = _vector(float(tMousePos.x), float(tMousePos.y), 0.f);
 	m_vMouseDir = vMousePos - vClinetCenter;
 	D3DXVec3Normalize(&m_vMouseDir, &m_vMouseDir);
+
 }
 
 _vector CMouse::Get_MouseDir()

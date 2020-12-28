@@ -107,6 +107,7 @@ HRESULT CTripleBullet::Fire()
 
 HRESULT CTripleBullet::Fire(_vector _Pos, _vector _vDir)
 {
+	CBullet::Fire();
 	m_pTransform->Set_Position(_Pos);
 	m_vDiraction = _vDir;
 	return S_OK;

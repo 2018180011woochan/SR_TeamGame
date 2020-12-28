@@ -33,6 +33,31 @@ void CSoundMgr::Play(const wstring& pSoundKey, CHANNELID eID)
 	}
 
 	FMOD_BOOL bPlay = FALSE; 
+	FMOD_Channel_Stop(m_pChannelArr[eID]);
+	if (FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay))
+	{
+		FMOD_System_PlaySound(m_pSystem, FMOD_CHANNEL_FREE, iter->second, FALSE, &m_pChannelArr[eID]);
+	}
+	FMOD_System_Update(m_pSystem);
+}
+
+void CSoundMgr::PlayContinue(const wstring & pSoundKey, CHANNELID eID)
+{
+	map<wstring, FMOD_SOUND*>::iterator iter;
+
+	iter = find_if(m_mapSound.begin(), m_mapSound.end(), [&](auto& iter) {
+		return pSoundKey == iter.first;
+	});
+
+	if (iter == m_mapSound.end())
+	{
+#ifdef _DEBUG
+		cout << "not exist " << pSoundKey.c_str() << " file" << endl;
+#endif // _DEBUG
+		return;
+	}
+
+	FMOD_BOOL bPlay = FALSE;
 	if (FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay))
 	{
 		FMOD_System_PlaySound(m_pSystem, FMOD_CHANNEL_FREE, iter->second, FALSE, &m_pChannelArr[eID]);

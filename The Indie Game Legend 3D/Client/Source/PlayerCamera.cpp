@@ -32,6 +32,8 @@ HRESULT CPlayerCamera::UpdateMove(float _fDeletaTime)
 	//Cheat
 
 	m_fCameraAngleX += m_pMouse->Get_MouseDir().y  * m_fCameraAngleSpeed * _fDeletaTime;
+	m_fCameraAngleX = CLAMP(m_fCameraAngleX, CameraYMin, CameraYMax);
+
 
 	CTransform* pPlayerTransFomr = (CTransform*)(m_pPlayer->GetComponent<CTransform>());
 	TRANSFORM_DESC PlayerTransFormDesc = pPlayerTransFomr->Get_TransformDesc();

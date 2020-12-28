@@ -13,6 +13,8 @@ enum class EWeaponType : unsigned int
 	Big,
 	Multiple,
 	Rapid,
+	Flame,
+	Lazer,
 	Normal,
 	End
 };

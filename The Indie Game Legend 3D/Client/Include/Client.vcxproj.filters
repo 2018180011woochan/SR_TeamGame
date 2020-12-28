@@ -277,11 +277,17 @@
     <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\01.BigBullet">
       <UniqueIdentifier>{52877393-bac0-4da6-b5de-5d7d53e2c9eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\02.Triple">
-      <UniqueIdentifier>{6bcbcdf7-124a-4072-a746-febb78aaf5c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.Manager\97.UtilityManager">
       <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\03.FlameBullet">
+      <UniqueIdentifier>{c1a6eaea-93fb-4274-9832-ce9b2c6c7f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\02.TripleBullet">
+      <UniqueIdentifier>{6bcbcdf7-124a-4072-a746-febb78aaf5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\04.Laser">
+      <UniqueIdentifier>{946a32fe-7d51-49ae-9004-6f168cb592a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -514,7 +520,13 @@
       <Filter>02.GameObject\04.Bullet\01.PlayerBullet\01.BigBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TripleBullet.h">
-      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\02.Triple</Filter>
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\02.TripleBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlameBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\03.FlameBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\04.Laser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -729,7 +741,13 @@
       <Filter>02.GameObject\04.Bullet\01.PlayerBullet\01.BigBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\TripleBullet.cpp">
-      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\02.Triple</Filter>
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\02.TripleBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FlameBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\03.FlameBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LaserBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\04.Laser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

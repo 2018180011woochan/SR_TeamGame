@@ -16,6 +16,9 @@
 #include "BigBullet.h"
 #include "TripleBullet.h"
 #include "NormalBullet.h"
+#include "FlameBullet.h"
+#include "LaserBullet.h"
+#include "MsgManager.h"
 USING(Engine)
 
 CPlayer::CPlayer()
@@ -37,6 +40,7 @@ CPlayer::CPlayer()
 	, m_fDashDuration(0.f)
 	, m_fDashDurationTime(0.f)
 	, m_eState(EState::Move)
+	, m_eSector(ESectorTileID::Sector1)
 
 {
 }
@@ -58,6 +62,7 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 	, m_vecWeapons(_rOther.m_vecWeapons)
 	, m_eState(_rOther.m_eState)
 	, m_fDashDurationTime(_rOther.m_fDashDurationTime)
+	, m_eSector(_rOther.m_eSector)
 
 {
 
@@ -76,9 +81,14 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	//Fire
 	if (m_pKeyMgr->Key_Toggle(VK_F2))
 	{
-		if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
+		if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))
 		{
 			BulletFire();
+		}
+		else if (m_ePreWeaponType == EWeaponType::Flame &&  m_pKeyMgr->Key_Press(KEY_LBUTTON))
+		{
+			BulletFire();
+
 		}
 	}
 
@@ -152,6 +162,7 @@ HRESULT CPlayer::MoveCheck()
 		m_eState = EState::Dash;
 		m_fDashDurationTime = 0.f;
 		m_fDashDelayTime = 0.f;
+		SoundPlay(ESoundID::Dash);
 	}
 
 
@@ -175,7 +186,15 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 	{
 		Move(m_fRunSpeed, _fDeltaTime);
 		m_fRunningTime += _fDeltaTime;
+
+		if (m_fRunningTime > 0.3f)
+		{
+			SoundPlay(ESoundID::Run);
+			m_fRunningTime = 0.f;
+		}
 		float fPer = 0.9f;
+
+
 		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 10.f);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
@@ -221,12 +240,15 @@ void CPlayer::TakeItem(const EItemID & _eID)
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
 		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
 		//++m_nCoin;
+		SoundPlay(ESoundID::AddCoin);
 		break;
 	case EItemID::sprBigCoin:
 		//m_nCoin += 10;
 		m_fAmmo += 3;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
 		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
+		SoundPlay(ESoundID::AddCoin);
+
 		break;
 	case EItemID::End:
 		break;
@@ -237,7 +259,8 @@ void CPlayer::BulletFire()
 {
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 		return;
-
+	if (m_fAmmo <= 0)
+		return;
 	// 현재 저 조건 아니면 발사 했다는 경우이니 초기화
 	m_fBulletFireTime = 0.f;
 	CBullet* pBullet = nullptr;
@@ -249,31 +272,44 @@ void CPlayer::BulletFire()
 		case EWeaponType::Multiple:
 			pBullet = (CTripleBullet*)AddGameObject<CTripleBullet>();
 			pBullet->Fire();
+			SoundPlay(ESoundID::NormaBullet);
 			break;
 		case EWeaponType::Big:
 			 pBullet = (CBigBullet*)AddGameObject<CBigBullet>();
 			pBullet->Fire();
+			SoundPlay(ESoundID::BigBullet);
 			break;
 		case EWeaponType::Rapid:
 			 pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 			pBullet->Fire();
+			SoundPlay(ESoundID::NormaBullet);
+			break;
+		case EWeaponType::Flame:
+			pBullet = (CFlameBullet*)AddGameObject<CFlameBullet>();
+			pBullet->Fire();
+			SoundPlay(ESoundID::FlameBullet);
+			break;
+		case EWeaponType::Lazer:
+			pBullet = (CLaserBullet*)AddGameObject<CLaserBullet>();
+			pBullet->Fire();
+			SoundPlay(ESoundID::LaserBullet);
 			break;
 		default :
-			//cout << " default  Input by BulletFire() of switch" << endl;
 			break;
 		}
 
 		m_fAmmo -= m_nAmmoDecrease;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
 		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
-		cout << "fire" << endl;
+		
 
 	}
 	else
 	{
 		CNormalBullet* pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 		pBullet->Fire();
-		cout << "fire" << endl;
+		SoundPlay(ESoundID::NormaBullet);
+
 	}
 }
 
@@ -314,12 +350,17 @@ void CPlayer::ChangeWeapon()
 			break;
 		case EWeaponType::Rapid:
 			m_fBulletFireDelay = RapidDelay;
+			m_nAmmoDecrease = 1;
+			break;
+		case EWeaponType::Flame:
+			m_fBulletFireDelay = FlameDelay;
 			m_nAmmoDecrease = 2;
 			break;
+		case EWeaponType::Lazer:
+			m_fBulletFireDelay = LaserDelay;
+			m_nAmmoDecrease = 0;
+			break;
 		default:
-#ifdef _DEBUG
-			cout << " default Input by ChangeWeaponSetting() of switch" << endl;
-#endif
 			break;
 		}
 	}
@@ -348,18 +389,57 @@ void CPlayer::AddHp(_int _nHp)
 	m_pHeartManager->SetGauge(m_nHp);
 }
 
-void CPlayer::SoundPlayer(const ESoundID & _eID)
+void CPlayer::TileSound(ESectorTileID _eID)
 {
 	switch (_eID)
 	{
-	case ESoundID::NormalFire:
-		//CSoundMgr::GetInstance()->
+	case ESectorTileID::Sector1:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxStep1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxStep2.mp3", CSoundMgr::Player_Action);
 		break;
-	case ESoundID::BigFire:
+	case ESectorTileID::Sector2:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxSandStep1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxSandStep2.mp3", CSoundMgr::Player_Action);
+		break;
+	}
+}
+
+void CPlayer::SoundPlay(const ESoundID & _eID)
+{
+	switch (_eID)
+	{
+	case ESoundID::NormaBullet:
+		CSoundMgr::GetInstance()->Play(L"sfxBullet.wav", CSoundMgr::Player_Bullet);
+		break;
+	case ESoundID::BigBullet:
+		CSoundMgr::GetInstance()->Play(L"sfxBigBullet.wav", CSoundMgr::Player_Bullet);
+		break;
+	case ESoundID::FlameBullet:
+		CSoundMgr::GetInstance()->Play(L"Flame.wav", CSoundMgr::Player_Bullet);
 		break;
 	case ESoundID::Hit:
+		CSoundMgr::GetInstance()->Play(L"sfxHurt.wav", CSoundMgr::Player_Hit);
+		break;
+	case ESoundID::AddHeart:
+	case ESoundID::AddCoin:
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Player_Effect);
+		break;
+	case ESoundID::Dash:
+		CSoundMgr::GetInstance()->Play(L"sfxDash.mp3", CSoundMgr::Player_Action);
 		break;
 	case ESoundID::Run:
+		m_bsfxStep = !m_bsfxStep;
+		TileSound(m_eSector);
+		break;
+	case ESoundID::AddEnergy:
+		CSoundMgr::GetInstance()->Play(L"sfxEnergy.wav", CSoundMgr::Player_Effect);
+		break;
+	case ESoundID::LaserBullet:
+		CSoundMgr::GetInstance()->Play(L"sfxLaser.wav", CSoundMgr::Player_Bullet);
 		break;
 	default:
 		break;
@@ -372,9 +452,6 @@ void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 	{
 		if (eType == _eWeaponType)
 		{
-#ifdef _DEBUG
-			cout << "Weapon already exists by CPlayer::AddWeapon()" << endl;
-#endif
 			return;
 		}
 	}
@@ -393,10 +470,12 @@ void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 		//cout << "add Rapid Weapon" << endl;
 		break;
 	}
-
 	m_vecWeapons.emplace_back(_eWeaponType);
+	m_nSetWeaponID = m_vecWeapons.size() - 1;
+	m_eCurWeaponType = m_vecWeapons[m_nSetWeaponID];
+	ChangeWeapon();
+	m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
 }
-
 
 HRESULT CPlayer::InitializePrototype()
 {
@@ -426,11 +505,12 @@ HRESULT CPlayer::Awake()
 	m_fHitDelayTime = 0.f;
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(5.f,5.f,5.f));
-	m_pTransform->UpdateTransform();
+
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
 	pCollider->SetMesh(L"Cube",BOUND::BOX);
 
+	m_bsfxStep = false;
 	return S_OK;
 }
 
@@ -447,27 +527,20 @@ HRESULT CPlayer::Start()
 	}
 	//SafeAddRef(m_pAmmobar);
 
-	//Test player spawn 찾아서 룸아디 대입받는걸로 
 	m_nTag = 0;
 	m_sName = L"Player";
 
-	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
-
-
+//	 CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
 // 	 _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
 // 	 m_pTransform->Set_Position(vPosition);
 // 	 m_nTag = pSpawn->GetTage();
 
-	 CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
+	// CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 	//Reference Setting
-	//할당 순서 때문에 작업 미완
 
+	 //weapon Setting
+	 m_vecWeapons.emplace_back(EWeaponType::Big);
 
-	 AddWeapon(EWeaponType::Big);
-	 AddWeapon(EWeaponType::Multiple);
-	 AddWeapon(EWeaponType::Rapid);
-	 
-	 
 	 //------------
 	 m_nHp = 8;
 	 m_nHpMax = 20;
@@ -488,11 +561,13 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	
 	if (m_pKeyMgr->Key_Down(KEY_Z))
 	{
-		AddHp(-1);
+		//Weapon add
+		CMsgManager::GetInstance()->Freezingstart(7.5f);
+
 	}
 	if (m_pKeyMgr->Key_Down(KEY_X))
-	{
-		AddHp(1);
+	{ 
+		AddWeapon(EWeaponType::Lazer);
 	}
 	return OBJ_NOENVET;
 }
@@ -500,10 +575,12 @@ UINT CPlayer::Update(const float _fDeltaTime)
 UINT CPlayer::LateUpdate(const float _fDeltaTime)
 {
 
-	//cout << m_fBulletFireTime << endl;
+
 
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 		m_fBulletFireTime += _fDeltaTime;
+	if(m_fHitDelay > m_fHitDelayTime)
+		m_fHitDelayTime += _fDeltaTime;
 
 	//대쉬에서 복귀
 	if (m_eState == EState::Dash && m_fDashDuration < m_fDashDurationTime)
@@ -555,27 +632,33 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	}
 
 	//Dmg 
-	if (L"Monster" == _pGameObject->GetName())
-	{
-		m_eState = EState::Hit;
-		m_fHitDelayTime = 0.f;
-		AddHp(-1);
-	}
-	else if (L"Electric" == _pGameObject->GetName())
-	{
-		m_eState = EState::Hit;
-		m_fHitDelayTime = 0.f;
-		cout << "eeee" << endl;
-		AddHp(-1);
-	}
-	else if (L"Swamp" == _pGameObject->GetName())
-	{
-		m_eState = EState::Hit;
-		m_bIsDeBuff = true;
-		cout << "sssss" << endl;
 
-		m_fHitDelayTime = 0.f;
-		AddHp(-1);
+	if (m_eState != EState::Hit && m_fHitDelay < m_fHitDelayTime)
+	{
+
+		if (L"Monster" == _pGameObject->GetName())
+		{
+			m_eState = EState::Hit;
+			m_fHitDelayTime = 0.f;
+			AddHp(-1);
+			SoundPlay(ESoundID::Hit);
+		}
+		else if (L"Electric" == _pGameObject->GetName())
+		{
+			m_eState = EState::Hit;
+			m_fHitDelayTime = 0.f;
+	
+			AddHp(-1);
+			SoundPlay(ESoundID::Hit);
+		}
+		else if (L"Swamp" == _pGameObject->GetName())
+		{
+			m_eState = EState::Hit;
+			m_bIsDeBuff = true;
+			m_fHitDelayTime = 0.f;
+			AddHp(-1);
+			SoundPlay(ESoundID::Hit);
+		}
 	}
 
 }

@@ -8,6 +8,9 @@ USING(Engine)
 #define MultipleDelay 0.5f
 #define RapidDelay 0.1f
 #define RunCameraYCycle 0.3f
+#define FlameDelay 0.1f
+#define LaserDelay 0.5f
+
 
 enum class EState : _uint
 {
@@ -19,15 +22,24 @@ enum class EState : _uint
 };
 enum class ESoundID :_uint
 {
-	NormalFire,
-	BigFire,
+	NormaBullet,
+	BigBullet,
+	FlameBullet,
+	LaserBullet,
 	Hit,
 	AddHeart,
 	AddCoin,
+	AddAmmo,
+	AddEnergy,
 	Dash,
-
 	Run,
+};
 
+enum class ESectorTileID : _uint
+{
+	Sector1,
+	Sector2,
+	End
 };
 class CPlayer final: public CGameObject
 {
@@ -53,10 +65,12 @@ private:
 	 float				m_fAmmo;
 	 float				m_fAmmoMax;
 	 _uint				m_nAmmoDecrease;
-	 //Test
+
+	 //UI
 	 Image*						m_pAmmobar = nullptr;
 	 class CHeartManager*		m_pHeartManager = nullptr;
 	 class CWeaponHUD*			m_pWeaponHud = nullptr;
+	 class CWeaponHUD* m_pWeaponHUD;
 
 
 	 //State
@@ -80,7 +94,10 @@ private:
 	 float				m_fDashDuration;
 	 float				m_fDashDurationTime;
 
-	 class CWeaponHUD* m_pWeaponHUD;
+	 bool				m_bsfxStep;
+	 wstring			m_sStepsfx; //나중에 타일에 따른 사운드 변화 줄떄 테스트용
+	 ESectorTileID		m_eSector;
+
 private:
 	HRESULT KeyInput(const float _fDeltaTime);
 	HRESULT MoveCheck();
@@ -93,8 +110,8 @@ private:
 	void    ChangeWeapon();// 관련 세팅값 설정
 	void	UpdateLight();
 	void	AddHp(_int _nHp);
-
-	void	SoundPlayer(const ESoundID& _eID);
+	void	TileSound(ESectorTileID _eID);
+	void	SoundPlay(const ESoundID& _eID);
 public:
 	//Getter Setter
 	const float& GetAmmo() { return m_fAmmo; }

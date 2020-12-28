@@ -40,10 +40,11 @@ bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 
 	list<CGameObject*> CollisionList;
 	//충돌시킬 물체 추가 ..
-	//merge로 합칠수 있음 정렬도 한다고 하는데 불안함 
 	CollisionList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CMonster>(_nSceneID);
-	CCollider* pCollider = nullptr;
+	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
+	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID));
 
+	CCollider* pCollider = nullptr;
 	_vector vPickPos = vZero;
 	_vector vResultPos = vZero;
 	bool	bIsPicking = false;
@@ -52,6 +53,9 @@ bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	float fLowDis = -1.f;
 	for (auto& pGameObject : CollisionList)
 	{
+		if(pGameObject->IsEnable() == false)
+			continue;
+
 		pCollider = (CCollider*)pGameObject->GetComponent<CCollider>();
 		if (pCollider->IsRayPicking(vPickPos, fDis, vRayPivot, vRayDirection))
 		{

@@ -52,7 +52,7 @@ HRESULT CElectricTile::Start()
 	m_nMaxFrame = m_pTexturePool->GetTexture(TEXT("Electric")).size();
 	m_fAnimateOneCycleTime = 1.5f;
 
-	m_fAnimateSpeed = (m_nMaxFrame + 1) / 1.f * m_fAnimateOneCycleTime;
+	m_fAnimateSpeed = (m_nMaxFrame) / 1.f * m_fAnimateOneCycleTime;
 	m_pTransform->UpdateTransform();
 
 	return S_OK;

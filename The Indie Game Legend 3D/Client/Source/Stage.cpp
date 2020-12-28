@@ -40,6 +40,8 @@
 #include "NormalBullet.h"
 #include "BigBullet.h"
 #include "TripleBullet.h"
+#include "FlameBullet.h"
+#include "LaserBullet.h"
 
 #pragma region INCLUDE_UI
 #include "AmmoGauge.h"
@@ -121,9 +123,12 @@ HRESULT CStage::Awake()
 	AddPrototype(CSector::Create());
 	AddPrototype(CPlayerSpawn::Create());
 
+	//bullet 
 	AddPrototype(CNormalBullet::Create());
 	AddPrototype(CBigBullet::Create());
 	AddPrototype(CTripleBullet::Create());
+	AddPrototype(CFlameBullet::Create());
+	AddPrototype(CLaserBullet::Create());
 
 	AddPrototype(CBulletSpawn::Create());
 
@@ -131,6 +136,7 @@ HRESULT CStage::Awake()
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+	AddGameObject<CPiramidUnBrake>();
 
 
 	// Test용으로 추가함
@@ -193,8 +199,6 @@ HRESULT CStage::Awake()
 
 HRESULT CStage::Start()
 {
-
-
 	CScene::Start();
 
 	return S_OK;

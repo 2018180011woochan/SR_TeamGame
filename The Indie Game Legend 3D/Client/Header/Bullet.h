@@ -14,9 +14,13 @@ protected:
 	float			m_fLivetime;
 	float			m_fMoveSpeed;
 
-
-	//test			
 	bool			m_bDead ;
+	//
+	float	m_fTextureIndex = 0.f;
+	float	m_fAnimateSpeed = 0.f;
+	float	m_fAnimateOneCycleTime = 0.f; 
+	_uint   m_nMaxTexture;
+
 public:
 	explicit CBullet();
 	explicit CBullet(const CBullet& _rOther);
@@ -33,9 +37,10 @@ public:
 
 	virtual HRESULT Fire() PURE;
 
+	HRESULT Animate(const float _fDeltaTime);
 
 protected:
-	HRESULT IsBillboarding();
+	virtual HRESULT IsBillboarding();
 	virtual void Free() override;
 	virtual void OnCollision(CGameObject * _pGameObject) PURE;
 };

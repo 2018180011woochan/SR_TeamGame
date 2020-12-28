@@ -16,6 +16,11 @@ CBullet::CBullet(const CBullet & _rOther)
 	,m_fMoveSpeed(_rOther.m_fMoveSpeed)
 	, m_vDiraction(_rOther.m_vDiraction)
 	, m_bDead(_rOther.m_bDead)
+	, m_fTextureIndex(_rOther.m_fTextureIndex)
+	, m_fAnimateSpeed(_rOther.m_fAnimateSpeed)
+	, m_fAnimateOneCycleTime(_rOther.m_fAnimateOneCycleTime)
+	, m_nMaxTexture(_rOther.m_nMaxTexture)
+
 {
 }
 
@@ -28,8 +33,10 @@ HRESULT CBullet::InitializePrototype()
 	m_fMoveSpeed = 0;
 	m_bDead = false;
 	m_vDiraction = vZero;
-
-
+	m_fTextureIndex = 0.f;
+	m_fAnimateSpeed = 0.f;
+	m_fAnimateOneCycleTime = 0.f;
+	m_nMaxTexture = 0;
 	return S_OK;
 }
 //레이저는 부모 호출하지말고 box로 바꿔야함
@@ -37,14 +44,12 @@ HRESULT CBullet::Awake()
 {
 	CGameObject::Awake();
 
-	m_pTransform->Set_Scale(_vector(1, 1, 1));
-
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_eRenderID = ERenderID::Alpha;
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("Sphere"), BOUND::BOUNDTYPE::SPHERE);
+	pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
 
 	return S_OK;
 }
@@ -56,6 +61,9 @@ HRESULT CBullet::Start()
 
 UINT CBullet::Update(const float _fDeltaTime)
 {
+	
+
+
 	return OBJ_NOENVET;
 }
 
@@ -83,7 +91,7 @@ HRESULT CBullet::Fire()
 	_vector PickPos;
 	if (CUtilityManger::CrossHairPicking(m_nSceneID, PickPos))
 	{
-
+		cout << "picking" << endl;
 		m_vDiraction = PickPos - pSpawnTrans->Get_WorldPosition();
 		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
 	}
@@ -94,6 +102,16 @@ HRESULT CBullet::Fire()
 	}
 
 	m_pTransform->Set_Position(vBulletPos);
+	return S_OK;
+}
+
+HRESULT CBullet::Animate(const float _fDeltaTime)
+{
+	m_fTextureIndex += _fDeltaTime * m_fAnimateSpeed;
+	if (m_nMaxTexture < m_fTextureIndex)
+	{
+		m_fTextureIndex = 0.f;// 디버깅작업 생각해서 아예 0으로 초기화 
+	}
 	return S_OK;
 }
 

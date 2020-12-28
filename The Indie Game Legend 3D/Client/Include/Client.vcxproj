@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\Explosion.h" />
     <ClInclude Include="..\Header\ExplosionBlue.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
+    <ClInclude Include="..\Header\FlameBullet.h" />
     <ClInclude Include="..\Header\Floor.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="..\Header\IntroBackGround.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\KeyManager.h" />
+    <ClInclude Include="..\Header\LaserBullet.h" />
     <ClInclude Include="..\Header\LavaTile.h" />
     <ClInclude Include="..\Header\LightMananger.h" />
     <ClInclude Include="..\Header\Logo.h" />
@@ -251,6 +253,7 @@
     <ClCompile Include="..\Source\Explosion.cpp" />
     <ClCompile Include="..\Source\ExplosionBlue.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
+    <ClCompile Include="..\Source\FlameBullet.cpp" />
     <ClCompile Include="..\Source\Floor.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
@@ -258,6 +261,7 @@
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
     <ClCompile Include="..\Source\Item.cpp" />
     <ClCompile Include="..\Source\KeyManager.cpp" />
+    <ClCompile Include="..\Source\LaserBullet.cpp" />
     <ClCompile Include="..\Source\LavaTile.cpp" />
     <ClCompile Include="..\Source\LightMananger.cpp" />
     <ClCompile Include="..\Source\Logo.cpp" />

@@ -4,6 +4,9 @@
 USING(Engine)
 
 #define PlayerCameraEye 10.f
+#define CameraYMax 89.f
+#define CameraYMin -89.f
+
 class CPlayerCamera final : public CCamera
 {
 private:
