@@ -1,5 +1,6 @@
 #include "..\Header\Management.h"
 #include "MeshManager.h"
+#include "FontManager.h"
 
 USING(Engine)
 IMPLEMENT_SINGLETON(CManagement)
@@ -40,6 +41,8 @@ void CManagement::ReleaseEngine()
 		PrintLog(L"Warning", L"Failed To Release CTimeManager");
 	if (FAILED(CMeshManager::DeleteInstance()))
 		PrintLog(L"Warning", L"Failed To Release CMeshManager");
+	if (FAILED(CFontManager::DeleteInstance()))
+		PrintLog(L"Warning", L"Failed To Release CFontManager");
 	if (FAILED(CFrameManager::DeleteInstance()))
 		PrintLog(L"Warning", L"Failed To Release CFrameManager");
 	if (CManagement::DeleteInstance())

@@ -552,6 +552,9 @@
     <ClInclude Include="..\Header\MiniMapPartial.h">
       <Filter>02.GameObject\04.UI\10.MiniMap\02.MiniMap\00.Partial</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\GemText.h">
+      <Filter>02.GameObject\04.UI\08.Gem\01.Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -778,6 +781,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\MiniMapPartial.cpp">
       <Filter>02.GameObject\04.UI\10.MiniMap\02.MiniMap\00.Partial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GemText.cpp">
+      <Filter>02.GameObject\04.UI\08.Gem\01.Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

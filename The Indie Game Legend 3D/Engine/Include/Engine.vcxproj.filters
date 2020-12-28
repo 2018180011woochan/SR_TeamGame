@@ -109,6 +109,15 @@
     <Filter Include="01.Utility\05.Component\07.Text">
       <UniqueIdentifier>{9641240f-02bb-4b1c-bf22-da0cb879c2ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\09.Font\00.Base">
+      <UniqueIdentifier>{8ccfee8a-2f6c-47b5-8362-33ef4b7b62b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\09.Font\01.Manager">
+      <UniqueIdentifier>{58e211b2-d53c-42fb-a099-58e7b663f19c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\09.Font\02.Character">
+      <UniqueIdentifier>{f9a22066-f7f7-4f41-9056-81d0cd964e83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineInclude.h">
@@ -210,9 +219,6 @@
     <ClInclude Include="..\Header\EngineExtern.h">
       <Filter>99.Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Font.h">
-      <Filter>01.Utility\09.Font</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Gizmo.h">
       <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
     </ClInclude>
@@ -236,6 +242,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\Text.h">
       <Filter>01.Utility\05.Component\07.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FontManager.h">
+      <Filter>01.Utility\09.Font\01.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Font.h">
+      <Filter>01.Utility\09.Font\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Character.h">
+      <Filter>01.Utility\09.Font\02.Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -299,9 +314,6 @@
     <ClCompile Include="..\Source\Image.cpp">
       <Filter>01.Utility\05.Component\03.Image</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Font.cpp">
-      <Filter>01.Utility\09.Font</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Gizmo.cpp">
       <Filter>01.Utility\04.GameObject\03.Gizmo</Filter>
     </ClCompile>
@@ -322,6 +334,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Text.cpp">
       <Filter>01.Utility\05.Component\07.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Font.cpp">
+      <Filter>01.Utility\09.Font\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FontManager.cpp">
+      <Filter>01.Utility\09.Font\01.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Character.cpp">
+      <Filter>01.Utility\09.Font\02.Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

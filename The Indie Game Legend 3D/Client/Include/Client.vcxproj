@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\FactoryManager.h" />
     <ClInclude Include="..\Header\Floor.h" />
     <ClInclude Include="..\Header\GemIcon.h" />
+    <ClInclude Include="..\Header\GemText.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="..\Source\FactoryManager.cpp" />
     <ClCompile Include="..\Source\Floor.cpp" />
     <ClCompile Include="..\Source\GemIcon.cpp" />
+    <ClCompile Include="..\Source\GemText.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />

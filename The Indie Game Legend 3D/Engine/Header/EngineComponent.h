@@ -9,6 +9,7 @@
 #include "MeshRenderer.h"
 #include "Image.h"
 #include "Collider.h"
+#include "Text.h"
 #pragma endregion
 
 

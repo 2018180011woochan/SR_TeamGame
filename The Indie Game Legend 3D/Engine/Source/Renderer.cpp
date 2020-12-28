@@ -149,6 +149,12 @@ HRESULT CRenderer::RenderUI()
 	SafeRelease(pBackBuffer);
 	//화면 정보 기반으로 직교 투영 행렬 생성 및 장치에 전달.
 	D3DXMatrixOrthoLH(&matOrtho, float(tSurfaceDesc.Width), float(tSurfaceDesc.Height), 0.f, 1.f);
+
+	//D3DXVECTOR3 vOffset = D3DXVECTOR3(0.5f, 0.f, 0.f);
+	//D3DXMATRIX matOffset;
+	//D3DXMatrixTranslation(&matOffset, vOffset.x, vOffset.y, vOffset.z);
+	//matOrtho = matOffset * matOrtho;
+
 	m_pDevice->SetTransform(D3DTS_PROJECTION, &matOrtho);
 
 	for (auto& pObject : m_GameObjects[(_int)ERenderID::UI])

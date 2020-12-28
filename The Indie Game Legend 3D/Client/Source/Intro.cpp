@@ -4,6 +4,9 @@
 #include "Star.h"
 #include "Logo.h"
 #include "Stage.h"
+
+#include "GemText.h"
+
 CIntro::CIntro()
 	:CScene(GetTypeHashCode<CIntro>())
 {
@@ -65,6 +68,9 @@ HRESULT CIntro::Awake()
 	((CTransform*)pGameObject->GetComponent<CTransform>())->Set_Position(D3DXVECTOR3(495.f, -320.f, 0.f));
 	
 	AddGameObject<CLogo>();
+
+	AddPrototype(CGemText::Create());
+	AddGameObject<CGemText>();
 	CScene::Awake();
 	return S_OK;
 }

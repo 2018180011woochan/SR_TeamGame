@@ -69,9 +69,9 @@ UINT CLogo::LateUpdate(const float _fDeltaTime)
 
 HRESULT CLogo::Render()
 {
-	CGameObject::Render();
-	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
-	m_pImage->Render();
+	//CGameObject::Render();
+	//m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
+	//m_pImage->Render();
 	return S_OK;
 }
 

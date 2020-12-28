@@ -169,12 +169,14 @@
   <ItemGroup>
     <ClInclude Include="..\Header\Base.h" />
     <ClInclude Include="..\Header\Camera.h" />
+    <ClInclude Include="..\Header\Character.h" />
     <ClInclude Include="..\Header\Collider.h" />
     <ClInclude Include="..\Header\CollisionManager.h" />
     <ClInclude Include="..\Header\EngineComponent.h" />
     <ClInclude Include="..\Header\EngineExtern.h" />
     <ClInclude Include="..\Header\FileInfo.h" />
     <ClInclude Include="..\Header\Font.h" />
+    <ClInclude Include="..\Header\FontManager.h" />
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\GameObject.hpp" />
     <ClInclude Include="..\Header\GameObjectManager.hpp" />
@@ -211,11 +213,13 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Base.cpp" />
     <ClCompile Include="..\Source\Camera.cpp" />
+    <ClCompile Include="..\Source\Character.cpp" />
     <ClCompile Include="..\Source\Collider.cpp" />
     <ClCompile Include="..\Source\CollisionManager.cpp" />
     <ClCompile Include="..\Source\Component.cpp" />
     <ClCompile Include="..\Source\FileInfo.cpp" />
     <ClCompile Include="..\Source\Font.cpp" />
+    <ClCompile Include="..\Source\FontManager.cpp" />
     <ClCompile Include="..\Source\FrameManager.cpp" />
     <ClCompile Include="..\Source\GameObject.cpp" />
     <ClCompile Include="..\Source\GameObjectManager.cpp" />

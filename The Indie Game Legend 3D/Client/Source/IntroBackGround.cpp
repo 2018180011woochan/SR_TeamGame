@@ -77,8 +77,9 @@ UINT CIntroBackGround::LateUpdate(const float _fDeltaTime)
 HRESULT CIntroBackGround::Render()
 {
 	CGameObject::Render();
-	if (nullptr != m_pImage)
-		m_pImage->Render();
+	//m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
+	//if (nullptr != m_pImage)
+	//	m_pImage->Render();
 	return S_OK;
 }
 

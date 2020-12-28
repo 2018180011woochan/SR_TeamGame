@@ -64,7 +64,7 @@ HRESULT CRenderTexture::Initialize(const UINT _nCX, const UINT _nCY)
 	ZeroMemory(&tOrigZBufferDesc, sizeof(D3DSURFACE_DESC));
 	if (FAILED(m_pOrigZBuffer->GetDesc(&tOrigZBufferDesc)))
 		return E_FAIL;
-
+	//BackBuffer Æ÷¸Ë Á¤º¸ ¹ÙÅÁÀ¸·Î ±íÀÌ ¹öÆÛ Surface ¸¸µë.
 	if (FAILED(m_pDevice->CreateDepthStencilSurface(_nCX, _nCY, tOrigZBufferDesc.Format, D3DMULTISAMPLE_NONE, 0, TRUE, &m_pZBuffer, NULL)))
 		return E_FAIL;
 	return S_OK;
