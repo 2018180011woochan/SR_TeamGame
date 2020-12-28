@@ -71,9 +71,12 @@ HRESULT CTreeBoss::Start()
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
-	m_pCollider->m_bIsRigid = true;
+	m_pCollider->m_bIsRigid = false;
 
 	m_pTransform->Add_Position(_vector(0, 10, 0));
+
+	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
+
 
 	return S_OK;
 }

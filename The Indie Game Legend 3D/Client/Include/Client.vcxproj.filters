@@ -328,6 +328,22 @@
     <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\04.Laser">
       <UniqueIdentifier>{946a32fe-7d51-49ae-9004-6f168cb592a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody1">
+      <UniqueIdentifier>{35a08f38-ddaa-4fa5-af70-df2e67f074e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody2">
+      <UniqueIdentifier>{73ca9bea-c98f-4649-ab7a-a7bd4e23fe3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody3">
+      <UniqueIdentifier>{73a7bf48-27f6-4e4c-a70e-b03eee50fd51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody4">
+      <UniqueIdentifier>{7b31d9fe-9812-42a6-b51a-e8c8e2abc77c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail">
+      <UniqueIdentifier>{db709d0f-8952-4af6-b6eb-23c6ba6c0f50}</UniqueIdentifier>
+
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -513,6 +529,9 @@
     <ClInclude Include="..\Header\WormBossBody.h">
       <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PickingManger.h">
+      <Filter>97.Manager\97.PeekingManager</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Trigger.h">
       <Filter>02.GameObject\99.Trigger\00.Base</Filter>
     </ClInclude>
@@ -590,6 +609,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\LaserBullet.h">
       <Filter>02.GameObject\04.Bullet\01.PlayerBullet\04.Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody2.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody3.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody4.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossTail.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -758,6 +792,9 @@
     <ClCompile Include="..\Source\WormBossBody.cpp">
       <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\PickingManger.cpp">
+      <Filter>97.Manager\97.PeekingManager</Filter>
+    </ClCompile>
     <ClCompile Include="..\Source\Trigger.cpp">
       <Filter>02.GameObject\99.Trigger\00.Base</Filter>
     </ClCompile>
@@ -835,6 +872,21 @@
     </ClCompile>
     <ClCompile Include="..\Source\LaserBullet.cpp">
       <Filter>02.GameObject\04.Bullet\01.PlayerBullet\04.Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody2.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody3.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody4.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossTail.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,10 @@
 #include "RootAttack.h"
 #include "WormBoss.h"
 #include "WormBossBody.h"
+#include "WormBossBody2.h"
+#include "WormBossBody3.h"
+#include "WormBossBody4.h"
+#include "WormBossTail.h"
 #pragma endregion
 
 #pragma region EFFECT
@@ -122,6 +126,10 @@ HRESULT CStage::Awake()
 	AddPrototype(CRootAttack::Create());
 	AddPrototype(CWormBoss::Create());
 	AddPrototype(CWormBossBody::Create());
+	AddPrototype(CWormBossBody2::Create());
+	AddPrototype(CWormBossBody3::Create());
+	AddPrototype(CWormBossBody4::Create());
+	AddPrototype(CWormBossTail::Create());
 
 	AddPrototype(CSandTile::Create());
 	AddPrototype(CPiramid::Create());
@@ -174,12 +182,11 @@ HRESULT CStage::Awake()
 	//AddGameObject<CDoomBird>();
 
 	//AddGameObject<CTreeBoss>();
-	//AddGameObject<CWormBoss>();
-	//AddGameObject<CWormBossBody>();
+	AddGameObject<CWormBoss>();
 
 	//AddGameObject<CTreeBoss>();
 
-	AddGameObject<CPhubans>();
+	//AddGameObject<CPhubans>();
 
 	//컬링 테스트 
 	
@@ -218,9 +225,9 @@ HRESULT CStage::Awake()
 	CSoundMgr::GetInstance()->StopAll();
 
 
-	CFactoryManager::GetInstance()->LoadDataFile(L"s1");
-	CFactoryManager::GetInstance()->LoadScene(this);
-	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
+	//CFactoryManager::GetInstance()->LoadDataFile(L"s1");
+	//CFactoryManager::GetInstance()->LoadScene(this);
+	//CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
 
 	CScene::Awake();
 	

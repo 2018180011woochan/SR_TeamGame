@@ -84,6 +84,7 @@ HRESULT CRenderer::RenderAlpha()
 	m_pDevice->SetRenderState(D3DRS_ALPHAREF, 1); /*알파기준값*/
 	m_pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
+
 	for (auto& pObject : m_GameObjects[(_int)ERenderID::Alpha])
 	{
 		if (FAILED(pObject->Render()))

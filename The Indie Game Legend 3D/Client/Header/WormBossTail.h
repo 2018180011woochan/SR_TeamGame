@@ -1,15 +1,14 @@
 #pragma once
-#ifndef __WORMBOSSBODY_H__
+#ifndef __WORMBOSSTAIL_H__
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CWormBossBody2;
-class CWormBossBody final : public CMonster
+class CWormBossTail final : public CMonster
 {
 private:
-	explicit CWormBossBody();
-	explicit CWormBossBody(const CWormBossBody& other);
-	virtual ~CWormBossBody() = default;
+	explicit CWormBossTail();
+	explicit CWormBossTail(const CWormBossTail& other);
+	virtual ~CWormBossTail() = default;
 
 	enum State { LEFT, RIGHT, UP, DOWN, IDLE };
 	enum Pos {UPPOS, DOWNPOS, SAME};
@@ -33,7 +32,7 @@ public:
 
 public:
 	virtual CGameObject * Clone() override;
-	static CWormBossBody* Create();
+	static CWormBossTail* Create();
 private:
 	virtual void Free() override;
 
@@ -41,8 +40,6 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 	CTransform*	   m_pWormBossTransform;
-
-	CWormBossBody2* pWormBody2;
 
 	float		   m_fFrameSpeed;
 	float		   m_fFrameDeltaTime;
@@ -68,6 +65,6 @@ private:
 	UINT nBodyIndex;
 };
 
-#define __WORMBOSSBODY_H__
-#endif // !__WORMBOSSBODY_H__
+#define __WORMBOSSTAIL_H__
+#endif // !__WORMBOSSTAIL_H__
 

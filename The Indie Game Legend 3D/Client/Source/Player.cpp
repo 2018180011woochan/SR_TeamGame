@@ -535,7 +535,13 @@ HRESULT CPlayer::Start()
 // 	 m_pTransform->Set_Position(vPosition);
 // 	 m_nTag = pSpawn->GetTage();
 
+
 	// CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
+
+	m_pTransform->Set_Position(D3DXVECTOR3(0.f,2.5f,0.f));
+
+	// CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
+
 	//Reference Setting
 
 	 //weapon Setting
