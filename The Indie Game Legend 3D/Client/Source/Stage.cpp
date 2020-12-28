@@ -67,6 +67,8 @@
 #include "MiniMapPartial.h"
 #include "BossHPFrame.h"
 #include "BossText.h"
+#include "BossHPBar.h"
+#include "BossHP.h"
 #pragma endregion
 
 #pragma region Collider
@@ -322,6 +324,8 @@ HRESULT CStage::AddUIObject()
 
 	AddPrototype(CBossHPFrame::Create());
 	AddPrototype(CBossText::Create());
+	AddPrototype(CBossHPBar::Create());
+	AddPrototype(CBossHP::Create());
 #pragma endregion
 
 #pragma region GAMEOBJECT
@@ -354,7 +358,8 @@ HRESULT CStage::AddUIObject()
 
 	AddGameObject<CBossHPFrame>();
 	AddGameObject<CBossText>();
-
+	AddGameObject<CBossHPBar>();
+	AddGameObject<CBossHP>();
 #pragma endregion
 	return S_OK;
 }

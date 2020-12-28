@@ -131,7 +131,20 @@ bool CGameObject::IsEnable()
 	return m_bEnable;
 }
 
+void CGameObject::OnEnable()
+{
+}
+
+void CGameObject::OnDisable()
+{
+}
+
 void CGameObject::SetEnable(const bool _bEnable)
 {
 	m_bEnable = _bEnable;
+
+	if (true == m_bEnable)
+		OnEnable();
+	else
+		OnDisable();
 }

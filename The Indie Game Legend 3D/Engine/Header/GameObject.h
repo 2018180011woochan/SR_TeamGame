@@ -63,6 +63,10 @@ public:
 	void					SetSceneID(const UINT _nSceneID);
 
 	bool					IsEnable();
+
+	virtual void			OnEnable();
+	virtual void			OnDisable();
+
 	void					SetEnable(const bool _bEnable);
 };
 END

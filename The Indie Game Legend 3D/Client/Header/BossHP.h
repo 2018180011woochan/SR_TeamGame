@@ -1,22 +1,24 @@
 #pragma once
-#ifndef __BOSS_HP_BAR_H__
+#ifndef __BOSS_HP_H__
 #include "GameObject.h"
 USING(Engine)
-class CTexturePool;
-class CBossHPBar final : public CGameObject
+class CBossHPFrame;
+class CBossHPBar;
+class CBossText;
+class CBossHP final : public CGameObject
 {
 private:
-	Image*			m_pImage;
-	CTexturePool*	m_pTexturePool;
-	TSTRING			m_sTextureKey;
+	CBossHPFrame*	m_pBossHpFrame;
+	CBossHPBar*		m_pBossHpBar;
+	CBossText*		m_pBossText;
 private:
-	explicit CBossHPBar();
-	explicit CBossHPBar(const CBossHPBar& _rOther);
-	virtual ~CBossHPBar() = default;
+	explicit CBossHP();
+	explicit CBossHP(const CBossHP& _rOther);
+	virtual ~CBossHP() = default;
 	// CBase을(를) 통해 상속됨
-	virtual void Free() override;
+	virtual void			Free() override;
 public:
-	static CBossHPBar* Create();
+	static CBossHP* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 public:
@@ -28,9 +30,11 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnEnable() override;
+	virtual void OnDisable() override;
 public:
 	//매개변수 값으로 현재 체력 / 최대 체력 값 넘겨주면 됨.
 	void SetHPBar(float _fRatio);
 };
-#define __BOSS_HP_BAR_H__
-#endif // !__BOSS_HP_BAR_H__
+#define __BOSS_HP_H__
+#endif // !__BOSS_HP_H__

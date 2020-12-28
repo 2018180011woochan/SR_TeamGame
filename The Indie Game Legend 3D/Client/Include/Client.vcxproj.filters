@@ -349,9 +349,6 @@
     <Filter Include="02.GameObject\04.UI\11.BossHP">
       <UniqueIdentifier>{6d39190d-7fbc-41f4-980e-da64368eff84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\04.UI\11.BossHP\00.Base">
-      <UniqueIdentifier>{5f30ab18-5f2a-42d8-bb5f-11143f518d97}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\04.UI\11.BossHP\01.Frame">
       <UniqueIdentifier>{299e02a6-383f-4971-8a69-f5efd05639d6}</UniqueIdentifier>
     </Filter>
@@ -360,6 +357,9 @@
     </Filter>
     <Filter Include="02.GameObject\04.UI\11.BossHP\03.Text">
       <UniqueIdentifier>{edf22b5f-0f40-4e2a-87e1-ed510d93ab65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\11.BossHP\00.Base">
+      <UniqueIdentifier>{5f30ab18-5f2a-42d8-bb5f-11143f518d97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -651,6 +651,9 @@
     <ClInclude Include="..\Header\BossHPBar.h">
       <Filter>02.GameObject\04.UI\11.BossHP\02.Bar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BossHP.h">
+      <Filter>02.GameObject\04.UI\11.BossHP\00.Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -922,6 +925,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\BossHPBar.cpp">
       <Filter>02.GameObject\04.UI\11.BossHP\02.Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BossHP.cpp">
+      <Filter>02.GameObject\04.UI\11.BossHP\00.Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

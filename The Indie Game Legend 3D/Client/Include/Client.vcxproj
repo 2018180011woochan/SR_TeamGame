@@ -161,6 +161,7 @@
     <ClInclude Include="..\Header\AmmoGauge.h" />
     <ClInclude Include="..\Header\BigBullet.h" />
     <ClInclude Include="..\Header\Blood.h" />
+    <ClInclude Include="..\Header\BossHP.h" />
     <ClInclude Include="..\Header\BossHPBar.h" />
     <ClInclude Include="..\Header\BossHPFrame.h" />
     <ClInclude Include="..\Header\BossText.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
     <ClCompile Include="..\Source\BigBullet.cpp" />
     <ClCompile Include="..\Source\Blood.cpp" />
+    <ClCompile Include="..\Source\BossHP.cpp" />
     <ClCompile Include="..\Source\BossHPBar.cpp" />
     <ClCompile Include="..\Source\BossHPFrame.cpp" />
     <ClCompile Include="..\Source\BossText.cpp" />
