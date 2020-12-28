@@ -176,6 +176,7 @@
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\CrossHair.h" />
     <ClInclude Include="..\Header\Cryder.h" />
+    <ClInclude Include="..\Header\DialogFrame.h" />
     <ClInclude Include="..\Header\DiscIcon.h" />
     <ClInclude Include="..\Header\DiscText.h" />
     <ClInclude Include="..\Header\DoomBird.h" />
@@ -205,9 +206,13 @@
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
     <ClInclude Include="..\Header\NormalBullet.h" />
+    <ClInclude Include="..\Header\NPCDialog.h" />
+    <ClInclude Include="..\Header\NPCPortrait.h" />
+    <ClInclude Include="..\Header\NPCText.h" />
     <ClInclude Include="..\Header\NubBoss.h" />
     <ClInclude Include="..\Header\Obstacle.h" />
     <ClInclude Include="..\Header\Phubans.h" />
+    <ClInclude Include="..\Header\PlayerPortrait.h" />
     <ClInclude Include="..\Header\TripleBullet.h" />
     <ClInclude Include="..\Header\UtilityManger.h" />
     <ClInclude Include="..\Header\Piramid.h" />
@@ -269,6 +274,7 @@
     <ClCompile Include="..\Source\CardinalPoint.cpp" />
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
+    <ClCompile Include="..\Source\DialogFrame.cpp" />
     <ClCompile Include="..\Source\DiscIcon.cpp" />
     <ClCompile Include="..\Source\DiscText.cpp" />
     <ClCompile Include="..\Source\DoomBird.cpp" />
@@ -298,9 +304,13 @@
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
     <ClCompile Include="..\Source\NormalBullet.cpp" />
+    <ClCompile Include="..\Source\NPCDialog.cpp" />
+    <ClCompile Include="..\Source\NPCPortrait.cpp" />
+    <ClCompile Include="..\Source\NPCText.cpp" />
     <ClCompile Include="..\Source\NubBoss.cpp" />
     <ClCompile Include="..\Source\Obstacle.cpp" />
     <ClCompile Include="..\Source\Phubans.cpp" />
+    <ClCompile Include="..\Source\PlayerPortrait.cpp" />
     <ClCompile Include="..\Source\TripleBullet.cpp" />
     <ClCompile Include="..\Source\UtilityManger.cpp" />
     <ClCompile Include="..\Source\Piramid.cpp" />

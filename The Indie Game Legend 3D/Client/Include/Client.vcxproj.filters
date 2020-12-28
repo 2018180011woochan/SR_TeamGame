@@ -361,6 +361,39 @@
     <Filter Include="02.GameObject\04.UI\11.BossHP\00.Base">
       <UniqueIdentifier>{5f30ab18-5f2a-42d8-bb5f-11143f518d97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog">
+      <UniqueIdentifier>{82f8fbab-62c9-4701-86b9-783836153330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\01.Frame">
+      <UniqueIdentifier>{7a0d8b29-a8ae-4dab-8e96-500df1cfcc44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\02.Portrait">
+      <UniqueIdentifier>{4063cb51-2ccf-43c4-8362-58ae3af70ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\02.Portrait\00.Player">
+      <UniqueIdentifier>{710f3f34-b0c7-4cf6-a207-01d1e5c97121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\02.Portrait\01.NPC">
+      <UniqueIdentifier>{05f007da-b46e-4bdf-bd4e-dcce8eca6011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\03.Text">
+      <UniqueIdentifier>{01ab6949-37a2-4d3e-883c-0676b2a53c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\03.Text\01.NPC">
+      <UniqueIdentifier>{c031718e-2f71-4c6b-a1af-5275166ec574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\03.Text\00.Player">
+      <UniqueIdentifier>{23a7a3e3-9c97-42f6-af95-76fa84e432d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\00.Base">
+      <UniqueIdentifier>{ccb7aadd-b80e-41a7-9cf2-8b0db299629b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\00.Base\00.Player">
+      <UniqueIdentifier>{babf88ac-3b4e-4304-87cc-1036a582793d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\00.Base\01.NPC">
+      <UniqueIdentifier>{d8e95cb6-cdc7-422b-9c07-e3cd1d9d49f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -654,6 +687,21 @@
     <ClInclude Include="..\Header\BossHP.h">
       <Filter>02.GameObject\04.UI\11.BossHP\00.Base</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DialogFrame.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\01.Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\NPCPortrait.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\01.NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerPortrait.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\NPCText.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\03.Text\01.NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\NPCDialog.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\00.Base\01.NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -928,6 +976,21 @@
     </ClCompile>
     <ClCompile Include="..\Source\BossHP.cpp">
       <Filter>02.GameObject\04.UI\11.BossHP\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\DialogFrame.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\01.Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\NPCPortrait.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\01.NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PlayerPortrait.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\NPCText.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\03.Text\01.NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\NPCDialog.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\00.Base\01.NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

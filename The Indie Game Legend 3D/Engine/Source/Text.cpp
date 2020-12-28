@@ -136,6 +136,8 @@ HRESULT CText::SetText(const TSTRING & _sText)
 {
 	if (_sText == m_sText)
 		return S_OK;
+	if (_sText[0] == NULL)
+		return S_OK;
 
 	m_sText = _sText;
 

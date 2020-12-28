@@ -69,6 +69,11 @@
 #include "BossText.h"
 #include "BossHPBar.h"
 #include "BossHP.h"
+#include "DialogFrame.h"
+#include "NPCPortrait.h"
+#include "PlayerPortrait.h"
+#include "NPCText.h"
+#include "NPCDialog.h"
 #pragma endregion
 
 #pragma region Collider
@@ -326,6 +331,12 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CBossText::Create());
 	AddPrototype(CBossHPBar::Create());
 	AddPrototype(CBossHP::Create());
+
+	AddPrototype(CDialogFrame::Create());
+	AddPrototype(CNPCPortrait::Create());
+	AddPrototype(CPlayerPortrait::Create());
+	AddPrototype(CNPCText::Create());
+	AddPrototype(CNPCDialog::Create());
 #pragma endregion
 
 #pragma region GAMEOBJECT
@@ -356,10 +367,16 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CMiniMapPartial>();
 	AddGameObject<CMiniMapFrame>();
 
-	AddGameObject<CBossHPFrame>();
-	AddGameObject<CBossText>();
-	AddGameObject<CBossHPBar>();
-	AddGameObject<CBossHP>();
+	AddGameObject<CBossHPFrame>()->SetEnable(false);
+	AddGameObject<CBossText>()->SetEnable(false);
+	AddGameObject<CBossHPBar>()->SetEnable(false);
+	AddGameObject<CBossHP>()->SetEnable(false);
+
+	AddGameObject<CDialogFrame>()->SetEnable(true);
+	AddGameObject<CNPCPortrait>()->SetEnable(true);
+	AddGameObject<CPlayerPortrait>()->SetEnable(false);
+	AddGameObject<CNPCText>()->SetEnable(true);
+	AddGameObject<CNPCDialog>()->SetEnable(true);
 #pragma endregion
 	return S_OK;
 }
