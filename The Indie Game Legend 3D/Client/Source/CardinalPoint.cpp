@@ -74,15 +74,6 @@ HRESULT CCardinalPoint::Start()
 UINT CCardinalPoint::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
-
-	static D3DXVECTOR2 vOffset = D3DXVECTOR2(0.f, 0.f);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-	{
-		vOffset.x += 0.1f;
-		m_pImage->SetOffset(vOffset);
-	}
-
 	return 0;
 }
 

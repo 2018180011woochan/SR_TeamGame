@@ -1,21 +1,19 @@
 #pragma once
-#ifndef __GEM_TEXT_H__
+#ifndef __BOSS_TEXT_H__
 #include "GameObject.h"
 USING(Engine)
-class CGemText final : public CGameObject
+class CBossText final : public CGameObject
 {
 private:
-	CText*	m_pText;
-
-	UINT	m_nCount;
+	CText* m_pText;
 private:
-	explicit CGemText();
-	explicit CGemText(const CGemText& _rOther);
-	virtual ~CGemText() = default;
+	explicit CBossText();
+	explicit CBossText(const CBossText& _rOther);
+	virtual ~CBossText() = default;
 	// CBase을(를) 통해 상속됨
 	virtual void Free() override;
 public:
-	static CGemText* Create();
+	static CBossText* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 public:
@@ -26,9 +24,6 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
-
-public:
-	void SetCount(const UINT _nCount);
 };
-#define __GEM_TEXT_H__
-#endif // !__GEM_TEXT_H__
+#define __BOSS_TEXT_H__
+#endif // !__BOSS_TEXT_H__

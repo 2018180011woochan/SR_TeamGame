@@ -5,9 +5,6 @@
 #include "Logo.h"
 #include "Stage.h"
 
-
-#include "GemText.h"
-
 #include "SoundMgr.h"
 
 CIntro::CIntro()
@@ -72,8 +69,6 @@ HRESULT CIntro::Awake()
 	
 	AddGameObject<CLogo>();
 
-	AddPrototype(CGemText::Create());
-	AddGameObject<CGemText>();
 	CScene::Awake();
 	return S_OK;
 }

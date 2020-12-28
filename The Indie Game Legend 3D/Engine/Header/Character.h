@@ -24,6 +24,7 @@ public:
 
 public:
 	UINT	GetWidth();
+	UINT	GetHeight();
 };
 END
 #define __CHARACTER_H__

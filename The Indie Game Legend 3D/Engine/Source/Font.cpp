@@ -199,16 +199,16 @@ HRESULT CFont::LoadFont(const TSTRING & _sFont)
 		//pVertices[2].Position = D3DXVECTOR3(float(nWidth * 0.5f) - 0.5f, float(nHeight*0.5f) - 0.5f, 0.f);
 		//pVertices[3].Position = D3DXVECTOR3(float(nWidth * 0.5f) - 0.5f, -float(nHeight*0.5f) - 0.5f, 0.f);
 
-		pVertices[0].UV = D3DXVECTOR2(float(nStartX) / float(nTextureWidth), float(nStartY + nHeight) / float(nTextureHeight));
-		pVertices[1].UV = D3DXVECTOR2(float(nStartX) / float(nTextureWidth), float(nStartY) / float(nTextureHeight));
-		pVertices[2].UV = D3DXVECTOR2(float(nStartX + nWidth) / float(nTextureWidth), float(nStartY) / float(nTextureHeight));
-		pVertices[3].UV = D3DXVECTOR2(float(nStartX + nWidth) / float(nTextureWidth), float(nStartY + nHeight) / float(nTextureHeight));
+		//pVertices[0].UV = D3DXVECTOR2(float(nStartX) / float(nTextureWidth), float(nStartY + nHeight) / float(nTextureHeight));
+		//pVertices[1].UV = D3DXVECTOR2(float(nStartX) / float(nTextureWidth), float(nStartY) / float(nTextureHeight));
+		//pVertices[2].UV = D3DXVECTOR2(float(nStartX + nWidth) / float(nTextureWidth), float(nStartY) / float(nTextureHeight));
+		//pVertices[3].UV = D3DXVECTOR2(float(nStartX + nWidth) / float(nTextureWidth), float(nStartY + nHeight) / float(nTextureHeight));
 
 
-		//pVertices[0].UV = D3DXVECTOR2(float(nStartX + 0.5f) / float(nTextureWidth), float(nStartY + nHeight + 0.5f) / float(nTextureHeight));
-		//pVertices[1].UV = D3DXVECTOR2(float(nStartX + 0.5f) / float(nTextureWidth), float(nStartY + 0.5f) / float(nTextureHeight));
-		//pVertices[2].UV = D3DXVECTOR2(float(nStartX + nWidth + 0.5f) / float(nTextureWidth), float(nStartY + 0.5f) / float(nTextureHeight));
-		//pVertices[3].UV = D3DXVECTOR2(float(nStartX + nWidth + 0.5f) / float(nTextureWidth), float(nStartY + nHeight + 0.5f) / float(nTextureHeight));
+		pVertices[0].UV = D3DXVECTOR2(float(nStartX + 0.5f) / float(nTextureWidth), float(nStartY + nHeight + 0.5f) / float(nTextureHeight));
+		pVertices[1].UV = D3DXVECTOR2(float(nStartX + 0.5f) / float(nTextureWidth), float(nStartY - 0.5f) / float(nTextureHeight));
+		pVertices[2].UV = D3DXVECTOR2(float(nStartX + nWidth - 0.5f) / float(nTextureWidth), float(nStartY - 0.5f) / float(nTextureHeight));
+		pVertices[3].UV = D3DXVECTOR2(float(nStartX + nWidth - 0.5f) / float(nTextureWidth), float(nStartY + nHeight + 0.5f) / float(nTextureHeight));
 
 		//pVertices[0].UV = D3DXVECTOR2(float(nStartX) / float(nTextureWidth) + 0.5f/ nTextureWidth, float(nStartY + nHeight) / float(nTextureHeight) + 0.5f/ nTextureHeight);
 		//pVertices[1].UV = D3DXVECTOR2(float(nStartX) / float(nTextureWidth) + 0.5f / nTextureWidth, float(nStartY) / float(nTextureHeight) + 0.5f / nTextureHeight);

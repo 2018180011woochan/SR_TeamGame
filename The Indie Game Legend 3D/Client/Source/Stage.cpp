@@ -58,11 +58,15 @@
 #include "Heart.h"
 #include "CrossHair.h"
 #include "GemIcon.h"
+#include "GemText.h"
 #include "DiscIcon.h"
+#include "DiscText.h"
 #include "MiniMapFrame.h"
 #include "CardinalPoint.h"
 #include "MiniMapRenderer.h"
 #include "MiniMapPartial.h"
+#include "BossHPFrame.h"
+#include "BossText.h"
 #pragma endregion
 
 #pragma region Collider
@@ -294,25 +298,40 @@ HRESULT CStage::AddMonsterLayer(const wstring & LayerTag)
 
 HRESULT CStage::AddUIObject()
 {
+#pragma region PROTOTYPE
+
 	AddPrototype(CAmmoGauge::Create());
 	AddPrototype(CAmmoFrame::Create());
+	AddPrototype(CWeaponHUD::Create());
+
 	AddPrototype(CHeart::Create());
 	AddPrototype(CHeartManager::Create());
+
 	AddPrototype(CCrossHair::Create());
-	AddPrototype(CWeaponHUD::Create());
+
 	AddPrototype(CGemIcon::Create());
+	AddPrototype(CGemText::Create());
+
 	AddPrototype(CDiscIcon::Create());
+	AddPrototype(CDiscText::Create());
+
 	AddPrototype(CMiniMapFrame::Create());
 	AddPrototype(CMiniMapRenderer::Create());
 	AddPrototype(CMiniMapPartial::Create());
 	AddPrototype(CCardinalPoint::Create());
 
+	AddPrototype(CBossHPFrame::Create());
+	AddPrototype(CBossText::Create());
+#pragma endregion
+
+#pragma region GAMEOBJECT
+
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
+	AddGameObject<CWeaponHUD>();
 
 	AddGameObject<CCrossHair>();
 
-	AddGameObject<CWeaponHUD>();
 
 	AddGameObject< CHeart>();
 	AddGameObject< CHeart>();
@@ -324,11 +343,19 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CHeartManager>();
 
 	AddGameObject<CGemIcon>();
+	AddGameObject<CGemText>();
 	AddGameObject<CDiscIcon>();
+	AddGameObject<CDiscText>();
+
 	AddGameObject<CCardinalPoint>();
 	AddGameObject<CMiniMapRenderer>();
 	AddGameObject<CMiniMapPartial>();
 	AddGameObject<CMiniMapFrame>();
+
+	AddGameObject<CBossHPFrame>();
+	AddGameObject<CBossText>();
+
+#pragma endregion
 	return S_OK;
 }
 

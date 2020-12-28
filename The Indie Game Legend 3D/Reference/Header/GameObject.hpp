@@ -38,7 +38,7 @@ inline CComponent * CGameObject::AddComponent()
 	if (m_Components.end() != iter)
 	{
 		TCHAR szBuf[128] = TEXT("");
-   		_stprintf_s(szBuf, 128, TEXT("Failed to add component. %s is already exist."), sTypeName.c_str());
+		_stprintf_s(szBuf, 128, TEXT("Failed to add component. %s is already exist."), sTypeName.c_str());
 		PrintLog(TEXT("Warning"), szBuf);
 		return iter->second;
 	}

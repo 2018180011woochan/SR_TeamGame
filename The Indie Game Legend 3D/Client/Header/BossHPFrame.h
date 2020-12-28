@@ -1,21 +1,22 @@
 #pragma once
-#ifndef __GEM_TEXT_H__
+#ifndef __BOSS_HP_FRAME_H__
 #include "GameObject.h"
 USING(Engine)
-class CGemText final : public CGameObject
+class CTexturePool;
+class CBossHPFrame final : public CGameObject
 {
 private:
-	CText*	m_pText;
-
-	UINT	m_nCount;
+	CTexturePool*	m_pTexturePool;
+	Image*			m_pImage;
+	TSTRING			m_sTextureKey;
 private:
-	explicit CGemText();
-	explicit CGemText(const CGemText& _rOther);
-	virtual ~CGemText() = default;
+	explicit CBossHPFrame();
+	explicit CBossHPFrame(const CBossHPFrame& _rOther);
+	virtual ~CBossHPFrame() = default;
 	// CBase을(를) 통해 상속됨
-	virtual void Free() override;
+	virtual void			Free() override;
 public:
-	static CGemText* Create();
+	static CBossHPFrame* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 public:
@@ -26,9 +27,6 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
-
-public:
-	void SetCount(const UINT _nCount);
 };
-#define __GEM_TEXT_H__
-#endif // !__GEM_TEXT_H__
+#define __BOSS_HP_FRAME_H__
+#endif // !__BOSS_HP_FRAME_H__

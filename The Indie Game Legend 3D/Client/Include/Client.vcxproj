@@ -161,6 +161,9 @@
     <ClInclude Include="..\Header\AmmoGauge.h" />
     <ClInclude Include="..\Header\BigBullet.h" />
     <ClInclude Include="..\Header\Blood.h" />
+    <ClInclude Include="..\Header\BossHPBar.h" />
+    <ClInclude Include="..\Header\BossHPFrame.h" />
+    <ClInclude Include="..\Header\BossText.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletSpark.h" />
@@ -173,6 +176,7 @@
     <ClInclude Include="..\Header\CrossHair.h" />
     <ClInclude Include="..\Header\Cryder.h" />
     <ClInclude Include="..\Header\DiscIcon.h" />
+    <ClInclude Include="..\Header\DiscText.h" />
     <ClInclude Include="..\Header\DoomBird.h" />
     <ClInclude Include="..\Header\Egg.h" />
     <ClInclude Include="..\Header\ElectricTile.h" />
@@ -254,6 +258,9 @@
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
     <ClCompile Include="..\Source\BigBullet.cpp" />
     <ClCompile Include="..\Source\Blood.cpp" />
+    <ClCompile Include="..\Source\BossHPBar.cpp" />
+    <ClCompile Include="..\Source\BossHPFrame.cpp" />
+    <ClCompile Include="..\Source\BossText.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
@@ -261,6 +268,7 @@
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
     <ClCompile Include="..\Source\DiscIcon.cpp" />
+    <ClCompile Include="..\Source\DiscText.cpp" />
     <ClCompile Include="..\Source\DoomBird.cpp" />
     <ClCompile Include="..\Source\Egg.cpp" />
     <ClCompile Include="..\Source\ElectricTile.cpp" />

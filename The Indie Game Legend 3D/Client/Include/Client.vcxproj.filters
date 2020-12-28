@@ -343,6 +343,24 @@
     <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail">
       <UniqueIdentifier>{db709d0f-8952-4af6-b6eb-23c6ba6c0f50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\09.Disc\01.Text">
+      <UniqueIdentifier>{d96db6b3-6b2f-4de6-b07f-46df8cef91f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\11.BossHP">
+      <UniqueIdentifier>{6d39190d-7fbc-41f4-980e-da64368eff84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\11.BossHP\00.Base">
+      <UniqueIdentifier>{5f30ab18-5f2a-42d8-bb5f-11143f518d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\11.BossHP\01.Frame">
+      <UniqueIdentifier>{299e02a6-383f-4971-8a69-f5efd05639d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\11.BossHP\02.Bar">
+      <UniqueIdentifier>{0243f3d4-f6e2-4e6a-b590-1a5e6f0f91d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\11.BossHP\03.Text">
+      <UniqueIdentifier>{edf22b5f-0f40-4e2a-87e1-ed510d93ab65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -621,6 +639,18 @@
     <ClInclude Include="..\Header\DiscIcon.h">
       <Filter>02.GameObject\04.UI\09.Disc\00.Icon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DiscText.h">
+      <Filter>02.GameObject\04.UI\09.Disc\01.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossHPFrame.h">
+      <Filter>02.GameObject\04.UI\11.BossHP\01.Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossText.h">
+      <Filter>02.GameObject\04.UI\11.BossHP\03.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossHPBar.h">
+      <Filter>02.GameObject\04.UI\11.BossHP\02.Bar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -880,6 +910,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\DiscIcon.cpp">
       <Filter>02.GameObject\04.UI\09.Disc\00.Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\DiscText.cpp">
+      <Filter>02.GameObject\04.UI\09.Disc\01.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BossHPFrame.cpp">
+      <Filter>02.GameObject\04.UI\11.BossHP\01.Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BossText.cpp">
+      <Filter>02.GameObject\04.UI\11.BossHP\03.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BossHPBar.cpp">
+      <Filter>02.GameObject\04.UI\11.BossHP\02.Bar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

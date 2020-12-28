@@ -1,23 +1,24 @@
 #pragma once
-#ifndef __GEM_TEXT_H__
+#ifndef __DISC_TEXT_H__
 #include "GameObject.h"
 USING(Engine)
-class CGemText final : public CGameObject
+class CDiscText final : public CGameObject
 {
 private:
 	CText*	m_pText;
-
+	UINT	m_nMaxCount;
 	UINT	m_nCount;
 private:
-	explicit CGemText();
-	explicit CGemText(const CGemText& _rOther);
-	virtual ~CGemText() = default;
+	explicit CDiscText();
+	explicit CDiscText(const CDiscText& _rOther);
+	virtual ~CDiscText() = default;
 	// CBase을(를) 통해 상속됨
 	virtual void Free() override;
 public:
-	static CGemText* Create();
+	static CDiscText* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
+
 public:
 	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT InitializePrototype() override;
@@ -28,7 +29,8 @@ public:
 	virtual HRESULT Render() override;
 
 public:
+	void SetMaxCount(const UINT _nMaxCount);
 	void SetCount(const UINT _nCount);
 };
-#define __GEM_TEXT_H__
-#endif // !__GEM_TEXT_H__
+#define __DISC_TEXT_H__
+#endif // !__DISC_TEXT_H__

@@ -56,3 +56,8 @@ UINT CCharacter::GetWidth()
 {
 	return m_nWidth;
 }
+
+UINT CCharacter::GetHeight()
+{
+	return m_nHeight;
+}

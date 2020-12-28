@@ -7,6 +7,8 @@ class CFont;
 class CFontManager;
 class ENGINE_DLL CText final : public CComponent
 {
+public:
+	enum HORIZON { LEFT, CENTER, RIGHT };
 private:
 	typedef vector<CCharacter*> CHARACTERS;
 	CHARACTERS		m_Characters;
@@ -15,12 +17,22 @@ private:
 	CFontManager*	m_pFontManager;
 	TSTRING			m_sFont;
 	TSTRING			m_sText;
-	UINT			m_nSize;
+	float			m_fSize;
+
+	HORIZON			m_eHorizon;
+
+	//Text Rect 넓이 높이
+	float			m_fWidth;
+	float			m_fHeight;
 
 	//문자열 길이
 	UINT			m_nLength;
-	//문자열 넓이.
-	UINT			m_nStringWidth;
+
+
+	//라인 길이.
+	vector<UINT>	m_vecLineWidth;
+	//라인 개수
+	UINT			m_nLineCount;
 private:
 	explicit CText(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	virtual ~CText() = default;
@@ -35,6 +47,10 @@ public:
 public:
 	HRESULT SetFont(const TSTRING& _sFont);
 	HRESULT SetText(const TSTRING& _sText);
+	void	SetSize(const float _fSize);
+	void	SetHorizon(const HORIZON _eHorizon);
+	void	SetWidth(const float _fWidth);
+	void	SetHeight(const float _fHeight);
 };
 END
 #define __TEXT_H__
