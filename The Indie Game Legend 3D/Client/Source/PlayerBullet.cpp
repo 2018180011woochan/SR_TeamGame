@@ -1,9 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\PlayerBullet.h"
 #include "MeshRenderer.h"
-#include "PlayerCamera.h"
-#include "BulletSpawn.h"
-#include "PickingManger.h"
+
 
 //effect
 #include "BulletSpark.h"
@@ -63,35 +61,6 @@ void CPlayerBullet::Set_Type(const EWeaponType & _eBulletType)
 
 HRESULT CPlayerBullet::Fire()
 {
-	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
-	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
-	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
-	_vector vBulletPos = pSpawnTrans->Get_WorldPosition();
-	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
-
-	//Test
-	_vector PickPos;
-	if (CPickingManger::CrossHairPicking(m_nSceneID, PickPos))
-	{
-
-		m_vDiraction = PickPos - pSpawnTrans->Get_WorldPosition();
-		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-	}
-	else
-	{
-		m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
-		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-	}
-
-	m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
-
-	switch (m_eBulletType)
-	{
-	case EWeaponType::Big:
-	case EWeaponType::Normal:
-		break;
-	case EWeaponType::Multiple:
-	{
 		_matrix matRotY;
 
 		CPlayerBullet* pBullet = (CPlayerBullet*)AddGameObject<CPlayerBullet>();
@@ -110,26 +79,17 @@ HRESULT CPlayerBullet::Fire()
 		D3DXVec3TransformNormal(&vDir, &m_vDiraction, &matRotY);
 		D3DXVec3Normalize(&vDir, &vDir);
 		pBullet->Fire(vDir);
-	}
-		break;
-	case EWeaponType::End:
-		break;
-	default:
-		break;
-	}
-
-
-
+	
 	return S_OK;
 }
 
 HRESULT CPlayerBullet::Fire(const _vector _Dir)
 {
-	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
-	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
-	m_vDiraction = _Dir;
-	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-	m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
+	//CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
+	//auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
+	//m_vDiraction = _Dir;
+	//D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	//m_pTransform->Set_Position(pSpawnTrans->Get_WorldPosition());
 
 	return S_OK;
 }
@@ -137,27 +97,15 @@ HRESULT CPlayerBullet::Fire(const _vector _Dir)
 
 HRESULT CPlayerBullet::InitializePrototype()
 {
-	m_fTimeCheck = 0.f;
-	m_fLiveTiem = 0.f;
-	m_fMoveSpeed = 0;
-	m_vDiraction = vZero;
+	
+
 	return S_OK;
 }
 
 HRESULT CPlayerBullet::Awake()
 {
 	CBullet::Awake();
-	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
-	m_pMeshRenderer->SetMesh(TEXT("Quad"));
-	m_eRenderID = ERenderID::Alpha;
 
-	m_fLiveTiem = 5.f;
-
-	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
-
-	m_sName = L"PlayerBullet";
 
 
 	return S_OK;
@@ -165,6 +113,7 @@ HRESULT CPlayerBullet::Awake()
 
 HRESULT CPlayerBullet::Start()
 {
+	CBullet::Start();
 
 	return S_OK;
 }
@@ -174,14 +123,6 @@ UINT CPlayerBullet::Update(const float _fDeltaTime)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_fTimeCheck += _fDeltaTime;
-	if (m_fLiveTiem < m_fTimeCheck)
-	{
-		return OBJ_DEAD;
-	}
-	m_pTransform->Add_Position(m_vDiraction* m_fMoveSpeed * _fDeltaTime);
-	m_pTransform->UpdateTransform();
-	m_pTransform->UpdateWorld();
 
 	return OBJ_NOENVET;
 }
@@ -232,7 +173,6 @@ void CPlayerBullet::OnCollision(CGameObject * _pGameObject)
 		}
 
 	}
-
 }
 
 void CPlayerBullet::Free()

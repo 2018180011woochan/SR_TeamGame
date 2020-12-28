@@ -1,9 +1,17 @@
 #pragma once
 #ifndef __BULLETSPAWN_H__
 #include "Gizmo.h"
+
+#define CameraYMax 89.f
+#define CameraYMin -89.f
+
 USING(Engine)
 class CBulletSpawn final : public CGizmo  
 {
+private:
+	float m_fRevAngleX = 0.f;
+	float m_fRevAngleY = 0.f;
+
 public:
 	explicit CBulletSpawn();
 	explicit CBulletSpawn(const CBulletSpawn& _rOther);

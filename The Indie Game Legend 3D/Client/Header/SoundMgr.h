@@ -6,8 +6,17 @@ class CSoundMgr final : public CBase
 {
 DECLARE_SINGLETON(CSoundMgr)
 public:
-	enum CHANNELID {BGM, PLAYER,BOSS,HURT,PLAYER_BULLET_BOUND,PLAYER_BULLET_KILL,
-		BULLET,EFFECT,MONSTER_BULLET, BNT1,BNT2,UI,MOUSE, WALL, Floor, MONSTER, MAXCHANNEL};
+	enum CHANNELID {BGM
+		,Player_Bullet
+		,Player_Effect
+		,Player_Hit
+		,Player_Action
+		,BOSS
+		,HURT
+		,BULLET
+		,EFFECT
+		,TimeStopSkill
+		,MONSTER_BULLET, BNT1,BNT2,UI,MOUSE, WALL, Floor, MONSTER, MAXCHANNEL};
 private:
 	explicit CSoundMgr();
 	virtual ~CSoundMgr() = default;
@@ -16,6 +25,8 @@ public:
 	void Initialize(); 
 public:
 	void Play(const wstring& pSoundKey, CHANNELID eID);
+	void PlayContinue(const wstring& pSoundKey, CHANNELID eID);
+
 	void PlayBGM(const wstring& pSoundKey);
 	void StopSound(CHANNELID eID);
 	void StopAll();

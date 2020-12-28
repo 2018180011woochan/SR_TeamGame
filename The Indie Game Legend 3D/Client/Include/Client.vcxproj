@@ -126,7 +126,6 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./;../Header/;../Soruce/;../../Reference/Header/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,8 +134,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../Reference/Library/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine.lib;d3d9.lib;d3dx9.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AssemblyDebug>
-      </AssemblyDebug>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -162,51 +159,47 @@
   <ItemGroup>
     <ClInclude Include="..\Header\AmmoFrame.h" />
     <ClInclude Include="..\Header\AmmoGauge.h" />
+    <ClInclude Include="..\Header\BigBullet.h" />
     <ClInclude Include="..\Header\Blood.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletSpark.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
-    <ClInclude Include="..\Header\CardinalPoint.h" />
     <ClInclude Include="..\Header\ClientDefine.h" />
     <ClInclude Include="..\Header\ClientEnum.h" />
     <ClInclude Include="..\Header\ClientExtern.h" />
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\CrossHair.h" />
     <ClInclude Include="..\Header\Cryder.h" />
-    <ClInclude Include="..\Header\DiscIcon.h" />
     <ClInclude Include="..\Header\DoomBird.h" />
     <ClInclude Include="..\Header\Egg.h" />
     <ClInclude Include="..\Header\ElectricTile.h" />
     <ClInclude Include="..\Header\Explosion.h" />
     <ClInclude Include="..\Header\ExplosionBlue.h" />
     <ClInclude Include="..\Header\FactoryManager.h" />
+    <ClInclude Include="..\Header\FlameBullet.h" />
     <ClInclude Include="..\Header\Floor.h" />
-    <ClInclude Include="..\Header\GemIcon.h" />
-    <ClInclude Include="..\Header\GemText.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
     <ClInclude Include="..\Header\IntroBackGround.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\KeyManager.h" />
+    <ClInclude Include="..\Header\LaserBullet.h" />
     <ClInclude Include="..\Header\LavaTile.h" />
     <ClInclude Include="..\Header\LightMananger.h" />
     <ClInclude Include="..\Header\Logo.h" />
-    <ClInclude Include="..\Header\MiniMapFrame.h" />
-    <ClInclude Include="..\Header\MiniMapPartial.h" />
-    <ClInclude Include="..\Header\MiniMapRenderer.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
+    <ClInclude Include="..\Header\NormalBullet.h" />
     <ClInclude Include="..\Header\NubBoss.h" />
     <ClInclude Include="..\Header\Obstacle.h" />
-    <ClInclude Include="..\Header\Phubans.h" />
-    <ClInclude Include="..\Header\PickingManger.h" />
+    <ClInclude Include="..\Header\TripleBullet.h" />
+    <ClInclude Include="..\Header\UtilityManger.h" />
     <ClInclude Include="..\Header\Piramid.h" />
     <ClInclude Include="..\Header\PiramidUnBrake.h" />
     <ClInclude Include="..\Header\Player.h" />
-    <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerCamera.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\PlayerSpawn.h" />
@@ -247,46 +240,42 @@
   <ItemGroup>
     <ClCompile Include="..\Source\AmmoFrame.cpp" />
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
+    <ClCompile Include="..\Source\BigBullet.cpp" />
     <ClCompile Include="..\Source\Blood.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
-    <ClCompile Include="..\Source\CardinalPoint.cpp" />
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
-    <ClCompile Include="..\Source\DiscIcon.cpp" />
     <ClCompile Include="..\Source\DoomBird.cpp" />
     <ClCompile Include="..\Source\Egg.cpp" />
     <ClCompile Include="..\Source\ElectricTile.cpp" />
     <ClCompile Include="..\Source\Explosion.cpp" />
     <ClCompile Include="..\Source\ExplosionBlue.cpp" />
     <ClCompile Include="..\Source\FactoryManager.cpp" />
+    <ClCompile Include="..\Source\FlameBullet.cpp" />
     <ClCompile Include="..\Source\Floor.cpp" />
-    <ClCompile Include="..\Source\GemIcon.cpp" />
-    <ClCompile Include="..\Source\GemText.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
     <ClCompile Include="..\Source\Item.cpp" />
     <ClCompile Include="..\Source\KeyManager.cpp" />
+    <ClCompile Include="..\Source\LaserBullet.cpp" />
     <ClCompile Include="..\Source\LavaTile.cpp" />
     <ClCompile Include="..\Source\LightMananger.cpp" />
     <ClCompile Include="..\Source\Logo.cpp" />
-    <ClCompile Include="..\Source\MiniMapFrame.cpp" />
-    <ClCompile Include="..\Source\MiniMapPartial.cpp" />
-    <ClCompile Include="..\Source\MiniMapRenderer.cpp" />
     <ClCompile Include="..\Source\Monster.cpp" />
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
+    <ClCompile Include="..\Source\NormalBullet.cpp" />
     <ClCompile Include="..\Source\NubBoss.cpp" />
     <ClCompile Include="..\Source\Obstacle.cpp" />
-    <ClCompile Include="..\Source\Phubans.cpp" />
-    <ClCompile Include="..\Source\PickingManger.cpp" />
+    <ClCompile Include="..\Source\TripleBullet.cpp" />
+    <ClCompile Include="..\Source\UtilityManger.cpp" />
     <ClCompile Include="..\Source\Piramid.cpp" />
     <ClCompile Include="..\Source\PiramidUnBrake.cpp" />
     <ClCompile Include="..\Source\Player.cpp" />
-    <ClCompile Include="..\Source\PlayerBullet.cpp" />
     <ClCompile Include="..\Source\PlayerCamera.cpp" />
     <ClCompile Include="..\Source\Bub.cpp" />
     <ClCompile Include="..\Source\MainApp.cpp" />

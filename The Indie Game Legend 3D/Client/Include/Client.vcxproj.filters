@@ -208,9 +208,6 @@
     <Filter Include="02.GameObject\00.Monster\11.WormBoss">
       <UniqueIdentifier>{15929005-3feb-481b-8ac6-84b0b1e86970}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97.Manager\97.PeekingManager">
-      <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\98.Collider">
       <UniqueIdentifier>{58a8a365-70c5-44d5-8bd8-afdad690e1ff}</UniqueIdentifier>
     </Filter>
@@ -313,6 +310,24 @@
     <Filter Include="02.GameObject\04.UI\10.MiniMap\02.MiniMap\00.Partial">
       <UniqueIdentifier>{8f202af6-aa3e-4bdb-8ce0-d6084ce6edb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\00.NormalBullet">
+      <UniqueIdentifier>{bc1bd2aa-94a0-43fb-a0d5-f4ee4f9c6a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\01.BigBullet">
+      <UniqueIdentifier>{52877393-bac0-4da6-b5de-5d7d53e2c9eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\97.UtilityManager">
+      <UniqueIdentifier>{8f37801a-0178-4152-abeb-de9a1ddcde48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\03.FlameBullet">
+      <UniqueIdentifier>{c1a6eaea-93fb-4274-9832-ce9b2c6c7f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\02.TripleBullet">
+      <UniqueIdentifier>{6bcbcdf7-124a-4072-a746-febb78aaf5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.Bullet\01.PlayerBullet\04.Laser">
+      <UniqueIdentifier>{946a32fe-7d51-49ae-9004-6f168cb592a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -383,9 +398,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02.GameObject\04.Bullet\00.Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PlayerBullet.h">
-      <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BulletSpawn.h">
       <Filter>02.GameObject\98.Gizmo\01.BulletSpawn</Filter>
@@ -501,9 +513,6 @@
     <ClInclude Include="..\Header\WormBossBody.h">
       <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PickingManger.h">
-      <Filter>97.Manager\97.PeekingManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Trigger.h">
       <Filter>02.GameObject\99.Trigger\00.Base</Filter>
     </ClInclude>
@@ -564,6 +573,24 @@
     <ClInclude Include="..\Header\GemText.h">
       <Filter>02.GameObject\04.UI\08.Gem\01.Text</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\NormalBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\00.NormalBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UtilityManger.h">
+      <Filter>97.Manager\97.UtilityManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\01.BigBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TripleBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\02.TripleBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlameBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\03.FlameBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserBullet.h">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\04.Laser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -616,9 +643,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Bullet.cpp">
       <Filter>02.GameObject\04.Bullet\00.Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\PlayerBullet.cpp">
-      <Filter>02.GameObject\04.Bullet\01.PlayerBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\BulletSpawn.cpp">
       <Filter>02.GameObject\98.Gizmo\01.BulletSpawn</Filter>
@@ -734,9 +758,6 @@
     <ClCompile Include="..\Source\WormBossBody.cpp">
       <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\PickingManger.cpp">
-      <Filter>97.Manager\97.PeekingManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Trigger.cpp">
       <Filter>02.GameObject\99.Trigger\00.Base</Filter>
     </ClCompile>
@@ -796,6 +817,24 @@
     </ClCompile>
     <ClCompile Include="..\Source\GemText.cpp">
       <Filter>02.GameObject\04.UI\08.Gem\01.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\NormalBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\00.NormalBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UtilityManger.cpp">
+      <Filter>97.Manager\97.UtilityManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BigBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\01.BigBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\TripleBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\02.TripleBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FlameBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\03.FlameBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LaserBullet.cpp">
+      <Filter>02.GameObject\04.Bullet\01.PlayerBullet\04.Laser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

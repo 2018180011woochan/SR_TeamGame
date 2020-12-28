@@ -61,7 +61,7 @@ UINT CMainApp::Update()
 	if (nullptr == m_pManagement)
 		return 0;
 	CKeyManager::GetInstance()->Update_KeyManager();
-	m_pManagement->Running();
+	CMsgManager::GetInstance()->UpdateFreezing(m_pManagement->Running());
 	return S_OK;
 }
 

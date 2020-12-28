@@ -46,7 +46,6 @@ HRESULT CBulletSpark::Animate(const float _fDeltaTime)
 		m_bDead = true;
 		return S_OK;
 	}
-	cout << (int)m_fTextureIndex << endl;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("BulletSpark"))[(_int)m_fTextureIndex]);
 	return S_OK;
 }

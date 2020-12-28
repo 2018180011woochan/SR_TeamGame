@@ -90,10 +90,10 @@ HRESULT CManagement::Render(HWND _hWnd)
 	return m_pRenderer->Render(_hWnd);
 }
 
-void CManagement::Running()
+float CManagement::Running()
 {
 	if (nullptr == m_pSceneManager)
-		return ;
+		return 0.f;
 
 	if (m_pFrameManager->LimitFrame())
 	{
@@ -102,7 +102,9 @@ void CManagement::Running()
 		m_pSceneManager->LateUpdate(fDeltaTime);
 		m_pRenderer->Render(m_hWnd);
 		m_pFrameManager->ShowFrame(m_hWnd, fDeltaTime);
+		return fDeltaTime;
 	}
+	return 0.f;
 }
 
 HRESULT CManagement::AwakeGameObject(const size_t _nSceneID)

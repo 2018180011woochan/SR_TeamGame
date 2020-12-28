@@ -1,8 +1,7 @@
 #pragma once
 #ifndef __PEEKINGMANAGER_H__
 USING(Engine)
-//이름 바꿀거임
- class CPickingManger
+class CUtilityManger
 {
 public:
 	static bool CrossHairPicking(_uint _nSceneID,OUT _vector& _vPickingPos/*,const _uint _nRoomID*/);

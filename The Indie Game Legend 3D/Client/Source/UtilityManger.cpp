@@ -1,15 +1,12 @@
 #include "stdafx.h"
-#include "PickingManger.h"
+#include "UtilityManger.h"
 #include "MsgManager.h"
 #include "PlayerCamera.h"
 
 #include "Monster.h"
 #include "Tile.h"
 #include "Obstacle.h"
-
-#include "Wall.h"
-#include "Floor.h"
-bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos/*,const _uint _nRoomID*/)
+bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos/*,const _uint _nRoomID*/)
 {
 	_vector vCenter = CMsgManager::GetInstance()->Get_ClientCenterVector();
 	RECT tClientRC = CMsgManager::GetInstance()->GetClientRc();
@@ -43,10 +40,11 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 
 	list<CGameObject*> CollisionList;
 	//충돌시킬 물체 추가 ..
-	//merge로 합칠수 있음 정렬도 한다고 하는데 불안함 
 	CollisionList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CMonster>(_nSceneID);
-	CCollider* pCollider = nullptr;
+	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
+	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID));
 
+	CCollider* pCollider = nullptr;
 	_vector vPickPos = vZero;
 	_vector vResultPos = vZero;
 	bool	bIsPicking = false;
@@ -55,6 +53,9 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	float fLowDis = -1.f;
 	for (auto& pGameObject : CollisionList)
 	{
+		if(pGameObject->IsEnable() == false)
+			continue;
+
 		pCollider = (CCollider*)pGameObject->GetComponent<CCollider>();
 		if (pCollider->IsRayPicking(vPickPos, fDis, vRayPivot, vRayDirection))
 		{
@@ -78,18 +79,17 @@ bool CPickingManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	return bIsPicking;
 }
 
-void CPickingManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
+void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 {
 	list<CGameObject*> CullingList;
 	//컬링 리스트 추가할것
 	CullingList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CMonster>(_nSceneID);
 	CullingList.splice(CullingList.end(),CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID));
 	CullingList.splice(CullingList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
-	CullingList.splice(CullingList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CWall>(_nSceneID));
-	CullingList.splice(CullingList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
+
 	for (auto& pGameObject : CullingList)
 	{
-		if (pGameObject->GetTag() != _nTag)
+		if (pGameObject->GetTage() != _nTag)
 			pGameObject->SetEnable(false);
 		else
 			pGameObject->SetEnable(true);

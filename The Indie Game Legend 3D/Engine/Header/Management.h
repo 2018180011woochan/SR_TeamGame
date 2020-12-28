@@ -28,7 +28,7 @@ public:
 	HRESULT Initialize(const HWND _hWnd, const UINT _nWinCX, const UINT _nWinCY, const EDisplayMode _eDisplayMode,const float _fSetFrame);
 	UINT	Update();
 	HRESULT	Render(HWND _hWnd);
-	void	Running();
+	float	Running();
 
 	// CBase을(를) 통해 상속됨
 	virtual void Free() override;

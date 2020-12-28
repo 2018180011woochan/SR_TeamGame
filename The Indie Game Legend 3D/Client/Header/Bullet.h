@@ -8,14 +8,19 @@ class CBullet : public CGameObject
 protected:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool = nullptr;
-	float			m_fMoveSpeed;
 	_vector			m_vDiraction;
-	//testm_vDiraction
-	float			m_fLiveTiem;
-	float			m_fTimeCheck;
 
-	//test			
-	bool			m_bDead =false;
+	float			m_fLive;
+	float			m_fLivetime;
+	float			m_fMoveSpeed;
+
+	bool			m_bDead ;
+	//
+	float	m_fTextureIndex = 0.f;
+	float	m_fAnimateSpeed = 0.f;
+	float	m_fAnimateOneCycleTime = 0.f; 
+	_uint   m_nMaxTexture;
+
 public:
 	explicit CBullet();
 	explicit CBullet(const CBullet& _rOther);
@@ -31,12 +36,13 @@ public:
 	virtual CGameObject * Clone() PURE;
 
 	virtual HRESULT Fire() PURE;
-	virtual HRESULT Fire(const _vector _Dir) PURE;
+
+	HRESULT Animate(const float _fDeltaTime);
 
 protected:
-	HRESULT IsBillboarding();
+	virtual HRESULT IsBillboarding();
 	virtual void Free() override;
-	virtual void OnCollision(CGameObject * _pGameObject) override;
+	virtual void OnCollision(CGameObject * _pGameObject) PURE;
 };
 #define __BULLET_H__
 #endif
