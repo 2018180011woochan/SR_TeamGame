@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "WormBossBody.h"
+#include "WormBossBody3.h"
 #include "Player.h"
 #include "MeshRenderer.h"
 #include "WormBossBody2.h"
-#include "WormBoss.h"
+#include "WormBossBody4.h"
 
-CWormBossBody::CWormBossBody()
+CWormBossBody3::CWormBossBody3()
 	: m_pTexturePool(nullptr)
 {
 }
 
-CWormBossBody::CWormBossBody(const CWormBossBody & other)
+CWormBossBody3::CWormBossBody3(const CWormBossBody3 & other)
 	: CMonster(other)
 {
 }
 
-HRESULT CWormBossBody::InitializePrototype()
+HRESULT CWormBossBody3::InitializePrototype()
 {
 	if (FAILED(CMonster::InitializePrototype()))
 		return E_FAIL;
@@ -23,7 +23,7 @@ HRESULT CWormBossBody::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CWormBossBody::Awake()
+HRESULT CWormBossBody3::Awake()
 {
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
@@ -56,7 +56,7 @@ HRESULT CWormBossBody::Awake()
 	return S_OK;
 }
 
-HRESULT CWormBossBody::Start()
+HRESULT CWormBossBody3::Start()
 {
 	CMonster::Start();
 
@@ -70,8 +70,8 @@ HRESULT CWormBossBody::Start()
 	m_fFrameSpeed = 0.5;
 	m_fFrameDeltaTime = 0.f;
 
-	pWormBody2 = (CWormBossBody2*)AddGameObject<CWormBossBody2>();
-	pWormBody2->Set_BodyPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 2.f, m_pTransform->Get_Position().z + 1.f), 1);
+	pWormBody4 = (CWormBossBody4*)AddGameObject<CWormBossBody4>();
+	pWormBody4->Set_BodyPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 2.f, m_pTransform->Get_Position().z + 1.f), 1);
 
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
@@ -79,11 +79,11 @@ HRESULT CWormBossBody::Start()
 	return S_OK;
 }
 
-UINT CWormBossBody::Update(const float _fDeltaTime)
+UINT CWormBossBody3::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
 
-	m_pWormBossTransform = (CTransform*)(FindGameObjectOfType<CWormBoss>()->GetComponent<CTransform>());
+	m_pWormBossTransform = (CTransform*)(FindGameObjectOfType<CWormBossBody2>()->GetComponent<CTransform>());
 
 	m_fFrameDeltaTime += _fDeltaTime;
 	if (m_fFrameSpeed <= m_fFrameDeltaTime)
@@ -106,13 +106,13 @@ UINT CWormBossBody::Update(const float _fDeltaTime)
 	return _uint();
 }
 
-UINT CWormBossBody::LateUpdate(const float _fDeltaTime)
+UINT CWormBossBody3::LateUpdate(const float _fDeltaTime)
 {
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
 
-HRESULT CWormBossBody::Render()
+HRESULT CWormBossBody3::Render()
 {
 	if (FAILED(CMonster::Render()))
 		return E_FAIL;
@@ -122,11 +122,11 @@ HRESULT CWormBossBody::Render()
 	return S_OK;
 }
 
-void CWormBossBody::OnCollision(CGameObject * _pGameObject)
+void CWormBossBody3::OnCollision(CGameObject * _pGameObject)
 {
 }
 
-HRESULT CWormBossBody::Movement(float fDeltaTime)
+HRESULT CWormBossBody3::Movement(float fDeltaTime)
 {
 	_vector vDir = {0.f, 0.f, 0.f};
 	_vector vMoveDir;
@@ -155,7 +155,7 @@ HRESULT CWormBossBody::Movement(float fDeltaTime)
 	return S_OK;
 }
 
-void CWormBossBody::Waving(float fDeltaTime)
+void CWormBossBody3::Waving(float fDeltaTime)
 {
 	float fY = m_pTransform->Get_Position().y;
 
@@ -235,25 +235,25 @@ void CWormBossBody::Waving(float fDeltaTime)
 
 }
 
-void CWormBossBody::Set_BodyPos(const _vector _vPos, UINT _nBodyIndex)
+void CWormBossBody3::Set_BodyPos(const _vector _vPos, UINT _nBodyIndex)
 {
 	m_pTransform->Set_Position(_vPos);
 	nBodyIndex = _nBodyIndex;
 }
 
-CGameObject * CWormBossBody::Clone()
+CGameObject * CWormBossBody3::Clone()
 {
-	CWormBossBody* pClone = new CWormBossBody(*this);
+	CWormBossBody3* pClone = new CWormBossBody3(*this);
 	return pClone;
 }
 
-CWormBossBody * CWormBossBody::Create()
+CWormBossBody3 * CWormBossBody3::Create()
 {
-	CWormBossBody* pInstance = new CWormBossBody();
+	CWormBossBody3* pInstance = new CWormBossBody3();
 	return pInstance;
 }
 
-void CWormBossBody::Free()
+void CWormBossBody3::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();

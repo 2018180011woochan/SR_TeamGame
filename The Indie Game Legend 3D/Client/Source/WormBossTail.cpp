@@ -1,21 +1,20 @@
 #include "stdafx.h"
-#include "WormBossBody.h"
+#include "WormBossTail.h"
+#include "WormBossBody4.h"
 #include "Player.h"
 #include "MeshRenderer.h"
-#include "WormBossBody2.h"
-#include "WormBoss.h"
 
-CWormBossBody::CWormBossBody()
+CWormBossTail::CWormBossTail()
 	: m_pTexturePool(nullptr)
 {
 }
 
-CWormBossBody::CWormBossBody(const CWormBossBody & other)
+CWormBossTail::CWormBossTail(const CWormBossTail & other)
 	: CMonster(other)
 {
 }
 
-HRESULT CWormBossBody::InitializePrototype()
+HRESULT CWormBossTail::InitializePrototype()
 {
 	if (FAILED(CMonster::InitializePrototype()))
 		return E_FAIL;
@@ -23,7 +22,7 @@ HRESULT CWormBossBody::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CWormBossBody::Awake()
+HRESULT CWormBossTail::Awake()
 {
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
@@ -56,11 +55,11 @@ HRESULT CWormBossBody::Awake()
 	return S_OK;
 }
 
-HRESULT CWormBossBody::Start()
+HRESULT CWormBossTail::Start()
 {
 	CMonster::Start();
 
-	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Body"))[0]);
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("TailSide"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	//m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
@@ -70,20 +69,16 @@ HRESULT CWormBossBody::Start()
 	m_fFrameSpeed = 0.5;
 	m_fFrameDeltaTime = 0.f;
 
-	pWormBody2 = (CWormBossBody2*)AddGameObject<CWormBossBody2>();
-	pWormBody2->Set_BodyPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 2.f, m_pTransform->Get_Position().z + 1.f), 1);
-
-
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 
 	return S_OK;
 }
 
-UINT CWormBossBody::Update(const float _fDeltaTime)
+UINT CWormBossTail::Update(const float _fDeltaTime)
 {
 	CMonster::Update(_fDeltaTime);
 
-	m_pWormBossTransform = (CTransform*)(FindGameObjectOfType<CWormBoss>()->GetComponent<CTransform>());
+	m_pWormBossTransform = (CTransform*)(FindGameObjectOfType<CWormBossBody4>()->GetComponent<CTransform>());
 
 	m_fFrameDeltaTime += _fDeltaTime;
 	if (m_fFrameSpeed <= m_fFrameDeltaTime)
@@ -95,7 +90,7 @@ UINT CWormBossBody::Update(const float _fDeltaTime)
 
 		m_fFrameDeltaTime -= m_fFrameSpeed;
 	}
-	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Body"))[0]);
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("TailSide"))[0]);
 
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
@@ -106,13 +101,13 @@ UINT CWormBossBody::Update(const float _fDeltaTime)
 	return _uint();
 }
 
-UINT CWormBossBody::LateUpdate(const float _fDeltaTime)
+UINT CWormBossTail::LateUpdate(const float _fDeltaTime)
 {
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
 
-HRESULT CWormBossBody::Render()
+HRESULT CWormBossTail::Render()
 {
 	if (FAILED(CMonster::Render()))
 		return E_FAIL;
@@ -122,11 +117,11 @@ HRESULT CWormBossBody::Render()
 	return S_OK;
 }
 
-void CWormBossBody::OnCollision(CGameObject * _pGameObject)
+void CWormBossTail::OnCollision(CGameObject * _pGameObject)
 {
 }
 
-HRESULT CWormBossBody::Movement(float fDeltaTime)
+HRESULT CWormBossTail::Movement(float fDeltaTime)
 {
 	_vector vDir = {0.f, 0.f, 0.f};
 	_vector vMoveDir;
@@ -155,7 +150,7 @@ HRESULT CWormBossBody::Movement(float fDeltaTime)
 	return S_OK;
 }
 
-void CWormBossBody::Waving(float fDeltaTime)
+void CWormBossTail::Waving(float fDeltaTime)
 {
 	float fY = m_pTransform->Get_Position().y;
 
@@ -235,25 +230,25 @@ void CWormBossBody::Waving(float fDeltaTime)
 
 }
 
-void CWormBossBody::Set_BodyPos(const _vector _vPos, UINT _nBodyIndex)
+void CWormBossTail::Set_BodyPos(const _vector _vPos, UINT _nBodyIndex)
 {
 	m_pTransform->Set_Position(_vPos);
 	nBodyIndex = _nBodyIndex;
 }
 
-CGameObject * CWormBossBody::Clone()
+CGameObject * CWormBossTail::Clone()
 {
-	CWormBossBody* pClone = new CWormBossBody(*this);
+	CWormBossTail* pClone = new CWormBossTail(*this);
 	return pClone;
 }
 
-CWormBossBody * CWormBossBody::Create()
+CWormBossTail * CWormBossTail::Create()
 {
-	CWormBossBody* pInstance = new CWormBossBody();
+	CWormBossTail* pInstance = new CWormBossTail();
 	return pInstance;
 }
 
-void CWormBossBody::Free()
+void CWormBossTail::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();

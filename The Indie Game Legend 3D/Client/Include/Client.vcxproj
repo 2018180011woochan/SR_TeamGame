@@ -236,6 +236,10 @@
     <ClInclude Include="..\Header\WeaponHUD.h" />
     <ClInclude Include="..\Header\WormBoss.h" />
     <ClInclude Include="..\Header\WormBossBody.h" />
+    <ClInclude Include="..\Header\WormBossBody2.h" />
+    <ClInclude Include="..\Header\WormBossBody3.h" />
+    <ClInclude Include="..\Header\WormBossBody4.h" />
+    <ClInclude Include="..\Header\WormBossTail.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -314,6 +318,10 @@
     <ClCompile Include="..\Source\WeaponHUD.cpp" />
     <ClCompile Include="..\Source\WormBoss.cpp" />
     <ClCompile Include="..\Source\WormBossBody.cpp" />
+    <ClCompile Include="..\Source\WormBossBody2.cpp" />
+    <ClCompile Include="..\Source\WormBossBody3.cpp" />
+    <ClCompile Include="..\Source\WormBossBody4.cpp" />
+    <ClCompile Include="..\Source\WormBossTail.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

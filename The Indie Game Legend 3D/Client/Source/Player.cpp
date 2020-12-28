@@ -469,7 +469,7 @@ HRESULT CPlayer::Start()
 
 	m_pTransform->Set_Position(D3DXVECTOR3(0.f,2.5f,0.f));
 
-	 CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
+	// CPickingManger::ObjectCulling(m_nSceneID, m_nTag);
 	//Reference Setting
 	//할당 순서 때문에 작업 미완
 

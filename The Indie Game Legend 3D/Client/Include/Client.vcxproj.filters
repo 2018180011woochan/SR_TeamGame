@@ -307,6 +307,21 @@
     <Filter Include="02.GameObject\04.UI\10.MiniMap\02.MiniMap">
       <UniqueIdentifier>{f81d022d-29c2-442a-a157-bde99e449940}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody1">
+      <UniqueIdentifier>{35a08f38-ddaa-4fa5-af70-df2e67f074e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody2">
+      <UniqueIdentifier>{73ca9bea-c98f-4649-ab7a-a7bd4e23fe3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody3">
+      <UniqueIdentifier>{73a7bf48-27f6-4e4c-a70e-b03eee50fd51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody4">
+      <UniqueIdentifier>{7b31d9fe-9812-42a6-b51a-e8c8e2abc77c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail">
+      <UniqueIdentifier>{db709d0f-8952-4af6-b6eb-23c6ba6c0f50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -492,9 +507,6 @@
     <ClInclude Include="..\Header\Wall.h">
       <Filter>02.GameObject\98.Collider\01.Wall</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\WormBossBody.h">
-      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PickingManger.h">
       <Filter>97.Manager\97.PeekingManager</Filter>
     </ClInclude>
@@ -548,6 +560,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\CardinalPoint.h">
       <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody2.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody3.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossBody4.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBossTail.h">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -716,9 +743,6 @@
     <ClCompile Include="..\Source\Wall.cpp">
       <Filter>02.GameObject\98.Collider\01.Wall</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\WormBossBody.cpp">
-      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\PickingManger.cpp">
       <Filter>97.Manager\97.PeekingManager</Filter>
     </ClCompile>
@@ -772,6 +796,21 @@
     </ClCompile>
     <ClCompile Include="..\Source\CardinalPoint.cpp">
       <Filter>02.GameObject\04.UI\10.MiniMap\01.CardinalPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody2.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody3.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossBody4.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormBody4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBossTail.cpp">
+      <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

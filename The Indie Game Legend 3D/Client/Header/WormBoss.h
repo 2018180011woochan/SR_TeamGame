@@ -3,12 +3,15 @@
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
+class CWormBossBody;
 class CWormBoss final : public CMonster
 {
 private:
 	explicit CWormBoss();
 	explicit CWormBoss(const CWormBoss& other);
 	virtual ~CWormBoss() = default;
+
+	enum State {LEFT, RIGHT, UP, DOWN, IDLE};
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -23,6 +26,7 @@ public:
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Waving(float fDeltaTime);
+	void ChaseAttack(float fDeltaTime);
 
 public:
 	virtual CGameObject * Clone() override;
@@ -33,6 +37,10 @@ private:
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
+	CWormBossBody* pWormBody;
+
+
+
 
 	float		   m_fFrameSpeed;
 	float		   m_fFrameDeltaTime;
@@ -41,14 +49,17 @@ private:
 
 	_vector vRightDir;
 	_vector vLeftDir;
-
+	State				m_eCurDirState;
 	float				m_fJumpPower;
 	float				m_fJumpTime;
 	float				m_fYTest;
 	bool				m_bJump;
+	bool				m_bDashAttack;
 
 	float				m_fJumpSpeed;
 	float				m_fJumpDeltaTime;
+
+	int					m_iChaseTime;
 
 	UINT nIndex;
 };
