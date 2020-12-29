@@ -160,8 +160,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Ammo.h" />
     <ClInclude Include="..\Header\AmmoFrame.h" />
     <ClInclude Include="..\Header\AmmoGauge.h" />
+    <ClInclude Include="..\Header\Armor.h" />
+    <ClInclude Include="..\Header\BigShot.h" />
     <ClInclude Include="..\Header\Blood.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
@@ -213,6 +216,7 @@
     <ClInclude Include="..\Header\Rub.h" />
     <ClInclude Include="..\Header\SandTile.h" />
     <ClInclude Include="..\Header\Sector.h" />
+    <ClInclude Include="..\Header\ShopKeeper.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Slider.h" />
     <ClInclude Include="..\Header\SmallExlode.h" />
@@ -246,8 +250,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Ammo.cpp" />
     <ClCompile Include="..\Source\AmmoFrame.cpp" />
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
+    <ClCompile Include="..\Source\Armor.cpp" />
+    <ClCompile Include="..\Source\BigShot.cpp" />
     <ClCompile Include="..\Source\Blood.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpark.cpp" />
@@ -295,6 +302,7 @@
     <ClCompile Include="..\Source\Rub.cpp" />
     <ClCompile Include="..\Source\SandTile.cpp" />
     <ClCompile Include="..\Source\Sector.cpp" />
+    <ClCompile Include="..\Source\ShopKeeper.cpp" />
     <ClCompile Include="..\Source\SkyBox.cpp" />
     <ClCompile Include="..\Source\Slider.cpp" />
     <ClCompile Include="..\Source\SmallExlode.cpp" />

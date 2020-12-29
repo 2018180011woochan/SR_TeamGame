@@ -4,6 +4,7 @@
 #include "TexturePoolManager.h"
 USING(Engine)
 class CWormBossTail;
+class CWormBoss;
 class CWormBossBody4 final : public CMonster
 {
 private:
@@ -43,6 +44,7 @@ private:
 	CTransform*	   m_pWormBossTransform;
 
 	CWormBossTail* pWormTail;
+	CWormBoss*	   m_pWormBoss;
 
 	float		   m_fFrameSpeed;
 	float		   m_fFrameDeltaTime;

@@ -322,6 +322,18 @@
     <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail">
       <UniqueIdentifier>{db709d0f-8952-4af6-b6eb-23c6ba6c0f50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\12.Shop">
+      <UniqueIdentifier>{523b28ec-0226-4a32-92ab-5021a193d49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\00.Ammo">
+      <UniqueIdentifier>{d836b055-bbaf-4cf0-b319-65c10756daa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\01.Armor">
+      <UniqueIdentifier>{8a9907b8-cc7b-4fbd-84cd-d22e030eda33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\02.BigShot">
+      <UniqueIdentifier>{68cabca7-fc75-454d-88cd-f4f5103fd925}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -576,6 +588,18 @@
     <ClInclude Include="..\Header\WormBossTail.h">
       <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ShopKeeper.h">
+      <Filter>02.GameObject\12.Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ammo.h">
+      <Filter>02.GameObject\12.Shop\00.Ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Armor.h">
+      <Filter>02.GameObject\12.Shop\01.Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigShot.h">
+      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -811,6 +835,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\WormBossTail.cpp">
       <Filter>02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ShopKeeper.cpp">
+      <Filter>02.GameObject\12.Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Ammo.cpp">
+      <Filter>02.GameObject\12.Shop\00.Ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BigShot.cpp">
+      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Armor.cpp">
+      <Filter>02.GameObject\12.Shop\01.Armor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
