@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "..\Header\PlayerPortrait.h"
+#include "..\Header\DialogPortrait.h"
 #include "TexturePoolManager.h"
 
-CPlayerPortrait::CPlayerPortrait()
+CDialogPortrait::CDialogPortrait()
 	: m_pImage(nullptr)
 	, m_pTexturePool(nullptr)
 	, m_sTextureKey(TEXT(""))
@@ -14,7 +14,7 @@ CPlayerPortrait::CPlayerPortrait()
 {
 }
 
-CPlayerPortrait::CPlayerPortrait(const CPlayerPortrait & _rOther)
+CDialogPortrait::CDialogPortrait(const CDialogPortrait & _rOther)
 	: CGameObject(_rOther)
 	, m_pImage(nullptr)
 	, m_pTexturePool(nullptr)
@@ -27,15 +27,15 @@ CPlayerPortrait::CPlayerPortrait(const CPlayerPortrait & _rOther)
 {
 }
 
-void CPlayerPortrait::Free()
+void CDialogPortrait::Free()
 {
 	CGameObject::Free();
 	SafeRelease(m_pTexturePool);
 }
 
-CPlayerPortrait * CPlayerPortrait::Create()
+CDialogPortrait* CDialogPortrait::Create()
 {
-	CPlayerPortrait* pInstance = new CPlayerPortrait;
+	CDialogPortrait* pInstance = new CDialogPortrait;
 	if (FAILED(pInstance->InitializePrototype()))
 	{
 		SafeRelease(pInstance);
@@ -44,32 +44,37 @@ CPlayerPortrait * CPlayerPortrait::Create()
 	return pInstance;
 }
 
-CGameObject * CPlayerPortrait::Clone()
+CGameObject * CDialogPortrait::Clone()
 {
-	CPlayerPortrait* pClone = new CPlayerPortrait(*this);
+	CDialogPortrait* pClone = new CDialogPortrait(*this);
 	return pClone;
 }
 
-HRESULT CPlayerPortrait::InitializePrototype()
+HRESULT CDialogPortrait::InitializePrototype()
 {
 	CGameObject::InitializePrototype();
 	return S_OK;
 }
 
-HRESULT CPlayerPortrait::Awake()
+HRESULT CDialogPortrait::Awake()
 {
 	CGameObject::Awake();
 	m_pImage = (Image*)AddComponent<Image>();
 
+	
 	m_pTransform->Set_Scale(D3DXVECTOR3(5.f, 5.f, 1.f));
+	//플레이어 위치
 	m_pTransform->Set_Position(D3DXVECTOR3(471.f, 189.f, 0.f));
+	//npc 위치
+	m_pTransform->Set_Position(D3DXVECTOR3(-470.f, 189.f, 0.f));
+	m_pTransform->UpdateTransform();
 	m_pTransform->UpdateTransform();
 
 	m_eRenderID = ERenderID::UI;
 	return S_OK;
 }
 
-HRESULT CPlayerPortrait::Start()
+HRESULT CDialogPortrait::Start()
 {
 	CGameObject::Start();
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Portrait"));
@@ -84,20 +89,20 @@ HRESULT CPlayerPortrait::Start()
 	return S_OK;
 }
 
-UINT CPlayerPortrait::Update(const float _fDeltaTime)
+UINT CDialogPortrait::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	AnimatePortrait(_fDeltaTime);
 	return 0;
 }
 
-UINT CPlayerPortrait::LateUpdate(const float _fDeltaTime)
+UINT CDialogPortrait::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 	return 0;
 }
 
-HRESULT CPlayerPortrait::Render()
+HRESULT CDialogPortrait::Render()
 {
 	CGameObject::Render();
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
@@ -105,14 +110,25 @@ HRESULT CPlayerPortrait::Render()
 	return S_OK;
 }
 
-void CPlayerPortrait::OnAnimation(bool _bPlaying)
+void CDialogPortrait::OnAnimation(bool _bPlaying)
 {
 	m_bPlaying = _bPlaying;
 
 	m_nIndex = 0;
+
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
 }
 
-void CPlayerPortrait::AnimatePortrait(const float _fDeltaTime)
+void CDialogPortrait::SetPortrait(const TSTRING & _sPortrait, const D3DXVECTOR3 _vPosition)
+{
+	m_sTextureKey = _sPortrait;
+	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
+	OnAnimation(true);
+	m_pTransform->Set_Position(_vPosition);
+	m_pTransform->UpdateTransform();
+}
+
+void CDialogPortrait::AnimatePortrait(const float _fDeltaTime)
 {
 	if (false == m_bPlaying)
 		return;
@@ -133,4 +149,3 @@ void CPlayerPortrait::AnimatePortrait(const float _fDeltaTime)
 		m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
 	}
 }
-

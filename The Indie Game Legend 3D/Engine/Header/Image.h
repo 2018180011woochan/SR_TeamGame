@@ -32,6 +32,8 @@ private:
 
 	D3DXVECTOR2				m_vOffset;
 	D3DXVECTOR2				m_vTiling;
+
+	D3DXMATERIAL			m_tMaterial;
 private:
 	explicit Image(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	virtual ~Image() = default;

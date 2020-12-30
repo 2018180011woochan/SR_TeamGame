@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "..\Header\NPCPortrait.h"
+#include "..\Header\DialogTextArrow.h"
 #include "TexturePoolManager.h"
 
-CNPCPortrait::CNPCPortrait()
+CDialogTextArrow::CDialogTextArrow()
 	: m_pImage(nullptr)
 	, m_pTexturePool(nullptr)
 	, m_sTextureKey(TEXT(""))
@@ -10,11 +10,10 @@ CNPCPortrait::CNPCPortrait()
 	, m_nMaxFrame(0)
 	, m_fTime(0.f)
 	, m_fAnimationSpeed(0.1f)
-	, m_bPlaying(true)
 {
 }
 
-CNPCPortrait::CNPCPortrait(const CNPCPortrait & _rOther)
+CDialogTextArrow::CDialogTextArrow(const CDialogTextArrow & _rOther)
 	: CGameObject(_rOther)
 	, m_pImage(nullptr)
 	, m_pTexturePool(nullptr)
@@ -23,19 +22,18 @@ CNPCPortrait::CNPCPortrait(const CNPCPortrait & _rOther)
 	, m_nMaxFrame(0)
 	, m_fTime(0.f)
 	, m_fAnimationSpeed(0.1f)
-	, m_bPlaying(true)
 {
 }
 
-void CNPCPortrait::Free()
+void CDialogTextArrow::Free()
 {
 	CGameObject::Free();
 	SafeRelease(m_pTexturePool);
 }
 
-CNPCPortrait * CNPCPortrait::Create()
+CDialogTextArrow * CDialogTextArrow::Create()
 {
-	CNPCPortrait* pInstance = new CNPCPortrait;
+	CDialogTextArrow* pInstance = new CDialogTextArrow;
 	if (FAILED(pInstance->InitializePrototype()))
 	{
 		SafeRelease(pInstance);
@@ -44,57 +42,57 @@ CNPCPortrait * CNPCPortrait::Create()
 	return pInstance;
 }
 
-CGameObject * CNPCPortrait::Clone()
+CGameObject * CDialogTextArrow::Clone()
 {
-	CNPCPortrait* pClone = new CNPCPortrait(*this);
+	CDialogTextArrow* pClone = new CDialogTextArrow(*this);
 	return pClone;
 }
 
-HRESULT CNPCPortrait::InitializePrototype()
+HRESULT CDialogTextArrow::InitializePrototype()
 {
 	CGameObject::InitializePrototype();
 	return S_OK;
 }
 
-HRESULT CNPCPortrait::Awake()
+HRESULT CDialogTextArrow::Awake()
 {
 	CGameObject::Awake();
 	m_pImage = (Image*)AddComponent<Image>();
-
-	m_pTransform->Set_Scale(D3DXVECTOR3(5.f, 5.f, 1.f));
-	m_pTransform->Set_Position(D3DXVECTOR3(-470.f, 189.f, 0.f));
-	m_pTransform->UpdateTransform();
-
 	m_eRenderID = ERenderID::UI;
 	return S_OK;
 }
 
-HRESULT CNPCPortrait::Start()
+HRESULT CDialogTextArrow::Start()
 {
 	CGameObject::Start();
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Portrait"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
 	SafeAddRef(m_pTexturePool);
 
+	m_sTextureKey = TEXT("TextArrow");
+	
+	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
+
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
 	m_pImage->SetPivot(0.f, 0.f);
 
-	SetPortrait(TEXT("Boss"));
+	m_pTransform->Set_Scale(D3DXVECTOR3(2.f, 2.f, 1.f));
 	return S_OK;
 }
 
-UINT CNPCPortrait::Update(const float _fDeltaTime)
+UINT CDialogTextArrow::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
-	AnimatePortrait(_fDeltaTime);
+	AnimateArrow(_fDeltaTime);
 	return 0;
 }
 
-UINT CNPCPortrait::LateUpdate(const float _fDeltaTime)
+UINT CDialogTextArrow::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 	return 0;
 }
 
-HRESULT CNPCPortrait::Render()
+HRESULT CDialogTextArrow::Render()
 {
 	CGameObject::Render();
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
@@ -102,28 +100,14 @@ HRESULT CNPCPortrait::Render()
 	return S_OK;
 }
 
-void CNPCPortrait::OnAnimation(bool _bPlaying)
+void CDialogTextArrow::SetArrow(const D3DXVECTOR3 _vPosition)
 {
-	m_bPlaying = _bPlaying;
-
-	m_nIndex = 0;
-
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
+	m_pTransform->Set_Position(_vPosition);
+	m_pTransform->UpdateTransform();
 }
 
-void CNPCPortrait::SetPortrait(const TSTRING & _sPortrait)
+void CDialogTextArrow::AnimateArrow(const float _fDeltaTime)
 {
-	m_sTextureKey = _sPortrait;
-	m_nIndex = 0;
-	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
-}
-
-void CNPCPortrait::AnimatePortrait(const float _fDeltaTime)
-{
-	if (false == m_bPlaying)
-		return;
-
 	m_fTime += _fDeltaTime;
 
 	if (m_fTime >= m_fAnimationSpeed)

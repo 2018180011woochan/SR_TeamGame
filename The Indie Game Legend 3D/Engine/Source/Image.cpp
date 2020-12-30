@@ -3,7 +3,7 @@
 
 USING(Engine)
 
-const DWORD VERTEXRECT::FVF = D3DFVF_XYZ | D3DFVF_TEX1;
+const DWORD VERTEXRECT::FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
 Image::Image(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 	: CComponent(_pGameObject, _pDevice)
@@ -24,6 +24,12 @@ Image::Image(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 	, m_vOffset(0.f, 0.f)
 	, m_vTiling(1.f, 1.f)
 {
+	ZeroMemory(&(m_tMaterial.MatD3D), sizeof(D3DMATERIAL9));
+	m_tMaterial.MatD3D.Diffuse = D3DCOLORVALUE{ 1.f, 1.f, 1.f, 1.f };
+	m_tMaterial.MatD3D.Specular =  D3DCOLORVALUE{ 1.f, 1.f, 1.f, 1.f };
+	m_tMaterial.MatD3D.Emissive =  D3DCOLORVALUE{ 1.f, 1.f, 1.f, 1.f };
+	m_tMaterial.MatD3D.Ambient = D3DCOLORVALUE{ 1.f, 1.f, 1.f, 1.f };
+	m_tMaterial.MatD3D.Power = 10.f;
 }
 
 void Image::Free()
@@ -61,6 +67,7 @@ HRESULT Image::Initialize()
 
 HRESULT Image::Render()
 {
+	m_pDevice->SetMaterial(&m_tMaterial.MatD3D);
 	if (FAILED(m_pDevice->SetTexture(0, (m_pTexture == nullptr ? 0 : m_pTexture->GetTexture()))))
 		return E_FAIL;
 	if (FAILED(m_pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEXRECT))))
@@ -241,6 +248,11 @@ HRESULT Image::UpdateBuffer()
 		pVertices[2].UV = D3DXVECTOR2(m_vOffset.x + m_vTiling.x, m_vOffset.y);
 		pVertices[3].Position = D3DXVECTOR3(-m_fWidth * m_tPivot.fX + m_fFillAmount * m_fWidth, -m_fHeight * (1.f - m_tPivot.fY), 0.f);
 		pVertices[3].UV = D3DXVECTOR2(m_vOffset.x + m_vTiling.x, m_vOffset.y + m_vTiling.y);
+
+		pVertices[0].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+		pVertices[1].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+		pVertices[2].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+		pVertices[3].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
 		m_pVertexBuffer->Unlock();
 	}
 	else
@@ -281,7 +293,10 @@ HRESULT Image::FillHorizontal()
 	default:
 		break;
 	}
-
+	pVertices[0].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+	pVertices[1].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+	pVertices[2].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+	pVertices[3].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
 	m_pVertexBuffer->Unlock();
 	return S_OK;
 }

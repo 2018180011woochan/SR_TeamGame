@@ -57,6 +57,9 @@ public:
 	const UINT			GetVertexCount();
 	const UINT			GetFaceCount();
 	HRESULT SetTexture(const UINT _nSubSet, CTexture* const _pTexture);
+
+	HRESULT SetMaterial(const UINT _nSubSet, const D3DMATERIAL9 _tMaterial);
+	D3DMATERIAL9 GetMaterial(const UINT _nSubSet);
 };
 END
 #define __MESH_H__

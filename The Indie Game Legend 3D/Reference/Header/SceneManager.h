@@ -19,6 +19,8 @@ public:
 	HRESULT SetUpCurrentScene(CScene* const _pCurrentScene);
 	UINT	Update(const float _fDeltaTime);
 	UINT	LateUpdate(const float _fDeltaTime);
+
+	bool	IsCurrentSceneActive();
 };
 END
 #define __SCENEMANAGER_H__

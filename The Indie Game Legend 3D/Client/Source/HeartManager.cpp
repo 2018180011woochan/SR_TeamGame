@@ -87,20 +87,20 @@ UINT CHeartManager::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 
-	static UINT nMax = 3;
-	static UINT nHP = 12;
-	if (GetAsyncKeyState('L') & 0x0001)
-	{
-		nMax++;
-	}
-	else if (GetAsyncKeyState('K') & 0x0001)
-	{
-		nMax--;
-	}
+	//static UINT nMax = 3;
+	//static UINT nHP = 12;
+	//if (GetAsyncKeyState('L') & 0x0001)
+	//{
+	//	nMax++;
+	//}
+	//else if (GetAsyncKeyState('K') & 0x0001)
+	//{
+	//	nMax--;
+	//}
 
-	nHP = CLAMP(nHP, 12, 24);
-	nMax = CLAMP(nMax, 3, 6);
-	SetHeartCount(nMax);
+	//nHP = CLAMP(nHP, 12, 24);
+	//nMax = CLAMP(nMax, 3, 6);
+	//SetHeartCount(nMax);
 	return 0;
 }
 

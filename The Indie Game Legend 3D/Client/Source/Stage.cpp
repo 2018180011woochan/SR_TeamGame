@@ -70,10 +70,10 @@
 #include "BossHPBar.h"
 #include "BossHP.h"
 #include "DialogFrame.h"
-#include "NPCPortrait.h"
-#include "PlayerPortrait.h"
-#include "NPCText.h"
-#include "NPCDialog.h"
+#include "DialogPortrait.h"
+#include "DialogText.h"
+#include "DialogTextArrow.h"
+#include "DialogHUD.h"
 #pragma endregion
 
 #pragma region Collider
@@ -104,6 +104,8 @@
 #include "PiramidUnBrake.h"
 #include "KeyManager.h"
 #include "WeaponHUD.h"
+
+#include "Gun.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -170,11 +172,16 @@ HRESULT CStage::Awake()
 
 	AddPrototype(CBulletSpawn::Create());
 
+#pragma region GUN_TEST
+	AddPrototype(CGun::Create());
+	AddGameObject<CGun>();
+#pragma endregion
+
 	AddGameObject<CPlayer>();
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
-	AddGameObject<CPiramidUnBrake>();
+	//AddGameObject<CPiramidUnBrake>();
 
 
 	// Test용으로 추가함
@@ -205,15 +212,16 @@ HRESULT CStage::Awake()
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
-		_vector(1, -1, 1), color*0.9f, color, color*1.f);
+		_vector(1, -1, 1), color*1.f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
-		_vector(-1, -1, -1), color*0.9f, color, color*1.f);
+		_vector(-1, -1, -1), color*1.f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
 	CLightMananger::GetInstance()->LightOff();
+	
 
 	//Sector
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
@@ -333,10 +341,11 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CBossHP::Create());
 
 	AddPrototype(CDialogFrame::Create());
-	AddPrototype(CNPCPortrait::Create());
-	AddPrototype(CPlayerPortrait::Create());
-	AddPrototype(CNPCText::Create());
-	AddPrototype(CNPCDialog::Create());
+	AddPrototype(CDialogPortrait::Create());
+	AddPrototype(CDialogText::Create());
+	AddPrototype(CDialogTextArrow::Create());
+	AddPrototype(CDialogHUD::Create());
+
 #pragma endregion
 
 #pragma region GAMEOBJECT
@@ -372,12 +381,16 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CBossHPBar>()->SetEnable(false);
 	AddGameObject<CBossHP>()->SetEnable(false);
 
-	AddGameObject<CDialogFrame>()->SetEnable(true);
-	AddGameObject<CNPCPortrait>()->SetEnable(true);
-	AddGameObject<CPlayerPortrait>()->SetEnable(false);
-	AddGameObject<CNPCText>()->SetEnable(true);
-	AddGameObject<CNPCDialog>()->SetEnable(true);
+	AddGameObject<CDialogFrame>()->SetEnable(false);
+	AddGameObject<CDialogPortrait>()->SetEnable(false);
+	AddGameObject<CDialogText>()->SetEnable(false);
+	AddGameObject<CDialogTextArrow>()->SetEnable(false);
+	AddGameObject<CDialogHUD>()->SetEnable(true);
+
 #pragma endregion
+
+
+
 	return S_OK;
 }
 

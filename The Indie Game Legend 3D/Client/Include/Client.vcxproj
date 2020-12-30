@@ -177,6 +177,10 @@
     <ClInclude Include="..\Header\CrossHair.h" />
     <ClInclude Include="..\Header\Cryder.h" />
     <ClInclude Include="..\Header\DialogFrame.h" />
+    <ClInclude Include="..\Header\DialogHUD.h" />
+    <ClInclude Include="..\Header\DialogPortrait.h" />
+    <ClInclude Include="..\Header\DialogText.h" />
+    <ClInclude Include="..\Header\DialogTextArrow.h" />
     <ClInclude Include="..\Header\DiscIcon.h" />
     <ClInclude Include="..\Header\DiscText.h" />
     <ClInclude Include="..\Header\DoomBird.h" />
@@ -189,6 +193,7 @@
     <ClInclude Include="..\Header\Floor.h" />
     <ClInclude Include="..\Header\GemIcon.h" />
     <ClInclude Include="..\Header\GemText.h" />
+    <ClInclude Include="..\Header\Gun.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
@@ -198,6 +203,9 @@
     <ClInclude Include="..\Header\LaserBullet.h" />
     <ClInclude Include="..\Header\LavaTile.h" />
     <ClInclude Include="..\Header\LightMananger.h" />
+    <ClInclude Include="..\Header\Loading.h" />
+    <ClInclude Include="..\Header\LoadingBackGround.h" />
+    <ClInclude Include="..\Header\LoadingText.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MiniMapFrame.h" />
     <ClInclude Include="..\Header\MiniMapPartial.h" />
@@ -206,13 +214,9 @@
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\MsgManager.h" />
     <ClInclude Include="..\Header\NormalBullet.h" />
-    <ClInclude Include="..\Header\NPCDialog.h" />
-    <ClInclude Include="..\Header\NPCPortrait.h" />
-    <ClInclude Include="..\Header\NPCText.h" />
     <ClInclude Include="..\Header\NubBoss.h" />
     <ClInclude Include="..\Header\Obstacle.h" />
     <ClInclude Include="..\Header\Phubans.h" />
-    <ClInclude Include="..\Header\PlayerPortrait.h" />
     <ClInclude Include="..\Header\TripleBullet.h" />
     <ClInclude Include="..\Header\UtilityManger.h" />
     <ClInclude Include="..\Header\Piramid.h" />
@@ -275,6 +279,10 @@
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
     <ClCompile Include="..\Source\DialogFrame.cpp" />
+    <ClCompile Include="..\Source\DialogHUD.cpp" />
+    <ClCompile Include="..\Source\DialogPortrait.cpp" />
+    <ClCompile Include="..\Source\DialogText.cpp" />
+    <ClCompile Include="..\Source\DialogTextArrow.cpp" />
     <ClCompile Include="..\Source\DiscIcon.cpp" />
     <ClCompile Include="..\Source\DiscText.cpp" />
     <ClCompile Include="..\Source\DoomBird.cpp" />
@@ -287,6 +295,7 @@
     <ClCompile Include="..\Source\Floor.cpp" />
     <ClCompile Include="..\Source\GemIcon.cpp" />
     <ClCompile Include="..\Source\GemText.cpp" />
+    <ClCompile Include="..\Source\Gun.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
@@ -296,6 +305,9 @@
     <ClCompile Include="..\Source\LaserBullet.cpp" />
     <ClCompile Include="..\Source\LavaTile.cpp" />
     <ClCompile Include="..\Source\LightMananger.cpp" />
+    <ClCompile Include="..\Source\Loading.cpp" />
+    <ClCompile Include="..\Source\LoadingBackGround.cpp" />
+    <ClCompile Include="..\Source\LoadingText.cpp" />
     <ClCompile Include="..\Source\Logo.cpp" />
     <ClCompile Include="..\Source\MiniMapFrame.cpp" />
     <ClCompile Include="..\Source\MiniMapPartial.cpp" />
@@ -304,13 +316,9 @@
     <ClCompile Include="..\Source\Mouse.cpp" />
     <ClCompile Include="..\Source\MsgManager.cpp" />
     <ClCompile Include="..\Source\NormalBullet.cpp" />
-    <ClCompile Include="..\Source\NPCDialog.cpp" />
-    <ClCompile Include="..\Source\NPCPortrait.cpp" />
-    <ClCompile Include="..\Source\NPCText.cpp" />
     <ClCompile Include="..\Source\NubBoss.cpp" />
     <ClCompile Include="..\Source\Obstacle.cpp" />
     <ClCompile Include="..\Source\Phubans.cpp" />
-    <ClCompile Include="..\Source\PlayerPortrait.cpp" />
     <ClCompile Include="..\Source\TripleBullet.cpp" />
     <ClCompile Include="..\Source\UtilityManger.cpp" />
     <ClCompile Include="..\Source\Piramid.cpp" />

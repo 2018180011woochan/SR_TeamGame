@@ -54,9 +54,12 @@ typedef struct tagTransformDesc
 typedef struct tagVertexRect
 {
 	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Normal;
 	D3DXVECTOR2 UV;
 	static const DWORD FVF;
 }VERTEXRECT, *LPVERTEXRECT;
+
+const DWORD FVF_VERTEX_RECT = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 typedef struct tagPivot
 {
 	float fX;

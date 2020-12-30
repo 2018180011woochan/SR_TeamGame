@@ -85,6 +85,8 @@ HRESULT CText::Render()
 				vStartPos.y = vPosition.y - nLineIndex * m_Characters[0]->GetHeight() * m_fSize;
 				break;
 			case Engine::CText::CENTER:
+				vStartPos.x = vPosition.x - m_vecLineWidth[nLineIndex] * m_fSize * 0.5f + m_Characters[(nullptr == m_Characters[i] ? i + 1 : i)]->GetWidth() * m_fSize * 0.5f;
+				vStartPos.y = vPosition.y - nLineIndex * m_Characters[0]->GetHeight() * m_fSize;
 				break;
 			case Engine::CText::RIGHT:
 				vStartPos.x = vPosition.x + m_fWidth * 0.5f - m_vecLineWidth[nLineIndex] * m_fSize;
@@ -137,7 +139,14 @@ HRESULT CText::SetText(const TSTRING & _sText)
 	if (_sText == m_sText)
 		return S_OK;
 	if (_sText[0] == NULL)
+	{
+		m_Characters.clear();
+		m_Characters.shrink_to_fit();
+		m_vecLineWidth.clear();
+		m_vecLineWidth.shrink_to_fit();
+		m_nLength = 0;
 		return S_OK;
+	}
 
 	m_sText = _sText;
 

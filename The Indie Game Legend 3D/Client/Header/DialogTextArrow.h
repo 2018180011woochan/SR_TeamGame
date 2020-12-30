@@ -1,9 +1,9 @@
 #pragma once
-#ifndef __PLAYER_PORTRAIT_H__
+#ifndef __DIALOG_TEXT_ARROW_H__
 #include "GameObject.h"
 USING(Engine)
 class CTexturePool;
-class CPlayerPortrait final : public CGameObject
+class CDialogTextArrow final : public CGameObject
 {
 private:
 	Image*			m_pImage;
@@ -15,17 +15,14 @@ private:
 
 	float			m_fTime;
 	float			m_fAnimationSpeed;
-
-	bool			m_bPlaying;
-
 private:
-	explicit CPlayerPortrait();
-	explicit CPlayerPortrait(const CPlayerPortrait& _rOther);
-	virtual ~CPlayerPortrait() = default;
+	explicit CDialogTextArrow();
+	explicit CDialogTextArrow(const CDialogTextArrow& _rOther);
+	virtual ~CDialogTextArrow() = default;
 	// CBase을(를) 통해 상속됨
-	virtual void			Free() override;
+	virtual void Free() override;
 public:
-	static CPlayerPortrait* Create();
+	static CDialogTextArrow* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 public:
@@ -38,11 +35,9 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void OnAnimation(bool _bPlaying);
-
+	void SetArrow(const D3DXVECTOR3 _vPosition);
 private:
-	void AnimatePortrait(const float _fDeltaTime);
+	void AnimateArrow(const float _fDeltaTime);
 };
-#define __PLAYER_PORTRAIT_H__
-#endif // !__PLAYER_PORTRAIT_H__
-
+#define __DIALOG_TEXT_ARROW_H__
+#endif // !__DIALOG_TEXT_ARROW_H__

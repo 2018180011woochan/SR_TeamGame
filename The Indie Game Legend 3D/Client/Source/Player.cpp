@@ -20,6 +20,7 @@
 #include "LaserBullet.h"
 #include "MsgManager.h"
 USING(Engine)
+#include "Gun.h"
 
 CPlayer::CPlayer()
 	:CGameObject()
@@ -41,6 +42,7 @@ CPlayer::CPlayer()
 	, m_fDashDurationTime(0.f)
 	, m_eState(EState::Move)
 	, m_eSector(ESectorTileID::Sector1)
+	, m_pGun(nullptr)
 
 {
 }
@@ -63,7 +65,7 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 	, m_eState(_rOther.m_eState)
 	, m_fDashDurationTime(_rOther.m_fDashDurationTime)
 	, m_eSector(_rOther.m_eSector)
-
+	, m_pGun(nullptr)
 {
 
 }
@@ -84,11 +86,12 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))
 		{
 			BulletFire();
+			m_pGun->SetFire();
 		}
 		else if (m_ePreWeaponType == EWeaponType::Flame &&  m_pKeyMgr->Key_Press(KEY_LBUTTON))
 		{
 			BulletFire();
-
+			m_pGun->SetFire();
 		}
 	}
 
@@ -173,6 +176,11 @@ void CPlayer::Move(const float& _fSpeed,  const float _fDeltaTime)
 {
 	D3DXVec3Normalize(&m_vMoveDir, &m_vMoveDir);
 	m_pTransform->Add_Position(m_vMoveDir * _fSpeed *_fDeltaTime);
+
+	if (D3DXVECTOR3(0.f, 0.f, 0.f) != m_vMoveDir)
+		m_pGun->SetState(CGun::STATE::MOVE);
+	else
+		m_pGun->SetState(CGun::STATE::NONE);
 }
 
 void CPlayer::UpdateState(const float _fDeltaTime)
@@ -516,6 +524,8 @@ HRESULT CPlayer::Awake()
 
 HRESULT CPlayer::Start()
 {
+	m_pGun = (CGun*)FindGameObjectOfType<CGun>();
+
 	//Test
 	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
 	m_pWeaponHud = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
@@ -683,6 +693,7 @@ CPlayer * CPlayer::Create()
 void CPlayer::Free()
 {
 	//SafeRelease(m_pAmmobar);
+	SafeRelease(m_pGun);
 	m_vecWeapons.clear();
 	m_vecWeapons.shrink_to_fit();
 	CGameObject::Free();

@@ -1,9 +1,9 @@
 #pragma once
-#ifndef __NPC_PORTRAIT_H__
+#ifndef __DIALOG_PORTRAIT_H__
 #include "GameObject.h"
 USING(Engine)
 class CTexturePool;
-class CNPCPortrait final : public CGameObject
+class CDialogPortrait final : public CGameObject
 {
 private:
 	Image*			m_pImage;
@@ -18,13 +18,13 @@ private:
 
 	bool			m_bPlaying;
 private:
-	explicit CNPCPortrait();
-	explicit CNPCPortrait(const CNPCPortrait& _rOther);
-	virtual ~CNPCPortrait() = default;
+	explicit CDialogPortrait();
+	explicit CDialogPortrait(const CDialogPortrait& _rOther);
+	virtual ~CDialogPortrait() = default;
 	// CBase을(를) 통해 상속됨
-	virtual void			Free() override;
+	virtual void Free() override;
 public:
-	static CNPCPortrait* Create();
+	static CDialogPortrait* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 public:
@@ -38,9 +38,10 @@ public:
 
 public:
 	void OnAnimation(bool _bPlaying);
-	void SetPortrait(const TSTRING& _sPortrait);
+public:
+	void SetPortrait(const TSTRING& _sPortrait, const D3DXVECTOR3 _vPosition);
 private:
 	void AnimatePortrait(const float _fDeltaTime);
 };
-#define __NPC_PORTRAIT_H__
-#endif // !__NPC_PORTRAIT_H__
+#define __DIALOG_PORTRAIT_H__
+#endif // !__DIALOG_PORTRAIT_H__

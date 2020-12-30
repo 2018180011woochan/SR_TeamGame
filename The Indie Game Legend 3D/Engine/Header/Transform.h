@@ -7,6 +7,7 @@ class ENGINE_DLL CTransform : public CComponent
 {
 private:
 	TRANSFORM_DESC	m_tTransformDesc;
+	CGameObject*	m_pParent;
 public:
 	/*Getter*/
 	const TRANSFORM_DESC& Get_TransformDesc() const;
@@ -36,6 +37,7 @@ public:
 	void Add_RevolutionZ(const float& _rRevolutionZ);
 
 	void Set_Parent(const _vector& _rParent);
+	void SetParent(CGameObject* _pParent);
 	void Add_parent(const _vector& _rParent);
 
 	void Set_WorldMatrix(const _matrix & matWorld);

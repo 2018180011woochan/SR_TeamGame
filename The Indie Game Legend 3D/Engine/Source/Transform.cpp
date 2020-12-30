@@ -1,10 +1,11 @@
 #include "Transform.h"
-
+#include "GameObject.h"
 
 USING(Engine)
 
 CTransform::CTransform(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 	:CComponent(_pGameObject,_pDevice)
+	, m_pParent(nullptr)
 {
 }
 
@@ -41,7 +42,12 @@ void CTransform::UpdateTransform()
 	D3DXMatrixRotationX(&matRevX, D3DXToRadian(m_tTransformDesc.vRevolution.x));
 	D3DXMatrixRotationY(&matRevY, D3DXToRadian(m_tTransformDesc.vRevolution.y));
 	D3DXMatrixRotationZ(&matRevZ, D3DXToRadian(m_tTransformDesc.vRevolution.z));
-	D3DXMatrixTranslation(&matParent, m_tTransformDesc.vParent.x, m_tTransformDesc.vParent.y, m_tTransformDesc.vParent.z);
+
+	D3DXMatrixIsIdentity(&matParent);
+	if (nullptr == m_pParent)
+		D3DXMatrixIdentity(&matParent);
+	else
+		matParent = ((CTransform*)m_pParent->GetComponent<CTransform>())->Get_WorldMatrix();
 
 	m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans
 		*matRevX * matRevY * matRevZ * matParent;
@@ -182,6 +188,10 @@ void CTransform::Add_RevolutionZ(const float & _rRevolutionZ)
 void CTransform::Set_Parent(const _vector & _rParent)
 {
 	m_tTransformDesc.vParent = _rParent;
+}
+void CTransform::SetParent(CGameObject * _pParent)
+{
+	m_pParent = _pParent;
 }
 void CTransform::Add_parent(const _vector & _rParent)
 {

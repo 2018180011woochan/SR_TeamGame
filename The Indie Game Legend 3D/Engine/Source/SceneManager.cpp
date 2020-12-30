@@ -30,14 +30,21 @@ HRESULT CSceneManager::SetUpCurrentScene(CScene * const _pCurrentScene)
 
 UINT CSceneManager::Update(const float _fDeltaTime)
 {
-	if (nullptr == m_pCurrentScene)
+	if (nullptr == m_pCurrentScene || false == m_pCurrentScene->IsActive())
 		return 0;
 	return m_pCurrentScene->Update(_fDeltaTime);
 }
 
 UINT CSceneManager::LateUpdate(const float _fDeltaTime)
 {
-	if (nullptr == m_pCurrentScene)
+	if (nullptr == m_pCurrentScene || false == m_pCurrentScene->IsActive())
 		return 0;
 	return m_pCurrentScene->LateUpdate(_fDeltaTime);
+}
+
+bool CSceneManager::IsCurrentSceneActive()
+{
+	if (nullptr == m_pCurrentScene || false == m_pCurrentScene->IsActive())
+		return false;
+	return true;
 }

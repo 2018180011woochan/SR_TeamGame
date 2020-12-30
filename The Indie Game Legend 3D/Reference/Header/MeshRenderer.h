@@ -23,6 +23,8 @@ public:
 	HRESULT SetMesh(const TSTRING& _sMeshID);
 	HRESULT SetTexture(const UINT _nGroupIndex, class CTexture* const _pTexture);
 
+	HRESULT SetMaterial(const UINT _nSubSet, const D3DMATERIAL9 _tMaterial);
+	D3DMATERIAL9 GetMaterial(const UINT _nSubSet);
 };
 END
 #define __MESHRENDERER_H__

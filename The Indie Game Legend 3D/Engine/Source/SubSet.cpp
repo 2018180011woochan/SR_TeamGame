@@ -62,4 +62,15 @@ HRESULT CSubSet::SetTexture(CTexture * const _pTexture)
 	return S_OK;
 }
 
+HRESULT CSubSet::SetMaterial(const D3DMATERIAL9 _tMaterial)
+{
+	m_tMaterial.tMaterial = _tMaterial;
+	return S_OK;
+}
+
+D3DMATERIAL9 CSubSet::GetMaterial()
+{
+	return m_tMaterial.tMaterial;
+}
+
 

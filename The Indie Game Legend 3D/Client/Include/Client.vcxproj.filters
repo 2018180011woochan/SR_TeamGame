@@ -370,29 +370,29 @@
     <Filter Include="02.GameObject\04.UI\12.Dialog\02.Portrait">
       <UniqueIdentifier>{4063cb51-2ccf-43c4-8362-58ae3af70ae1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\04.UI\12.Dialog\02.Portrait\00.Player">
-      <UniqueIdentifier>{710f3f34-b0c7-4cf6-a207-01d1e5c97121}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\04.UI\12.Dialog\02.Portrait\01.NPC">
-      <UniqueIdentifier>{05f007da-b46e-4bdf-bd4e-dcce8eca6011}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\04.UI\12.Dialog\03.Text">
       <UniqueIdentifier>{01ab6949-37a2-4d3e-883c-0676b2a53c06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\04.UI\12.Dialog\03.Text\01.NPC">
-      <UniqueIdentifier>{c031718e-2f71-4c6b-a1af-5275166ec574}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\04.UI\12.Dialog\03.Text\00.Player">
-      <UniqueIdentifier>{23a7a3e3-9c97-42f6-af95-76fa84e432d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\04.UI\12.Dialog\00.Base">
       <UniqueIdentifier>{ccb7aadd-b80e-41a7-9cf2-8b0db299629b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\04.UI\12.Dialog\00.Base\00.Player">
-      <UniqueIdentifier>{babf88ac-3b4e-4304-87cc-1036a582793d}</UniqueIdentifier>
+    <Filter Include="02.GameObject\04.UI\12.Dialog\04.TextArrow">
+      <UniqueIdentifier>{47bd57ca-b6f5-4f9e-a765-dda5f522fc78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\04.UI\12.Dialog\00.Base\01.NPC">
-      <UniqueIdentifier>{d8e95cb6-cdc7-422b-9c07-e3cd1d9d49f4}</UniqueIdentifier>
+    <Filter Include="03.Scene\02.Loading">
+      <UniqueIdentifier>{45fa1bf4-e78b-4d7c-8dd5-a063d4d8a025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\13.Loading">
+      <UniqueIdentifier>{9425fa50-cfd0-4524-93f7-f4d6987eb312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\13.Loading\00.BackGround">
+      <UniqueIdentifier>{8bbc090e-05af-472c-8f7a-80ae349cf3c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\13.Loading\01.Text">
+      <UniqueIdentifier>{2570fb47-c5d6-4b88-8761-44f984c30ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\01.Gun">
+      <UniqueIdentifier>{3e4b5be8-19dc-4c46-990f-a4c2a4fbb1e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -690,17 +690,29 @@
     <ClInclude Include="..\Header\DialogFrame.h">
       <Filter>02.GameObject\04.UI\12.Dialog\01.Frame</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\NPCPortrait.h">
-      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\01.NPC</Filter>
+    <ClInclude Include="..\Header\DialogPortrait.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerPortrait.h">
-      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\00.Player</Filter>
+    <ClInclude Include="..\Header\DialogText.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\03.Text</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\NPCText.h">
-      <Filter>02.GameObject\04.UI\12.Dialog\03.Text\01.NPC</Filter>
+    <ClInclude Include="..\Header\DialogHUD.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\00.Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\NPCDialog.h">
-      <Filter>02.GameObject\04.UI\12.Dialog\00.Base\01.NPC</Filter>
+    <ClInclude Include="..\Header\DialogTextArrow.h">
+      <Filter>02.GameObject\04.UI\12.Dialog\04.TextArrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Loading.h">
+      <Filter>03.Scene\02.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingText.h">
+      <Filter>02.GameObject\04.UI\13.Loading\01.Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingBackGround.h">
+      <Filter>02.GameObject\04.UI\13.Loading\00.BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Gun.h">
+      <Filter>02.GameObject\00.Player\01.Gun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -980,17 +992,29 @@
     <ClCompile Include="..\Source\DialogFrame.cpp">
       <Filter>02.GameObject\04.UI\12.Dialog\01.Frame</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\NPCPortrait.cpp">
-      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\01.NPC</Filter>
+    <ClCompile Include="..\Source\DialogPortrait.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\PlayerPortrait.cpp">
-      <Filter>02.GameObject\04.UI\12.Dialog\02.Portrait\00.Player</Filter>
+    <ClCompile Include="..\Source\DialogText.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\03.Text</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\NPCText.cpp">
-      <Filter>02.GameObject\04.UI\12.Dialog\03.Text\01.NPC</Filter>
+    <ClCompile Include="..\Source\DialogHUD.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\00.Base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\NPCDialog.cpp">
-      <Filter>02.GameObject\04.UI\12.Dialog\00.Base\01.NPC</Filter>
+    <ClCompile Include="..\Source\DialogTextArrow.cpp">
+      <Filter>02.GameObject\04.UI\12.Dialog\04.TextArrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Loading.cpp">
+      <Filter>03.Scene\02.Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LoadingText.cpp">
+      <Filter>02.GameObject\04.UI\13.Loading\01.Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LoadingBackGround.cpp">
+      <Filter>02.GameObject\04.UI\13.Loading\00.BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gun.cpp">
+      <Filter>02.GameObject\00.Player\01.Gun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

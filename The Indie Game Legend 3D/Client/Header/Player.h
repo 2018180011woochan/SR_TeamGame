@@ -3,6 +3,8 @@
 #include "GameObject.h"
 USING(Engine)
 
+class CGun;
+
 #define NormalDelay 0.35f
 #define BigDelay 1.5f
 #define MultipleDelay 0.5f
@@ -98,6 +100,8 @@ private:
 	 wstring			m_sStepsfx; //나중에 타일에 따른 사운드 변화 줄떄 테스트용
 	 ESectorTileID		m_eSector;
 
+	 /****************************************/
+	 CGun*				m_pGun;
 private:
 	HRESULT KeyInput(const float _fDeltaTime);
 	HRESULT MoveCheck();

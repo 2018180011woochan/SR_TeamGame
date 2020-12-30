@@ -7,6 +7,8 @@
 
 #include "SoundMgr.h"
 
+#include "Loading.h"
+
 CIntro::CIntro()
 	:CScene(GetTypeHashCode<CIntro>())
 {
@@ -87,11 +89,14 @@ UINT CIntro::Update(const float _fDeltaTime)
 	CScene::Update(_fDeltaTime);
 	if (GetAsyncKeyState(VK_RETURN) && 0x8000)
 	{
-		if (FAILED(SetUpCurrentScene(CStage::Create())))
+		CLoading* pLoading = CLoading::Create(m_pDevice);
+		pLoading->OnLoading(CStage::Create());
+		SafeRelease(pLoading);
+		/*if (FAILED(SetUpCurrentScene(CStage::Create())))
 		{
 			PrintLog(L"Error", L"Failed To SetUpCurrentScene");
 			return E_FAIL;
-		}
+		}*/
 	}
 	return 0;
 }

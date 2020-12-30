@@ -357,3 +357,18 @@ HRESULT CMesh::SetTexture(const UINT _nSubSet, CTexture* const _pTexture)
 	return m_Subset[_nSubSet]->SetTexture(_pTexture);
 }
 
+HRESULT CMesh::SetMaterial(const UINT _nSubSet, const D3DMATERIAL9 _tMaterial)
+{
+	if (_nSubSet >= m_Subset.size())
+		return E_FAIL;
+	m_Subset[_nSubSet]->SetMaterial(_tMaterial);
+	return S_OK;
+}
+
+D3DMATERIAL9 CMesh::GetMaterial(const UINT _nSubSet)
+{
+	if (_nSubSet >= m_Subset.size())
+		return D3DMATERIAL9();
+	return m_Subset[_nSubSet]->GetMaterial();
+}
+

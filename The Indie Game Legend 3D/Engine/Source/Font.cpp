@@ -183,7 +183,7 @@ HRESULT CFont::LoadFont(const TSTRING & _sFont)
 		m_pDevice->CreateVertexBuffer(
 			sizeof(VERTEXRECT) * 4,
 			D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
-			VERTEXRECT::FVF,
+			FVF_VERTEX_RECT,
 			D3DPOOL_DEFAULT,
 			&pVertexBuffer,
 			0);
@@ -214,6 +214,11 @@ HRESULT CFont::LoadFont(const TSTRING & _sFont)
 		//pVertices[1].UV = D3DXVECTOR2(float(nStartX) / float(nTextureWidth) + 0.5f / nTextureWidth, float(nStartY) / float(nTextureHeight) + 0.5f / nTextureHeight);
 		//pVertices[2].UV = D3DXVECTOR2(float(nStartX + nWidth) / float(nTextureWidth) + 0.5f / nTextureWidth, float(nStartY) / float(nTextureHeight) + 0.5f / nTextureHeight);
 		//pVertices[3].UV = D3DXVECTOR2(float(nStartX + nWidth) / float(nTextureWidth) + 0.5f / nTextureWidth, float(nStartY + nHeight) / float(nTextureHeight) + 0.5f / nTextureHeight);
+
+		pVertices[0].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+		pVertices[1].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+		pVertices[2].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
+		pVertices[3].Normal = D3DXVECTOR3(0.f, 0.f, -1.f);
 
 		pVertexBuffer->Unlock();
 

@@ -5,6 +5,7 @@ USING(Engine)
 CScene::CScene(const UINT _nSceneID)
 	: m_pManagement(CManagement::GetInstance())
 	, m_pDevice(m_pManagement->GetDevice())
+	, m_bActive(true)
 {
 	SafeAddRef(m_pManagement);
 	SafeAddRef(m_pDevice);
@@ -64,4 +65,14 @@ CGameObject * CScene::AddGameObject(const TSTRING & _sTypeName)
 	if (nullptr == m_pManagement)
 		return nullptr;
 	return m_pManagement->AddGameObject(m_nSceneID, _sTypeName);
+}
+
+bool CScene::IsActive()
+{
+	return m_bActive;
+}
+
+void CScene::SetActive(const bool _bActive)
+{
+	m_bActive = _bActive;
 }

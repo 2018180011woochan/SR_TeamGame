@@ -87,6 +87,8 @@ HRESULT CManagement::Render(HWND _hWnd)
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
+	if (false == m_pSceneManager->IsCurrentSceneActive())
+		return S_OK;
 	return m_pRenderer->Render(_hWnd);
 }
 
@@ -100,7 +102,8 @@ float CManagement::Running()
 		float fDeltaTime = m_pTimeManager->GetDeltaTime();
 		m_pSceneManager->Update(fDeltaTime);
 		m_pSceneManager->LateUpdate(fDeltaTime);
-		m_pRenderer->Render(m_hWnd);
+		if (true == m_pSceneManager->IsCurrentSceneActive())
+			m_pRenderer->Render(m_hWnd);
 		m_pFrameManager->ShowFrame(m_hWnd, fDeltaTime);
 		return fDeltaTime;
 	}

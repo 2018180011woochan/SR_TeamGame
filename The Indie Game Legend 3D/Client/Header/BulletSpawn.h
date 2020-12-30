@@ -6,12 +6,13 @@
 #define CameraYMin -89.f
 
 USING(Engine)
+class CPlayerCamera;
 class CBulletSpawn final : public CGizmo  
 {
 private:
 	float m_fRevAngleX = 0.f;
 	float m_fRevAngleY = 0.f;
-
+	CPlayerCamera* m_pPlayerCamera;
 public:
 	explicit CBulletSpawn();
 	explicit CBulletSpawn(const CBulletSpawn& _rOther);
@@ -29,7 +30,6 @@ public:
 	static CBulletSpawn* Create();
 private:
 	virtual void Free() override;
-	HRESULT UpdatePos(const float _fDeltaTime);
 };
 #define __BULLETSPAWN_H__
 #endif

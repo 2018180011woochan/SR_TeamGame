@@ -1,20 +1,20 @@
 #include "stdafx.h"
-#include "..\Header\NPCText.h"
+#include "..\Header\DialogText.h"
 
 
-CNPCText::CNPCText()
+CDialogText::CDialogText()
 	: m_pText(nullptr)
 	, m_sText(TEXT(""))
 	, m_sBuffer(TEXT(""))
 	, m_nIndex(0)
 	, m_nLength(0)
 	, m_fTime(0.f)
-	, m_fTypingSpeed(0.2f)
+	, m_fTypingSpeed(0.1f)
 	, m_bIsEnd(false)
 {
 }
 
-CNPCText::CNPCText(const CNPCText & _rOther)
+CDialogText::CDialogText(const CDialogText & _rOther)
 	: CGameObject(_rOther)
 	, m_pText(nullptr)
 	, m_sText(TEXT(""))
@@ -27,72 +27,68 @@ CNPCText::CNPCText(const CNPCText & _rOther)
 {
 }
 
-void CNPCText::Free()
+void CDialogText::Free()
 {
 	CGameObject::Free();
 }
 
-CNPCText * CNPCText::Create()
+CDialogText * CDialogText::Create()
 {
-	CNPCText* pInstance = new CNPCText;
+	CDialogText* pInstance = new CDialogText;
 	if (FAILED(pInstance->InitializePrototype()))
 	{
-		SafeRelease(pInstance);
+		SafeAddRef(pInstance);
 		return nullptr;
 	}
 	return pInstance;
 }
 
-CGameObject * CNPCText::Clone()
+CGameObject * CDialogText::Clone()
 {
-	CNPCText* pClone = new CNPCText(*this);
+	CDialogText* pClone = new CDialogText(*this);
 	return pClone;
 }
 
-HRESULT CNPCText::InitializePrototype()
+HRESULT CDialogText::InitializePrototype()
 {
 	CGameObject::InitializePrototype();
 	return S_OK;
 }
 
-HRESULT CNPCText::Awake()
+HRESULT CDialogText::Awake()
 {
 	CGameObject::Awake();
 	m_pText = (CText*)AddComponent<CText>();
-	
+
 	m_eRenderID = ERenderID::UI;
 	return S_OK;
 }
 
-HRESULT CNPCText::Start()
+HRESULT CDialogText::Start()
 {
 	CGameObject::Start();
 	m_pText->SetFont(TEXT("Squarem-OL"));
 	m_pText->SetHorizon(CText::HORIZON::LEFT);
 	m_pText->SetSize(1.2f);
-	m_pText->SetWidth(438.f);
-	m_pText->SetHeight(200.f);
-	SetText(TEXT(""));
-	//SetText(TEXT("This is commander bean from hq\nand i've been assgined to you\nfor this mission"));
-	m_pTransform->Set_Position(D3DXVECTOR3(-0.f, 150.f, 0.f));
-	m_pTransform->UpdateTransform();
+	m_pText->SetWidth(550.f);
+	m_pText->SetHeight(66.f);
 	return S_OK;
 }
 
-UINT CNPCText::Update(const float _fDeltaTime)
+UINT CDialogText::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	Typing(_fDeltaTime);
 	return 0;
 }
 
-UINT CNPCText::LateUpdate(const float _fDeltaTime)
+UINT CDialogText::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 	return 0;
 }
 
-HRESULT CNPCText::Render()
+HRESULT CDialogText::Render()
 {
 	CGameObject::Render();
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
@@ -100,26 +96,27 @@ HRESULT CNPCText::Render()
 	return S_OK;
 }
 
-void CNPCText::SetText(const TSTRING & _sText)
+void CDialogText::SetText(const TSTRING & _sText, const D3DXVECTOR3 _vPosition)
 {
 	m_sText = _sText;
 	m_sBuffer = TEXT("");
 	m_nIndex = 0;
 	m_nLength = m_sText.length();
 	m_bIsEnd = false;
+	m_pText->SetText(TEXT(" "));
+	m_pTransform->Set_Position(_vPosition);
+	m_pTransform->UpdateTransform();
 }
 
-bool CNPCText::IsTypingEnd()
+bool CDialogText::IsTypingEnd()
 {
 	return m_bIsEnd;
 }
 
-void CNPCText::Typing(float _fDeltaTime)
+void CDialogText::Typing(float _fDeltaTime)
 {
 	if (true == m_bIsEnd)
 		return;
-
-
 
 	m_fTime += _fDeltaTime;
 
@@ -142,4 +139,3 @@ void CNPCText::Typing(float _fDeltaTime)
 		m_bIsEnd = true;
 	}
 }
-

@@ -32,6 +32,8 @@ public:
 
 public:
 	HRESULT SetTexture(CTexture* const _pTexture);
+	HRESULT SetMaterial(const D3DMATERIAL9 _tMaterial);
+	D3DMATERIAL9 GetMaterial();
 };
 END
 #define __SUBSET_H__

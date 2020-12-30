@@ -1,29 +1,21 @@
 #pragma once
-#ifndef __NPC_TEXT_H__
+#ifndef __LOADING_BACKGROUND_H__
 #include "GameObject.h"
 USING(Engine)
-class CNPCText final : public CGameObject
+class CTexturePool;
+class CLoadingBackGround final : public CGameObject
 {
 private:
-	CText* m_pText;
-	TSTRING	m_sText;
-	TSTRING m_sBuffer;
-
-	UINT	m_nLength;
-	UINT	m_nIndex;
-
-	float	m_fTime;
-	float	m_fTypingSpeed;
-
-	bool	m_bIsEnd;
+	CTexturePool*	m_pTexturePool;
+	Image*			m_pImage;
 private:
-	explicit CNPCText();
-	explicit CNPCText(const CNPCText& _rOther);
-	virtual ~CNPCText() = default;
+	explicit CLoadingBackGround();
+	explicit CLoadingBackGround(const CLoadingBackGround& _rOther);
+	virtual ~CLoadingBackGround() = default;
 	// CBase을(를) 통해 상속됨
 	virtual void Free() override;
 public:
-	static CNPCText* Create();
+	static CLoadingBackGround* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
 public:
@@ -34,13 +26,6 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
-
-public:
-	void SetText(const TSTRING& _sText);
-
-	bool IsTypingEnd();
-private:
-	void Typing(float _fDeltaTime);
 };
-#define __NPC_TEXT_H__
-#endif // !__NPC_TEXT_H__
+#define __LOADING_BACKGROUND_H__
+#endif // !__LOADING_BACKGROUND_H__

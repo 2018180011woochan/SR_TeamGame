@@ -9,6 +9,7 @@ class ENGINE_DLL CScene abstract : public CBase
 private:
 	CManagement*		m_pManagement;
 	UINT				m_nSceneID;
+	bool				m_bActive;
 protected:
 	LPDIRECT3DDEVICE9	m_pDevice;
 protected:
@@ -31,6 +32,9 @@ public:
 	CGameObject*	AddGameObject();
 	CGameObject*	AddGameObject(const TSTRING& _sTypeName);
 
+public:
+	bool		IsActive();
+	void		SetActive(const bool _bActive);
 };
 END
 #include "Scene.hpp"
