@@ -57,6 +57,7 @@ typedef struct tagVertexRect
 	D3DXVECTOR2 UV;
 	static const DWORD FVF;
 }VERTEXRECT, *LPVERTEXRECT;
+
 typedef struct tagPivot
 {
 	float fX;

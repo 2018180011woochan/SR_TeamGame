@@ -45,7 +45,7 @@ HRESULT CCameraManager::RegisteCamera(const ECameraID & _eCameraID, const CCamer
 		return E_FAIL;
 	}
 	m_pCameraList[_eCameraID] = const_cast<CCamera*>(pCamera);
-	SafeAddRef(pCamera);
+	SafeAddRef(m_pCameraList[_eCameraID]);
 	return S_OK;
 }
 

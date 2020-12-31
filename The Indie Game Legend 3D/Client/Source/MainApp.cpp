@@ -66,7 +66,6 @@ UINT CMainApp::Update()
 		return 0;
 	CKeyManager::GetInstance()->Update_KeyManager();
 	CMsgManager::GetInstance()->UpdateSkillTime(m_pManagement->Running());
-	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 	return S_OK;
 }
 

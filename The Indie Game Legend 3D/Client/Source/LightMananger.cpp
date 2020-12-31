@@ -125,6 +125,8 @@ CLightMananger::CLightMananger()
 	}
 	m_pDevice = nullptr;
 	m_pDevice = CManagement::GetInstance()->GetDevice();
+	//장치가 알아서 법선백터 관리 
+	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS,TRUE);
 	SafeAddRef(m_pDevice);
 }
 
