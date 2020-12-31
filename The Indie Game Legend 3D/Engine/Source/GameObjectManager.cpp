@@ -47,7 +47,12 @@ HRESULT CGameObjectManager::Awake(const size_t _nSceneID)
 	for (auto pGameObject : iter->second)
 	{
 		if (FAILED(pGameObject->Awake()))
+		{
+			TCHAR szBuf[128] = TEXT("");
+			_stprintf_s(szBuf, 128, TEXT("Failed to Awake %s gameobject."), pGameObject->GetName().c_str());
+			PrintLog(L"Error", szBuf);
 			return E_FAIL;
+		}
 	}
 	return S_OK;
 }
@@ -67,7 +72,12 @@ HRESULT CGameObjectManager::Start(const size_t _nSceneID)
 	for (auto pGameObject : iter->second)
 	{
 		if (FAILED(pGameObject->Start()))
+		{
+			TCHAR szBuf[128] = TEXT("");
+			_stprintf_s(szBuf, 128, TEXT("Failed to Start %s gameobject."), pGameObject->GetName().c_str());
+			PrintLog(L"Error", szBuf);
 			return E_FAIL;
+		}
 	}
 	return S_OK;
 }

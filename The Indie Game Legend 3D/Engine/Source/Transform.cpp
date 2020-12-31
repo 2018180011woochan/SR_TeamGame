@@ -19,19 +19,12 @@ HRESULT CTransform::Initialize()
 	ZeroMemory(&m_tTransformDesc, sizeof(TRANSFORM_DESC));
 	m_tTransformDesc.vScale = _vector(1, 1, 1);
 	D3DXMatrixIdentity(&m_tTransformDesc.matWorld);
+	D3DXMatrixIdentity(&m_tTransformDesc.vParent);
 	return S_OK;
 }
 
 void CTransform::UpdateTransform()
 {
-	//_matrix matScale, matRotX, matRotY, matRotZ, matTrans;
-	//D3DXMatrixScaling(&matScale, m_tTransformDesc.vScale.x, m_tTransformDesc.vScale.y, m_tTransformDesc.vScale.z);
-	//D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_tTransformDesc.vRotation.x));
-	//D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_tTransformDesc.vRotation.y));
-	//D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_tTransformDesc.vRotation.z));
-	//D3DXMatrixTranslation(&matTrans, m_tTransformDesc.vPosition.x, m_tTransformDesc.vPosition.y, m_tTransformDesc.vPosition.z);
-	//m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans;
-
 	_matrix matScale, matRotX, matRotY, matRotZ, matTrans, matRevX, matRevY, matRevZ, matParent;
 	D3DXMatrixScaling(&matScale, m_tTransformDesc.vScale.x, m_tTransformDesc.vScale.y, m_tTransformDesc.vScale.z);
 	D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_tTransformDesc.vRotation.x));
@@ -41,10 +34,10 @@ void CTransform::UpdateTransform()
 	D3DXMatrixRotationX(&matRevX, D3DXToRadian(m_tTransformDesc.vRevolution.x));
 	D3DXMatrixRotationY(&matRevY, D3DXToRadian(m_tTransformDesc.vRevolution.y));
 	D3DXMatrixRotationZ(&matRevZ, D3DXToRadian(m_tTransformDesc.vRevolution.z));
-	D3DXMatrixTranslation(&matParent, m_tTransformDesc.vParent.x, m_tTransformDesc.vParent.y, m_tTransformDesc.vParent.z);
+	//D3DXMatrixTranslation(&matParent, m_tTransformDesc.vParent.x, m_tTransformDesc.vParent.y, m_tTransformDesc.vParent.z);
 
 	m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans
-		*matRevX * matRevY * matRevZ * matParent;
+		*matRevX * matRevY * matRevZ * m_tTransformDesc.vParent;
 }
 /*행렬 세팅용*/
 HRESULT CTransform::UpdateWorld()
@@ -179,14 +172,11 @@ void CTransform::Add_RevolutionZ(const float & _rRevolutionZ)
 {
 	m_tTransformDesc.vRevolution.z += _rRevolutionZ;
 }
-void CTransform::Set_Parent(const _vector & _rParent)
+void CTransform::Set_Parent(const D3DMATRIX& _rParent)
 {
 	m_tTransformDesc.vParent = _rParent;
 }
-void CTransform::Add_parent(const _vector & _rParent)
-{
-	m_tTransformDesc.vParent += _rParent;
-}
+
 void CTransform::Set_Scale(const _vector & _rScale)
 {
 	m_tTransformDesc.vScale = _rScale;

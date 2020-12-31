@@ -22,10 +22,9 @@ public:
 	HRESULT IsBillboarding();
 
 public:
+	//Getter
+	bool	GetDead() { return m_bDead; };
 	virtual CGameObject * Clone() = 0;
-	//부모는 체력 감소 / 사망 체크 / 이팩트 호출 / 사운드 호출 등등 코드 분활이 필요하면 
-	//제각각 코드 분할 해서 모듈화 해줄것 요망
-	// 테스트 용이라 override 쓰지만 순수가상으로 만들어야  할듯
 	virtual void OnCollision(CGameObject* _pGameObject) override;
 protected:
 	const CTransform*	m_pPlayerTransform;

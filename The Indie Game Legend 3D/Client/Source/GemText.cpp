@@ -53,7 +53,7 @@ HRESULT CGemText::Start()
 {
 	CGameObject::Start();
 	m_pText->SetFont(TEXT("Squarem-OL"));
-	m_pText->SetText(TEXT("uchan-a baem gajyeowa"));
+	m_pText->SetText(TEXT(""));
 	m_pTransform->Set_Position(D3DXVECTOR3(-200.f, 0.f, 0.f));
 	m_pTransform->UpdateTransform();
 	return S_OK;

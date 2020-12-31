@@ -17,9 +17,9 @@ HRESULT CLightMananger::CreatePoint(const LightID & _eID, const _vector & _vPosi
 	pLight->Position = _vPosition;
 	pLight->Range = 1000.0f;
 	pLight->Falloff = 1.0f;
-	pLight->Attenuation0 = 0.0000001f;
-	pLight->Attenuation1 = 0.0f;
-	pLight->Attenuation2 = 0.0f;
+	pLight->Attenuation0 = 0.5f;
+	pLight->Attenuation1 = 0.01f;
+	pLight->Attenuation2 = 0.000001f;
 	m_pLightChannel[_eID] = pLight;
 	m_pDevice->SetLight(_eID, m_pLightChannel[_eID]);
 	return S_OK;

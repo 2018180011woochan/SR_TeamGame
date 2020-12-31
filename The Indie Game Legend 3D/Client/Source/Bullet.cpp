@@ -4,6 +4,8 @@
 #include "PlayerCamera.h"
 #include "BulletSpawn.h"
 #include "UtilityManger.h"
+#include "MsgManager.h"
+#include "..\..\Engine\Header\GameObject.h"
 
 CBullet::CBullet()
 {
@@ -89,21 +91,42 @@ HRESULT CBullet::Fire()
 	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
 
 	_vector PickPos;
-	if (CUtilityManger::CrossHairPicking(m_nSceneID, PickPos))
+	CGameObject* pGameObj = nullptr;
+
+	if (CMsgManager::GetInstance()->GetAutoAimEnable() && CUtilityManger::AutoAim(m_nSceneID,pGameObj))
 	{
-		cout << "picking" << endl;
-		m_vDiraction = PickPos - pSpawnTrans->Get_WorldPosition();
-		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+		if (nullptr != pGameObj)
+		{
+			auto  pMobTrans = ((CTransform*)pGameObj->GetComponent<CTransform>());
+			m_vDiraction = pMobTrans->Get_WorldPosition() - pSpawnTrans->Get_WorldPosition();
+			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+			//UiÃß°¡
+		}
+		else
+		{
+			m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
+			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+		}
 	}
 	else
 	{
-		m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
-		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-	}
+		if (CUtilityManger::CrossHairPicking(m_nSceneID, PickPos))
+		{
+			m_vDiraction = PickPos - pSpawnTrans->Get_WorldPosition();
+			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+		}
+		else
+		{
+			m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
+			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+		}
 
+	}
 	m_pTransform->Set_Position(vBulletPos);
 	return S_OK;
 }
+
+
 
 HRESULT CBullet::Animate(const float _fDeltaTime)
 {

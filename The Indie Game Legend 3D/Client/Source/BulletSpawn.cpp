@@ -35,7 +35,6 @@ HRESULT CBulletSpawn::Start()
 
 UINT CBulletSpawn::Update(const float _fDeltaTime)
 {
-	UpdatePos(_fDeltaTime);
 	CGizmo::Update(_fDeltaTime);
 	return OBJ_NOENVET;
 }
@@ -43,12 +42,17 @@ UINT CBulletSpawn::Update(const float _fDeltaTime)
 UINT CBulletSpawn::LateUpdate(const float _fDeltaTime)
 {
 	CGizmo::LateUpdate(_fDeltaTime);
+	
+	UpdatePos(0);
+	m_pTransform->UpdateTransform();
+
 	return OBJ_NOENVET;
 }
 
 HRESULT CBulletSpawn::Render()
 {
 	CGizmo::Render();
+
 	return S_OK;
 }
 
@@ -72,17 +76,17 @@ void CBulletSpawn::Free()
 HRESULT CBulletSpawn::UpdatePos(const float _fDeltaTime)
 {
 	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
-	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
-	m_pTransform->Set_Parent(CameraDesc.vEye);
+	CTransform* CameraTrans = (CTransform*)pCamera->GetComponent<CTransform>();
 
+	m_pTransform->Set_Parent(CameraTrans->Get_WorldMatrix());
 	
-	CMouse* m_pMouse = (CMouse*)FindGameObjectOfType<CMouse>();
+	/*CMouse* m_pMouse = (CMouse*)FindGameObjectOfType<CMouse>();
 	if (nullptr == m_pMouse)
 		return E_FAIL;
 	m_fRevAngleX += m_pMouse->Get_MouseDir().y  * 200.f * _fDeltaTime;
 	m_fRevAngleY += m_pMouse->Get_MouseDir().x  * 200.f * _fDeltaTime;
 	m_fRevAngleX = CLAMP(m_fRevAngleX, CameraYMin, CameraYMax);
-	m_pTransform->Set_Revolution(_vector(m_fRevAngleX, m_fRevAngleY,0));
+	m_pTransform->Set_Revolution(_vector(m_fRevAngleX, m_fRevAngleY, 0));*/
 	return S_OK;
 }
 

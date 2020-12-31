@@ -16,14 +16,14 @@ CMouse::CMouse(const CMouse & _rOther)
 
 void CMouse::MoveToCentorCursor()
 {
-	POINT ClientCenter = CMsgManager::GetInstance()->Get_ClientCenterPoint();
+	POINT ClientCenter = CMsgManager::GetInstance()->GetClientCenterPoint();
 	ClientToScreen(g_hWnd, &ClientCenter);
 	SetCursorPos(ClientCenter.x, ClientCenter.y);
 }
 
 void CMouse::UpdateMouseDir()
 {
-	_vector vClinetCenter = CMsgManager::GetInstance()->Get_ClientCenterVector();
+	_vector vClinetCenter = CMsgManager::GetInstance()->GetClientCenterVector();
 	POINT tMousePos;
 	GetCursorPos(&tMousePos);
 	ScreenToClient(g_hWnd, &tMousePos);

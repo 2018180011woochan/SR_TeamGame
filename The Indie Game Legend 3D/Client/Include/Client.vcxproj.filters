@@ -343,6 +343,12 @@
     <Filter Include="02.GameObject\00.Monster\11.WormBoss\01.WormBossBody\WormTail">
       <UniqueIdentifier>{db709d0f-8952-4af6-b6eb-23c6ba6c0f50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\09.Disc\01.DiscText">
+      <UniqueIdentifier>{b042a956-1f74-4a36-9cc4-8701810c4eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\03.CameraManger">
+      <UniqueIdentifier>{d850c5b5-9c1b-4237-82af-faef2b930f01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -621,6 +627,10 @@
     <ClInclude Include="..\Header\DiscIcon.h">
       <Filter>02.GameObject\04.UI\09.Disc\00.Icon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DiscText.h">
+      <Filter>02.GameObject\04.UI\09.Disc\01.DiscText</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CameraManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -881,6 +891,10 @@
     <ClCompile Include="..\Source\DiscIcon.cpp">
       <Filter>02.GameObject\04.UI\09.Disc\00.Icon</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\DiscText.cpp">
+      <Filter>02.GameObject\04.UI\09.Disc\01.DiscText</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

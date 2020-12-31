@@ -10,7 +10,7 @@ USING(Engine)
 #define RunCameraYCycle 0.3f
 #define FlameDelay 0.1f
 #define LaserDelay 0.5f
-
+#define HPMax 24
 
 enum class EState : _uint
 {
@@ -70,13 +70,17 @@ private:
 	 Image*						m_pAmmobar = nullptr;
 	 class CHeartManager*		m_pHeartManager = nullptr;
 	 class CWeaponHUD*			m_pWeaponHud = nullptr;
-	 class CWeaponHUD* m_pWeaponHUD;
+	 class CWeaponHUD*			m_pWeaponHUD;
+	 CText*						m_pGemText = nullptr;
+	 CText*						m_pDiscText = nullptr;
 
 
 	 //State
 	 _int						m_nHp = 0;
 	 _int						m_nHpMax = 0;
-	 _int						m_nCoin = 0;
+	 _int						m_nGem = 0;
+	 _int						m_nDisc = 0;
+	 _int						m_nDiscMax = 0;
 
 	 float						m_fHitDelay = 0.f;
 	 float						m_fHitDelayTime = 0.f;
@@ -109,13 +113,15 @@ private:
 	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
 	void    ChangeWeapon();// 관련 세팅값 설정
 	void	UpdateLight();
-	void	AddHp(_int _nHp);
 	void	TileSound(ESectorTileID _eID);
 	void	SoundPlay(const ESoundID& _eID);
+	void	UpdateUI();
 public:
 	//Getter Setter
 	const float& GetAmmo() { return m_fAmmo; }
 	const float& GetAmmoMax() { return m_fAmmoMax; }
+	void	AddHp(_int _nHp);
+	void    AddHpMax();
 	void AddWeapon(const EWeaponType _eWeaponType);
 protected:
 	explicit CPlayer();

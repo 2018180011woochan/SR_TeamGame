@@ -35,8 +35,7 @@ public:
 	void Add_RevolutionY(const float& _rRevolutionY);
 	void Add_RevolutionZ(const float& _rRevolutionZ);
 
-	void Set_Parent(const _vector& _rParent);
-	void Add_parent(const _vector& _rParent);
+	void Set_Parent(const D3DMATRIX& _rParent);
 
 	void Set_WorldMatrix(const _matrix & matWorld);
 	void Set_Scale(const _vector & _rScale);

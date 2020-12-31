@@ -6,6 +6,8 @@
 #include "Intro.h"
 #include "SoundMgr.h"
 #include "LightMananger.h"
+#include "UtilityManger.h"
+#include "CameraManager.h"
 CMainApp::CMainApp()
 	: m_pManagement(CManagement::GetInstance())
 {
@@ -14,7 +16,9 @@ CMainApp::CMainApp()
 
 void CMainApp::Free()
 {
-	CLightMananger::DeleteInstance();//Device use
+	CCameraManager::DeleteInstance(); // Camera Reference
+	CLightMananger::DeleteInstance();//Device Reference
+	CUtilityManger::Release(); //GameObject Reference
 	SafeRelease(m_pDevice);
     SafeRelease(m_pManagement);
 	CManagement::GetInstance()->ReleaseEngine();
@@ -61,7 +65,8 @@ UINT CMainApp::Update()
 	if (nullptr == m_pManagement)
 		return 0;
 	CKeyManager::GetInstance()->Update_KeyManager();
-	CMsgManager::GetInstance()->UpdateFreezing(m_pManagement->Running());
+	CMsgManager::GetInstance()->UpdateSkillTime(m_pManagement->Running());
+	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 	return S_OK;
 }
 

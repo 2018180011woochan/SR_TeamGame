@@ -28,7 +28,6 @@ HRESULT CBub::InitializePrototype()
 
 HRESULT CBub::Awake()
 {
-
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
 
@@ -38,6 +37,7 @@ HRESULT CBub::Awake()
 	SafeAddRef(m_pTexturePool);
 	m_iHP = 3;
 	m_eRenderID = ERenderID::Alpha;
+	m_nTag = 0;
 	return S_OK;
 }
 
@@ -45,9 +45,7 @@ HRESULT CBub::Start()
 {
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(4, 4, 4));
-	m_pTransform->Add_Position(_vector(0, -3, 0));
-	m_pTransform->Set_Position(_vector(-15.f, 0.f, 0.f));
-
+	//m_pTransform->Add_Position(_vector(0, -3, 0));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	//Test
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -84,9 +82,9 @@ UINT CBub::Update(const float _fDeltaTime)
 		m_fJumpingCnt = 0.f;
 	}
 
-	if (FAILED(Movement(_fDeltaTime)))
+	/*if (FAILED(Movement(_fDeltaTime)))
 		return 0;
-
+*/
 
 	m_pTransform->UpdateTransform();
 
@@ -114,12 +112,12 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
-	{
-		m_iHP--;
-		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
-		pBlood->SetPos(m_pTransform->Get_Position());
-	}
+	//if (L"PlayerBullet" == _pGameObject->GetName())
+	//{
+	//	m_iHP--;
+	//	CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+	//	pBlood->SetPos(m_pTransform->Get_Position());
+	//}
 	if (m_iHP <= 0)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();

@@ -62,12 +62,7 @@ HRESULT CWeaponHUD::Awake()
 
 	m_eRenderID = ERenderID::UI;
 
-	return S_OK;
-}
-
-HRESULT CWeaponHUD::Start()
-{
-	CGameObject::Start();
+	//Test	
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
 	SafeAddRef(m_pTexturePool);
 
@@ -76,6 +71,21 @@ HRESULT CWeaponHUD::Start()
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
 
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
+
+	return S_OK;
+}
+
+HRESULT CWeaponHUD::Start()
+{
+	CGameObject::Start();
+	//m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
+	//SafeAddRef(m_pTexturePool);
+
+	//m_sTextureKey = TEXT("WeaponHUD");
+
+	//m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
+
+	//m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
 	return S_OK;
 }
 

@@ -80,7 +80,8 @@ UINT CFlameBullet::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
-	
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	Animate(_fDeltaTime);
 	UpdateScale(_fDeltaTime);
 
@@ -93,7 +94,9 @@ UINT CFlameBullet::Update(const float _fDeltaTime)
 
 UINT CFlameBullet::LateUpdate(const float _fDeltaTime)
 {
+
 	CBullet::LateUpdate(_fDeltaTime);
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	m_fLivetime += _fDeltaTime;
 	if (m_fLivetime >= m_fLive)
@@ -122,6 +125,10 @@ HRESULT CFlameBullet::Fire()
 
 void CFlameBullet::OnCollision(CGameObject * _pGameObject)
 {
+	if ( L"Floor" == _pGameObject->GetName())
+	{
+		m_bDead = true;
+	}
 }
 
 void CFlameBullet::Free()

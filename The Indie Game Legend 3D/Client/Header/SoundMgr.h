@@ -15,7 +15,7 @@ public:
 		,HURT
 		,BULLET
 		,EFFECT
-		,TimeStopSkill
+		,PlayerSkill
 		,MONSTER_BULLET, BNT1,BNT2,UI,MOUSE, WALL, Floor, MONSTER, MAXCHANNEL};
 private:
 	explicit CSoundMgr();

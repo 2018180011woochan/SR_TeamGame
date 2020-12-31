@@ -43,7 +43,7 @@ HRESULT CExplosionBlue::Awake()
 	m_fAnimateSpeed = (m_nMaxFrame) / 1.f * m_fAnimateOneCycleTime;
 	//animate
 
-	m_pTransform->Set_Scale(_vector(7.f, 7.f, 7.f));
+	m_pTransform->Set_Scale(_vector(20.f, 20.f, 20.f));
 
 	m_fJumpPower = 10.f;
 	m_fJumpTime = 0.f;

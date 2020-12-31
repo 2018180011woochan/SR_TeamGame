@@ -1,6 +1,10 @@
 #pragma once
 #ifndef __MSGMANAGER_H__
 #include "Base.h"
+
+#define AirStrikeFireDelay 0.1f
+#define AirStrikeBulletCount 15
+#define AirstrikeSceneDuration 10.f
 USING(Engine)
 class CMsgManager : public CBase
 {
@@ -8,24 +12,44 @@ class CMsgManager : public CBase
 private:
 	RECT		m_tClinetRect;
 	_vector		m_vClinetCenterPos;
-	bool		m_bTrigger;
-	float		m_fFreezing;
-	float		m_fFreezingTime;
+	bool		m_bFreezeTrigger;
+	bool		m_bAutoAimTrigger;
+	bool		m_bAirStrikeTrigger;
+	bool		m_bAirStrikeReady;
 
+	float		m_fSkillDuration;
+	float		m_fSkillDurationTime;
+	//공습공격 간격
+	float		m_fAirStrikeDelay;
+	float		m_fAirStrikeTime;
+	//공습 컷씬 시간
+	float		m_fAirStrikeCutSceneDuration;
+	//float		m_fAirStrikeCutSceneTime;
+	bool		m_bAirStrikeSceneTrigger;
+
+	_vector		m_vAirStrikePos;
+	_uint		m_nAirStrikeCount;
+	_uint		m_nSceneID;
 public:	
-	_vector Get_ClientCenterVector() { return m_vClinetCenterPos; };
+	_vector GetClientCenterVector() { return m_vClinetCenterPos; };
 	RECT	GetClientRc() { return m_tClinetRect; }
-	POINT	Get_ClientCenterPoint();
+	POINT	GetClientCenterPoint();
+	bool	GetAutoAimEnable(){return m_bAutoAimTrigger;}
+	bool	GetAirStrikeReady() { return m_bAirStrikeReady; }
+
 public:
 	void	ReSizeClient();
 	void	Freeze(const float* _fTimeDeleta);
-	void	UpdateFreezing(const float& _fTimeDelta);
+	void    AirStrikeSetting(const _uint& _nSceneID,const _vector& _vPosition);
+	void	AirStrikeReady();
+	void	AirStrikeFire();
+	void	UpdateSkillTime(const float& _fTimeDelta);
 
-	void	Freezingstart(const float& _fFreeze);
+	void	FreezingStart(const float& _fTime);
+	void    AutoAimStart(const float& _fTime);
 private:
 	explicit CMsgManager();
 	virtual ~CMsgManager();
-public:
 	virtual void Free() override;
 };
 

@@ -88,7 +88,7 @@ HRESULT CManagement::Render(HWND _hWnd)
 		return E_FAIL;
 
 	return m_pRenderer->Render(_hWnd);
-}
+} 
 
 float CManagement::Running()
 {
