@@ -46,7 +46,7 @@ void CTransform::UpdateTransform()
 
 
 	m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans
-		*matRevX * matRevY * matRevZ * m_tTransformDesc.vParent;
+		*matRevX * matRevY * matRevZ * matParent;
 }
 /*행렬 세팅용*/
 HRESULT CTransform::UpdateWorld()
@@ -113,7 +113,7 @@ const _vector CTransform::Get_WorldPosition() const
 	return vPos;
 }
 
-const _vector CTransform::Get_Parent() const
+const _matrix CTransform::Get_Parent() const
 {
 	return  m_tTransformDesc.vParent;
 }
@@ -190,10 +190,7 @@ void CTransform::SetParent(CGameObject * _pParent)
 {
 	m_pParent = _pParent;
 }
-void CTransform::Add_parent(const _vector & _rParent)
-{
-	m_tTransformDesc.vParent += _rParent;
-}
+
 
 
 

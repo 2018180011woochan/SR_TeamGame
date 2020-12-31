@@ -196,9 +196,9 @@ HRESULT CStage::Awake()
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
 
-	AddGameObject<CPiramidUnBrake>();
+	//AddGameObject<CPiramidUnBrake>();
 
-	AddGameObject<CPiramid>();
+	//AddGameObject<CPiramid>();
 
 
 

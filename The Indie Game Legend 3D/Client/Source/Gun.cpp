@@ -50,6 +50,7 @@ HRESULT CGun::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pTransform->Set_Scale(D3DXVECTOR3(1.f, 1.f, 1.f));
 	m_pTransform->Set_Position(D3DXVECTOR3(1.09485126f, -2.05116796f, 1.58047402f));
+	//m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pTransform->Add_RotationY(180.f);
 	m_eRenderID = ERenderID::NoAlpha;
 	return S_OK;

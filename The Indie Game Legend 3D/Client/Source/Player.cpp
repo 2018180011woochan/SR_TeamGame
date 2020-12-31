@@ -87,7 +87,6 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		if (CMsgManager::GetInstance()->GetAirStrikeReady())
 		{
 			BulletFire();
-			m_pGun->SetFire();
 
 			//에임 계속 체크 
 			_vector AirStrikePos = vZero;
@@ -103,15 +102,16 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		{
 
 			BulletFire();
-			m_pGun->SetFire();
 
 			if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
 				BulletFire();
+				m_pGun->SetFire();
 			}
 			else if (m_ePreWeaponType == EWeaponType::Flame &&  m_pKeyMgr->Key_Press(KEY_LBUTTON))
 			{
 				BulletFire();
+				m_pGun->SetFire();
 			}
 
 		}
@@ -589,7 +589,7 @@ HRESULT CPlayer::Awake()
 {
 	CGameObject::Awake();
 	m_pKeyMgr = CKeyManager::GetInstance();
-	m_pTransform->Set_Position(_vector(0, 0, 0));
+	m_pTransform->Set_Position(_vector(0, 2.5f, 0));
 	m_eRenderID = ERenderID::Alpha;
 	m_fMoveSpeed = 30.f;
 	m_fRunSpeed = 45.f;
@@ -612,7 +612,7 @@ HRESULT CPlayer::Awake()
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(L"Cube",BOUND::BOX);
+	pCollider->SetMesh(L"Quad",BOUND::SPHERE);
 
 	m_bsfxStep = false;
 	m_nTag = 0;
