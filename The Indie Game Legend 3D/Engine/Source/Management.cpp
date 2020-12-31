@@ -90,7 +90,7 @@ HRESULT CManagement::Render(HWND _hWnd)
 	if (false == m_pSceneManager->IsCurrentSceneActive())
 		return S_OK;
 	return m_pRenderer->Render(_hWnd);
-}
+} 
 
 float CManagement::Running()
 {

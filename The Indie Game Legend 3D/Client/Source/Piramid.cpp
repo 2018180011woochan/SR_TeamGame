@@ -20,6 +20,8 @@ HRESULT CPiramid::Awake()
 {
 	CObstacle::Awake();
 	m_bDead = false;
+	//
+	m_nTag = 0;
 	return S_OK;
 }
 

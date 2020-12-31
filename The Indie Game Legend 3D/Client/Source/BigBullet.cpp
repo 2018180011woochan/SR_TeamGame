@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\BigBullet.h"
 #include "ExplosionBlue.h"
+#include "SoundMgr.h"
 
 
 CBigBullet::CBigBullet()
@@ -35,8 +36,8 @@ HRESULT CBigBullet::Start()
 {
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("BigBullet"))[0]);
-	m_fMoveSpeed = 60.f;
-	m_pTransform->Set_Scale(_vector(2, 2, 2));
+	m_fMoveSpeed = 100.f;
+	m_pTransform->Set_Scale(_vector(4, 4, 4));
 	SafeAddRef(m_pTexturePool);
 
 	//아직 충돌 이외의 삭제 처리가 필요 함
@@ -49,6 +50,7 @@ UINT CBigBullet::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	m_pTransform->Add_Position(m_vDiraction* m_fMoveSpeed * _fDeltaTime);
 	m_pTransform->UpdateTransform();
@@ -60,11 +62,11 @@ UINT CBigBullet::Update(const float _fDeltaTime)
 UINT CBigBullet::LateUpdate(const float _fDeltaTime)
 {
 	CBullet::LateUpdate(_fDeltaTime);
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	m_fLivetime += _fDeltaTime;
 	if (m_fLivetime >= m_fLive)
 		m_bDead = true;
-
 	return OBJ_NOENVET;
 }
 
@@ -92,6 +94,13 @@ HRESULT CBigBullet::Fire()
 	return S_OK;
 }
 
+HRESULT CBigBullet::Fire(const _vector & _vPos, const _vector & _vDir)
+{
+	m_vDiraction = _vDir;
+	m_pTransform->Set_Position(_vPos);
+	return S_OK;
+}
+
 void CBigBullet::Free()
 {
 	CBullet::Free();
@@ -105,11 +114,13 @@ CBigBullet * CBigBullet::Create()
 
 void CBigBullet::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"Monster" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName())
+	if (L"Monster" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName())
 	{
 		CExplosionBlue* pEffect = nullptr;
 		pEffect = (CExplosionBlue*)AddGameObject<CExplosionBlue>();
 		pEffect->SetPos(m_pTransform->Get_Position());
+		CSoundMgr::GetInstance()->Play(L"sfxExplode.wav", CSoundMgr::Player_Bullet);
 		m_bDead = true;
 	}
 }

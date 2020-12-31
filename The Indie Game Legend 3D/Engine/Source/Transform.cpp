@@ -11,6 +11,7 @@ CTransform::CTransform(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const
 
 CTransform::CTransform(const CTransform & _rOther)
 	:CComponent(_rOther)
+	, m_pParent(nullptr)
 {
 	PrintLog(L"warring", L"copy transform Danger");
 }
@@ -20,19 +21,12 @@ HRESULT CTransform::Initialize()
 	ZeroMemory(&m_tTransformDesc, sizeof(TRANSFORM_DESC));
 	m_tTransformDesc.vScale = _vector(1, 1, 1);
 	D3DXMatrixIdentity(&m_tTransformDesc.matWorld);
+	D3DXMatrixIdentity(&m_tTransformDesc.vParent);
 	return S_OK;
 }
 
 void CTransform::UpdateTransform()
 {
-	//_matrix matScale, matRotX, matRotY, matRotZ, matTrans;
-	//D3DXMatrixScaling(&matScale, m_tTransformDesc.vScale.x, m_tTransformDesc.vScale.y, m_tTransformDesc.vScale.z);
-	//D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_tTransformDesc.vRotation.x));
-	//D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_tTransformDesc.vRotation.y));
-	//D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_tTransformDesc.vRotation.z));
-	//D3DXMatrixTranslation(&matTrans, m_tTransformDesc.vPosition.x, m_tTransformDesc.vPosition.y, m_tTransformDesc.vPosition.z);
-	//m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans;
-
 	_matrix matScale, matRotX, matRotY, matRotZ, matTrans, matRevX, matRevY, matRevZ, matParent;
 	D3DXMatrixScaling(&matScale, m_tTransformDesc.vScale.x, m_tTransformDesc.vScale.y, m_tTransformDesc.vScale.z);
 	D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_tTransformDesc.vRotation.x));
@@ -43,14 +37,16 @@ void CTransform::UpdateTransform()
 	D3DXMatrixRotationY(&matRevY, D3DXToRadian(m_tTransformDesc.vRevolution.y));
 	D3DXMatrixRotationZ(&matRevZ, D3DXToRadian(m_tTransformDesc.vRevolution.z));
 
+
 	D3DXMatrixIsIdentity(&matParent);
 	if (nullptr == m_pParent)
 		D3DXMatrixIdentity(&matParent);
 	else
 		matParent = ((CTransform*)m_pParent->GetComponent<CTransform>())->Get_WorldMatrix();
 
+
 	m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans
-		*matRevX * matRevY * matRevZ * matParent;
+		*matRevX * matRevY * matRevZ * m_tTransformDesc.vParent;
 }
 /*행렬 세팅용*/
 HRESULT CTransform::UpdateWorld()
@@ -185,10 +181,11 @@ void CTransform::Add_RevolutionZ(const float & _rRevolutionZ)
 {
 	m_tTransformDesc.vRevolution.z += _rRevolutionZ;
 }
-void CTransform::Set_Parent(const _vector & _rParent)
+void CTransform::Set_Parent(const D3DMATRIX& _rParent)
 {
 	m_tTransformDesc.vParent = _rParent;
 }
+
 void CTransform::SetParent(CGameObject * _pParent)
 {
 	m_pParent = _pParent;
@@ -197,6 +194,9 @@ void CTransform::Add_parent(const _vector & _rParent)
 {
 	m_tTransformDesc.vParent += _rParent;
 }
+
+
+
 void CTransform::Set_Scale(const _vector & _rScale)
 {
 	m_tTransformDesc.vScale = _rScale;

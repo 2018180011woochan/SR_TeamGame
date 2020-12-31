@@ -47,6 +47,7 @@ UINT CBulletSpawn::LateUpdate(const float _fDeltaTime)
 {
 	CGizmo::LateUpdate(_fDeltaTime);
 	m_pTransform->UpdateTransform();
+
 	return OBJ_NOENVET;
 }
 

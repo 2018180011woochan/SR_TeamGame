@@ -18,7 +18,6 @@ public:
 	static CDiscText* Create();
 	// CGameObject을(를) 통해 상속됨
 	virtual CGameObject * Clone() override;
-
 public:
 	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT InitializePrototype() override;
@@ -34,3 +33,4 @@ public:
 };
 #define __DISC_TEXT_H__
 #endif // !__DISC_TEXT_H__
+

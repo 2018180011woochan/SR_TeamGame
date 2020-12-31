@@ -129,15 +129,12 @@ UINT CPlayerCamera::Update(const float _fDeltaTime)
 
 UINT CPlayerCamera::LateUpdate(const float _fDeltaTime)
 {
-	//CCamera::LateUpdate(_fDeltaTime);
-	//D3DXMATRIX matInverseView;
-	//D3DXMatrixInverse(&matInverseView, 0, &m_tCameraDesc.matView);
-	//m_pTransform->Set_WorldMatrix(matInverseView);
 	return OBJ_NOENVET;
 }
 
 HRESULT CPlayerCamera::Render()
 {
+
 	return S_OK	;
 }
 

@@ -181,13 +181,27 @@ HRESULT CStage::Awake()
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
-	//AddGameObject<CPiramidUnBrake>();
+
+	AddGameObject<CPiramidUnBrake>();
+
+	AddGameObject<CPiramid>();
+
 
 
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
-	//AddGameObject<CBub>();
+	CGameObject* pObj =  AddGameObject<CBub>();
+	((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(0, 0, 9));
+
+	// pObj = AddGameObject<CBub>();
+	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-10, 0, 0));
+	// pObj = AddGameObject<CBub>();
+	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(10, 0, 10));
+	//pObj = AddGameObject<CBub>();
+	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-20, 0, 10));
+	//pObj = AddGameObject<CBub>();
+	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(15, 0, 25));
 	//AddGameObject<CRub>();
 	//AddGameObject<CsqrNub>();
 	//AddGameObject<CTurret>();
@@ -215,11 +229,26 @@ HRESULT CStage::Awake()
 		_vector(1, -1, 1), color*1.f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
-
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
 		_vector(-1, -1, -1), color*1.f, color, color*1.f);
 
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World3,
+		_vector(1, -0, -1), color*0.4f, color, color*0.4f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World3, true);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World4,
+		_vector(-1, -0, 1), color*0.4f, color, color*0.4f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World4, true);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World5,
+		_vector(0, -1, 0), color*0.4f, color, color*0.4f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World5, true);
+
+
+	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::Player,
+	//	_vector(0, 30, 0), color*0.1f, color, color*0.f);
+	//CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
+
+
 	CLightMananger::GetInstance()->LightOff();
 	
 
@@ -238,6 +267,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CWall::Create());
 	AddPrototype(CFloor::Create());
 #pragma endregion
+	AddGameObject<CFloor>();
 
 
 	CSoundMgr::GetInstance()->PlayBGM(L"Sector1.wav");
@@ -273,7 +303,7 @@ UINT CStage::Update(float _fDeltaTime)
 	}
 	if (GetAsyncKeyState('2') & 0x8000)
 	{
-		fTestVolum += 0.01f;
+		//fTestVolum += 0.01f;
 	}
 	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
 
@@ -293,7 +323,7 @@ UINT CStage::Update(float _fDeltaTime)
 		}
 
 	}
-
+	 
 
 	//Test
 	return 0;

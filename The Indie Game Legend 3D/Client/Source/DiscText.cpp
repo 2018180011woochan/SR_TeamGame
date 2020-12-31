@@ -49,7 +49,6 @@ HRESULT CDiscText::Awake()
 {
 	CGameObject::Awake();
 	m_pText = (CText*)AddComponent<CText>();
-
 	m_eRenderID = ERenderID::UI;
 	return S_OK;
 }
@@ -58,6 +57,7 @@ HRESULT CDiscText::Start()
 {
 	CGameObject::Start();
 	m_pText->SetFont(TEXT("Squarem-OL"));
+
 	m_pText->SetHorizon(CText::HORIZON::RIGHT);
 	m_pText->SetSize(2.5f);
 	m_pText->SetWidth(95.f);
@@ -68,7 +68,6 @@ HRESULT CDiscText::Start()
 
 	SetMaxCount(m_nMaxCount);
 	SetCount(m_nCount);
-
 	return S_OK;
 }
 
@@ -92,6 +91,7 @@ HRESULT CDiscText::Render()
 	return S_OK;
 }
 
+
 void CDiscText::SetMaxCount(const UINT _nMaxCount)
 {
 	m_nMaxCount = _nMaxCount;
@@ -109,5 +109,4 @@ void CDiscText::SetCount(const UINT _nCount)
 	_stprintf_s(szBuf, 128, TEXT("%d/%d"), m_nCount, m_nMaxCount);
 	m_pText->SetText(szBuf);
 }
-
 

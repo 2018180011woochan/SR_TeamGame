@@ -47,7 +47,6 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 
 			if (BOUND::BOUNDTYPE::BOX == tOrigin.eType &&BOUND::BOUNDTYPE::BOX == tTarget.eType)
 			{
-				cout << "continue" << endl;
 				continue;
 			}
 			else if (BOUND::BOUNDTYPE::SPHERE == tOrigin.eType &&BOUND::BOUNDTYPE::SPHERE == tTarget.eType)
@@ -144,7 +143,7 @@ bool CCollisionManager::SphereToSphere(BOUND _tOriginBound, BOUND _tTargetBound)
 
 	if (fDiameter >= fLength)
 	{
-		cout << "SphereToSphere" << endl;
+		//cout << "SphereToSphere" << endl;
 		return true;
 	}
 	return false;

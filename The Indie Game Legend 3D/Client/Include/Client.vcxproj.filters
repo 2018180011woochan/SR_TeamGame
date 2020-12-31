@@ -394,6 +394,9 @@
     <Filter Include="02.GameObject\00.Player\01.Gun">
       <UniqueIdentifier>{3e4b5be8-19dc-4c46-990f-a4c2a4fbb1e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Manager\03.CameraManger">
+      <UniqueIdentifier>{d850c5b5-9c1b-4237-82af-faef2b930f01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -711,6 +714,9 @@
     <ClInclude Include="..\Header\LoadingBackGround.h">
       <Filter>02.GameObject\04.UI\13.Loading\00.BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CameraManager.h">
+      <Filter>97.Manager\03.CameraManger</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Gun.h">
       <Filter>02.GameObject\00.Player\01.Gun</Filter>
     </ClInclude>
@@ -1012,6 +1018,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\LoadingBackGround.cpp">
       <Filter>02.GameObject\04.UI\13.Loading\00.BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CameraManager.cpp">
+      <Filter>97.Manager\03.CameraManger</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Gun.cpp">
       <Filter>02.GameObject\00.Player\01.Gun</Filter>

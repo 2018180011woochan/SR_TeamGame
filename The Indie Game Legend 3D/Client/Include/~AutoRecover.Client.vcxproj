@@ -161,10 +161,6 @@
     <ClInclude Include="..\Header\AmmoGauge.h" />
     <ClInclude Include="..\Header\BigBullet.h" />
     <ClInclude Include="..\Header\Blood.h" />
-    <ClInclude Include="..\Header\BossHP.h" />
-    <ClInclude Include="..\Header\BossHPBar.h" />
-    <ClInclude Include="..\Header\BossHPFrame.h" />
-    <ClInclude Include="..\Header\BossText.h" />
     <ClInclude Include="..\Header\Bub.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletSpark.h" />
@@ -177,11 +173,6 @@
     <ClInclude Include="..\Header\ClientInclude.h" />
     <ClInclude Include="..\Header\CrossHair.h" />
     <ClInclude Include="..\Header\Cryder.h" />
-    <ClInclude Include="..\Header\DialogFrame.h" />
-    <ClInclude Include="..\Header\DialogHUD.h" />
-    <ClInclude Include="..\Header\DialogPortrait.h" />
-    <ClInclude Include="..\Header\DialogText.h" />
-    <ClInclude Include="..\Header\DialogTextArrow.h" />
     <ClInclude Include="..\Header\DiscIcon.h" />
     <ClInclude Include="..\Header\DiscText.h" />
     <ClInclude Include="..\Header\DoomBird.h" />
@@ -194,7 +185,6 @@
     <ClInclude Include="..\Header\Floor.h" />
     <ClInclude Include="..\Header\GemIcon.h" />
     <ClInclude Include="..\Header\GemText.h" />
-    <ClInclude Include="..\Header\Gun.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
     <ClInclude Include="..\Header\Intro.h" />
@@ -204,9 +194,6 @@
     <ClInclude Include="..\Header\LaserBullet.h" />
     <ClInclude Include="..\Header\LavaTile.h" />
     <ClInclude Include="..\Header\LightMananger.h" />
-    <ClInclude Include="..\Header\Loading.h" />
-    <ClInclude Include="..\Header\LoadingBackGround.h" />
-    <ClInclude Include="..\Header\LoadingText.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MiniMapFrame.h" />
     <ClInclude Include="..\Header\MiniMapPartial.h" />
@@ -269,10 +256,6 @@
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
     <ClCompile Include="..\Source\BigBullet.cpp" />
     <ClCompile Include="..\Source\Blood.cpp" />
-    <ClCompile Include="..\Source\BossHP.cpp" />
-    <ClCompile Include="..\Source\BossHPBar.cpp" />
-    <ClCompile Include="..\Source\BossHPFrame.cpp" />
-    <ClCompile Include="..\Source\BossText.cpp" />
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
@@ -280,11 +263,6 @@
     <ClCompile Include="..\Source\CardinalPoint.cpp" />
     <ClCompile Include="..\Source\CrossHair.cpp" />
     <ClCompile Include="..\Source\Cryder.cpp" />
-    <ClCompile Include="..\Source\DialogFrame.cpp" />
-    <ClCompile Include="..\Source\DialogHUD.cpp" />
-    <ClCompile Include="..\Source\DialogPortrait.cpp" />
-    <ClCompile Include="..\Source\DialogText.cpp" />
-    <ClCompile Include="..\Source\DialogTextArrow.cpp" />
     <ClCompile Include="..\Source\DiscIcon.cpp" />
     <ClCompile Include="..\Source\DiscText.cpp" />
     <ClCompile Include="..\Source\DoomBird.cpp" />
@@ -297,7 +275,6 @@
     <ClCompile Include="..\Source\Floor.cpp" />
     <ClCompile Include="..\Source\GemIcon.cpp" />
     <ClCompile Include="..\Source\GemText.cpp" />
-    <ClCompile Include="..\Source\Gun.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
@@ -307,9 +284,6 @@
     <ClCompile Include="..\Source\LaserBullet.cpp" />
     <ClCompile Include="..\Source\LavaTile.cpp" />
     <ClCompile Include="..\Source\LightMananger.cpp" />
-    <ClCompile Include="..\Source\Loading.cpp" />
-    <ClCompile Include="..\Source\LoadingBackGround.cpp" />
-    <ClCompile Include="..\Source\LoadingText.cpp" />
     <ClCompile Include="..\Source\Logo.cpp" />
     <ClCompile Include="..\Source\MiniMapFrame.cpp" />
     <ClCompile Include="..\Source\MiniMapPartial.cpp" />

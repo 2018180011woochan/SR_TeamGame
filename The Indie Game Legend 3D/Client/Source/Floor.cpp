@@ -43,7 +43,7 @@ HRESULT CFloor::InitializePrototype()
 HRESULT CFloor::Awake()
 {
 	CGameObject::Awake();
-	m_pTransform->Set_Scale(D3DXVECTOR3(112.f, 0.f, 96.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(112.f, 0.1f, 96.f));
 	m_pTransform->UpdateTransform();
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Floor"), BOUND::BOUNDTYPE::BOX);

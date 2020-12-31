@@ -27,6 +27,11 @@ CMiniMapRenderer::CMiniMapRenderer(const CMiniMapRenderer & _rOther)
 	, m_nCY(40)
 	, m_nPartialCX(120)
 	, m_nPartialCY(120)
+	, m_pTexturePool(nullptr)
+	, m_pExploredArea(nullptr)
+	, m_pEntireMap(nullptr)
+	, m_pPartialMap(nullptr)
+	, m_pPlayer(nullptr)
 {
 }
 

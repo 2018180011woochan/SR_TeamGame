@@ -2,6 +2,8 @@
 #ifndef __BULLET_H__
 #include "GameObject.h"
 #include "TexturePoolManager.h"
+#include "MsgManager.h"
+
 USING(Engine)
 class CBullet : public CGameObject
 {

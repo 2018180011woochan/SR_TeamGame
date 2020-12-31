@@ -47,6 +47,7 @@ UINT CTripleBullet::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	m_pTransform->Add_Position(m_vDiraction* m_fMoveSpeed * _fDeltaTime);
 	m_pTransform->UpdateTransform();
@@ -58,6 +59,7 @@ UINT CTripleBullet::Update(const float _fDeltaTime)
 UINT CTripleBullet::LateUpdate(const float _fDeltaTime)
 {
 	CBullet::LateUpdate(_fDeltaTime);
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	m_fLivetime += _fDeltaTime;
 	if (m_fLivetime >= m_fLive)
@@ -126,7 +128,8 @@ CTripleBullet * CTripleBullet::Create()
 
 void CTripleBullet::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"Monster" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName())
+	if (L"Monster" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName())
 	{
 		CBulletSpark* pEffect = nullptr;
 		pEffect = (CBulletSpark*)AddGameObject<CBulletSpark>();

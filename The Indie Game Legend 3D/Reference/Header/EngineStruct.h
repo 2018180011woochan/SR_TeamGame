@@ -47,7 +47,7 @@ typedef struct tagTransformDesc
 	_vector	vScale;
 	_vector	vRotation; // For.Degree
 	_vector vRevolution;
-	_vector vParent;
+	_matrix vParent;
 	_matrix matWorld;
 }TRANSFORM_DESC;
 
@@ -59,7 +59,9 @@ typedef struct tagVertexRect
 	static const DWORD FVF;
 }VERTEXRECT, *LPVERTEXRECT;
 
+
 const DWORD FVF_VERTEX_RECT = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
+
 typedef struct tagPivot
 {
 	float fX;

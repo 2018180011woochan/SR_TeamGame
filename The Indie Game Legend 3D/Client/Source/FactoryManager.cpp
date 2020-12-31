@@ -74,15 +74,6 @@ HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 
 HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 {
-	/*3데이터의 사이즈가 다르면 로드실패*/
-	//if (m_vecSaveDataRoomID.size() != m_vecSaveDataPosition.size()  && m_vecSaveDataPosition.size()  != m_vecSaveDataType.size())
-	//{
-	//	PrintLog(L"Error", L"Failed Load Data");
-	//	int a = m_vecSaveDataRoomID.size();
-	//	int b = m_vecSaveDataPosition.size();
-	//	int c = m_vecSaveDataType.size();
-	//	return E_FAIL;
-	//}
 
 	CManagement* pManagement = CManagement::GetInstance();
 	CGameObject* pGameObject = nullptr;

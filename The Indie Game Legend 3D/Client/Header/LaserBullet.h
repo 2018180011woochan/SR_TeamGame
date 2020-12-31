@@ -3,8 +3,9 @@
 class CLaserBullet final : public CBullet
 {
 private:
-	_matrix	 m_matTest;
-
+	_matrix	 m_matDest;
+	bool	m_bAutoEnable = false;
+	float  m_fAxisAngle = 0.f;
 public:
 	explicit CLaserBullet();
 	explicit CLaserBullet(const CLaserBullet& _rOther);

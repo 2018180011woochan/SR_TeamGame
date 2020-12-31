@@ -132,6 +132,7 @@ void CItem::Bounce(float _fDeltaTime)
 
 HRESULT CItem::InitializePrototype()
 {
+	m_sName = L"Item";
 	return S_OK;
 }
 
@@ -142,7 +143,6 @@ HRESULT CItem::Awake()
 	m_eRenderID = ERenderID::Alpha;
 	m_bDelete = false;
 	m_sTextureName = L"";
-	m_sName = L"Item";
 
 	// Prod By Woochan
 	m_fJumpPower = 10.f;
@@ -180,8 +180,8 @@ HRESULT CItem::Start()
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Cube"),BOUND::BOUNDTYPE::BOX);
-
+	m_pCollider->SetMesh(TEXT("Cube"),BOUND::BOX);
+	m_pCollider->m_bIsRigid = true;
 	return S_OK;
 }
 

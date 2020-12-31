@@ -17,6 +17,8 @@ public:
 	virtual HRESULT Render() override;
 	virtual CGameObject * Clone() override;
 	virtual HRESULT Fire() override;
+	virtual HRESULT Fire(const _vector& _vPos , const _vector& _vDir);
+
 	
 	virtual void Free() override;
 	static CBigBullet* Create();
