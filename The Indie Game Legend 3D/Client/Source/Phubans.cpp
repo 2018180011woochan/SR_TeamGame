@@ -66,6 +66,8 @@ HRESULT CPhubans::Start()
 	m_pCollider->m_bIsRigid = true;
 	m_nTag = 0;
 
+	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
+
 	return S_OK;
 }
 

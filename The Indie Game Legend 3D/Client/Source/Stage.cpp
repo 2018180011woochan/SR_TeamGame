@@ -42,6 +42,7 @@
 
 #pragma region NPC
 #include "Phubans.h"
+#include "Cactus.h"
 #pragma endregion
 
 #include "FactoryManager.h"
@@ -110,6 +111,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CBigShot::Create());
 
 	AddPrototype(CPhubans::Create());
+	AddPrototype(CCactus::Create());
 
 	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
@@ -183,8 +185,9 @@ HRESULT CStage::Awake()
 
 	//AddGameObject<CTreeBoss>();
 
-	AddGameObject<CShopKeeper>();
+	//AddGameObject<CShopKeeper>();
 	//AddGameObject<CPhubans>();
+	AddGameObject<CCactus>();
 
 	//컬링 테스트 
 	

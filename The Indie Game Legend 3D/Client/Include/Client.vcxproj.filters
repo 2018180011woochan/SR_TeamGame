@@ -334,6 +334,15 @@
     <Filter Include="02.GameObject\12.Shop\02.BigShot">
       <UniqueIdentifier>{68cabca7-fc75-454d-88cd-f4f5103fd925}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\11.Npc\01.Cactus">
+      <UniqueIdentifier>{cfb8d0fa-7184-4eb2-a2ed-0743c62ad2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\11.Npc\02.Derek">
+      <UniqueIdentifier>{b7be7448-660d-401e-ac43-aa352ea14223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\11.Npc\03.Edragon">
+      <UniqueIdentifier>{248d53e8-cdf2-49f3-a387-9dba1efa3ee1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -600,6 +609,9 @@
     <ClInclude Include="..\Header\BigShot.h">
       <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Cactus.h">
+      <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -847,6 +859,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Armor.cpp">
       <Filter>02.GameObject\12.Shop\01.Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Cactus.cpp">
+      <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
