@@ -21,13 +21,14 @@ HRESULT CTransform::Initialize()
 	ZeroMemory(&m_tTransformDesc, sizeof(TRANSFORM_DESC));
 	m_tTransformDesc.vScale = _vector(1, 1, 1);
 	D3DXMatrixIdentity(&m_tTransformDesc.matWorld);
-	D3DXMatrixIdentity(&m_tTransformDesc.vParent);
 	return S_OK;
 }
 
 void CTransform::UpdateTransform()
 {
 	_matrix matScale, matRotX, matRotY, matRotZ, matTrans, matRevX, matRevY, matRevZ, matParent;
+	
+	D3DXMatrixIdentity(&matParent);
 	D3DXMatrixScaling(&matScale, m_tTransformDesc.vScale.x, m_tTransformDesc.vScale.y, m_tTransformDesc.vScale.z);
 	D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_tTransformDesc.vRotation.x));
 	D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_tTransformDesc.vRotation.y));
@@ -37,16 +38,13 @@ void CTransform::UpdateTransform()
 	D3DXMatrixRotationY(&matRevY, D3DXToRadian(m_tTransformDesc.vRevolution.y));
 	D3DXMatrixRotationZ(&matRevZ, D3DXToRadian(m_tTransformDesc.vRevolution.z));
 
-
-	D3DXMatrixIsIdentity(&matParent);
-	if (nullptr == m_pParent)
-		D3DXMatrixIdentity(&matParent);
-	else
+	if (nullptr != m_pParent)
+	{
 		matParent = ((CTransform*)m_pParent->GetComponent<CTransform>())->Get_WorldMatrix();
-
+	}
 
 	m_tTransformDesc.matWorld = matScale * matRotX * matRotY *matRotZ * matTrans
-		*matRevX * matRevY * matRevZ * m_tTransformDesc.vParent;
+		*matRevX * matRevY * matRevZ * matParent;
 }
 /*행렬 세팅용*/
 HRESULT CTransform::UpdateWorld()
@@ -113,11 +111,6 @@ const _vector CTransform::Get_WorldPosition() const
 	return vPos;
 }
 
-const _vector CTransform::Get_Parent() const
-{
-	return  m_tTransformDesc.vParent;
-}
-
 const _matrix CTransform::Get_WorldMatrix() const
 {
 	return m_tTransformDesc.matWorld;
@@ -181,21 +174,13 @@ void CTransform::Add_RevolutionZ(const float & _rRevolutionZ)
 {
 	m_tTransformDesc.vRevolution.z += _rRevolutionZ;
 }
-void CTransform::Set_Parent(const D3DMATRIX& _rParent)
-{
-	m_tTransformDesc.vParent = _rParent;
-}
 
 void CTransform::SetParent(CGameObject * _pParent)
 {
+	if (nullptr == _pParent)
+		return;
 	m_pParent = _pParent;
 }
-void CTransform::Add_parent(const _vector & _rParent)
-{
-	m_tTransformDesc.vParent += _rParent;
-}
-
-
 
 void CTransform::Set_Scale(const _vector & _rScale)
 {

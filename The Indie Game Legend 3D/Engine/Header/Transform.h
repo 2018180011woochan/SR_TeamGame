@@ -17,7 +17,6 @@ public:
 	const _vector Get_Position() const;
 	const _vector Get_WorldPosition() const;
 
-	const _vector Get_Parent() const;
 	const _matrix Get_WorldMatrix() const;
 	/*Setter*/
 	void Set_Position(const _vector& _rPosition);
@@ -36,13 +35,7 @@ public:
 	void Add_RevolutionY(const float& _rRevolutionY);
 	void Add_RevolutionZ(const float& _rRevolutionZ);
 
-
-	void Set_Parent(const _vector& _rParent);
 	void SetParent(CGameObject* _pParent);
-	void Add_parent(const _vector& _rParent);
-
-	void Set_Parent(const D3DMATRIX& _rParent);
-
 
 	void Set_WorldMatrix(const _matrix & matWorld);
 	void Set_Scale(const _vector & _rScale);
