@@ -630,7 +630,9 @@
     <ClInclude Include="..\Header\DiscText.h">
       <Filter>02.GameObject\04.UI\09.Disc\01.DiscText</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CameraManager.h" />
+    <ClInclude Include="..\Header\CameraManager.h">
+      <Filter>97.Manager\03.CameraManger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -894,7 +896,9 @@
     <ClCompile Include="..\Source\DiscText.cpp">
       <Filter>02.GameObject\04.UI\09.Disc\01.DiscText</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\CameraManager.cpp" />
+    <ClCompile Include="..\Source\CameraManager.cpp">
+      <Filter>97.Manager\03.CameraManger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

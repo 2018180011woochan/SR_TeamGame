@@ -4,6 +4,10 @@
 #include "Camera.h"
 
 USING(Engine)
+
+//카메라 여러개 세팅한뒤 
+//FSM구조로 활성화 설정만 관리하는 넘 
+
 class CCameraManager : public CBase
 {
 	enum  ECameraID : _uint
