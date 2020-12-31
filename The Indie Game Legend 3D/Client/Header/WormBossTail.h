@@ -3,6 +3,7 @@
 #include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
+class CWormBoss;
 class CWormBossTail final : public CMonster
 {
 private:
@@ -40,6 +41,7 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 	CTransform*	   m_pWormBossTransform;
+	CWormBoss*	   m_pWormBoss;
 
 	float		   m_fFrameSpeed;
 	float		   m_fFrameDeltaTime;

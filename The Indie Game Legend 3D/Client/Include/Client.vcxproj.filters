@@ -397,6 +397,27 @@
     <Filter Include="97.Manager\03.CameraManger">
       <UniqueIdentifier>{d850c5b5-9c1b-4237-82af-faef2b930f01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\12.Shop">
+      <UniqueIdentifier>{523b28ec-0226-4a32-92ab-5021a193d49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\00.Ammo">
+      <UniqueIdentifier>{d836b055-bbaf-4cf0-b319-65c10756daa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\01.Armor">
+      <UniqueIdentifier>{8a9907b8-cc7b-4fbd-84cd-d22e030eda33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\02.BigShot">
+      <UniqueIdentifier>{68cabca7-fc75-454d-88cd-f4f5103fd925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\11.Npc\01.Cactus">
+      <UniqueIdentifier>{cfb8d0fa-7184-4eb2-a2ed-0743c62ad2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\11.Npc\02.Derek">
+      <UniqueIdentifier>{b7be7448-660d-401e-ac43-aa352ea14223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\11.Npc\03.Edragon">
+      <UniqueIdentifier>{248d53e8-cdf2-49f3-a387-9dba1efa3ee1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -720,6 +741,21 @@
     <ClInclude Include="..\Header\Gun.h">
       <Filter>02.GameObject\00.Player\01.Gun</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ShopKeeper.h">
+      <Filter>02.GameObject\12.Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ammo.h">
+      <Filter>02.GameObject\12.Shop\00.Ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Armor.h">
+      <Filter>02.GameObject\12.Shop\01.Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigShot.h">
+      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Cactus.h">
+      <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1024,6 +1060,21 @@
     </ClCompile>
     <ClCompile Include="..\Source\Gun.cpp">
       <Filter>02.GameObject\00.Player\01.Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ShopKeeper.cpp">
+      <Filter>02.GameObject\12.Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Ammo.cpp">
+      <Filter>02.GameObject\12.Shop\00.Ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BigShot.cpp">
+      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Armor.cpp">
+      <Filter>02.GameObject\12.Shop\01.Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Cactus.cpp">
+      <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -29,6 +29,9 @@ private:
 	void ChaseAttack(float fDeltaTime);
 
 public:
+	bool GetIsChaseAttack();
+
+public:
 	virtual CGameObject * Clone() override;
 	static CWormBoss* Create();
 private:

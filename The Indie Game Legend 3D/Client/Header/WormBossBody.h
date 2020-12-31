@@ -4,6 +4,7 @@
 #include "TexturePoolManager.h"
 USING(Engine)
 class CWormBossBody2;
+class CWormBoss;
 class CWormBossBody final : public CMonster
 {
 private:
@@ -41,6 +42,7 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 	CTransform*	   m_pWormBossTransform;
+	CWormBoss*	   m_pWormBoss;
 
 	CWormBossBody2* pWormBody2;
 

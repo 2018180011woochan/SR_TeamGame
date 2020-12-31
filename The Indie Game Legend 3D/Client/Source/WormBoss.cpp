@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\Header\WormBoss.h"
+#include "WormBoss.h"
 #include "Player.h"
 #include "MeshRenderer.h"
 #include "WormBossBody.h"
@@ -287,6 +287,11 @@ void CWormBoss::ChaseAttack(float fDeltaTime)
 		m_eCurDirState = UP;
 		m_fMoveSpeed = 8.f;
 	}
+}
+
+bool CWormBoss::GetIsChaseAttack()
+{
+	return m_bDashAttack;
 }
 
 CGameObject * CWormBoss::Clone()

@@ -26,6 +26,13 @@
 #include "WormBossTail.h"
 #pragma endregion
 
+#pragma region SHOP
+#include "ShopKeeper.h"
+#include "Ammo.h"
+#include "Armor.h"
+#include "BigShot.h"
+#pragma endregion
+
 #pragma region EFFECT
 #include "Blood.h"
 #include "SmallExlode.h"
@@ -35,6 +42,7 @@
 
 #pragma region NPC
 #include "Phubans.h"
+#include "Cactus.h"
 #pragma endregion
 
 #include "FactoryManager.h"
@@ -118,7 +126,13 @@ HRESULT CStage::Awake()
 	AddPrototype(CExplosion::Create());
 	AddPrototype(CExplosionBlue::Create());
 
+	AddPrototype(CShopKeeper::Create());
+	AddPrototype(CAmmo::Create());
+	AddPrototype(CArmor::Create());
+	AddPrototype(CBigShot::Create());
+
 	AddPrototype(CPhubans::Create());
+	AddPrototype(CCactus::Create());
 
 	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
@@ -218,7 +232,9 @@ HRESULT CStage::Awake()
 
 	//AddGameObject<CTreeBoss>();
 
+	//AddGameObject<CShopKeeper>();
 	//AddGameObject<CPhubans>();
+	AddGameObject<CCactus>();
 
 	//컬링 테스트 
 	

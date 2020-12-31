@@ -1,19 +1,15 @@
 #pragma once
-#ifndef __WORMBOSSBODY4_H__
-#include "Monster.h"
+#ifndef __CACTUS_H__
+
+#include "GameObject.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CWormBossTail;
-class CWormBoss;
-class CWormBossBody4 final : public CMonster
+class CCactus final : public CGameObject
 {
 private:
-	explicit CWormBossBody4();
-	explicit CWormBossBody4(const CWormBossBody4& other);
-	virtual ~CWormBossBody4() = default;
-
-	enum State { LEFT, RIGHT, UP, DOWN, IDLE };
-	enum Pos {UPPOS, DOWNPOS, SAME};
+	explicit CCactus();
+	explicit CCactus(const CCactus& other);
+	virtual ~CCactus() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -27,31 +23,27 @@ public:
 	virtual void OnCollision(CGameObject* _pGameObject) override;
 private:
 	HRESULT Movement(float fDeltaTime);
-	void Waving(float fDeltaTime);
-
+	void Jumping(float fDeltaTime);
+	
 public:
-	void Set_BodyPos(const _vector _vPos, UINT _nBodyIndex);
+	void SetNPCPos(const _vector _EggPos);
+	HRESULT IsBillboarding();
 
 public:
 	virtual CGameObject * Clone() override;
-	static CWormBossBody4* Create();
+	static CCactus* Create();
 private:
 	virtual void Free() override;
 
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
-	CTransform*	   m_pWormBossTransform;
+	const CTransform*	m_pPlayerTransform;
 
-	CWormBossTail* pWormTail;
-	CWormBoss*	   m_pWormBoss;
+	float				m_fMoveSpeed;
 
-	float		   m_fFrameSpeed;
-	float		   m_fFrameDeltaTime;
-	
-	float			m_fMoveSpeed;
-
-	float			m_fHeadJumpPower;
+	float				m_fWalkSpeed;
+	float				m_fWalkDeltaTime;
 
 	float				m_fJumpPower;
 	float				m_fJumpTime;
@@ -61,15 +53,10 @@ private:
 	float				m_fJumpSpeed;
 	float				m_fJumpDeltaTime;
 
-	State				m_eCurDirState;
-	Pos					m_eCurPos;
-	_vector vRightDir;
-	_vector vLeftDir;
-
 	UINT nIndex;
-	UINT nBodyIndex;
+
+	bool m_bIsTPS;
 };
 
-#define __WORMBOSSBODY4_H__
-#endif // !__WORMBOSSBODY4_H__
-
+#define __CACTUS_H__
+#endif // !__CACTUS_H__

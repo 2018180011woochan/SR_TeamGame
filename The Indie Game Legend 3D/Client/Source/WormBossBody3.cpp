@@ -4,6 +4,7 @@
 #include "MeshRenderer.h"
 #include "WormBossBody2.h"
 #include "WormBossBody4.h"
+#include "WormBoss.h"
 
 CWormBossBody3::CWormBossBody3()
 	: m_pTexturePool(nullptr)
@@ -84,6 +85,7 @@ UINT CWormBossBody3::Update(const float _fDeltaTime)
 	CMonster::Update(_fDeltaTime);
 
 	m_pWormBossTransform = (CTransform*)(FindGameObjectOfType<CWormBossBody2>()->GetComponent<CTransform>());
+	m_pWormBoss = (CWormBoss*)FindGameObjectOfType<CWormBoss>();
 
 	m_fFrameDeltaTime += _fDeltaTime;
 	if (m_fFrameSpeed <= m_fFrameDeltaTime)
@@ -131,21 +133,29 @@ HRESULT CWormBossBody3::Movement(float fDeltaTime)
 	_vector vDir = {0.f, 0.f, 0.f};
 	_vector vMoveDir;
 
-	if (m_eCurPos == UPPOS)
+	if (m_pWormBoss->GetIsChaseAttack())
 	{
-		if (m_eCurDirState == LEFT || m_eCurDirState == UP)
-			vDir = _vector(m_pWormBossTransform->Get_Position().x - nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().y + nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
-		if (m_eCurDirState == RIGHT || m_eCurDirState == DOWN)
-			vDir = _vector(m_pWormBossTransform->Get_Position().x + nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().y + nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
+		vDir = _vector(m_pWormBossTransform->Get_Position().x, m_pWormBossTransform->Get_Position().y, m_pWormBossTransform->Get_Position().z + 1.f);
 	}
-		
-		
-	if (m_eCurPos == DOWNPOS)
+	else
 	{
-		if (m_eCurDirState == LEFT || m_eCurDirState == UP)
-			vDir = _vector(m_pWormBossTransform->Get_Position().x - 3.f, m_pWormBossTransform->Get_Position().y - 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
-		if (m_eCurDirState == RIGHT || m_eCurDirState == DOWN)
-			vDir = _vector(m_pWormBossTransform->Get_Position().x + 3.f, m_pWormBossTransform->Get_Position().y - 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
+
+		if (m_eCurPos == UPPOS)
+		{
+			if (m_eCurDirState == LEFT || m_eCurDirState == UP)
+				vDir = _vector(m_pWormBossTransform->Get_Position().x - nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().y + nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
+			if (m_eCurDirState == RIGHT || m_eCurDirState == DOWN)
+				vDir = _vector(m_pWormBossTransform->Get_Position().x + nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().y + nBodyIndex * 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
+		}
+
+
+		if (m_eCurPos == DOWNPOS)
+		{
+			if (m_eCurDirState == LEFT || m_eCurDirState == UP)
+				vDir = _vector(m_pWormBossTransform->Get_Position().x - 3.f, m_pWormBossTransform->Get_Position().y - 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
+			if (m_eCurDirState == RIGHT || m_eCurDirState == DOWN)
+				vDir = _vector(m_pWormBossTransform->Get_Position().x + 3.f, m_pWormBossTransform->Get_Position().y - 3.f, m_pWormBossTransform->Get_Position().z + 1.f);
+		}
 	}
 
 	vMoveDir = vDir - m_pTransform->Get_Position();
