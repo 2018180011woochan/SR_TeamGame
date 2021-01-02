@@ -2,6 +2,7 @@
 #ifndef __SECTOR1_H__
 #include "GameObject.h"
 USING(Engine)
+class CTexturePool;
 class CSector final : public CGameObject
 {
 private:
@@ -23,10 +24,20 @@ private:
 	virtual void Free();
 public:
 	void SetSectorName(const TSTRING& _sSectorName);
+private:
+	void Animate(const float _fDeltaTime);
 
 private:
 	TSTRING		m_sSectorName;
 	CMeshRenderer* m_pMeshRenderer = nullptr;
+	CTexturePool*  m_pTexturePool;
+	TSTRING		   m_sTextureKey;
+
+	UINT		   m_nIndex;
+	UINT		   m_nMaxFrame;
+
+	float		   m_fTime;
+	float		   m_fAnimationSpeed;
 };
 
 #define __SECTOR1_H__

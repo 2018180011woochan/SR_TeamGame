@@ -627,7 +627,7 @@ HRESULT CPlayer::Awake()
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(L"Cube",BOUND::BOX);
+	pCollider->SetMesh(L"Cube",BOUND::SPHERE);
 
 	m_bsfxStep = false;
 

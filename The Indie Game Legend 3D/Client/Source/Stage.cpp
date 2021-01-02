@@ -335,7 +335,7 @@ HRESULT CStage::Awake()
 	AddUIObject();
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
-	//AddGameObject<CSkyBox>();
+	AddGameObject<CSkyBox>();
 #pragma endregion
 
 #pragma region Collider
@@ -349,13 +349,13 @@ HRESULT CStage::Awake()
 	CSoundMgr::GetInstance()->StopAll();
 
 
-	//CFactoryManager::GetInstance()->LoadDataFile(L"s1");
-	//CFactoryManager::GetInstance()->LoadScene(this);
-	//CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
-
+	 CFactoryManager::GetInstance()->LoadDataFile(L"s1");
+	 CFactoryManager::GetInstance()->LoadScene(this);
+	 CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
+	 
 	CScene::Awake();
 	
-
+	m_pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	return S_OK;
 }
 
