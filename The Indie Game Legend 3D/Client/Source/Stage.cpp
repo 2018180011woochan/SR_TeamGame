@@ -239,10 +239,7 @@ HRESULT CStage::Awake()
 	AddGameObject<CGun>();
 #pragma endregion
 
-	AddGameObject<CPlayer>();
-	AddGameObject<CPlayerCamera>();
-	AddGameObject<CBulletSpawn>();
-	AddGameObject<CMouse>();
+
 
 	//Sector
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
@@ -250,6 +247,11 @@ HRESULT CStage::Awake()
 
 	AddLight();
 	AddUIObject();
+
+	AddGameObject<CPlayer>();
+	AddGameObject<CPlayerCamera>();
+	AddGameObject<CBulletSpawn>();
+	AddGameObject<CMouse>();
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();

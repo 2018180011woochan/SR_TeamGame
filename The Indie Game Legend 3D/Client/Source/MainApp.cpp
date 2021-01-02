@@ -19,10 +19,11 @@ void CMainApp::Free()
 	CCameraManager::DeleteInstance(); // Camera Reference
 	CLightMananger::DeleteInstance();//Device Reference
 	CUtilityManger::Release(); //GameObject Reference
+	m_pTexturePoolManager->Release();
 	SafeRelease(m_pDevice);
     SafeRelease(m_pManagement);
 	CManagement::GetInstance()->ReleaseEngine();
-	m_pTexturePoolManager->Release();
+	//m_pTexturePoolManager->Release();
 	CFactoryManager::DeleteInstance();
 	CKeyManager::DeleteInstance();
 	CMsgManager::DeleteInstance();
