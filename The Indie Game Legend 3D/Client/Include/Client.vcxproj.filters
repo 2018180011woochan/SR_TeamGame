@@ -460,6 +460,24 @@
     <Filter Include="02.GameObject\99.Trigger\98.Gizmo\01.BulletSpawn">
       <UniqueIdentifier>{84291075-3e58-4e64-8013-b1df7d15e855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\14.Focus">
+      <UniqueIdentifier>{1fe1766a-2317-40c9-b7c6-c8123e69bf39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\13.InterectionObject">
+      <UniqueIdentifier>{20925498-6c0d-4edb-badd-22d0ab276540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\13.InterectionObject\00.Base">
+      <UniqueIdentifier>{75d969d3-1b9a-4b96-8c10-c4a72440af39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Interface">
+      <UniqueIdentifier>{ec497771-82c6-4695-9ba2-96caf03eea5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\13.InterectionObject\02.Switch">
+      <UniqueIdentifier>{3a8a6179-31ae-4bbc-9032-9a035c09259b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\13.InterectionObject\01.Door">
+      <UniqueIdentifier>{d1b7fcfc-0acc-41a8-a9c2-6cceabca6816}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -828,6 +846,16 @@
     <ClInclude Include="..\Header\WormBullet.h">
       <Filter>02.GameObject\00.Monster\12.Worm\02.Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Focus.h">
+      <Filter>02.GameObject\04.UI\14.Focus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InteractionObj.h">
+      <Filter>02.GameObject\13.InterectionObject\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Switch.h">
+      <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Door.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1178,6 +1206,16 @@
     <ClCompile Include="..\Source\WormBullet.cpp">
       <Filter>02.GameObject\00.Monster\12.Worm\02.Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Focus.cpp">
+      <Filter>02.GameObject\04.UI\14.Focus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\InteractionObj.cpp">
+      <Filter>02.GameObject\13.InterectionObject\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Switch.cpp">
+      <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Door.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

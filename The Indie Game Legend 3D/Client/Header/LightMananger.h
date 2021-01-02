@@ -7,9 +7,9 @@ class CLightMananger final : public CBase
 {
 	DECLARE_SINGLETON(CLightMananger)
 public:
-	enum LightID 
+	enum LightID  : int
 	{
-		Player, World1, World2,World3, World4, World5, End
+		Player, World1, World2,World3, World4, World5, World6, World7, End
 	};
 	// 이넘버전이 
 	D3DLIGHT9*	m_pLightChannel[(_uint)LightID::End]; 

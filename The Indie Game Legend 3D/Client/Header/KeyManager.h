@@ -20,6 +20,9 @@
 #define KEY_X		0x00000001 << 12
 #define KEY_C		0x00000001 << 13
 
+#define KEY_1		0x00000001 << 14
+#define KEY_2		0x00000001 << 15
+#define KEY_3		0x00000001 << 16
 
 USING(Engine)
 class CKeyManager : public CBase

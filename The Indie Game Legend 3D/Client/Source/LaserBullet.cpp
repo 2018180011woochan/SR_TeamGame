@@ -41,7 +41,7 @@ HRESULT CLaserBullet::Start()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
 	SafeAddRef(m_pTexturePool);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("LaserBullet"))[0]);
-	m_fMoveSpeed = 100.f;
+	m_fMoveSpeed = 10.f;
 
 	//아직 충돌 이외의 삭제 처리가 필요 함
 	m_fLive = 5.f;
@@ -146,38 +146,66 @@ HRESULT CLaserBullet::Fire()
 	if (CMsgManager::GetInstance()->GetAutoAimEnable() &&CUtilityManger::AutoAim(m_nSceneID, pGameObj))
 	{
 		//Ui추가
-		m_bAutoEnable = true;
 		auto  pMobTrans = ((CTransform*)pGameObj->GetComponent<CTransform>());
-		_matrix matBill,matView ,matMobWorld;
-		m_vDiraction = pMobTrans->Get_WorldPosition() - pSpawnTrans->Get_WorldPosition();
+		_matrix matView = pCamera->Get_Camera().matView;
+		_matrix matProj = pCamera->Get_Camera().matProj;
+		_vector vMobProj = pMobTrans->Get_WorldPosition();
+		_vector vSpawnProj = pSpawnTrans->Get_WorldPosition();
+		//투영으로 변환전에 방향 계산
+		m_vDiraction = vMobProj - vSpawnProj;
 		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-		//x/z 로 y축 각도 
+
+		//스포너랑 몹 투영좌표로 
+		D3DXVec3TransformCoord(&vMobProj, &vMobProj, &matView);
+		//D3DXVec3TransformCoord(&vMobProj, &vMobProj, &matProj);
+		D3DXVec3TransformCoord(&vSpawnProj, &vSpawnProj, &matView);
+		//D3DXVec3TransformCoord(&vSpawnProj, &vSpawnProj, &matProj);
+		cout << "monster : " << vMobProj.x << ", " << vMobProj.y << ", " << vMobProj.z << endl;
+		cout << "spawn   : " << vSpawnProj.x << ", " << vSpawnProj.y << ", " << vSpawnProj.z << endl;
+
+		//투영좌표의 방향
+//		_vector vProjDir = vMobProj - vSpawnProj;
+		_vector vProjDir;
+		 D3DXVec3TransformNormal(&vProjDir,&m_vDiraction,&matView);
+
+		D3DXVec3Normalize(&vProjDir, &vProjDir);
+		_vector vRight;
+		D3DXVec3Cross(&vRight, &_vector(0, 1, 0), &vProjDir);
+
 		_vector vWorldRight = _vector(1, 0, 0);
-		_vector vWorldLook = _vector(0, 0, 1);
-
+		_vector vWorldLook = _vector(0,0, 1);
 		_vector	vAngleY = _vector(m_vDiraction.x, 0, m_vDiraction.z);
-		_vector	vAngleZ = _vector(m_vDiraction.x, m_vDiraction.y, m_vDiraction.z);
+		_vector	vAngleZ = _vector(0, vProjDir.y, vProjDir.z);
 
-		float fDot = D3DXVec3Dot(&vWorldRight, &vAngleY);
+		//if (m_pTransform->Get_Position().z > pMobTrans->Get_WorldPosition().z)
+		//	vAngleZ.z *= -1;
+
+		float fDotY = D3DXVec3Dot(&vWorldRight, &vAngleY);
+		float fDotZ = D3DXVec3Dot(&vWorldLook, &vAngleZ);
 		float fAngleY,fAngleZ;
+		float fDegreeY,fDegreeZ;
+		fAngleY = acosf(fDotY);
+		fAngleZ = acosf(fDotZ);
+
 		if (vAngleY.z < 0)
-			fAngleY = 2 * PI - acosf(fDot);
-		else
-			fAngleY = acosf(fDot);
+			fAngleY = 2 * PI - acosf(fDotY);
 
-		fDot = D3DXVec3Dot(&vWorldLook, &vAngleZ);
+		fDegreeZ = D3DXToDegree(fAngleZ);
+		// Z 
+		//if (vAngleZ.y < 0)
+		//	fDegreeZ = -fDegreeZ;
+		if (vAngleZ.y < 0 && vProjDir.x < 0)
+			fDegreeZ = -fDegreeZ;
 
-		//if (vAngleZ.y  < 0)
-		//	m_fAxisAngle = 2 * PI- acosf(fDot);
-		//else
-			m_fAxisAngle = acosf(fDot);
+		cout << "Z: "<< fDegreeZ << endl;
+		cout << "Y: "<<D3DXToDegree(fAngleY) << endl;
 
-		cout << D3DXToDegree(fAngleY) << endl;
-		cout << D3DXToDegree(m_fAxisAngle) << endl;
+		//cout << D3DXToDegree(m_fAxisAngle) << endl;
 
-		cout << m_vDiraction.x << ", " << m_vDiraction.y << ", " << m_vDiraction.z << endl;
+		cout << vProjDir.x << ", " << vProjDir.y << ", " << vProjDir.z << endl;
 		m_pTransform->Add_Position(m_vDiraction * 1);
-		m_pTransform->Set_Rotation(_vector(0, D3DXToDegree(-fAngleY), D3DXToDegree(0)));
+		//m_pTransform->Set_Rotation(_vector(0, D3DXToDegree(-fAngleY), D3DXToDegree(-fAngleZ)));
+		m_pTransform->Set_Rotation(_vector(0, D3DXToDegree(-fAngleY),fDegreeZ));
 
 	}
 	else

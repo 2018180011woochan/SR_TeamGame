@@ -31,7 +31,6 @@ void CMainApp::Free()
 
 HRESULT CMainApp::Initialize()
 {
-	
 	if (FAILED(m_pManagement->Initialize(g_hWnd, 1280, 720, EDisplayMode::Window,120.f)))
 	{
 		PrintLog(TEXT("Error"), TEXT("Failed to ready engine."));

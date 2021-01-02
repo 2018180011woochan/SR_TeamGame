@@ -11,6 +11,7 @@ CSlider::CSlider()
 
 CSlider::CSlider(const CSlider & _rOther)
 	:CGameObject(_rOther)
+	,m_vDir(_rOther.m_vDir)
 {
 }
 
@@ -19,9 +20,9 @@ void CSlider::Move(const float _fDeltaTime)
 {
 	//Test
 	//나중에 툴로 배치신넘들 z x 방향 지정하는거 이거 리스트 가져와서 룸아이디로 하는걸로 
-	_vector vDir = _vector(1,0,0); 
-	vDir *= m_fMoveSpeed * (m_bReturn ? _fDeltaTime : -_fDeltaTime);
-	m_pTransform->Add_Position(vDir);
+	
+	m_vDir *= m_fMoveSpeed * (m_bReverse ? _fDeltaTime : -_fDeltaTime);
+	m_pTransform->Add_Position(m_vDir);
 }
 
 void CSlider::IsBillboarding()
@@ -48,29 +49,25 @@ void CSlider::IsBillboarding()
 
 HRESULT CSlider::InitializePrototype()
 {
+	m_vDir = _vector(1, 0, 0);
+	m_fMoveSpeed = 40.f;
 	return S_OK;
 }
 
 HRESULT CSlider::Awake()
 {
 	CGameObject::Awake();
+	m_pTransform->Set_Scale(_vector(3, 3, 3));
+	m_pTransform->Set_Position(_vector(1, 2, 3));
+
 	return S_OK;
 }
 
 HRESULT CSlider::Start()
 {
-	m_fMoveSpeed = 40.f;
-
-	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	//Test
-	m_pTransform->Set_Position(_vector(1, 2, 3));
-
-	m_vSavePos = m_pTransform->Get_Position();
-
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_eRenderID = ERenderID::Alpha;
-
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Object"));
 	SafeAddRef(m_pTexturePool);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Slider"))[0]);
@@ -87,12 +84,6 @@ UINT CSlider::Update(const float _fDeltaTime)
 UINT CSlider::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
-
-	//Test
-	if (m_vSavePos.x -26.f > m_pTransform->Get_Position().x)
-		m_bReturn = true;
-	else if(m_vSavePos.x + 26.f < m_pTransform->Get_Position().x)
-		m_bReturn = false;
 
 	return OBJ_NOENVET;
 }
@@ -111,9 +102,29 @@ CGameObject * CSlider::Clone()
 	return pInstance;
 }
 
+void CSlider::OnCollision(CGameObject * _pGameObject)
+{
+	//벽체크 
+	if (L"Wall" == _pGameObject->GetName())
+	{
+		m_bReverse = !m_bReverse;
+	}
+}
+
+void CSlider::SetDirVertical()
+{
+	//툴에서 배치시 세로 무브는 이거 호출로 세팅함
+	m_vDir = _vector(0, 0, 1);
+}
+
 CSlider * CSlider::Create()
 {
 	CSlider* pInstance = new CSlider();
+	if (FAILED(pInstance->InitializePrototype()))
+	{
+		SafeRelease(pInstance);
+		return pInstance;
+	}
 	return pInstance;
 }
 

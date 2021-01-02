@@ -128,6 +128,7 @@
 #include "WeaponHUD.h"
 
 #include "Gun.h"
+#include "Focus.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -211,7 +212,6 @@ HRESULT CStage::Awake()
 	AddGameObject<CMouse>();
 
 	//AddGameObject<CPiramidUnBrake>();
-
 	//AddGameObject<CPiramid>();
 
 
@@ -221,10 +221,9 @@ HRESULT CStage::Awake()
 
 	CGameObject* pObj =  AddGameObject<CBub>();
 	((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(0, 0, 9));
-
-	// pObj = AddGameObject<CBub>();
+	//pObj = AddGameObject<CBub>();
 	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-10, 0, 0));
-	// pObj = AddGameObject<CBub>();
+	//pObj = AddGameObject<CBub>();
 	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(10, 0, 10));
 	//pObj = AddGameObject<CBub>();
 	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-20, 0, 10));
@@ -248,38 +247,37 @@ HRESULT CStage::Awake()
 
 	//AddGameObject<CShopKeeper>();
 	//AddGameObject<CPhubans>();
-	AddGameObject<CCactus>();
+	//AddGameObject<CCactus>();
 
 	//컬링 테스트 
 	
 	//Light manager Test
 	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
 
+	//Direction World Light
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
-		_vector(1, -1, 1), color*1.f, color, color*1.f);
-
+		_vector(1, -0, 0), color*0.f, color* 0.9f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
-		_vector(-1, -1, -1), color*1.f, color, color*1.f);
-
+		_vector(-1, -0, 0), color*0.f, color* 0.9f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World3,
-		_vector(1, -0, -1), color*0.4f, color, color*0.4f);
+		_vector(0, -0, -1), color*0.f, color* 0.9f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World3, true);
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World4,
-		_vector(-1, -0, 1), color*0.4f, color, color*0.4f);
+		_vector(0, 0, 1), color*0.f, color* 0.9f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World4, true);
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World5,
-		_vector(0, -1, 0), color*0.4f, color, color*0.4f);
+		_vector(0, -1, 0), color*0.f, color* 0.9f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World5, true);
 
-
+	//Point World Light
 	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::Player,
-	//	_vector(0, 30, 0), color*0.1f, color, color*0.f);
+	//	_vector(0, 10, 0), color*0.f, color* 0.8f, color*0.f);
 	//CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
 
 
-	CLightMananger::GetInstance()->LightOff();
+	CLightMananger::GetInstance()->LightOn();
 	
 
 	//Sector
@@ -290,7 +288,7 @@ HRESULT CStage::Awake()
 	AddUIObject();
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
-	AddGameObject<CSkyBox>();
+	//AddGameObject<CSkyBox>();
 #pragma endregion
 
 #pragma region Collider
@@ -411,6 +409,9 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CDialogTextArrow::Create());
 	AddPrototype(CDialogHUD::Create());
 
+	AddPrototype(CFocus::Create());
+
+
 #pragma endregion
 
 #pragma region GAMEOBJECT
@@ -455,6 +456,8 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CDialogText>()->SetEnable(false);
 	AddGameObject<CDialogTextArrow>()->SetEnable(false);
 	AddGameObject<CDialogHUD>()->SetEnable(true);
+
+	AddGameObject<CFocus>()->SetEnable(false);
 
 #pragma endregion
 	AddPrototype(CWorm::Create());

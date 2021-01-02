@@ -175,6 +175,8 @@
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletSpark.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
+    <ClInclude Include="..\Header\Door.h" />
+    <ClInclude Include="..\Header\Switch.h" />
     <ClInclude Include="..\Header\CameraManager.h" />
     <ClInclude Include="..\Header\Cactus.h" />
     <ClInclude Include="..\Header\CardinalPoint.h" />
@@ -199,11 +201,13 @@
     <ClInclude Include="..\Header\FactoryManager.h" />
     <ClInclude Include="..\Header\FlameBullet.h" />
     <ClInclude Include="..\Header\Floor.h" />
+    <ClInclude Include="..\Header\Focus.h" />
     <ClInclude Include="..\Header\GemIcon.h" />
     <ClInclude Include="..\Header\GemText.h" />
     <ClInclude Include="..\Header\Gun.h" />
     <ClInclude Include="..\Header\Heart.h" />
     <ClInclude Include="..\Header\HeartManager.h" />
+    <ClInclude Include="..\Header\InteractionObj.h" />
     <ClInclude Include="..\Header\Intro.h" />
     <ClInclude Include="..\Header\IntroBackGround.h" />
     <ClInclude Include="..\Header\Item.h" />
@@ -297,6 +301,8 @@
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
+    <ClCompile Include="..\Source\Door.cpp" />
+    <ClCompile Include="..\Source\Switch.cpp" />
     <ClCompile Include="..\Source\CameraManager.cpp" />
     <ClCompile Include="..\Source\Cactus.cpp" />
     <ClCompile Include="..\Source\CardinalPoint.cpp" />
@@ -317,11 +323,13 @@
     <ClCompile Include="..\Source\FactoryManager.cpp" />
     <ClCompile Include="..\Source\FlameBullet.cpp" />
     <ClCompile Include="..\Source\Floor.cpp" />
+    <ClCompile Include="..\Source\Focus.cpp" />
     <ClCompile Include="..\Source\GemIcon.cpp" />
     <ClCompile Include="..\Source\GemText.cpp" />
     <ClCompile Include="..\Source\Gun.cpp" />
     <ClCompile Include="..\Source\Heart.cpp" />
     <ClCompile Include="..\Source\HeartManager.cpp" />
+    <ClCompile Include="..\Source\InteractionObj.cpp" />
     <ClCompile Include="..\Source\Intro.cpp" />
     <ClCompile Include="..\Source\IntroBackGround.cpp" />
     <ClCompile Include="..\Source\Item.cpp" />
