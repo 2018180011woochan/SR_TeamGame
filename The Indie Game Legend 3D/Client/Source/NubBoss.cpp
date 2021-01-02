@@ -7,6 +7,7 @@
 #include "Blood.h"
 #include "Explosion.h"
 #include "ExplosionBlue.h"
+#include "BossHP.h"
 
 CNubBoss::CNubBoss()
 	: m_pTexturePool(nullptr)
@@ -48,13 +49,15 @@ HRESULT CNubBoss::Awake()
 
 	m_bisDash = false;
 	m_bisStop = false;
+	m_bDead = false;
 
 	m_fMoveSpeed = 8.f;
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 
-
+	m_nTag = 0;
 	m_iHP = 10;
+	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -70,12 +73,21 @@ HRESULT CNubBoss::Start()
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
+	//Test
+	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
+	SafeAddRef(m_pBossHP);
+	m_pBossHP->Start();
+	m_pBossHP->SetEnable(true);
+
 	m_pTransform->Add_Position(_vector(0, 10.f, 0));
 	return S_OK;
 }
 
 UINT CNubBoss::Update(const float _fDeltaTime)
 {
+	/* 보스 hp 업데이트 */
+	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
+
 	if (m_bDead)
 		return OBJ_DEAD;
 
@@ -165,6 +177,7 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 				, m_pTransform->Get_Position().z + iRandZ));
 		}
 
+		m_pBossHP->SetEnable(false);
 		m_bDead = true;
 	}
 }

@@ -6,7 +6,8 @@
 #include "Player.h"
 #include "Camera.h"
 #include "Item.h"
-#include "Blood.h"
+#include "SandBurst.h"
+#include "DialogHUD.h"
 
 CCactus::CCactus()
 	:m_pTexturePool(nullptr)
@@ -51,6 +52,8 @@ HRESULT CCactus::Awake()
 	m_fYTest = 0.f;
 
 	nIndex = 0;
+	m_bEffect = false;
+	m_bisSave = false;
 
 	m_eRenderID = ERenderID::Alpha;
 
@@ -70,9 +73,9 @@ HRESULT CCactus::Start()
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	
 	//test
-	//m_pCollider = (CCollider*)AddComponent<CCollider>();
-	//m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
-	//m_pCollider->m_bIsRigid = true;
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->m_bIsRigid = true;
 
 	//Test
 	m_nTag = 0;
@@ -84,29 +87,30 @@ HRESULT CCactus::Start()
 
 UINT CCactus::Update(const float _fDeltaTime)
 {
-
 	CGameObject::Update(_fDeltaTime);
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
-
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
-
-
-	m_fJumpDeltaTime += _fDeltaTime;
-	if (m_fJumpSpeed <= m_fJumpDeltaTime)
+	if (m_bisSave)
 	{
-		m_fJumpDeltaTime -= m_fJumpSpeed;
+		if (FAILED(Movement(_fDeltaTime)))
+			return 0;
 
-		if (false == m_bJump)
-			m_bJump = true;
 
-		m_fYTest = m_pTransform->Get_Position().y;
+		m_fJumpDeltaTime += _fDeltaTime;
+		if (m_fJumpSpeed <= m_fJumpDeltaTime)
+		{
+			m_fJumpDeltaTime -= m_fJumpSpeed;
+			m_bEffect = true;
+			if (false == m_bJump)
+				m_bJump = true;
 
+			m_fYTest = m_pTransform->Get_Position().y;
+
+		}
+
+		Jumping(_fDeltaTime);
 	}
-
-	Jumping(_fDeltaTime);
 	m_pTransform->UpdateTransform();
 
 	return _uint();
@@ -132,7 +136,11 @@ HRESULT CCactus::Render()
 
 void CCactus::OnCollision(CGameObject * _pGameObject)
 {
-	
+	if (L"Player" == _pGameObject->GetName())
+	{
+		//CDialogHUD* pHUD = (CDialogHUD*)AddGameObject<CDialogHUD>();
+		m_bisSave = true;
+	}
 }
 
 
@@ -163,6 +171,12 @@ void CCactus::Jumping(float fDeltaTime)
 			m_pTransform->Get_Position().z));
 
 		m_fJumpTime += 0.05f;
+		if (m_bEffect)
+		{
+			CSandBurst* pSandBurst = (CSandBurst*)AddGameObject<CSandBurst>();
+			pSandBurst->SetPos(m_pTransform->Get_Position());
+			m_bEffect = false;
+		}
 
 		if (fY < 2.f)
 		{
@@ -174,8 +188,8 @@ void CCactus::Jumping(float fDeltaTime)
 
 			// 한번 뛸때마다 체력회복
 
-			//CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
-
+			CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
+			pPlayer->AddHp(1);
 		}
 	}
 }

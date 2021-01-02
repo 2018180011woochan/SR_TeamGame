@@ -9,6 +9,7 @@
 #include "Blood.h"
 #include "Explosion.h"
 #include "ExplosionBlue.h"
+#include "BossHP.h"
 
 CTreeBoss::CTreeBoss()
 	: m_pTexturePool(nullptr)
@@ -56,8 +57,10 @@ HRESULT CTreeBoss::Awake()
 
 	nIndex = 0;
 	nCreateIndex = 0;
-
+	//m_bEnable = true;
+	m_nTag = 0;
 	m_iHP = 30;
+	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -73,16 +76,22 @@ HRESULT CTreeBoss::Start()
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = false;
 
-	m_pTransform->Add_Position(_vector(0, 10, 0));
+	m_pTransform->Add_Position(_vector(10, 10, 10));
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 
+	//Test
+	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
+	SafeAddRef(m_pBossHP);
 
 	return S_OK;
 }
 
 UINT CTreeBoss::Update(const float _fDeltaTime)
 {
+	/* 보스 hp 업데이트 */
+	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
+
 	if (m_bDead)
 		return OBJ_DEAD;
 
@@ -155,6 +164,7 @@ void CTreeBoss::OnCollision(CGameObject * _pGameObject)
 				, m_pTransform->Get_Position().z + iRandZ));
 		}
 
+		m_pBossHP->SetEnable(false);
 		m_bDead = true;
 	}
 }

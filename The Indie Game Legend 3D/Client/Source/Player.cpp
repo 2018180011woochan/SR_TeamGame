@@ -669,7 +669,7 @@ HRESULT CPlayer::Start()
 	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
 	_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
 	m_pTransform->Set_Position(vPosition);
-	m_nTag = pSpawn->GetTage();
+	m_nTag = pSpawn->GetTag();
 #endif
 	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 

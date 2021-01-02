@@ -39,7 +39,7 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 	const CTransform*	m_pPlayerTransform;
-
+	CCollider*			m_pCollider;
 	float				m_fMoveSpeed;
 
 	float				m_fWalkSpeed;
@@ -49,6 +49,8 @@ private:
 	float				m_fJumpTime;
 	float				m_fYTest;
 	bool				m_bJump;
+	bool				m_bEffect;
+	bool				m_bisSave;
 
 	float				m_fJumpSpeed;
 	float				m_fJumpDeltaTime;

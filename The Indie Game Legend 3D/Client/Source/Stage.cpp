@@ -24,6 +24,12 @@
 #include "WormBossBody3.h"
 #include "WormBossBody4.h"
 #include "WormBossTail.h"
+#include "GreenBoyHead.h"
+#include "GreenBoyBody.h"
+#include "Flame.h"
+#include "GreenBoyLeftHand.h"
+#include "GreenBoyRightHand.h"
+#include "BloodHand.h"
 #pragma endregion
 
 #pragma region SHOP
@@ -38,11 +44,14 @@
 #include "SmallExlode.h"
 #include "Explosion.h"
 #include "ExplosionBlue.h"
+#include "SandBurst.h"
 #pragma endregion
 
 #pragma region NPC
 #include "Phubans.h"
 #include "Cactus.h"
+#include "Derek.h"
+#include "Edragon.h"
 #pragma endregion
 
 #include "FactoryManager.h"
@@ -58,6 +67,8 @@
 #include "TripleBullet.h"
 #include "FlameBullet.h"
 #include "LaserBullet.h"
+#include "FireBullet.h"
+#include "IceBullet.h"
 
 #pragma region INCLUDE_UI
 #include "AmmoGauge.h"
@@ -128,7 +139,13 @@
 #include "WeaponHUD.h"
 
 #include "Gun.h"
+
 #include "Focus.h"
+
+
+#include "Loading.h"
+#include "ShootingMinigame.h"
+
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -136,10 +153,12 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
+
 	AddPrototype(CBlood::Create());
 	AddPrototype(CSmallExlode::Create());
 	AddPrototype(CExplosion::Create());
 	AddPrototype(CExplosionBlue::Create());
+	AddPrototype(CSandBurst::Create());
 
 	AddPrototype(CShopKeeper::Create());
 	AddPrototype(CAmmo::Create());
@@ -148,6 +167,8 @@ HRESULT CStage::Awake()
 
 	AddPrototype(CPhubans::Create());
 	AddPrototype(CCactus::Create());
+	AddPrototype(CDerek::Create());
+	AddPrototype(CEdragon::Create());
 
 	AddPrototype(CItem::Create());
 	AddPrototype(CBub::Create());
@@ -172,6 +193,16 @@ HRESULT CStage::Awake()
 	AddPrototype(CWormBossBody3::Create());
 	AddPrototype(CWormBossBody4::Create());
 	AddPrototype(CWormBossTail::Create());
+	AddPrototype(CGreenBoyHead::Create());
+	AddPrototype(CGreenBoyBody::Create());
+	AddPrototype(CFlame::Create());
+	AddPrototype(CGreenBoyLeftHand::Create());
+	AddPrototype(CGreenBoyRightHand::Create());
+	// 그린보이가 쏘는 총알
+	AddPrototype(CBloodHand::Create());
+
+	AddPrototype(CFireBullet::Create());
+	AddPrototype(CIceBullet::Create());
 
 	AddPrototype(CSandTile::Create());
 	AddPrototype(CPiramid::Create());
@@ -219,9 +250,16 @@ HRESULT CStage::Awake()
 	// Test용으로 추가함
 	//AddGameObject<CSlider>();
 
+
 	CGameObject* pObj =  AddGameObject<CBub>();
 	((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(0, 0, 9));
 	//pObj = AddGameObject<CBub>();
+
+	//CGameObject* pObj =  AddGameObject<CWormBoss>();
+	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-20.f, 10.f, -20.f));
+
+	// pObj = AddGameObject<CBub>();
+
 	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-10, 0, 0));
 	//pObj = AddGameObject<CBub>();
 	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(10, 0, 10));
@@ -236,7 +274,7 @@ HRESULT CStage::Awake()
 	//AddGameObject<CCryder>();
 	//AddGameObject<CEgg>();
 	//AddGameObject<CWalkerBoss>();
-	//AddGameObject<CNubBoss>();
+	AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
 
@@ -248,6 +286,15 @@ HRESULT CStage::Awake()
 	//AddGameObject<CShopKeeper>();
 	//AddGameObject<CPhubans>();
 	//AddGameObject<CCactus>();
+
+	//AddGameObject<CDerek>();
+	//AddGameObject<CEdragon>();
+	//AddGameObject<CGreenBoyHead>();
+	//AddGameObject<CGreenBoyBody>();
+	//AddGameObject<CGreenBoyLeftHand>();
+	//AddGameObject<CGreenBoyRightHand>();
+	//AddGameObject<CFlame>();
+
 
 	//컬링 테스트 
 	
@@ -322,6 +369,13 @@ HRESULT CStage::Start()
 UINT CStage::Update(float _fDeltaTime)
 {
 	CScene::Update(_fDeltaTime);
+
+	// Test용으로 return누르면 미니게임 전환
+	//if (GetAsyncKeyState(VK_RETURN) && 0x8000)
+	//{
+	//	//CManagement::GetInstance()->SetUpCurrentScene(CShootingMinigame::Create());
+	//}
+
 	//Test
 	static float fTestVolum = 1.f;
 	static bool bLight = false;
