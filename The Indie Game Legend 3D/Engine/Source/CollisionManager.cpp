@@ -59,8 +59,8 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 					if (true == bCollision && true == Collider[j]->m_bIsRigid)
 					{
 						((CTransform*)(Collider[j]->GetGameObject()->GetComponent<CTransform>()))->Add_Position(vPenetration);
-						wcout << Collider[i]->GetGameObject()->GetName().c_str() << "  /  " << Collider[j]->GetGameObject()->GetName().c_str() << "  /  " << endl;
-						cout << vPenetration.x << " / " << vPenetration.y << " / " << vPenetration.z << " / " << endl;
+						//wcout << Collider[i]->GetGameObject()->GetName().c_str() << "  /  " << Collider[j]->GetGameObject()->GetName().c_str() << "  /  " << endl;
+						//cout << vPenetration.x << " / " << vPenetration.y << " / " << vPenetration.z << " / " << endl;
 					}
 				}
 				else
@@ -69,8 +69,8 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 					if (true == bCollision && true == Collider[i]->m_bIsRigid && true == Collider[j]->m_bIsRigid)
 					{
 						((CTransform*)(Collider[i]->GetGameObject()->GetComponent<CTransform>()))->Add_Position(vPenetration);
-						wcout << Collider[i]->GetGameObject()->GetName().c_str() << "  /  " << Collider[j]->GetGameObject()->GetName().c_str() << "  /  " << endl;
-						cout << vPenetration.x << " / " << vPenetration.y << " / " << vPenetration.z << " / " << endl;
+						//wcout << Collider[i]->GetGameObject()->GetName().c_str() << "  /  " << Collider[j]->GetGameObject()->GetName().c_str() << "  /  " << endl;
+						//cout << vPenetration.x << " / " << vPenetration.y << " / " << vPenetration.z << " / " << endl;
 					}
 
 				}

@@ -71,51 +71,51 @@ UINT CGun::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 
-	if (GetAsyncKeyState(VK_NUMPAD4) & 0x8000)
-	{
-		m_pTransform->Add_Position(D3DXVECTOR3(-1.f * _fDeltaTime, 0.f, 0.f));
-	}
-	else if (GetAsyncKeyState(VK_NUMPAD6) & 0x8000)
-	{
-		m_pTransform->Add_Position(D3DXVECTOR3(1.f * _fDeltaTime, 0.f, 0.f));
-	}
+	//if (GetAsyncKeyState(VK_NUMPAD4) & 0x8000)
+	//{
+	//	m_pTransform->Add_Position(D3DXVECTOR3(-1.f * _fDeltaTime, 0.f, 0.f));
+	//}
+	//else if (GetAsyncKeyState(VK_NUMPAD6) & 0x8000)
+	//{
+	//	m_pTransform->Add_Position(D3DXVECTOR3(1.f * _fDeltaTime, 0.f, 0.f));
+	//}
 
-	if (GetAsyncKeyState(VK_NUMPAD8) & 0x8000)
-	{
-		m_pTransform->Add_Position(D3DXVECTOR3(0.f, 1.f * _fDeltaTime, 0.f));
-	}
-	else if (GetAsyncKeyState(VK_NUMPAD5) & 0x8000)
-	{
-		m_pTransform->Add_Position(D3DXVECTOR3(0.f, -1.f * _fDeltaTime, 0.f));
-	}
+	//if (GetAsyncKeyState(VK_NUMPAD8) & 0x8000)
+	//{
+	//	m_pTransform->Add_Position(D3DXVECTOR3(0.f, 1.f * _fDeltaTime, 0.f));
+	//}
+	//else if (GetAsyncKeyState(VK_NUMPAD5) & 0x8000)
+	//{
+	//	m_pTransform->Add_Position(D3DXVECTOR3(0.f, -1.f * _fDeltaTime, 0.f));
+	//}
 
-	if (GetAsyncKeyState(VK_NUMPAD1) & 0x8000)
-	{
-		m_pTransform->Add_Position(D3DXVECTOR3(0.f, 0.f, 1.f * _fDeltaTime));
-	}
-	else if (GetAsyncKeyState(VK_NUMPAD3) & 0x8000)
-	{
-		m_pTransform->Add_Position(D3DXVECTOR3(0.f, 0.f, -1.f * _fDeltaTime));
-	}
+	//if (GetAsyncKeyState(VK_NUMPAD1) & 0x8000)
+	//{
+	//	m_pTransform->Add_Position(D3DXVECTOR3(0.f, 0.f, 1.f * _fDeltaTime));
+	//}
+	//else if (GetAsyncKeyState(VK_NUMPAD3) & 0x8000)
+	//{
+	//	m_pTransform->Add_Position(D3DXVECTOR3(0.f, 0.f, -1.f * _fDeltaTime));
+	//}
+
+	////if (GetAsyncKeyState(VK_NUMPAD7) & 0x8000)
+	////{
+	////	m_pTransform->Add_RotationY(5.f*_fDeltaTime);
+	////}
+	////else if (GetAsyncKeyState(VK_NUMPAD9) & 0x8000)
+	////{
+	////	m_pTransform->Add_RotationY(-5.f*_fDeltaTime);
+	////}
+
 
 	//if (GetAsyncKeyState(VK_NUMPAD7) & 0x8000)
 	//{
-	//	m_pTransform->Add_RotationY(5.f*_fDeltaTime);
+	//	SetActive(true);
 	//}
 	//else if (GetAsyncKeyState(VK_NUMPAD9) & 0x8000)
 	//{
-	//	m_pTransform->Add_RotationY(-5.f*_fDeltaTime);
+	//	SetActive(false);
 	//}
-
-
-	if (GetAsyncKeyState(VK_NUMPAD7) & 0x8000)
-	{
-		SetActive(true);
-	}
-	else if (GetAsyncKeyState(VK_NUMPAD9) & 0x8000)
-	{
-		SetActive(false);
-	}
 	return 0;
 }
 

@@ -62,6 +62,11 @@
 #pragma region INCLUDE_UI
 #include "AmmoGauge.h"
 #include "AmmoFrame.h"
+#include "AmmoIcon.h"
+#include "AmmoIconHighlight.h"
+#include "SkillGauge.h"
+#include "AmmoHUD.h"
+
 #include "HeartManager.h"
 #include "Heart.h"
 #include "CrossHair.h"
@@ -83,6 +88,15 @@
 #include "DialogTextArrow.h"
 #include "DialogHUD.h"
 #pragma endregion
+
+#pragma region WORM
+#include "Worm.h"
+#include "WormBody.h"
+#include "WormConnector.h"
+#include "WormTail.h"
+#include "WormBullet.h"
+#pragma endregion
+
 
 #pragma region Collider
 #include "Wall.h"
@@ -363,6 +377,11 @@ HRESULT CStage::AddUIObject()
 
 	AddPrototype(CAmmoGauge::Create());
 	AddPrototype(CAmmoFrame::Create());
+	AddPrototype(CAmmoIcon::Create());
+	AddPrototype(CAmmoIconHighlight::Create());
+	AddPrototype(CSkillGauge::Create());
+	AddPrototype(CAmmoHUD::Create());
+
 	AddPrototype(CWeaponHUD::Create());
 
 	AddPrototype(CHeart::Create());
@@ -398,7 +417,11 @@ HRESULT CStage::AddUIObject()
 
 	AddGameObject<CAmmoGauge>();
 	AddGameObject<CAmmoFrame>();
+	AddGameObject<CAmmoIcon>();
+	AddGameObject<CSkillGauge>();
+	AddGameObject<CAmmoHUD>();
 	AddGameObject<CWeaponHUD>();
+	AddGameObject<CAmmoIconHighlight>();
 
 	AddGameObject<CCrossHair>();
 
@@ -434,9 +457,24 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CDialogHUD>()->SetEnable(true);
 
 #pragma endregion
+	AddPrototype(CWorm::Create());
+	AddPrototype(CWormBody::Create());
+	AddPrototype(CWormConnector::Create());
+	AddPrototype(CWormTail::Create());
+	AddPrototype(CWormBullet::Create());
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
 
+	AddGameObject<CWorm>();
+	AddGameObject<CWormBody>();
+	AddGameObject<CWormBody>();
+	AddGameObject<CWormBody>();
+	AddGameObject<CWormBody>();
 
-
+	AddGameObject<CWormTail>();
 	return S_OK;
 }
 

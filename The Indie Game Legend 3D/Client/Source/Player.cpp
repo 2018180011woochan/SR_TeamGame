@@ -94,7 +94,7 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 				&& m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
 				CMsgManager::GetInstance()->AirStrikeSetting(m_nSceneID, AirStrikePos);
-				cout << AirStrikePos.x << "," << AirStrikePos.y << "," << AirStrikePos.z << endl;
+				//cout << AirStrikePos.x << "," << AirStrikePos.y << "," << AirStrikePos.z << endl;
 			}
 
 		}
@@ -649,7 +649,7 @@ HRESULT CPlayer::Start()
 	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f,2.5f,0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(0.f,3.5f,0.f));
 
 
 	 //weapon Setting

@@ -2,20 +2,21 @@
 
 newmtl Floors-mat
 Kd 1 1 1
-map_Kd Floors-mat-_MainTex-atlas0.png
+map_Kd C:\Users\KHJ\Desktop\Jusin\포트폴리오\IndieGameLegend3D\Resource\Model\Sector1\Version\Sector1.fbm\Floors-mat-_MainTex-atlas0.png
 Ks 1 1 1
 Ns 43.219
 illum 7
 
 newmtl Walls-mat0
 Kd 1 1 1
-map_Kd WallPanels.png
+map_Kd C:\Users\KHJ\Desktop\Jusin\포트폴리오\IndieGameLegend3D\Resource\Model\Sector1\Version\Sector1.fbm\WallPanels.png
 Ks 1 1 1
 Ns 43.219
 illum 7
 
 newmtl Walls-mat1
-Kd 0.75686275959015 0.80784314870834 0.85098040103912
+Kd 1 1 1
+map_Kd WallRoof.png
 Ks 1 1 1
 Ns 43.219
 illum 7
@@ -52,21 +53,21 @@ illum 7
 
 newmtl Walls-mat7
 Kd 1 1 1
-map_Kd WallSpecial.png
+map_Kd C:\Users\KHJ\Desktop\Jusin\포트폴리오\IndieGameLegend3D\Resource\Model\Sector1\Version\Sector1.fbm\WallSpecial.png
 Ks 1 1 1
 Ns 43.219
 illum 7
 
 newmtl Walls-mat8
 Kd 1 1 1
-map_Kd WallPipes.png
+map_Kd C:\Users\KHJ\Desktop\Jusin\포트폴리오\IndieGameLegend3D\Resource\Model\Sector1\Version\Sector1.fbm\WallPipes.png
 Ks 1 1 1
 Ns 43.219
 illum 7
 
 newmtl Walls-mat9
 Kd 1 1 1
-map_Kd WallVent.png
+map_Kd C:\Users\KHJ\Desktop\Jusin\포트폴리오\IndieGameLegend3D\Resource\Model\Sector1\Version\Sector1.fbm\WallVent.png
 Ks 1 1 1
 Ns 43.219
 illum 7

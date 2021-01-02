@@ -87,3 +87,8 @@ HRESULT CAmmoFrame::Render()
 	return S_OK;
 }
 
+void CAmmoFrame::SetAmmoLevel(const UINT _nLevel)
+{
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[_nLevel]);
+}
+

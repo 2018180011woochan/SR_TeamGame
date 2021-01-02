@@ -121,12 +121,6 @@
     <Filter Include="02.GameObject\04.UI\03.Ammo">
       <UniqueIdentifier>{75108c0d-c752-453e-a185-f06d938b8c52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\04.UI\03.Ammo\00.Gauge">
-      <UniqueIdentifier>{aec674f9-d85e-429a-b40f-22aefcbd088d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\04.UI\03.Ammo\01.Frame">
-      <UniqueIdentifier>{b7030400-c1df-4a76-abba-e11665a034be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\04.UI\05.Heart">
       <UniqueIdentifier>{ed44e63c-cdd1-413e-878a-3156b3f131f4}</UniqueIdentifier>
     </Filter>
@@ -418,6 +412,54 @@
     <Filter Include="02.GameObject\11.Npc\03.Edragon">
       <UniqueIdentifier>{248d53e8-cdf2-49f3-a387-9dba1efa3ee1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\01.Frame">
+      <UniqueIdentifier>{b7030400-c1df-4a76-abba-e11665a034be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\02.Gauge">
+      <UniqueIdentifier>{aec674f9-d85e-429a-b40f-22aefcbd088d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\00.Base">
+      <UniqueIdentifier>{1fd12bcd-5cd6-4883-9789-43fcec4295f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\03.Icon">
+      <UniqueIdentifier>{acafad31-537e-4a5e-b9a4-aacbba687e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\02.Gauge\00.Ammo">
+      <UniqueIdentifier>{f3b0bfaf-aaec-4157-8ace-3796df34e836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\02.Gauge\01.Skill">
+      <UniqueIdentifier>{90686162-3327-48ee-adb9-4ab3e4051818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\03.Icon\00.Base">
+      <UniqueIdentifier>{8c46727d-5636-4b9f-b724-06275c866ab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\03.Ammo\03.Icon\01.HighLight">
+      <UniqueIdentifier>{9a29ed00-8b82-4f54-8818-36ba1fe28aee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm">
+      <UniqueIdentifier>{5add753d-3b72-4e7e-8814-7fa0a8407f98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm\00.Base">
+      <UniqueIdentifier>{d4cdc041-1211-47d8-809d-d42ffbee0fb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm\01.Part">
+      <UniqueIdentifier>{08f3ffca-0773-430e-8ed6-bb55af5ea7f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm\01.Part\00.Base">
+      <UniqueIdentifier>{e0c9438c-bbd7-4d66-b66b-ccf4450759ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm\01.Part\01.Body">
+      <UniqueIdentifier>{88dc6511-e61a-4980-9f4e-92fdbdc58838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm\01.Part\02.Tail">
+      <UniqueIdentifier>{7e9ee16d-a936-45f2-91bd-07efd0a85a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm\01.Part\03.Connector">
+      <UniqueIdentifier>{027f5ce9-773c-456a-8303-8ea3eb486d00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.Worm\02.Bullet">
+      <UniqueIdentifier>{dee2a93a-1a3b-44e7-b340-760a19ff3e3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -515,9 +557,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\TurretBullet.h">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\AmmoGauge.h">
-      <Filter>02.GameObject\04.UI\03.Ammo\00.Gauge</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\AmmoFrame.h">
       <Filter>02.GameObject\04.UI\03.Ammo\01.Frame</Filter>
@@ -756,6 +795,39 @@
     <ClInclude Include="..\Header\Cactus.h">
       <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\AmmoHUD.h">
+      <Filter>02.GameObject\04.UI\03.Ammo\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AmmoGauge.h">
+      <Filter>02.GameObject\04.UI\03.Ammo\02.Gauge\00.Ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillGauge.h">
+      <Filter>02.GameObject\04.UI\03.Ammo\02.Gauge\01.Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AmmoIcon.h">
+      <Filter>02.GameObject\04.UI\03.Ammo\03.Icon\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AmmoIconHighlight.h">
+      <Filter>02.GameObject\04.UI\03.Ammo\03.Icon\01.HighLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Worm.h">
+      <Filter>02.GameObject\00.Monster\12.Worm\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBody.h">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\01.Body</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormTail.h">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\02.Tail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormConnector.h">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\03.Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormPart.h">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WormBullet.h">
+      <Filter>02.GameObject\00.Monster\12.Worm\02.Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -835,9 +907,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\TurretBullet.cpp">
       <Filter>02.GameObject\00.Monster\04.Turret\00.TurretBullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\AmmoGauge.cpp">
-      <Filter>02.GameObject\04.UI\03.Ammo\00.Gauge</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\AmmoFrame.cpp">
       <Filter>02.GameObject\04.UI\03.Ammo\01.Frame</Filter>
@@ -1075,6 +1144,39 @@
     </ClCompile>
     <ClCompile Include="..\Source\Cactus.cpp">
       <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AmmoHUD.cpp">
+      <Filter>02.GameObject\04.UI\03.Ammo\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AmmoGauge.cpp">
+      <Filter>02.GameObject\04.UI\03.Ammo\02.Gauge\00.Ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SkillGauge.cpp">
+      <Filter>02.GameObject\04.UI\03.Ammo\02.Gauge\01.Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AmmoIcon.cpp">
+      <Filter>02.GameObject\04.UI\03.Ammo\03.Icon\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\AmmoIconHighlight.cpp">
+      <Filter>02.GameObject\04.UI\03.Ammo\03.Icon\01.HighLight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Worm.cpp">
+      <Filter>02.GameObject\00.Monster\12.Worm\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBody.cpp">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\01.Body</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormTail.cpp">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\02.Tail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormConnector.cpp">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\03.Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormPart.cpp">
+      <Filter>02.GameObject\00.Monster\12.Worm\01.Part\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\WormBullet.cpp">
+      <Filter>02.GameObject\00.Monster\12.Worm\02.Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -47,6 +47,8 @@ public:
 	const D3DXVECTOR3*	GetVertices();
 	const UINT			GetVertexCount();
 
+	void				SetRadius(const float _fRadius);
+
 	bool IsRayPicking(OUT D3DXVECTOR3& _pOut,OUT float& _Dis, const D3DXVECTOR3 _vRayPv, const D3DXVECTOR3 _vRayDir);
 };
 END

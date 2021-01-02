@@ -27,6 +27,10 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
+
+public:
+	void SetAmmoLevel(const UINT _nLevel);
+	void SetAmmoCount(const float _fFillAmount);
 };
 #define __AMMO_GAUGE_H__
 #endif // !__AMMO_GAUGE_H__

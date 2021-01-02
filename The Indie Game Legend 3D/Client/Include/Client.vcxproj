@@ -160,6 +160,9 @@
     <ClInclude Include="..\Header\Ammo.h" />
     <ClInclude Include="..\Header\AmmoFrame.h" />
     <ClInclude Include="..\Header\AmmoGauge.h" />
+    <ClInclude Include="..\Header\AmmoHUD.h" />
+    <ClInclude Include="..\Header\AmmoIcon.h" />
+    <ClInclude Include="..\Header\AmmoIconHighlight.h" />
     <ClInclude Include="..\Header\BigBullet.h" />
     <ClInclude Include="..\Header\Armor.h" />
     <ClInclude Include="..\Header\BigShot.h" />
@@ -222,6 +225,7 @@
     <ClInclude Include="..\Header\NubBoss.h" />
     <ClInclude Include="..\Header\Obstacle.h" />
     <ClInclude Include="..\Header\Phubans.h" />
+    <ClInclude Include="..\Header\SkillGauge.h" />
     <ClInclude Include="..\Header\TripleBullet.h" />
     <ClInclude Include="..\Header\UtilityManger.h" />
     <ClInclude Include="..\Header\Piramid.h" />
@@ -258,12 +262,18 @@
     <ClInclude Include="..\Header\WalkerBullet.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WeaponHUD.h" />
+    <ClInclude Include="..\Header\Worm.h" />
+    <ClInclude Include="..\Header\WormBody.h" />
     <ClInclude Include="..\Header\WormBoss.h" />
     <ClInclude Include="..\Header\WormBossBody.h" />
     <ClInclude Include="..\Header\WormBossBody2.h" />
     <ClInclude Include="..\Header\WormBossBody3.h" />
     <ClInclude Include="..\Header\WormBossBody4.h" />
     <ClInclude Include="..\Header\WormBossTail.h" />
+    <ClInclude Include="..\Header\WormBullet.h" />
+    <ClInclude Include="..\Header\WormConnector.h" />
+    <ClInclude Include="..\Header\WormPart.h" />
+    <ClInclude Include="..\Header\WormTail.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -273,6 +283,9 @@
     <ClCompile Include="..\Source\Ammo.cpp" />
     <ClCompile Include="..\Source\AmmoFrame.cpp" />
     <ClCompile Include="..\Source\AmmoGauge.cpp" />
+    <ClCompile Include="..\Source\AmmoHUD.cpp" />
+    <ClCompile Include="..\Source\AmmoIcon.cpp" />
+    <ClCompile Include="..\Source\AmmoIconHighlight.cpp" />
     <ClCompile Include="..\Source\BigBullet.cpp" />
     <ClCompile Include="..\Source\Armor.cpp" />
     <ClCompile Include="..\Source\BigShot.cpp" />
@@ -330,6 +343,7 @@
     <ClCompile Include="..\Source\NubBoss.cpp" />
     <ClCompile Include="..\Source\Obstacle.cpp" />
     <ClCompile Include="..\Source\Phubans.cpp" />
+    <ClCompile Include="..\Source\SkillGauge.cpp" />
     <ClCompile Include="..\Source\TripleBullet.cpp" />
     <ClCompile Include="..\Source\UtilityManger.cpp" />
     <ClCompile Include="..\Source\Piramid.cpp" />
@@ -367,12 +381,18 @@
     <ClCompile Include="..\Source\WalkerBullet.cpp" />
     <ClCompile Include="..\Source\Wall.cpp" />
     <ClCompile Include="..\Source\WeaponHUD.cpp" />
+    <ClCompile Include="..\Source\Worm.cpp" />
+    <ClCompile Include="..\Source\WormBody.cpp" />
     <ClCompile Include="..\Source\WormBoss.cpp" />
     <ClCompile Include="..\Source\WormBossBody.cpp" />
     <ClCompile Include="..\Source\WormBossBody2.cpp" />
     <ClCompile Include="..\Source\WormBossBody3.cpp" />
     <ClCompile Include="..\Source\WormBossBody4.cpp" />
     <ClCompile Include="..\Source\WormBossTail.cpp" />
+    <ClCompile Include="..\Source\WormBullet.cpp" />
+    <ClCompile Include="..\Source\WormConnector.cpp" />
+    <ClCompile Include="..\Source\WormPart.cpp" />
+    <ClCompile Include="..\Source\WormTail.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

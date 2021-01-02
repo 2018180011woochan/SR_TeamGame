@@ -82,24 +82,6 @@ UINT CBossHPBar::Update(const float _fDeltaTime)
 UINT CBossHPBar::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
-	static float fFill = 1.f;
-	if (GetAsyncKeyState('2') & 0x8000)
-	{
-		fFill += 0.1f;
-
-		if (fFill >= 1.f)
-			fFill = 1.f;
-	}
-
-	if (GetAsyncKeyState('1') & 0x8000)
-	{
-		fFill -= 0.1f;
-
-		if (fFill < 0.f)
-			fFill = 0.f;
-	}
-
-	m_pImage->SetFillAmount(fFill);
 	return 0;
 }
 

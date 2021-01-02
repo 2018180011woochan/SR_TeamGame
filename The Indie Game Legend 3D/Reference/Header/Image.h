@@ -7,8 +7,8 @@ class ENGINE_DLL Image final : public CComponent
 {
 public:
 	enum ImageType { Simple, Fill};
-	enum FillMethod { Horizontal};
-	enum FillOrigin { Left, Right};
+	enum FillMethod { Horizontal , Vertical};
+	enum FillOrigin { Left, Right , Top, Bottom};
 private:
 	LPDIRECT3DVERTEXBUFFER9	m_pVertexBuffer;
 	LPDIRECT3DINDEXBUFFER9	m_pIndexBuffer;

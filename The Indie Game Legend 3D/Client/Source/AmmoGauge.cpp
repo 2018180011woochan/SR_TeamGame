@@ -90,3 +90,13 @@ HRESULT CAmmoGauge::Render()
 	return S_OK;
 }
 
+void CAmmoGauge::SetAmmoLevel(const UINT _nLevel)
+{
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[_nLevel]);
+}
+
+void CAmmoGauge::SetAmmoCount(const float _fFillAmount)
+{
+	m_pImage->SetFillAmount(_fFillAmount);
+}
+

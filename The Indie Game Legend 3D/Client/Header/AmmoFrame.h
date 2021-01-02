@@ -27,6 +27,9 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
+
+public:
+	void SetAmmoLevel(const UINT _nLevel);
 };
 #define __AMMO_FRAME_H__
 #endif // !__AMMO_FRAME_H__

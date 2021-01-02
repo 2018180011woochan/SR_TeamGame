@@ -83,18 +83,8 @@ HRESULT CDialogHUD::Start()
 UINT CDialogHUD::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
-
 	if (true == m_pDialogText->IsTypingEnd())
 		m_pDialogPortrait->OnAnimation(false);
-
-	if (GetAsyncKeyState('2') & 0x8000)
-	{
-		SetDialog(SPEAKER::PLAYER, TEXT("Looks like you found the \nrapid shot."), TEXT("Player"));
-	}
-	else if (GetAsyncKeyState('3') & 0x8000)
-	{
-		SetDialog(SPEAKER::NPC, TEXT("Looks like you found the \nrapid shot."), TEXT("Bean"));
-	}
 	return 0;
 }
 

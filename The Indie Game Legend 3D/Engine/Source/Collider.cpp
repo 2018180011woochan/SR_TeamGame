@@ -161,6 +161,11 @@ const UINT CCollider::GetVertexCount()
 	return m_pCollisionMesh->GetVertexCount();
 }
 
+void CCollider::SetRadius(const float _fRadius)
+{
+	m_tBound.fRadius = _fRadius;
+}
+
 bool CCollider::IsRayPicking(OUT D3DXVECTOR3& _pOut, OUT float& _Dis, const D3DXVECTOR3 _vRayPv, const D3DXVECTOR3 _vRayDir)
 {
 	const D3DXVECTOR3* pVertices =  GetVertices();
