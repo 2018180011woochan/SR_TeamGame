@@ -5,18 +5,16 @@ USING(Engine)
 class CSlider final : public CGameObject
 {
 private:
-	CMeshRenderer* m_pMeshRenderer = nullptr;
-	class CTexturePool*  m_pTexturePool = nullptr;
-	bool				m_bReturn = false;
-	float			m_fMoveSpeed = 0.f;
-
-	//Test
-	_vector			m_vSavePos;
+	CMeshRenderer*			m_pMeshRenderer = nullptr;
+	class CTexturePool*		m_pTexturePool = nullptr;
+	bool					m_bReverse = false;
+	float					m_fMoveSpeed = 0.f;
+	_vector					m_vDir;
 
 private:
 	void Move(const float _fDeltaTime);
 	void IsBillboarding();
-private:
+public:
 	explicit CSlider();
 	explicit CSlider(const CSlider& _rOther);
 	virtual ~CSlider() = default;
@@ -29,6 +27,9 @@ private:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 	virtual CGameObject * Clone() override;
+
+	virtual void OnCollision(CGameObject* _pGameObject) override;
+	void SetDirVertical();
 public:
 	static CSlider* Create();
 private:

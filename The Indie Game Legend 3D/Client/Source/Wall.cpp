@@ -37,6 +37,7 @@ CGameObject * CWall::Clone()
 HRESULT CWall::InitializePrototype()
 {
 	CGameObject::InitializePrototype();
+	m_sName = L"Wall";
 	return S_OK;
 }
 

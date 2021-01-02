@@ -21,7 +21,6 @@ HRESULT CTile::Awake()
 {
 	CGameObject::Awake();
 	m_pTransform->Set_Rotation(_vector(90, 0, 0));
-
 	m_pTransform->Set_Scale(_vector(8, 8, 8));
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();

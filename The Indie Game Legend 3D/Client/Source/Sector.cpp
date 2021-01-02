@@ -54,7 +54,6 @@ HRESULT CSector::Render()
 	if (FAILED(CGameObject::Render()))
 		return E_FAIL;
 	m_pTransform->UpdateWorld();
-
 	m_pMeshRenderer->Render();
 	return S_OK;
 }

@@ -22,6 +22,14 @@ enum class EState : _uint
 	Hit,
 	End
 };
+
+enum class ESkillID : _uint
+{
+	TimeStop,
+	AutoAim,
+	AirStrike,
+	End
+};
 enum class ESoundID :_uint
 {
 	NormaBullet,
@@ -51,12 +59,13 @@ private:
 	 float				m_fDashSpeed = 0.f;
 	 float				m_fRunSpeed = 0.f;
 	 float				m_fMouseSpeedX = 0.f;
-
+	 //Skill
+	 vector<ESkillID>	m_vecSkillID;
 	//weapon
 	 vector<EWeaponType>	m_vecWeapons; 
 	 EWeaponType	    m_eCurWeaponType;
 	 EWeaponType	    m_ePreWeaponType;
-
+	 
 	 _int				m_nSetWeaponID;
 
 
@@ -72,9 +81,10 @@ private:
 	 Image*						m_pAmmobar = nullptr;
 	 class CHeartManager*		m_pHeartManager = nullptr;
 	 class CWeaponHUD*			m_pWeaponHud = nullptr;
-	 class CWeaponHUD*			m_pWeaponHUD;
+	 CGameObject*				m_pCrossHair = nullptr;
 	 CText*						m_pGemText = nullptr;
 	 CText*						m_pDiscText = nullptr;
+	 class CFocus*				m_pFocus = nullptr;
 
 
 	 //State
@@ -120,6 +130,7 @@ private:
 	void	TileSound(ESectorTileID _eID);
 	void	SoundPlay(const ESoundID& _eID);
 	void	UpdateUI();
+	void	UpdateAirStrikeFocus();
 public:
 	//Getter Setter
 	const float& GetAmmo() { return m_fAmmo; }

@@ -31,7 +31,7 @@ typedef struct tagTransformDesc
 	_vector	vScale;
 	_vector	vRotation; // For.Degree
 	_vector vRevolution;
-	_matrix matWorld;
+	_matrix matWorld; 
 }TRANSFORM_DESC;
 
 typedef struct tagVertexRect

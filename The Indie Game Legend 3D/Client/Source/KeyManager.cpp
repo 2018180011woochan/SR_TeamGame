@@ -91,6 +91,13 @@ void CKeyManager::Update_KeyManager()
 		m_dwKeyState |= KEY_X;
 	if (GetAsyncKeyState('C') & 0x8000)
 		m_dwKeyState |= KEY_C;
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_dwKeyState |= KEY_1;
+	if (GetAsyncKeyState('2') & 0x8000)
+		m_dwKeyState |= KEY_2;
+	if (GetAsyncKeyState('3') & 0x8000)
+		m_dwKeyState |= KEY_3;
 }
 
 void CKeyManager::Free()

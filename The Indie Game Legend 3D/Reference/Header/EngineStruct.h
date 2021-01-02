@@ -31,7 +31,7 @@ typedef struct tagTransformDesc
 	_vector	vScale;
 	_vector	vRotation; // For.Degree
 	_vector vRevolution;
-	_matrix matWorld;
+	_matrix matWorld; 
 }TRANSFORM_DESC;
 
 typedef struct tagVertexRect
@@ -41,7 +41,6 @@ typedef struct tagVertexRect
 	D3DXVECTOR2 UV;
 	static const DWORD FVF;
 }VERTEXRECT, *LPVERTEXRECT;
-
 
 const DWORD FVF_VERTEX_RECT = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 

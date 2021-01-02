@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Wall.h"
 #include "Floor.h"
+#include "Slider.h"
 IMPLEMENT_SINGLETON(CFactoryManager)
 HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 {
@@ -51,7 +52,7 @@ HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 		{
 			if (vecPosition.size() != 5)
 			{
-				int a = 0;
+				PrintLog(L"Error", L"Failed Load vecPosition count Error");
 			}
 
 			_int nRoomID;
@@ -82,17 +83,6 @@ HRESULT CFactoryManager::LoadScene(CScene* const _pScene)
 	for (size_t i = 0; i < m_vecSaveDataRoomID.size(); ++i)
 	{
 		AddObject(_pScene, i);
-	/*	TSTRING TypeID = L"C" + m_vecSaveDataType[i];
-		pGameObject = _pScene->AddGameObject(TypeID);
-
-		if (nullptr == pGameObject)
-		{
-			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
-			return E_FAIL;
-		}
-		pGameObject->Awake();
-		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[i]);
-		pGameObject->SetTag(m_vecSaveDataRoomID[i]);*/
 	}
 	return S_OK;
 }
@@ -182,9 +172,20 @@ HRESULT CFactoryManager::AddObject(CScene* const _pScene , _uint _nIndex)
 			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
 			return E_FAIL;
 		}
-		//pGameObject->Awake();
 		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[_nIndex]);
 		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Rotation(_vector(0, 90, 0));
+		pGameObject->SetTag(m_vecSaveDataRoomID[_nIndex]);
+	}
+	else if (L"CSliderH" == TypeID)
+	{
+		pGameObject = _pScene->AddGameObject(L"CSlider");
+		if (nullptr == pGameObject)
+		{
+			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
+			return E_FAIL;
+		}
+		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[_nIndex]);
+		((CSlider*)pGameObject)->SetDirVertical();
 		pGameObject->SetTag(m_vecSaveDataRoomID[_nIndex]);
 	}
 	else
@@ -196,7 +197,6 @@ HRESULT CFactoryManager::AddObject(CScene* const _pScene , _uint _nIndex)
 			PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
 			return E_FAIL;
 		}
-		//pGameObject->Awake();
 		((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(m_vecSaveDataPosition[_nIndex]);
 		pGameObject->SetTag(m_vecSaveDataRoomID[_nIndex]);
 	}

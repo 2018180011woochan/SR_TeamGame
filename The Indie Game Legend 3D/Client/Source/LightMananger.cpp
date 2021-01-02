@@ -13,13 +13,14 @@ HRESULT CLightMananger::CreatePoint(const LightID & _eID, const _vector & _vPosi
 	pLight->Type = D3DLIGHT_POINT;
 	pLight->Ambient = _Ambient;
 	pLight->Diffuse = _Diffuse;
+	pLight->Diffuse.a = 1.f;
 	pLight->Specular = _Specular;
 	pLight->Position = _vPosition;
-	pLight->Range = 1000.0f;
+	pLight->Range = 500.0f;
 	pLight->Falloff = 1.0f;
-	pLight->Attenuation0 = 0.5f;
-	pLight->Attenuation1 = 0.01f;
-	pLight->Attenuation2 = 0.000001f;
+	pLight->Attenuation0 = 0.0f;
+	pLight->Attenuation1 = 0.0035f;
+	pLight->Attenuation2 = 0.0f;
 	m_pLightChannel[_eID] = pLight;
 	m_pDevice->SetLight(_eID, m_pLightChannel[_eID]);
 	return S_OK;
@@ -34,6 +35,7 @@ HRESULT CLightMananger::CreateDirction(const LightID & _eID, const _vector & _vD
 	pLight->Type = D3DLIGHT_DIRECTIONAL;
 	pLight->Ambient = _Ambient;
 	pLight->Diffuse = _Diffuse;
+	pLight->Diffuse.a = 1.f;
 	pLight->Specular = _Specular;
 	pLight->Direction = _vDirection;
 	
@@ -52,6 +54,9 @@ HRESULT CLightMananger::CreateSpotlight(const LightID & _eID, const _vector & _v
 	pLight->Type = D3DLIGHT_SPOT;
 	pLight->Ambient = _Ambient;
 	pLight->Diffuse = _Diffuse;
+	pLight->Diffuse.a = 1.f;
+
+
 	pLight->Specular = _Specular;
 
 	pLight->Position = _vPosition;
@@ -93,7 +98,7 @@ D3DLIGHT9 * CLightMananger::GetLight(const LightID & _eID)
 
 void CLightMananger::SetLight(const LightID & _eID)
 {
-	if (nullptr == m_pLightChannel[_eID])
+	if (nullptr == m_pLightChannel[_eID] || CLightMananger::End == _eID)
 		return;
 	m_pDevice->SetLight(_eID, m_pLightChannel[_eID]);
 }

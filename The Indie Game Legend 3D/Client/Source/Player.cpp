@@ -23,6 +23,8 @@
 #include "DiscText.h"
 USING(Engine)
 #include "Gun.h"
+#include "Focus.h"
+#include "CrossHair.h"
 
 CPlayer::CPlayer()
 	:CGameObject()
@@ -82,33 +84,35 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	m_pTransform->Add_RotationY(pMouse->Get_MouseDir().x *  m_fMouseSpeedX * _fDeltaTime);
 
 	//Fire & airStrike
+	//디버깅 하기 편하게 좌클릭 제어 걸어둠 
 	if (m_pKeyMgr->Key_Toggle(VK_F2))
 	{
+		//공습스킬 사용 눌렀는지 체크
 		if (CMsgManager::GetInstance()->GetAirStrikeReady())
 		{
-			BulletFire();
-			m_pGun->SetFire();
-
 			//에임 계속 체크 
 			_vector AirStrikePos = vZero;
+			//바닥이랑 레이충돌로 체크해서 충돌시 && 좌클릭 다운 시 
 			if (CUtilityManger::AirstrikePicking(m_nSceneID, AirStrikePos) 
 				&& m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
 				CMsgManager::GetInstance()->AirStrikeSetting(m_nSceneID, AirStrikePos);
-				cout << AirStrikePos.x << "," << AirStrikePos.y << "," << AirStrikePos.z << endl;
+				m_pCrossHair->SetEnable(true);
 			}
-
+			AirStrikePos.y = 0.1f;
+			m_pFocus->SetFocusPos(AirStrikePos);
 		}
 		else
 		{
-
-			BulletFire();
-			m_pGun->SetFire();
-
+			//BulletFire();
+			//m_pGun->SetFire();
+			//플레임 건이 아닐경우 반동 필요 
 			if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
 				BulletFire();
+				m_pGun->SetFire();
 			}
+			//플레임 건일경우 반동 무필요 
 			else if (m_ePreWeaponType == EWeaponType::Flame &&  m_pKeyMgr->Key_Press(KEY_LBUTTON))
 			{
 				BulletFire();
@@ -136,6 +140,25 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
 		ChangeWeaponUISetting();
 	}
+
+	//Use Skill
+	if (m_pKeyMgr->Key_Down(KEY_1) && m_vecWeapons.empty() == false)
+	{
+		CMsgManager::GetInstance()->FreezingStart(5.f);
+	}
+	if (m_pKeyMgr->Key_Down(KEY_2))
+	{
+		CMsgManager::GetInstance()->AutoAimStart(5.f);
+	}
+	else if (m_pKeyMgr->Key_Down(KEY_3) && m_vecWeapons.empty() == false)
+	{
+		CMsgManager::GetInstance()->AirStrikeReady();
+		m_pFocus->SetEnable(true);
+		m_pCrossHair->SetEnable(false);
+	}
+
+
+
 	return S_OK;
 }
 
@@ -277,7 +300,6 @@ void CPlayer::TakeItem(const EItemID & _eID)
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
 		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
 		SoundPlay(ESoundID::AddCoin);
-
 		break;
 	case EItemID::End:
 		break;
@@ -397,14 +419,13 @@ void CPlayer::ChangeWeapon()
 	{
 		m_fBulletFireDelay = NormalDelay;
 	}
-
 }
 
 void CPlayer::UpdateLight()
 {
 	D3DLIGHT9& playerLight = *CLightMananger::GetInstance()->GetLight(CLightMananger::Player);
 	playerLight.Position = m_pTransform->Get_Position();
-	float v = 0.0005f;
+	float v = 0.0001f;
 	static float h = 100;
 
 	if (GetAsyncKeyState('1') & 0x8000)
@@ -446,9 +467,9 @@ void CPlayer::UpdateLight()
 
 	}
 
-	playerLight.Attenuation0 = CLAMP(playerLight.Attenuation0, 0.00001f, 0.9f);
-	playerLight.Attenuation1 = CLAMP(playerLight.Attenuation1, 0.000001f, 0.9f);
-	playerLight.Attenuation2 = CLAMP(playerLight.Attenuation2, 0.000001f, 0.9f);
+	playerLight.Attenuation0 = CLAMP(playerLight.Attenuation0, 0.f, 0.9f);
+	playerLight.Attenuation1 = CLAMP(playerLight.Attenuation1, 0.0001f, 0.9f);
+	playerLight.Attenuation2 = CLAMP(playerLight.Attenuation2, 0.f, 0.9f);
 	
 	if (GetAsyncKeyState('3') & 0x8000)
 	{
@@ -459,8 +480,6 @@ void CPlayer::UpdateLight()
 	cout << "1 : " << playerLight.Attenuation1 << endl;
 	cout << "2 : " << playerLight.Attenuation2 << endl;
 	}
-
-
 
 	CLightMananger::GetInstance()->SetLight(CLightMananger::Player);
 }
@@ -542,11 +561,7 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 	}
 }
 
-void CPlayer::UpdateUI()
-{
 
-
-}
 
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 {
@@ -615,7 +630,13 @@ HRESULT CPlayer::Awake()
 	pCollider->SetMesh(L"Cube",BOUND::BOX);
 
 	m_bsfxStep = false;
+
+
+#ifdef _DEBUG
 	m_nTag = 0;
+#else
+
+#endif
 	return S_OK;
 }
 
@@ -627,25 +648,29 @@ HRESULT CPlayer::Start()
 	//Test
 
 	//Reference Setting
-
 	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
 	m_pWeaponHud = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
 	m_pHeartManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
+	m_pCrossHair = FindGameObjectOfType<CCrossHair>();
 	//m_pGemText = (CText*)((CGemText*)FindGameObjectOfType<CGemText>())->GetComponent<CText>();
 	//m_pDiscText = (CText*)((CDiscText*)FindGameObjectOfType<CDiscText>())->GetComponent<CText>();
-
-	if (nullptr == m_pWeaponHud || nullptr == m_pHeartManager || nullptr == m_pGemText || nullptr == m_pDiscText)
-	{
-	//	return E_FAIL;
-	}
+	m_pFocus = (CFocus*)FindGameObjectOfType<CFocus>();
+	//if (nullptr == m_pWeaponHud || nullptr == m_pHeartManager || nullptr == m_pGemText || nullptr == m_pDiscText)
+	//{
+	////	return E_FAIL;
+	//}
 	//SafeAddRef(m_pAmmobar);
 
 
 	//스폰지점 세팅과 씬 초반 컬링
-//	 CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
-// 	 _vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
-// 	 m_pTransform->Set_Position(vPosition);
-// 	 m_nTag = pSpawn->GetTage();
+#ifdef _DEBUG
+
+#else
+	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
+	_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
+	m_pTransform->Set_Position(vPosition);
+	m_nTag = pSpawn->GetTage();
+#endif
 	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 
 
@@ -664,6 +689,9 @@ HRESULT CPlayer::Start()
 	 AddWeapon(EWeaponType::Flame);
 	 AddWeapon(EWeaponType::Lazer);
 
+	 //Skill Setting
+
+	 m_vecSkillID.push_back(ESkillID::TimeStop);
 	 return S_OK;
 }
 
@@ -675,16 +703,6 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	UpdateState(_fDeltaTime);
 	//UpdateLight();
 
-	
-	if (m_pKeyMgr->Key_Down(KEY_Z))
-	{
-		//Weapon add
-		CMsgManager::GetInstance()->AutoAimStart(5.f);
-	}
-	if (m_pKeyMgr->Key_Down(KEY_X))
-	{ 
-		CMsgManager::GetInstance()->AirStrikeReady();
-	}
 	return OBJ_NOENVET;
 }
 

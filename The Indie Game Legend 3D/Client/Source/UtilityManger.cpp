@@ -143,9 +143,9 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 	if(m_RoomMobList.empty())
 		return false;
 
-	CPlayerCamera* pCamaer = (CPlayerCamera*)CManagement::GetInstance()->FindGameObjectOfType<CPlayerCamera>(_nSceneID);
-	_matrix matView = pCamaer->Get_Camera().matView;
-	_matrix matProj = pCamaer->Get_Camera().matProj;
+	CPlayerCamera* pCamera = (CPlayerCamera*)CManagement::GetInstance()->FindGameObjectOfType<CPlayerCamera>(_nSceneID);
+	_matrix matView = pCamera->Get_Camera().matView;
+	_matrix matProj = pCamera->Get_Camera().matProj;
 	cout << m_RoomMobList.size() << endl;
 
 	//float fAimSize = 0.6f;
@@ -197,7 +197,7 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 			pGameObject->SetEnable(true);
 	}
 
-	//Mob
+	//Mob 유도판정 계산할려면 따로 돌려서 가져와야함 
 	for (auto& pGameObject : CullingMobList)
 	{
 		if (pGameObject->GetTag() != _nTag)

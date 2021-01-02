@@ -92,7 +92,7 @@ UINT CIntro::Update(const float _fDeltaTime)
 		CLoading* pLoading = CLoading::Create(m_pDevice);
 		pLoading->OnLoading(CStage::Create());
 		SafeRelease(pLoading);
-		/*if (FAILED(SetUpCurrentScene(CStage::Create())))
+	/*	if (FAILED(SetUpCurrentScene(CStage::Create())))
 		{
 			PrintLog(L"Error", L"Failed To SetUpCurrentScene");
 			return E_FAIL;

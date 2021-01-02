@@ -2,9 +2,8 @@
 #ifndef __MSGMANAGER_H__
 #include "Base.h"
 
-#define AirStrikeFireDelay 0.1f
 #define AirStrikeBulletCount 15
-#define AirstrikeSceneDuration 10.f
+
 USING(Engine)
 class CMsgManager : public CBase
 {
@@ -16,6 +15,7 @@ private:
 	bool		m_bAutoAimTrigger;
 	bool		m_bAirStrikeTrigger;
 	bool		m_bAirStrikeReady;
+	bool		m_bSkillCooldown;
 
 	float		m_fSkillDuration;
 	float		m_fSkillDurationTime;
@@ -24,8 +24,9 @@ private:
 	float		m_fAirStrikeTime;
 	//공습 컷씬 시간
 	float		m_fAirStrikeCutSceneDuration;
-	//float		m_fAirStrikeCutSceneTime;
 	bool		m_bAirStrikeSceneTrigger;
+	float		m_fSirenLightColor; // 경고등컬리
+	float		m_fSirenLightChangValue;
 
 	_vector		m_vAirStrikePos;
 	_uint		m_nAirStrikeCount;
@@ -44,7 +45,7 @@ public:
 	void	AirStrikeReady();
 	void	AirStrikeFire();
 	void	UpdateSkillTime(const float& _fTimeDelta);
-
+	void    WargingLight(const float& _fTimeDelta);
 	void	FreezingStart(const float& _fTime);
 	void    AutoAimStart(const float& _fTime);
 private:
