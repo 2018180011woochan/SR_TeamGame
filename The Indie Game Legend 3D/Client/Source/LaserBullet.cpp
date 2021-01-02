@@ -90,43 +90,6 @@ CGameObject * CLaserBullet::Clone()
 
 HRESULT CLaserBullet::Fire()
 {
-
-	[]() {
-		//D3DXMatrixIdentity(&matBill);
-		//matView = pCamera->Get_Camera().matView;
-		////matBill._11 = matView._11;
-		////matBill._13 = matView._13;
-		////matBill._31 = matView._31;
-		////matBill._33 = matView._33;
-
-		//memcpy(&matBill.m[0][0], &matView.m[0][0], sizeof(_vector));
-		//memcpy(&matBill.m[1][0], &matView.m[1][0], sizeof(_vector));
-		//memcpy(&matBill.m[2][0], &matView.m[2][0], sizeof(_vector));
-		//D3DXMatrixInverse(&matBill, 0, &matBill);
-
-		//D3DXVECTOR3 vPos = pMobTrans->Get_Position();
-		//D3DXVECTOR3 vRot = pMobTrans->Get_TransformDesc().vRotation;
-		//D3DXMATRIX  matRX, matRY, matRZ, matTrans;
-
-		//D3DXMatrixRotationX(&matRX, D3DXToRadian(vRot.x));
-		//D3DXMatrixRotationY(&matRY, D3DXToRadian(vRot.y));
-		//D3DXMatrixRotationZ(&matRZ, D3DXToRadian(vRot.z));
-		//D3DXMatrixTranslation(&matTrans, vPos.x, vPos.y, vPos.z);
-		////scale 뺀 mob의 빌보드행렬 구함 
-		////matMobWorld =  matRX * matRY * matRZ * matBill * matTrans;
-		//matMobWorld = pMobTrans->Get_WorldMatrix();
-
-		//D3DXMatrixIdentity(&m_matDest);
-		//memcpy(&m_matDest.m[0][0], &matMobWorld.m[0][0], sizeof(_vector));
-		//memcpy(&m_matDest.m[1][0], &matMobWorld.m[1][0], sizeof(_vector));
-		//memcpy(&m_matDest.m[2][0], &matMobWorld.m[2][0], sizeof(_vector));
-		//D3DXMatrixInverse(&m_matDest, 0, &m_matDest);
-
-	};
-
-	//CBullet::Fire();
-	// 망할 자동 에임 때문에 각도 세팅 여기서 다해야함 
-
 	//카메라의 빌보드로 초기각도 세팅
 	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 	if (pCamera == nullptr)
@@ -148,7 +111,7 @@ HRESULT CLaserBullet::Fire()
 		//Ui추가
 		auto  pMobTrans = ((CTransform*)pGameObj->GetComponent<CTransform>());
 		_matrix matView = pCamera->Get_Camera().matView;
-		_matrix matProj = pCamera->Get_Camera().matProj;
+
 		_vector vMobProj = pMobTrans->Get_WorldPosition();
 		_vector vSpawnProj = pSpawnTrans->Get_WorldPosition();
 		//투영으로 변환전에 방향 계산
@@ -160,9 +123,6 @@ HRESULT CLaserBullet::Fire()
 		//D3DXVec3TransformCoord(&vMobProj, &vMobProj, &matProj);
 		D3DXVec3TransformCoord(&vSpawnProj, &vSpawnProj, &matView);
 		//D3DXVec3TransformCoord(&vSpawnProj, &vSpawnProj, &matProj);
-		cout << "monster : " << vMobProj.x << ", " << vMobProj.y << ", " << vMobProj.z << endl;
-		cout << "spawn   : " << vSpawnProj.x << ", " << vSpawnProj.y << ", " << vSpawnProj.z << endl;
-
 		//투영좌표의 방향
 //		_vector vProjDir = vMobProj - vSpawnProj;
 		_vector vProjDir;
@@ -183,29 +143,16 @@ HRESULT CLaserBullet::Fire()
 		float fDotY = D3DXVec3Dot(&vWorldRight, &vAngleY);
 		float fDotZ = D3DXVec3Dot(&vWorldLook, &vAngleZ);
 		float fAngleY,fAngleZ;
-		float fDegreeY,fDegreeZ;
 		fAngleY = acosf(fDotY);
 		fAngleZ = acosf(fDotZ);
 
 		if (vAngleY.z < 0)
 			fAngleY = 2 * PI - acosf(fDotY);
 
-		fDegreeZ = D3DXToDegree(fAngleZ);
-		// Z 
-		//if (vAngleZ.y < 0)
-		//	fDegreeZ = -fDegreeZ;
-		if (vAngleZ.y < 0 && vProjDir.x < 0)
-			fDegreeZ = -fDegreeZ;
 
-		cout << "Z: "<< fDegreeZ << endl;
-		cout << "Y: "<<D3DXToDegree(fAngleY) << endl;
-
-		//cout << D3DXToDegree(m_fAxisAngle) << endl;
-
-		cout << vProjDir.x << ", " << vProjDir.y << ", " << vProjDir.z << endl;
 		m_pTransform->Add_Position(m_vDiraction * 1);
 		//m_pTransform->Set_Rotation(_vector(0, D3DXToDegree(-fAngleY), D3DXToDegree(-fAngleZ)));
-		m_pTransform->Set_Rotation(_vector(0, D3DXToDegree(-fAngleY),fDegreeZ));
+		m_pTransform->Set_Rotation(_vector(0, D3DXToDegree(-fAngleY),0));
 
 	}
 	else
@@ -242,7 +189,7 @@ HRESULT CLaserBullet::Fire()
 void CLaserBullet::OnCollision(CGameObject * _pGameObject)
 {
 	//벽추가
-	if (L"Obstacle" == _pGameObject->GetName() || L"Floor" == _pGameObject->GetName())
+	if (L"Obstacle" == _pGameObject->GetName() || L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
 	{
 		//CBulletSpark* pEffect = nullptr;
 		//pEffect = (CBulletSpark*)AddGameObject<CBulletSpark>();
@@ -274,15 +221,7 @@ HRESULT CLaserBullet::IsBillboarding()
 	D3DXMatrixTranslation(&matTrans, vPos.x, vPos.y, vPos.z);
 	_matrix NewWorld;
 
-	//if (m_bAutoEnable)
-	//{
-	//	_vector vBulletRight; 
-	//	D3DXVec3Cross(&vBulletRight, &_vector(0, 1, 0), &m_vDiraction);
-	//	D3DXMatrixRotationAxis(&matAxis, &_vector(0, 0, 1), m_fAxisAngle);
-	//	NewWorld = matScale * matRX * matRY * matRZ * matAxis * matTrans;
-	//}
-	//else
-		NewWorld = matScale * matRX * matRY * matRZ * m_matDest * matTrans;
+	NewWorld = matScale * matRX * matRY * matRZ * m_matDest * matTrans;
 
 	m_pTransform->Set_WorldMatrix(NewWorld);
 	return S_OK;

@@ -104,20 +104,16 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		}
 		else
 		{
-			//BulletFire();
-			//m_pGun->SetFire();
 			//플레임 건이 아닐경우 반동 필요 
 			if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
 				BulletFire();
-				m_pGun->SetFire();
 			}
 			//플레임 건일경우 반동 무필요 
 			else if (m_ePreWeaponType == EWeaponType::Flame &&  m_pKeyMgr->Key_Press(KEY_LBUTTON))
 			{
 				BulletFire();
 			}
-
 		}
 	}
 
@@ -322,17 +318,20 @@ void CPlayer::BulletFire()
 		{
 		case EWeaponType::Multiple:
 			pBullet = (CTripleBullet*)AddGameObject<CTripleBullet>();
-			pBullet->Fire();
+			pBullet->Fire();			
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::NormaBullet);
 			break;
 		case EWeaponType::Big:
 			 pBullet = (CBigBullet*)AddGameObject<CBigBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::BigBullet);
 			break;
 		case EWeaponType::Rapid:
 			 pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::NormaBullet);
 			break;
 		case EWeaponType::Flame:
@@ -343,6 +342,7 @@ void CPlayer::BulletFire()
 		case EWeaponType::Lazer:
 			pBullet = (CLaserBullet*)AddGameObject<CLaserBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::LaserBullet);
 			break;
 		default :
@@ -360,7 +360,7 @@ void CPlayer::BulletFire()
 		CNormalBullet* pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 		pBullet->Fire();
 		SoundPlay(ESoundID::NormaBullet);
-
+		m_pGun->SetFire();
 	}
 }
 
@@ -623,20 +623,14 @@ HRESULT CPlayer::Awake()
 	m_fHitDelayTime = 0.f;
 	m_nDiscMax = 1;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(5.f,5.f,5.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(3.9f, 3.9f, 3.9f));
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(L"Cube",BOUND::BOX);
+	pCollider->SetMesh(L"Cube",BOUND::SPHERE);
 
 	m_bsfxStep = false;
 
-
-#ifdef _DEBUG
-	m_nTag = 0;
-#else
-
-#endif
 	return S_OK;
 }
 
@@ -664,6 +658,7 @@ HRESULT CPlayer::Start()
 
 	//스폰지점 세팅과 씬 초반 컬링
 #ifdef _DEBUG
+	m_nTag = 0;
 
 #else
 	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();

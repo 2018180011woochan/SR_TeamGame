@@ -22,9 +22,8 @@ HRESULT CRoomTrigger::Awake()
 	CGameObject::Awake();
 	m_sName = L"RoomTrigger";
 	//Test
-	m_pTransform->Set_Scale(_vector(8.f, 24.f, 0.1f));
-
-
+	m_pTransform->Set_Scale(_vector(8.f, 20.f, 0.1f));
+	m_pTransform->Add_Position(_vector(0.f, 2.f, 0.f));
 	m_eRenderID = ERenderID::AlphaCullNone;
 
 	return S_OK;

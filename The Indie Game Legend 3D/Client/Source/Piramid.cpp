@@ -35,7 +35,6 @@ HRESULT CPiramid::Start()
 	m_eRenderID = ERenderID::NoAlpha;
 
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_pTransform->Add_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();

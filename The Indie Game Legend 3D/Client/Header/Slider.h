@@ -6,6 +6,7 @@ class CSlider final : public CGameObject
 {
 private:
 	CMeshRenderer*			m_pMeshRenderer = nullptr;
+	CCollider*				m_pCollider;
 	class CTexturePool*		m_pTexturePool = nullptr;
 	bool					m_bReverse = false;
 	float					m_fMoveSpeed = 0.f;

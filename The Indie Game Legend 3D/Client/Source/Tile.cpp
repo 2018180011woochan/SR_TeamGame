@@ -34,8 +34,6 @@ HRESULT CTile::Awake()
 
 HRESULT CTile::Start()
 {
-	m_pTransform->Add_Position(_vector(0, -0.5f, 0));
-
 	return S_OK;
 }
 

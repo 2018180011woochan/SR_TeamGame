@@ -45,7 +45,8 @@ HRESULT CBub::Start()
 {
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(4, 4, 4));
-	//m_pTransform->Add_Position(_vector(0, -3, 0));
+	m_pTransform->Add_Position(_vector(0, 3, 0));
+
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	//Test
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -82,9 +83,9 @@ UINT CBub::Update(const float _fDeltaTime)
 		m_fJumpingCnt = 0.f;
 	}
 
-	/*if (FAILED(Movement(_fDeltaTime)))
+	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
-*/
+
 
 	m_pTransform->UpdateTransform();
 
@@ -94,7 +95,6 @@ UINT CBub::Update(const float _fDeltaTime)
 
 UINT CBub::LateUpdate(const float _fDeltaTime)
 {
-
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }

@@ -7,6 +7,8 @@
 #include "Tile.h"
 #include "Obstacle.h"
 #include "Floor.h"
+#include "Wall.h"
+#include "Slider.h"
 
 list<CGameObject*> CUtilityManger::m_RoomMobList;
 
@@ -48,6 +50,7 @@ bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
 	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID));
 	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
+	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CWall>(_nSceneID));
 
 
 	CCollider* pCollider = nullptr;
@@ -57,11 +60,13 @@ bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	CGameObject* pGameObject = nullptr;
 	float fDis = 0.f;
 	float fLowDis = -1.f;
+
 	for (auto& pGameObject : CollisionList)
 	{
-		if(pGameObject->IsEnable() == false)
+		if (pGameObject->IsEnable() == false)
+		{
 			continue;
-
+		}
 		pCollider = (CCollider*)pGameObject->GetComponent<CCollider>();
 		if (pCollider->IsRayPicking(vPickPos, fDis, vRayPivot, vRayDirection))
 		{
@@ -137,7 +142,6 @@ bool CUtilityManger::AirstrikePicking(_uint _nSceneID, OUT _vector & _vPickingPo
 	return bIsPicking;
 }
 
-//bool CUtilityManger::AutoAim(_uint _nSceneID ,OUT CGameObject**  _pGameObject)
 bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 {
 	if(m_RoomMobList.empty())
@@ -152,13 +156,19 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 	float fAimSize = 1.f;
 
 	float fMinimumZ = 1.f;
-	for (auto& pMob : m_RoomMobList)
+	auto Iter = m_RoomMobList.begin();
+
+	//for (auto& pMob : m_RoomMobList)
+	for (; Iter != m_RoomMobList.end(); )
 	{
 		//삭제해야하긴 하는데 귀찮
-		if(((CMonster*)pMob)->GetDead())
+		if (((CMonster*)*Iter)->GetDead())
+		{
+			SafeRelease(*Iter);
+			Iter = m_RoomMobList.erase(Iter);
 			continue;
-
-		_vector vPos = ((CTransform*)pMob->GetComponent<CTransform>())->Get_WorldPosition();
+		}
+		_vector vPos = ((CTransform*)(*Iter)->GetComponent<CTransform>())->Get_WorldPosition();
 		D3DXVec3TransformCoord(&vPos, &vPos, &matView);
 		D3DXVec3TransformCoord(&vPos, &vPos, &matProj);
 
@@ -166,10 +176,11 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 		{
 			if (vPos.z < fMinimumZ)
 			{
-				_pGameObject = pMob;
+				_pGameObject = (*Iter);
 				fMinimumZ = vPos.z;
 			}
 		}
+		++Iter;
 	}
 
 	
@@ -187,6 +198,10 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 
 	CullingObjectList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID);
 	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
+	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
+	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CWall>(_nSceneID));
+
+	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CSlider>(_nSceneID));
 
 	//Object
 	for (auto& pGameObject : CullingObjectList)
@@ -205,6 +220,7 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 		else
 		{
 			pGameObject->SetEnable(true);
+			pGameObject->OnEnable();
 			m_RoomMobList.emplace_back(pGameObject);
 			SafeAddRef(pGameObject);
 		}

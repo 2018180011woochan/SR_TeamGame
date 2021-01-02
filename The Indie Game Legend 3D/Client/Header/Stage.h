@@ -15,10 +15,7 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 
 private:
-	HRESULT AddPlayerLayer(const wstring& LayerTag);
-	HRESULT AddMonsterLayer(const wstring& LayerTag);
-	HRESULT AddCameraLayer(const wstring& LayerTag);
-
+	HRESULT AddLight();
 	HRESULT AddUIObject();
 public:
 	static CStage* Create();

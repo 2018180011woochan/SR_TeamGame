@@ -242,116 +242,34 @@ HRESULT CStage::Awake()
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
 
-	//AddGameObject<CPiramidUnBrake>();
-	//AddGameObject<CPiramid>();
-
-
-
-	// Test용으로 추가함
-	//AddGameObject<CSlider>();
-
-
-	CGameObject* pObj =  AddGameObject<CBub>();
-	((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(0, 0, 9));
-	//pObj = AddGameObject<CBub>();
-
-	//CGameObject* pObj =  AddGameObject<CWormBoss>();
-	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-20.f, 10.f, -20.f));
-
-	// pObj = AddGameObject<CBub>();
-
-	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-10, 0, 0));
-	//pObj = AddGameObject<CBub>();
-	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(10, 0, 10));
-	//pObj = AddGameObject<CBub>();
-	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(-20, 0, 10));
-	//pObj = AddGameObject<CBub>();
-	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(15, 0, 25));
-	//AddGameObject<CRub>();
-	//AddGameObject<CsqrNub>();
-	//AddGameObject<CTurret>();
-	//AddGameObject<CWalker>();
-	//AddGameObject<CCryder>();
-	//AddGameObject<CEgg>();
-	//AddGameObject<CWalkerBoss>();
-	AddGameObject<CNubBoss>();
-	//AddGameObject<CRoboBird>();
-	//AddGameObject<CDoomBird>();
-
-	//AddGameObject<CTreeBoss>();
-	//AddGameObject<CWormBoss>();
-
-	//AddGameObject<CTreeBoss>();
-
-	//AddGameObject<CShopKeeper>();
-	//AddGameObject<CPhubans>();
-	//AddGameObject<CCactus>();
-
-	//AddGameObject<CDerek>();
-	//AddGameObject<CEdragon>();
-	//AddGameObject<CGreenBoyHead>();
-	//AddGameObject<CGreenBoyBody>();
-	//AddGameObject<CGreenBoyLeftHand>();
-	//AddGameObject<CGreenBoyRightHand>();
-	//AddGameObject<CFlame>();
-
-
-	//컬링 테스트 
-	
-	//Light manager Test
-	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
-
-	//Direction World Light
-	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
-		_vector(1, -0, 0), color*0.f, color* 0.9f, color*0.f);
-	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
-	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
-		_vector(-1, -0, 0), color*0.f, color* 0.9f, color*0.f);
-	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
-	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World3,
-		_vector(0, -0, -1), color*0.f, color* 0.9f, color*0.f);
-	CLightMananger::GetInstance()->LightEnable(CLightMananger::World3, true);
-	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World4,
-		_vector(0, 0, 1), color*0.f, color* 0.9f, color*0.f);
-	CLightMananger::GetInstance()->LightEnable(CLightMananger::World4, true);
-	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World5,
-		_vector(0, -1, 0), color*0.f, color* 0.9f, color*0.f);
-	CLightMananger::GetInstance()->LightEnable(CLightMananger::World5, true);
-
-	//Point World Light
-	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::Player,
-	//	_vector(0, 10, 0), color*0.f, color* 0.8f, color*0.f);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
-
-
-	CLightMananger::GetInstance()->LightOn();
-	
-
 	//Sector
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	pSector->SetSectorName(L"Sector1");
 
-	
+	AddLight();
 	AddUIObject();
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
-	//AddGameObject<CSkyBox>();
+	AddGameObject<CSkyBox>();
 #pragma endregion
 
 #pragma region Collider
 	AddPrototype(CWall::Create());
 	AddPrototype(CFloor::Create());
 #pragma endregion
-	AddGameObject<CFloor>();
 
 
-	CSoundMgr::GetInstance()->PlayBGM(L"Sector1.wav");
-	CSoundMgr::GetInstance()->StopAll();
+	//CSoundMgr::GetInstance()->PlayBGM(L"Sector1.wav");
+	//CSoundMgr::GetInstance()->StopAll();
 
+#ifdef _DEBUG
 
-	//CFactoryManager::GetInstance()->LoadDataFile(L"s1");
-	//CFactoryManager::GetInstance()->LoadScene(this);
-	//CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
+#else
+	CFactoryManager::GetInstance()->LoadDataFile(L"Sector1_Test1");
+	CFactoryManager::GetInstance()->LoadScene(this);
+	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
+#endif // _DEBUG
+
 
 	CScene::Awake();
 	
@@ -376,38 +294,6 @@ UINT CStage::Update(float _fDeltaTime)
 	//	//CManagement::GetInstance()->SetUpCurrentScene(CShootingMinigame::Create());
 	//}
 
-	//Test
-	static float fTestVolum = 1.f;
-	static bool bLight = false;
-	if (GetAsyncKeyState('1') & 0x8000)
-	{
-		fTestVolum -= 0.01f;
-	}
-	if (GetAsyncKeyState('2') & 0x8000)
-	{
-		//fTestVolum += 0.01f;
-	}
-	fTestVolum = CLAMP(fTestVolum, 0.f, 1.f);
-
-	if (CKeyManager::GetInstance()->Key_Down(KEY_F))
-	{
-		bLight = !bLight;
-
-		if (bLight)
-		{
-			CLightMananger::GetInstance()->LightOn();
-
-		}
-		else
-		{
-			CLightMananger::GetInstance()->LightOff();
-
-		}
-
-	}
-	 
-
-	//Test
 	return 0;
 }
 
@@ -418,8 +304,44 @@ UINT CStage::LateUpdate(float _fDeltaTime)
 	return 0;
 }
 
-HRESULT CStage::AddMonsterLayer(const wstring & LayerTag)
+HRESULT CStage::AddLight()
 {
+	//Light manager Test
+	D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	//Direction World Light
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World1,
+		_vector(1, -1, 1), color*0.f, color* 0.6f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World1, true);
+
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World2,
+		_vector(-1, -1, 1), color*0.f, color* 0.6f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World2, true);
+
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World3,
+		_vector(-1, -1, -1), color*0.f, color* 0.6f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World3, true);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World4,
+		_vector(1, -1, -1), color*0.f, color* 0.6f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World4, true);
+
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World5,
+		_vector(0, 0, 1), color*0.f, color* 0.1f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World5, true);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World6,
+		_vector(1, 0, 0), color*0.f, color* 0.1f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World6, true);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World7,
+		_vector(-1, 0, 0), color*0.f, color* 0.1f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World7, true);
+	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World8,
+		_vector(0, 0, -1), color*0.f, color* 0.1f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::World8, true);
+
+	//Point World Light
+	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::Player,
+	//	_vector(0, 10, 0), color*0.f, color* 0.8f, color*0.f);
+	//CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
+	CLightMananger::GetInstance()->LightOn();
 	return S_OK;
 }
 
@@ -519,19 +441,19 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CWormConnector::Create());
 	AddPrototype(CWormTail::Create());
 	AddPrototype(CWormBullet::Create());
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
 
-	AddGameObject<CWorm>()->SetEnable(true);
-	AddGameObject<CWormBody>();
-	AddGameObject<CWormBody>();
-	AddGameObject<CWormBody>();
-	AddGameObject<CWormBody>();
+	//AddGameObject<CWorm>()->SetEnable(true);
+	//AddGameObject<CWormBody>();
+	//AddGameObject<CWormBody>();
+	//AddGameObject<CWormBody>();
+	//AddGameObject<CWormBody>();
 
-	AddGameObject<CWormTail>();
+	//AddGameObject<CWormTail>();
 	return S_OK;
 }
 
