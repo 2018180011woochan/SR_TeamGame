@@ -88,6 +88,18 @@ HRESULT CWormPart::Render()
 	return S_OK;
 }
 
+void CWormPart::OnEnable()
+{
+	if (nullptr != m_pChild)
+		m_pChild->SetEnable(true);
+}
+
+void CWormPart::OnDisable()
+{
+	if (nullptr != m_pChild)
+		m_pChild->SetEnable(false);
+}
+
 void CWormPart::RotationZ(D3DXVECTOR3 _vMoveDir)
 {
 	D3DXVec3Normalize(&_vMoveDir, &_vMoveDir);

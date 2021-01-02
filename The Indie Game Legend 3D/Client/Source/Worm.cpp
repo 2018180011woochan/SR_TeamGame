@@ -127,6 +127,18 @@ HRESULT CWorm::Render()
 	return S_OK;
 }
 
+void CWorm::OnEnable()
+{
+	if (nullptr != m_pChild)
+		m_pChild->SetEnable(true);
+}
+
+void CWorm::OnDisable()
+{
+	if (nullptr != m_pChild)
+		m_pChild->SetEnable(false);
+}
+
 void CWorm::ConnectBody()
 {
 	list<CGameObject*>		pBodyList;

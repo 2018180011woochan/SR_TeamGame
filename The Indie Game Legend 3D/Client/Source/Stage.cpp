@@ -468,7 +468,7 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CWormConnector>();
 	AddGameObject<CWormConnector>();
 
-	AddGameObject<CWorm>();
+	AddGameObject<CWorm>()->SetEnable(true);
 	AddGameObject<CWormBody>();
 	AddGameObject<CWormBody>();
 	AddGameObject<CWormBody>();

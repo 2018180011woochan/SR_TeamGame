@@ -37,6 +37,8 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnEnable() override;
+	virtual void OnDisable() override;
 public:
 	//진행 방향 회전
 	void RotationZ(D3DXVECTOR3 _vMoveDir);

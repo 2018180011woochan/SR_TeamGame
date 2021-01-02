@@ -5,6 +5,7 @@
 #include "AmmoIcon.h"
 #include "SkillGauge.h"
 #include "AmmoIconHighlight.h"
+#include "AmmoGaugeCover.h"
 
 CAmmoHUD::CAmmoHUD()
 	: m_pAmmoFrame(nullptr)

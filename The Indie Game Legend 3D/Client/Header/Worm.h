@@ -53,6 +53,8 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnEnable() override;
+	virtual void OnDisable() override;
 private:
 	void ConnectBody();
 	void Animate(const float _fDeltaTime);

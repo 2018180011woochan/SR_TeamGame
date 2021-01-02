@@ -65,7 +65,7 @@ HRESULT CAmmoGauge::Start()
 	m_sTextureKey = TEXT("AmmoGauge");
 	SafeAddRef(m_pTexturePool);
 
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[1]);
 
 	return S_OK;
 }
