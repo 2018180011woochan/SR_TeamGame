@@ -15,22 +15,6 @@ typedef struct tagCameraDesc
 	float	fFar;
 }CAMERA_DESC;
 
-typedef struct tagVertexTexture
-{
-	D3DXVECTOR3 vPosition;
-	D3DXVECTOR2 vUV; 
-}VTX_TEXTURE;
-
-const _uint FVF_VTX_TEXTURE = D3DFVF_XYZ | D3DFVF_TEX1 ;
-
-typedef struct tagVertexCubeTexture
-{
-	D3DXVECTOR3 vPosition;
-	D3DXVECTOR3 vUV;
-}VTXCUBE_TEXTURE;
-
-const _uint FVF_VTXCUBE_TEXTURE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
-
 typedef struct tagIndex16
 {
 	WORD _1, _2, _3;
@@ -57,7 +41,6 @@ typedef struct tagVertexRect
 	D3DXVECTOR2 UV;
 	static const DWORD FVF;
 }VERTEXRECT, *LPVERTEXRECT;
-
 
 const DWORD FVF_VERTEX_RECT = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
