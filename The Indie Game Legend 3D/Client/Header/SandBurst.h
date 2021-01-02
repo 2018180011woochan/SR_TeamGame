@@ -1,15 +1,15 @@
 #pragma once
-#ifndef __CACTUS_H__
+#ifndef __SANDBURST_H__
 
 #include "GameObject.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CCactus final : public CGameObject
+class CSandBurst final : public CGameObject
 {
 private:
-	explicit CCactus();
-	explicit CCactus(const CCactus& other);
-	virtual ~CCactus() = default;
+	explicit CSandBurst();
+	explicit CSandBurst(const CSandBurst& other);
+	virtual ~CSandBurst() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -20,26 +20,23 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
-	virtual void OnCollision(CGameObject* _pGameObject) override;
 private:
-	HRESULT Movement(float fDeltaTime);
-	void Jumping(float fDeltaTime);
+	void Spreading(float _fDeltaTime);
+	void IsBillBording();
 	
 public:
-	void SetNPCPos(const _vector _EggPos);
-	HRESULT IsBillboarding();
+	void SetPos(const _vector _EggPos);
 
 public:
 	virtual CGameObject * Clone() override;
-	static CCactus* Create();
+	static CSandBurst* Create();
 private:
 	virtual void Free() override;
 
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
-	const CTransform*	m_pPlayerTransform;
-	CCollider*			m_pCollider;
+
 	float				m_fMoveSpeed;
 
 	float				m_fWalkSpeed;
@@ -49,16 +46,12 @@ private:
 	float				m_fJumpTime;
 	float				m_fYTest;
 	bool				m_bJump;
-	bool				m_bEffect;
-	bool				m_bisSave;
-
-	float				m_fJumpSpeed;
-	float				m_fJumpDeltaTime;
+	bool				m_bDead;
 
 	UINT nIndex;
 
 	bool m_bIsTPS;
 };
 
-#define __CACTUS_H__
-#endif // !__CACTUS_H__
+#define __SANDBURST_H__
+#endif // !__SANDBURST_H__

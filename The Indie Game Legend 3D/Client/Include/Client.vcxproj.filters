@@ -418,6 +418,42 @@
     <Filter Include="02.GameObject\11.Npc\03.Edragon">
       <UniqueIdentifier>{248d53e8-cdf2-49f3-a387-9dba1efa3ee1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\10.Effect\05.SandBurst">
+      <UniqueIdentifier>{1ae4060c-92a9-4485-b666-e665e2f19f6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\03.ShootingMinigame">
+      <UniqueIdentifier>{679daad6-50f2-4c5d-9fab-6722000871a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\02.PlayerShip">
+      <UniqueIdentifier>{d86a0827-97ca-477c-b644-756956567cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy">
+      <UniqueIdentifier>{792fcf4e-1174-41dd-bc0c-70f83a3b28b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\00.GreenBoyHead">
+      <UniqueIdentifier>{0ee02de3-ed9b-49c3-b736-375b613ae14e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\01.GreenBoyBody">
+      <UniqueIdentifier>{3e85f399-71ca-4d9b-98d2-7412e488ccb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\02.GreenBoyLeftHand">
+      <UniqueIdentifier>{1aae7545-4a45-4197-9e1b-1e8b5a47b7b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\03.GreenBoyRightHand">
+      <UniqueIdentifier>{6afa4e7a-2199-4fc8-b22f-3c42f0891a97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\04.Flame">
+      <UniqueIdentifier>{8a9aacca-c434-4023-8775-3f2ef8be1005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\05.FireBullet">
+      <UniqueIdentifier>{59cac894-9169-448d-9b07-38969ae7d6c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\06.IceBullet">
+      <UniqueIdentifier>{bd3b8ee8-bb97-4302-929e-7d0cba91be38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\07.BloodHand">
+      <UniqueIdentifier>{978000bf-40f0-4aa2-bc27-06d833cfeba0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -756,6 +792,45 @@
     <ClInclude Include="..\Header\Cactus.h">
       <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SandBurst.h">
+      <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Derek.h">
+      <Filter>02.GameObject\11.Npc\02.Derek</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Edragon.h">
+      <Filter>02.GameObject\11.Npc\03.Edragon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShootingMinigame.h">
+      <Filter>03.Scene\03.ShootingMinigame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerShip.h">
+      <Filter>02.GameObject\00.Player\02.PlayerShip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyHead.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\00.GreenBoyHead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyBody.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\01.GreenBoyBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Flame.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.Flame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyLeftHand.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\02.GreenBoyLeftHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyRightHand.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\03.GreenBoyRightHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FireBullet.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.FireBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IceBullet.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\06.IceBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BloodHand.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1075,6 +1150,45 @@
     </ClCompile>
     <ClCompile Include="..\Source\Cactus.cpp">
       <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SandBurst.cpp">
+      <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Derek.cpp">
+      <Filter>02.GameObject\11.Npc\02.Derek</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Edragon.cpp">
+      <Filter>02.GameObject\11.Npc\03.Edragon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ShootingMinigame.cpp">
+      <Filter>03.Scene\03.ShootingMinigame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PlayerShip.cpp">
+      <Filter>02.GameObject\00.Player\02.PlayerShip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyHead.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\00.GreenBoyHead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyBody.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\01.GreenBoyBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Flame.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.Flame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyLeftHand.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\02.GreenBoyLeftHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyRightHand.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\03.GreenBoyRightHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FireBullet.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.FireBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IceBullet.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\06.IceBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BloodHand.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

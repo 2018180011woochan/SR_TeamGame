@@ -192,7 +192,7 @@ void CTransform::SetParent(CGameObject * _pParent)
 }
 void CTransform::Add_parent(const _vector & _rParent)
 {
-	m_tTransformDesc.vParent += _rParent;
+	//m_tTransformDesc.vParent += _rParent;
 }
 
 

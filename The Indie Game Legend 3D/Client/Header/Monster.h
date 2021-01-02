@@ -2,6 +2,7 @@
 #ifndef __MONSTER_H__
 #include "GameObject.h"
 USING(Engine)
+class CBossHP;
 class CMonster : public CGameObject
 {
 public:
@@ -26,6 +27,11 @@ public:
 	bool	GetDead() { return m_bDead; };
 	virtual CGameObject * Clone() = 0;
 	virtual void OnCollision(CGameObject* _pGameObject) override;
+	// 초기 위치 저장
+	virtual void	SetMonsterPos();
+	// 컬링 꺼지면 위치 초기화
+	virtual void	ResetMonsterPos();
+
 protected:
 	const CTransform*	m_pPlayerTransform;
 	class CVIBuffer*	m_pVIBufferCom = nullptr;
@@ -35,6 +41,9 @@ protected:
 	//wjm test
 	bool				m_bDead = false;
 	int					m_iHP;
+	int					m_iMaxHP;
+	_vector				m_vecStartPos;
+	CBossHP*			m_pBossHP;
 };
 
 #define __MONSTER_H__

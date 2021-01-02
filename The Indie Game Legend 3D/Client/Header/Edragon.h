@@ -1,15 +1,15 @@
 #pragma once
-#ifndef __CACTUS_H__
+#ifndef __EDRAGON_H__
 
 #include "GameObject.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CCactus final : public CGameObject
+class CEdragon final : public CGameObject
 {
 private:
-	explicit CCactus();
-	explicit CCactus(const CCactus& other);
-	virtual ~CCactus() = default;
+	explicit CEdragon();
+	explicit CEdragon(const CEdragon& other);
+	virtual ~CEdragon() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -31,7 +31,7 @@ public:
 
 public:
 	virtual CGameObject * Clone() override;
-	static CCactus* Create();
+	static CEdragon* Create();
 private:
 	virtual void Free() override;
 
@@ -60,5 +60,5 @@ private:
 	bool m_bIsTPS;
 };
 
-#define __CACTUS_H__
-#endif // !__CACTUS_H__
+#define __EDRAGON_H__
+#endif // !__EDRAGON_H__

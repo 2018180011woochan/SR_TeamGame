@@ -1,15 +1,15 @@
 #pragma once
-#ifndef __CACTUS_H__
+#ifndef __DEREK_H__
 
 #include "GameObject.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CCactus final : public CGameObject
+class CDerek final : public CGameObject
 {
 private:
-	explicit CCactus();
-	explicit CCactus(const CCactus& other);
-	virtual ~CCactus() = default;
+	explicit CDerek();
+	explicit CDerek(const CDerek& other);
+	virtual ~CDerek() = default;
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -31,7 +31,7 @@ public:
 
 public:
 	virtual CGameObject * Clone() override;
-	static CCactus* Create();
+	static CDerek* Create();
 private:
 	virtual void Free() override;
 
@@ -60,5 +60,5 @@ private:
 	bool m_bIsTPS;
 };
 
-#define __CACTUS_H__
-#endif // !__CACTUS_H__
+#define __DEREK_H__
+#endif // !__DEREK_H__

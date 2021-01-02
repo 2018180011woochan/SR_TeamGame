@@ -1,15 +1,19 @@
 #pragma once
-#ifndef __CACTUS_H__
+#ifndef __GREENBOYBODY_H__
 
-#include "GameObject.h"
+#include "Monster.h"
 #include "TexturePoolManager.h"
 USING(Engine)
-class CCactus final : public CGameObject
+class CGreenBoyRightHand;
+class CGreenBoyLeftHand;
+class CGreenBoyBody final : public CMonster
 {
 private:
-	explicit CCactus();
-	explicit CCactus(const CCactus& other);
-	virtual ~CCactus() = default;
+	explicit CGreenBoyBody();
+	explicit CGreenBoyBody(const CGreenBoyBody& other);
+	virtual ~CGreenBoyBody() = default;
+
+	enum Attack {LEFTBEEM, RIGHTBEEM, DOUBLEBEEM, BEEMEND};
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -24,22 +28,23 @@ public:
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Jumping(float fDeltaTime);
+	bool isCloseToPlayer();
 	
 public:
-	void SetNPCPos(const _vector _EggPos);
-	HRESULT IsBillboarding();
+	void SetPos(const _vector _Pos);
 
 public:
 	virtual CGameObject * Clone() override;
-	static CCactus* Create();
+	static CGreenBoyBody* Create();
 private:
 	virtual void Free() override;
 
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
-	const CTransform*	m_pPlayerTransform;
-	CCollider*			m_pCollider;
+	CGreenBoyRightHand* pRightHand;
+	CGreenBoyLeftHand* pLeftHand;
+
 	float				m_fMoveSpeed;
 
 	float				m_fWalkSpeed;
@@ -49,16 +54,19 @@ private:
 	float				m_fJumpTime;
 	float				m_fYTest;
 	bool				m_bJump;
-	bool				m_bEffect;
-	bool				m_bisSave;
 
 	float				m_fJumpSpeed;
 	float				m_fJumpDeltaTime;
 
+	float				m_fAttackSpeed;
+	float				m_fAttackDeltaTime;
+
+	bool				m_bIsAttack;
+	Attack				m_eAttackBeem;
 	UINT nIndex;
 
 	bool m_bIsTPS;
 };
 
-#define __CACTUS_H__
-#endif // !__CACTUS_H__
+#define __GREENBOYBODY_H__
+#endif // !__GREENBOYBODY_H__

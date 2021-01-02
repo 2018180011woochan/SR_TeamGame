@@ -41,6 +41,8 @@ HRESULT CTurret::Awake()
 
 
 	m_iHP = 3;
+	m_nTag = 0;
+	m_bDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -61,8 +63,9 @@ HRESULT CTurret::Start()
 UINT CTurret::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
-		return OBJ_DEAD;
-
+	{
+		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
+	}
 	CMonster::Update(_fDeltaTime);
 
 	/*

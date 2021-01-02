@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Cactus.h"
+#include "Edragon.h"
 #include "VIBuffer_Rect.h"
 #include "MeshRenderer.h"
 #include "Transform.h"
@@ -9,17 +9,17 @@
 #include "SandBurst.h"
 #include "DialogHUD.h"
 
-CCactus::CCactus()
+CEdragon::CEdragon()
 	:m_pTexturePool(nullptr)
 {
 }
 
-CCactus::CCactus(const CCactus & other)
+CEdragon::CEdragon(const CEdragon & other)
 	: CGameObject(other)
 {
 }
 
-HRESULT CCactus::InitializePrototype()
+HRESULT CEdragon::InitializePrototype()
 {
 	if (FAILED(CGameObject::InitializePrototype()))
 		return E_FAIL;
@@ -27,7 +27,7 @@ HRESULT CCactus::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CCactus::Awake()
+HRESULT CEdragon::Awake()
 {
 	if (FAILED(CGameObject::Awake()))
 		return E_FAIL;
@@ -35,7 +35,7 @@ HRESULT CCactus::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("NPC_Cactus"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("NPC_Ed"));
 	SafeAddRef(m_pTexturePool);
 
 	m_fJumpPower = 10.f;
@@ -61,7 +61,7 @@ HRESULT CCactus::Awake()
 	return S_OK;
 }
 
-HRESULT CCactus::Start()
+HRESULT CEdragon::Start()
 {
 	CGameObject::Start();
 	m_pTransform->Set_Scale(_vector(5, 5, 5));
@@ -85,7 +85,7 @@ HRESULT CCactus::Start()
 	return S_OK;
 }
 
-UINT CCactus::Update(const float _fDeltaTime)
+UINT CEdragon::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 
@@ -116,14 +116,14 @@ UINT CCactus::Update(const float _fDeltaTime)
 	return _uint();
 }
 
-UINT CCactus::LateUpdate(const float _fDeltaTime)
+UINT CEdragon::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 	IsBillboarding();
 	return _uint();
 }
 
-HRESULT CCactus::Render()
+HRESULT CEdragon::Render()
 {
 	/*엔진에서 호출하는 식으로*/
 	if (FAILED(CGameObject::Render()))
@@ -134,7 +134,7 @@ HRESULT CCactus::Render()
 	return S_OK;
 }
 
-void CCactus::OnCollision(CGameObject * _pGameObject)
+void CEdragon::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Player" == _pGameObject->GetName())
 	{
@@ -144,12 +144,12 @@ void CCactus::OnCollision(CGameObject * _pGameObject)
 }
 
 
-HRESULT CCactus::Movement(float fDeltaTime)
+HRESULT CEdragon::Movement(float fDeltaTime)
 {
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 
 	_vector vDir;
-	_vector vPlayerDir = _vector(m_pPlayerTransform->Get_Position().x - 8.f, m_pPlayerTransform->Get_Position().y, m_pPlayerTransform->Get_Position().z);
+	_vector vPlayerDir = _vector(m_pPlayerTransform->Get_Position().x, m_pPlayerTransform->Get_Position().y, m_pPlayerTransform->Get_Position().z + 8.f);
 
 	vDir = vPlayerDir - m_pTransform->Get_Position();
 	vDir.y = 0.f;
@@ -160,7 +160,7 @@ HRESULT CCactus::Movement(float fDeltaTime)
 	return S_OK;
 }
 
-void CCactus::Jumping(float fDeltaTime)
+void CEdragon::Jumping(float fDeltaTime)
 {
 	float fY = 0.f;
 	if (m_bJump)
@@ -194,12 +194,12 @@ void CCactus::Jumping(float fDeltaTime)
 	}
 }
 
-void CCactus::SetNPCPos(const _vector _EggPos)
+void CEdragon::SetNPCPos(const _vector _EggPos)
 {
 	m_pTransform->Set_Position(_EggPos);
 }
 
-HRESULT CCactus::IsBillboarding()
+HRESULT CEdragon::IsBillboarding()
 {
 	CCamera* pCamera = (CCamera*)FindGameObjectOfType<CCamera>();
 	if (pCamera == nullptr)
@@ -238,19 +238,19 @@ HRESULT CCactus::IsBillboarding()
 	return S_OK;
 }
 
-CGameObject * CCactus::Clone()
+CGameObject * CEdragon::Clone()
 {
-	CCactus* pClone = new CCactus(*this);
+	CEdragon* pClone = new CEdragon(*this);
 	return pClone;
 }
 
-CCactus * CCactus::Create()
+CEdragon * CEdragon::Create()
 {
-	CCactus* pInstance = new CCactus();
+	CEdragon* pInstance = new CEdragon();
 	return pInstance;
 }
 
-void CCactus::Free()
+void CEdragon::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
