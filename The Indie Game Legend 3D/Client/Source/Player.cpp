@@ -25,6 +25,7 @@ USING(Engine)
 #include "Gun.h"
 #include "Focus.h"
 #include "CrossHair.h"
+#include "AmmoHUD.h"
 
 CPlayer::CPlayer()
 	:CGameObject()
@@ -104,20 +105,16 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		}
 		else
 		{
-			//BulletFire();
-			//m_pGun->SetFire();
 			//플레임 건이 아닐경우 반동 필요 
 			if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
 				BulletFire();
-				m_pGun->SetFire();
 			}
 			//플레임 건일경우 반동 무필요 
 			else if (m_ePreWeaponType == EWeaponType::Flame &&  m_pKeyMgr->Key_Press(KEY_LBUTTON))
 			{
 				BulletFire();
 			}
-
 		}
 	}
 
@@ -280,6 +277,8 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 
 void CPlayer::TakeItem(const EItemID & _eID)
 {
+	
+	//m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
 	switch (_eID)
 	{
 	case EItemID::Heart:
@@ -290,7 +289,7 @@ void CPlayer::TakeItem(const EItemID & _eID)
 	case EItemID::sprCoin:
 		++m_fAmmo;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
-		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
+	
 		//++m_nCoin;
 		SoundPlay(ESoundID::AddCoin);
 		break;
@@ -298,7 +297,6 @@ void CPlayer::TakeItem(const EItemID & _eID)
 		//m_nCoin += 10;
 		m_fAmmo += 3;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
-		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
 		SoundPlay(ESoundID::AddCoin);
 		break;
 	case EItemID::End:
@@ -322,17 +320,20 @@ void CPlayer::BulletFire()
 		{
 		case EWeaponType::Multiple:
 			pBullet = (CTripleBullet*)AddGameObject<CTripleBullet>();
-			pBullet->Fire();
+			pBullet->Fire();			
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::NormaBullet);
 			break;
 		case EWeaponType::Big:
 			 pBullet = (CBigBullet*)AddGameObject<CBigBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::BigBullet);
 			break;
 		case EWeaponType::Rapid:
 			 pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::NormaBullet);
 			break;
 		case EWeaponType::Flame:
@@ -343,6 +344,7 @@ void CPlayer::BulletFire()
 		case EWeaponType::Lazer:
 			pBullet = (CLaserBullet*)AddGameObject<CLaserBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::LaserBullet);
 			break;
 		default :
@@ -351,16 +353,14 @@ void CPlayer::BulletFire()
 
 		m_fAmmo -= m_nAmmoDecrease;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
-		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
-		
-
+		m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
 	}
 	else
 	{
 		CNormalBullet* pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 		pBullet->Fire();
 		SoundPlay(ESoundID::NormaBullet);
-
+		m_pGun->SetFire();
 	}
 }
 
@@ -376,7 +376,7 @@ void CPlayer::ChangeWeaponUISetting()
 	//중복콜 방지용
 	if (m_ePreWeaponType != m_eCurWeaponType)
 	{
-		m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
+		m_pAmmoHud->SetAmmoIcon((UINT)m_eCurWeaponType);
 		m_ePreWeaponType = m_eCurWeaponType;
 	}
 	ChangeWeapon();
@@ -591,7 +591,8 @@ void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 	m_nSetWeaponID = m_vecWeapons.size() - 1;
 	m_eCurWeaponType = m_vecWeapons[m_nSetWeaponID];
 	ChangeWeapon();
-	m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
+	m_pAmmoHud->SetAmmoIcon((UINT)m_eCurWeaponType);
+
 }
 
 HRESULT CPlayer::InitializePrototype()
@@ -623,7 +624,7 @@ HRESULT CPlayer::Awake()
 	m_fHitDelayTime = 0.f;
 	m_nDiscMax = 1;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(5.f,5.f,5.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(3.9f, 3.9f, 3.9f));
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
@@ -631,12 +632,6 @@ HRESULT CPlayer::Awake()
 
 	m_bsfxStep = false;
 
-
-#ifdef _DEBUG
-	m_nTag = 0;
-#else
-
-#endif
 	return S_OK;
 }
 
@@ -644,41 +639,38 @@ HRESULT CPlayer::Start()
 {
 
 	m_pGun = (CGun*)FindGameObjectOfType<CGun>();
-
+	SafeAddRef(m_pGun);
 	//Test
 
 	//Reference Setting
-	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
-	m_pWeaponHud = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
+	m_pAmmoHud = (CAmmoHUD*)FindGameObjectOfType<CAmmoHUD>();
 	m_pHeartManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
 	m_pCrossHair = FindGameObjectOfType<CCrossHair>();
-	//m_pGemText = (CText*)((CGemText*)FindGameObjectOfType<CGemText>())->GetComponent<CText>();
-	//m_pDiscText = (CText*)((CDiscText*)FindGameObjectOfType<CDiscText>())->GetComponent<CText>();
+	m_pGemText = (CGemText*)FindGameObjectOfType<CGemText>();
+	m_pDiscText = (CDiscText*)FindGameObjectOfType<CDiscText>();
 	m_pFocus = (CFocus*)FindGameObjectOfType<CFocus>();
-	//if (nullptr == m_pWeaponHud || nullptr == m_pHeartManager || nullptr == m_pGemText || nullptr == m_pDiscText)
-	//{
-	////	return E_FAIL;
-	//}
-	//SafeAddRef(m_pAmmobar);
+	SafeAddRef(m_pAmmoHud);
 
 
 	//스폰지점 세팅과 씬 초반 컬링
 #ifdef _DEBUG
+	m_nTag = 0;
 
 #else
 	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
 	_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
 	m_pTransform->Set_Position(vPosition);
 	m_nTag = pSpawn->GetTag();
-#endif
 	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
+#endif
 
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f,2.5f,0.f));
+	m_pTransform->Add_Position(D3DXVECTOR3(0.f,3.f,0.f));
 
 
 	 //weapon Setting
 	 m_vecWeapons.emplace_back(EWeaponType::Big);
+	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Big);
 
 	 //------------
 	 m_pHeartManager->SetHeartCount(m_nHpMax);

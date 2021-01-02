@@ -172,15 +172,10 @@ HRESULT CItem::Start()
 
 
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	//Test	
-	//m_pTransform->Set_Position(_vector(-25, 3, 10));
-	//SetItemType(EItemID::Heart);
-	//Test	
-
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Cube"),BOUND::BOX);
+	m_pCollider->SetMesh(TEXT("Cube"),BOUND::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 	return S_OK;
 }
@@ -210,7 +205,6 @@ HRESULT CItem::Render()
 	BillBord();
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
-	//m_pCollider->Draw();
 	return S_OK;
 }
 

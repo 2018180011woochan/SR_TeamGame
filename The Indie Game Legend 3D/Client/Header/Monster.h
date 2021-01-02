@@ -31,7 +31,7 @@ public:
 	virtual void	SetMonsterPos();
 	// 컬링 꺼지면 위치 초기화
 	virtual void	ResetMonsterPos();
-
+	virtual void	OnEnable() override;
 protected:
 	const CTransform*	m_pPlayerTransform;
 	class CVIBuffer*	m_pVIBufferCom = nullptr;

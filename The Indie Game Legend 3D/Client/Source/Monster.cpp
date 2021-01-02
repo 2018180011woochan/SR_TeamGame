@@ -4,7 +4,6 @@
 
 
 CMonster::CMonster()
-	
 {
 }
 
@@ -45,7 +44,7 @@ UINT CMonster::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	
-	ResetMonsterPos();
+
 
 
 	return _uint();
@@ -111,11 +110,16 @@ void CMonster::OnCollision(CGameObject * _pGameObject)
 void CMonster::SetMonsterPos()
 {
 	m_vecStartPos = m_pTransform->Get_Position();
+	m_vecStartPos.y += 3.f;
 }
 
 void CMonster::ResetMonsterPos()
 {
-	if (!m_bEnable)
-		m_pTransform->Set_Position(m_vecStartPos);
+	m_pTransform->Set_Position(m_vecStartPos);
+}
+
+void CMonster::OnEnable()
+{
+	ResetMonsterPos();
 }
 

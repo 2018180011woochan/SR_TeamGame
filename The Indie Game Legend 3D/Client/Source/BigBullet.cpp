@@ -115,7 +115,7 @@ CBigBullet * CBigBullet::Create()
 void CBigBullet::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Monster" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName()
-		|| L"Floor" == _pGameObject->GetName())
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
 	{
 		CExplosionBlue* pEffect = nullptr;
 		pEffect = (CExplosionBlue*)AddGameObject<CExplosionBlue>();

@@ -135,16 +135,13 @@ HRESULT CFactoryManager::LoadCollider(CScene* _pScene, const TSTRING & _sFileNam
 				((CWall*)pGameObject)->SetMesh(sMeshKey);
 				((CWall*)pGameObject)->SetDirection(sDirection);
 				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
-				pGameObject->SetTag(nRoomID);
-				pGameObject->SetEnable(false);
+				pGameObject->SetTag(++nRoomID);
 			}
 			else
 			{
 				pGameObject = _pScene->AddGameObject<CFloor>();
 				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
-				pGameObject->SetTag(nRoomID);
-				pGameObject->SetEnable(false);
-
+				pGameObject->SetTag(++nRoomID);
 			}
 		}
 	}

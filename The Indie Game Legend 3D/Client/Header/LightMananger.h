@@ -9,7 +9,7 @@ class CLightMananger final : public CBase
 public:
 	enum LightID  : int
 	{
-		Player, World1, World2,World3, World4, World5, World6, World7, End
+		Player, World1, World2,World3, World4, World5, World6, World7, World8, End
 	};
 	// 이넘버전이 
 	D3DLIGHT9*	m_pLightChannel[(_uint)LightID::End]; 
@@ -26,13 +26,6 @@ public:
 		, const D3DXCOLOR& _Diffuse, const D3DXCOLOR& _Specular);
 	HRESULT CreateSpotlight(const LightID& _eID, const _vector& _vPosition, const _vector& _vDirection, const D3DXCOLOR& _Ambient
 		, const D3DXCOLOR& _Diffuse, const D3DXCOLOR& _Specular,const float& _fTheta , const float& _fPhi);
-
-	HRESULT CreatePoint(const wstring& _wstrkey, const _vector& _vPosition, const D3DXCOLOR& _Ambient
-		, const D3DXCOLOR& _Diffuse, const D3DXCOLOR& _Specular);
-	HRESULT CreateDirction(const wstring& _wstrkey, const _vector& _vDirection, const D3DXCOLOR& _Ambient
-		, const D3DXCOLOR& _Diffuse, const D3DXCOLOR& _Specular);
-	HRESULT CreateSpotlight(const wstring& _wstrkey, const _vector& _vPosition, const _vector& _vDirection, const D3DXCOLOR& _Ambient
-		, const D3DXCOLOR& _Diffuse, const D3DXCOLOR& _Specular);
 
 	HRESULT LightEnable(const LightID & _eID, const bool& _bEnable);
 

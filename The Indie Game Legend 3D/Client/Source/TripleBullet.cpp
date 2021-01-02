@@ -129,7 +129,7 @@ CTripleBullet * CTripleBullet::Create()
 void CTripleBullet::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Monster" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName()
-		|| L"Floor" == _pGameObject->GetName())
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
 	{
 		CBulletSpark* pEffect = nullptr;
 		pEffect = (CBulletSpark*)AddGameObject<CBulletSpark>();

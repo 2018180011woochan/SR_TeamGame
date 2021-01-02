@@ -11,7 +11,8 @@ CSlider::CSlider()
 
 CSlider::CSlider(const CSlider & _rOther)
 	:CGameObject(_rOther)
-	,m_vDir(_rOther.m_vDir)
+	, m_vDir(_rOther.m_vDir)
+	, m_fMoveSpeed(_rOther.m_fMoveSpeed)
 {
 }
 
@@ -21,8 +22,8 @@ void CSlider::Move(const float _fDeltaTime)
 	//Test
 	//나중에 툴로 배치신넘들 z x 방향 지정하는거 이거 리스트 가져와서 룸아이디로 하는걸로 
 	
-	m_vDir *= m_fMoveSpeed * (m_bReverse ? _fDeltaTime : -_fDeltaTime);
-	m_pTransform->Add_Position(m_vDir);
+	_vector vDir =m_vDir * m_fMoveSpeed * (m_bReverse ? _fDeltaTime : -_fDeltaTime);
+	m_pTransform->Add_Position(vDir);
 }
 
 void CSlider::IsBillboarding()
@@ -51,6 +52,7 @@ HRESULT CSlider::InitializePrototype()
 {
 	m_vDir = _vector(1, 0, 0);
 	m_fMoveSpeed = 40.f;
+	m_sName = L"Slide";
 	return S_OK;
 }
 
@@ -58,8 +60,8 @@ HRESULT CSlider::Awake()
 {
 	CGameObject::Awake();
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	m_pTransform->Set_Position(_vector(1, 2, 3));
-
+	m_pTransform->Add_Position(_vector(0, 4, 0));
+	m_fMoveSpeed = 10.f;
 	return S_OK;
 }
 
@@ -71,6 +73,11 @@ HRESULT CSlider::Start()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Object"));
 	SafeAddRef(m_pTexturePool);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Slider"))[0]);
+
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Cube"), BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->m_bIsRigid = true;
+
 	return S_OK;
 }
 

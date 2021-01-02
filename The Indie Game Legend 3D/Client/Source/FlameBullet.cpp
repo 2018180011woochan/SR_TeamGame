@@ -125,7 +125,7 @@ HRESULT CFlameBullet::Fire()
 
 void CFlameBullet::OnCollision(CGameObject * _pGameObject)
 {
-	if ( L"Floor" == _pGameObject->GetName())
+	if ( L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
 	{
 		m_bDead = true;
 	}
