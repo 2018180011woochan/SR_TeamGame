@@ -78,12 +78,11 @@ private:
 	 _uint				m_nAmmoDecrease;
 
 	 //UI
-	 Image*						m_pAmmobar = nullptr;
+	 class CAmmoHUD*            m_pAmmoHud = nullptr;
 	 class CHeartManager*		m_pHeartManager = nullptr;
-	 class CWeaponHUD*			m_pWeaponHud = nullptr;
 	 CGameObject*				m_pCrossHair = nullptr;
-	 CText*						m_pGemText = nullptr;
-	 CText*						m_pDiscText = nullptr;
+	 class CGemText*			m_pGemText = nullptr;
+	 class CDiscText*			m_pDiscText = nullptr;
 	 class CFocus*				m_pFocus = nullptr;
 
 

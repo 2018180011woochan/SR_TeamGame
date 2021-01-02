@@ -142,7 +142,6 @@ HRESULT CBub::Movement(float fDeltaTime)
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	m_pTransform->Add_Position(vDir * fDeltaTime * m_fMoveSpeed);
-
 	return S_OK;
 }
 

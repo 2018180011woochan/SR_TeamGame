@@ -232,6 +232,8 @@ HRESULT CStage::Awake()
 
 	AddPrototype(CBulletSpawn::Create());
 
+
+
 #pragma region GUN_TEST
 	AddPrototype(CGun::Create());
 	AddGameObject<CGun>();
@@ -264,6 +266,8 @@ HRESULT CStage::Awake()
 
 #ifdef _DEBUG
 
+	//CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
+	//CFactoryManager::GetInstance()->LoadScene(this);
 #else
 	CFactoryManager::GetInstance()->LoadDataFile(L"Sector1_Test1");
 	CFactoryManager::GetInstance()->LoadScene(this);
@@ -325,22 +329,22 @@ HRESULT CStage::AddLight()
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World4, true);
 
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World5,
-		_vector(0, 0, 1), color*0.f, color* 0.1f, color*0.f);
+		_vector(0, 0, 1), color*0.f, color* 0.3f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World5, true);
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World6,
-		_vector(1, 0, 0), color*0.f, color* 0.1f, color*0.f);
+		_vector(1, 0, 0), color*0.f, color* 0.3f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World6, true);
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World7,
-		_vector(-1, 0, 0), color*0.f, color* 0.1f, color*0.f);
+		_vector(-1, 0, 0), color*0.f, color* 0.3f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World7, true);
 	CLightMananger::GetInstance()->CreateDirction(CLightMananger::World8,
-		_vector(0, 0, -1), color*0.f, color* 0.1f, color*0.f);
+		_vector(0, 0, -1), color*0.f, color* 0.3f, color*0.f);
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World8, true);
 
 	//Point World Light
-	//CLightMananger::GetInstance()->CreatePoint(CLightMananger::Player,
-	//	_vector(0, 10, 0), color*0.f, color* 0.8f, color*0.f);
-	//CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
+	CLightMananger::GetInstance()->CreatePoint(CLightMananger::Player,
+		_vector(0, 10, 0), color*0.f, color* 0.8f, color*0.f);
+	CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, false);
 	CLightMananger::GetInstance()->LightOn();
 	return S_OK;
 }

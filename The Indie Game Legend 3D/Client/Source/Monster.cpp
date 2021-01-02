@@ -44,7 +44,7 @@ UINT CMonster::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	
-	ResetMonsterPos();
+
 
 
 	return _uint();
@@ -115,7 +115,7 @@ void CMonster::SetMonsterPos()
 
 void CMonster::ResetMonsterPos()
 {
-		m_pTransform->Set_Position(m_vecStartPos);
+	m_pTransform->Set_Position(m_vecStartPos);
 }
 
 void CMonster::OnEnable()
