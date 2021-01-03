@@ -124,6 +124,7 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	{
 		m_bUseWeapon = !m_bUseWeapon;
 		ChangeWeaponUISetting();
+		m_pAmmoHud->SetActive(m_bUseWeapon);
 	}
 	//weapon Change
 	if (m_pKeyMgr->Key_Down(KEY_Q) && m_vecWeapons.empty() == false)
@@ -140,22 +141,20 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	}
 
 	//Use Skill
-	if (m_pKeyMgr->Key_Down(KEY_1) && m_vecWeapons.empty() == false)
+	if (m_pKeyMgr->Key_Down(KEY_1)  /*&& m_bEnableSkill*/)
 	{
 		CMsgManager::GetInstance()->FreezingStart(5.f);
 	}
-	if (m_pKeyMgr->Key_Down(KEY_2))
+	if (m_pKeyMgr->Key_Down(KEY_2)  /*&& m_bEnableSkill*/ )
 	{
 		CMsgManager::GetInstance()->AutoAimStart(5.f);
 	}
-	else if (m_pKeyMgr->Key_Down(KEY_3) && m_vecWeapons.empty() == false)
+	else if (m_pKeyMgr->Key_Down(KEY_3) /*&& m_bEnableSkill*/)
 	{
 		CMsgManager::GetInstance()->AirStrikeReady();
 		m_pFocus->SetEnable(true);
 		m_pCrossHair->SetEnable(false);
 	}
-
-
 
 	return S_OK;
 }
@@ -286,9 +285,13 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 
 void CPlayer::TakeItem(const EItemID & _eID)
 {
-	
 	switch (_eID)
 	{
+	case EItemID::Disc :
+		++m_nDisc;
+		m_nDisc = CLAMP(m_nDisc, 0, DiscMax);
+		m_pDiscText->SetCount(m_nDisc);
+		break;
 	case EItemID::Heart:
 		AddHp(4);
 		break;
@@ -317,14 +320,15 @@ void CPlayer::BulletFire()
 {
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 		return;
-	if (m_fAmmo <= 0)
-		return;
+	
 	// 현재 저 조건 아니면 발사 했다는 경우이니 초기화
 	m_fBulletFireTime = 0.f;
 	CBullet* pBullet = nullptr;
 
 	if (m_bUseWeapon)
 	{
+		if (m_fAmmo <= 0)
+			return;
 		switch (m_eCurWeaponType)
 		{
 		case EWeaponType::Multiple:
@@ -418,7 +422,7 @@ void CPlayer::ChangeWeapon()
 			break;
 		case EWeaponType::Lazer:
 			m_fBulletFireDelay = LaserDelay;
-			m_nAmmoDecrease = 0;
+			m_nAmmoDecrease = 4;
 			break;
 		default:
 			break;
@@ -454,11 +458,21 @@ void CPlayer::AddHp(_int _nHp)
 {
 	m_nHp += _nHp;
 	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
-	if (m_nHp < 1)
-	{
-		//Dead
-	}
+
 	m_pHeartManager->SetGauge(m_nHp);
+}
+
+void CPlayer::AddSkillGauge(_int _nPoint)
+{
+	m_nSkillPoint += _nPoint;
+	m_nSkillPoint = CLAMP(m_nSkillPoint, 0, SkillPGaugeMax);
+	
+	if (m_nSkillPoint == SkillPGaugeMax)
+		m_bEnableSkill = true;
+	else
+		m_bEnableSkill = false;
+
+	m_pAmmoHud->SetSkillGauge(float(m_nSkillPoint) / SkillPGaugeMax);
 }
 
 void CPlayer::AddHpMax()
@@ -546,12 +560,21 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 	case ESoundID::AddAmmo:
 		CSoundMgr::GetInstance()->Play(L"sfxEnergy.wav", CSoundMgr::Item_Ammo);
 		break;
+	case ESoundID::AddDisc:
+		CSoundMgr::GetInstance()->Play(L"Secret.wav", CSoundMgr::Item_Disc);
+		break;
 	default:
 		break;
 	}
 }
 
-
+void CPlayer::AmmoLvUp()
+{
+	++m_nAmmoLv;
+	m_fAmmoMax = float(50 + (m_nAmmoLv * 15));
+	m_nAmmoLv = CLAMP(m_nAmmoLv, 0, AmmoLvMax);
+	m_pAmmoHud->SetAmmoLevel(m_nAmmoLv);
+}
 
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 {
@@ -564,25 +587,13 @@ void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 	}
 
 	//처음 먹은 경우 바로 웨폰 세팅 호출 
-
-	switch (_eWeaponType)
-	{
-	case EWeaponType::Multiple:
-		//cout << "add Multiple Weapon" << endl;
-		break;
-	case EWeaponType::Big:
-		//cout << "add Big Weapon" << endl;
-		break;
-	case EWeaponType::Rapid:
-		//cout << "add Rapid Weapon" << endl;
-		break;
-	}
 	m_vecWeapons.emplace_back(_eWeaponType);
 	m_nSetWeaponID = m_vecWeapons.size() - 1;
+
 	m_eCurWeaponType = m_vecWeapons[m_nSetWeaponID];
+
 	ChangeWeapon();
 	m_pAmmoHud->SetAmmoIcon((UINT)m_eCurWeaponType);
-
 }
 
 HRESULT CPlayer::InitializePrototype()
@@ -615,6 +626,7 @@ HRESULT CPlayer::Awake()
 	m_nDiscMax = 1;
 	m_nGem = 0;
 	m_nDisc = 0;
+	m_nSkillPoint = 0;
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(3.9f, 3.9f, 3.9f));
 
@@ -629,11 +641,10 @@ HRESULT CPlayer::Awake()
 
 HRESULT CPlayer::Start()
 {
-
 	m_pGun = (CGun*)FindGameObjectOfType<CGun>();
-	//Test
 
 	//Reference Setting
+#pragma region Reference Setting
 	m_pAmmoHud = (CAmmoHUD*)FindGameObjectOfType<CAmmoHUD>();
 	m_pHeartManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
 	m_pCrossHair = FindGameObjectOfType<CCrossHair>();
@@ -647,11 +658,11 @@ HRESULT CPlayer::Start()
 	SafeAddRef(m_pDiscText);
 	SafeAddRef(m_pFocus);
 
+#pragma endregion
 
 	//스폰지점 세팅과 씬 초반 컬링
 #ifdef _DEBUG
 	m_nTag = 0;
-
 #else
 	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
 	_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
@@ -663,15 +674,21 @@ HRESULT CPlayer::Start()
 
 	m_pTransform->Add_Position(D3DXVECTOR3(0.f,3.f,0.f));
 
-
-	 //weapon Setting
+	 //UI Setting
 	 m_vecWeapons.emplace_back(EWeaponType::Big);
-	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Big);
+	 //Ammo
+	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Rapid);
 	 m_pAmmoHud->SetAmmoLevel(0);
-	 m_pAmmoHud->SetSkillGauge(0);
-	 //------------
+	 m_pAmmoHud->SetActive(false);
+
+	 //Disc
+	 m_pDiscText->SetMaxCount(DiscMax);
+	 m_pDiscText->SetCount(m_nDisc);
+
+	 //hp
 	 m_pHeartManager->SetHeartCount(m_nHpMax);
 	 m_pHeartManager->SetGauge(m_nHp);
+
 
 	 AddWeapon(EWeaponType::Rapid);
 	 AddWeapon(EWeaponType::Multiple);
@@ -680,7 +697,7 @@ HRESULT CPlayer::Start()
 
 	 //Skill Setting
 
-	 m_vecSkillID.push_back(ESkillID::TimeStop);
+	// m_vecSkillID.push_back(ESkillID::TimeStop);
 	 return S_OK;
 }
 
@@ -690,8 +707,6 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	KeyInput(_fDeltaTime);
 	m_pTransform->UpdateTransform();
 	UpdateState(_fDeltaTime);
-	
-	
 	UpdateLight();
 
 	return OBJ_NOENVET;

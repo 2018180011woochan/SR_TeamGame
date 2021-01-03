@@ -13,6 +13,9 @@ class CGun;
 #define FlameDelay 0.1f
 #define LaserDelay 0.5f
 #define HPMax 24
+#define SkillPGaugeMax 20
+#define DiscMax 4
+#define AmmoLvMax 3
 
 enum class EState : _uint
 {
@@ -42,6 +45,7 @@ enum class ESoundID :_uint
 	AddCoin,
 	AddAmmo,
 	AddEnergy,
+	AddDisc,
 	Dash,
 	Run,
 };
@@ -88,6 +92,9 @@ private:
 	 _int						m_nGem = 0;
 	 _int						m_nDisc = 0;
 	 _int						m_nDiscMax = 0;
+	 _int						m_nSkillPoint = 0;
+	 _int						m_nAmmoLv= 0;
+
 
 	 float						m_fHitDelay = 0.f;
 	 float						m_fHitDelayTime = 0.f;
@@ -96,7 +103,7 @@ private:
 	 float						m_fDebuffDuration = 0.f;
 	 float						m_fDebuffDurationTime = 0.f;
 	 bool						m_bIsDeBuff = false;
-
+	 bool						m_bEnableSkill = false;
 	 //Action
 	 EState				m_eState;
 	 float				m_fRunningTime = 0.f;
@@ -128,12 +135,13 @@ private:
 	void	UpdateLight();
 	void	TileSound(const ETileID& _eID);
 	void	SoundPlay(const ESoundID& _eID);
-
+	void	AmmoLvUp();
 public:
 	//Getter Setter
 	void	SetSpotLightTrigget(const bool& _bTrigger);
 	void	SetsfxTileID(const ETileID& _bool);
 	void	AddHp(_int _nHp);
+	void	AddSkillGauge(_int _nPoint);
 	void    AddHpMax();
 	void	AddWeapon(const EWeaponType _eWeaponType);
 protected:

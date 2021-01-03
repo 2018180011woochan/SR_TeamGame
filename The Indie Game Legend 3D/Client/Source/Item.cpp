@@ -82,6 +82,9 @@ void CItem::SetItemType(const EItemID & _eID)
 	case EItemID::sprCoin:
 		m_sTextureName = L"sprCoin";
 		break;
+	case EItemID::Disc:
+		m_sTextureName = L"Disc";
+		break;
 	case EItemID::sprBigCoin:
 		m_sTextureName = L"sprBigCoin";
 		m_pTransform->Set_Scale(_vector(2, 2, 2));

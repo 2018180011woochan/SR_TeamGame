@@ -148,6 +148,7 @@ void CsqrNub::OnCollision(CGameObject * _pGameObject)
 		psqrCoin->SetItemType(EItemID::sprCoin);
 		m_bDead = true;
 		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(1);
 
 	}
 }

@@ -130,6 +130,7 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
 		m_bDead = true;
 		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(3);
 
 	}
 }

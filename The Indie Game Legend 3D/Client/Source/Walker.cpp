@@ -148,6 +148,7 @@ void CWalker::OnCollision(CGameObject * _pGameObject)
 		pHeart->SetItemType(EItemID::sprBigCoin);
 		m_bDead = true;
 		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(2);
 
 	}
 }

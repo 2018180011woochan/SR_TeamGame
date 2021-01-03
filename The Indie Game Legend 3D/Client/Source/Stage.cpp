@@ -246,7 +246,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CSwitch::Create());
 #pragma endregion
 
-	AddGameObject<CBub>();
+
 
 
 #pragma region GUN_TEST
@@ -257,7 +257,7 @@ HRESULT CStage::Awake()
 	//Sector
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 
-	
+	AddGameObject<CBub>();
 	AddLight();
 	AddUIObject();
 
@@ -413,9 +413,7 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CAmmoIcon>();
 	AddGameObject<CSkillGauge>();
 	AddGameObject<CAmmoHUD>();
-	AddGameObject<CWeaponHUD>();
 	AddGameObject<CAmmoIconHighlight>();
-
 	AddGameObject<CCrossHair>();
 
 

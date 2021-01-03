@@ -123,13 +123,15 @@ void CBub::OnCollision(CGameObject * _pGameObject)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();
 		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		pHeart->SetItemType(EItemID::sprBigCoin);
+		pHeart->SetItemType(EItemID::sprCoin);
 
 		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
-		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x +1, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
 		psqrCoin->SetItemType(EItemID::Ammo);
 		m_bDead = true;
 		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(1);
+
 	}
 }
 

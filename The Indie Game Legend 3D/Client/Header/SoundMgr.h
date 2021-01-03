@@ -12,6 +12,7 @@ public:
 		,Item_Ammo
 		,Item_Heart
 		,Item_Coin
+		,Item_Disc
 		,Player_Hit
 		,Player_Action
 		,Object_SFX

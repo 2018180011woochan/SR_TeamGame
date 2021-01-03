@@ -142,6 +142,7 @@ void CDoomBird::OnCollision(CGameObject * _pGameObject)
 	if (m_iHP <= 0)
 	{
 		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(1);
 
 		m_bDead = true;
 	}

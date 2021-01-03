@@ -25,6 +25,7 @@ enum class EItemID : unsigned int
 	Ammo,
 	sprCoin,
 	sprBigCoin,
+	Disc,
 	End
 };
 
