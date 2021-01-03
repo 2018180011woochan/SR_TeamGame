@@ -29,6 +29,7 @@ HRESULT CLavaTile::InitializePrototype()
 HRESULT CLavaTile::Awake()
 {
 	CTile::Awake();
+	m_sName = L"Lava";
 	return S_OK;
 }
 

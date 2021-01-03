@@ -34,7 +34,6 @@ HRESULT CPiramid::Start()
 	m_pMeshRenderer->SetMesh(TEXT("Pyramid_Level1"));
 	m_eRenderID = ERenderID::NoAlpha;
 
-	m_pTransform->Set_Scale(_vector(1, 1, 1));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -86,11 +85,10 @@ void CPiramid::OnCollision(CGameObject * _pGameObject)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();
 		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 1.5f, m_pTransform->Get_Position().z));
-		pHeart->SetItemType(EItemID::sprBigCoin);
-
+		pHeart->SetItemRand();
 		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
 		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 1.5f, m_pTransform->Get_Position().z));
-		psqrCoin->SetItemType(EItemID::sprCoin);
+		psqrCoin->SetItemRand();
 	}
 }
 

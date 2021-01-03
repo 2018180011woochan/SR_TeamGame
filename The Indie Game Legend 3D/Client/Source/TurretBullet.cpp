@@ -34,6 +34,7 @@ HRESULT CTurretBullet::Awake()
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
 	m_fBulletSpeed = 100.f;
 	m_eRenderID = ERenderID::Alpha;
+	m_bDead = false;
 	return S_OK;
 }
 
@@ -56,6 +57,8 @@ HRESULT CTurretBullet::Start()
 
 UINT CTurretBullet::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
 	CGameObject::Update(_fDeltaTime);
 
 	if (nIndex >= 4)
@@ -86,6 +89,15 @@ HRESULT CTurretBullet::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CTurretBullet::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"Obstacle" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
+	{
+		m_bDead = true;
+	}
 }
 
 CGameObject * CTurretBullet::Clone()

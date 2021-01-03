@@ -46,7 +46,7 @@ CPlayer::CPlayer()
 	, m_fDashDuration(0.f)
 	, m_fDashDurationTime(0.f)
 	, m_eState(EState::Move)
-	, m_eSector(ESectorTileID::Sector1)
+	, m_eTileID(ETileID::Nomal)
 	, m_pGun(nullptr)
 
 {
@@ -69,8 +69,9 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 	, m_vecWeapons(_rOther.m_vecWeapons)
 	, m_eState(_rOther.m_eState)
 	, m_fDashDurationTime(_rOther.m_fDashDurationTime)
-	, m_eSector(_rOther.m_eSector)
+	, m_eTileID(_rOther.m_eTileID)
 	, m_pGun(nullptr)
+	, m_bSpotLightTrigger(false)
 {
 
 }
@@ -278,25 +279,25 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 void CPlayer::TakeItem(const EItemID & _eID)
 {
 	
-	//m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
 	switch (_eID)
 	{
 	case EItemID::Heart:
-		AddHp(1);
+		AddHp(4);
 		break;
 	case EItemID::Ammo:
-		break;
-	case EItemID::sprCoin:
 		++m_fAmmo;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
-	
-		//++m_nCoin;
+		m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
+		SoundPlay(ESoundID::AddAmmo);
+		break;
+	case EItemID::sprCoin:
+		++m_nGem;
+		m_pGemText->SetCount(m_nGem);
 		SoundPlay(ESoundID::AddCoin);
 		break;
 	case EItemID::sprBigCoin:
-		//m_nCoin += 10;
-		m_fAmmo += 3;
-		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
+		m_nGem += 10;
+		m_pGemText->SetCount(m_nGem);
 		SoundPlay(ESoundID::AddCoin);
 		break;
 	case EItemID::End:
@@ -423,10 +424,22 @@ void CPlayer::ChangeWeapon()
 
 void CPlayer::UpdateLight()
 {
+	if (m_bSpotLightTrigger == false)
+		return;
 	D3DLIGHT9& playerLight = *CLightMananger::GetInstance()->GetLight(CLightMananger::Player);
 	playerLight.Position = m_pTransform->Get_Position();
-	playerLight.Position.y = 15.f;
+	playerLight.Position.y = 30.f;
 	CLightMananger::GetInstance()->SetLight(CLightMananger::Player);
+}
+
+void CPlayer::SetSpotLightTrigget(const bool & _bTrigger)
+{
+	m_bSpotLightTrigger = _bTrigger;
+}
+
+void CPlayer::SetsfxTileID(const ETileID & _eID)
+{
+	m_eTileID = _eID;
 }
 
 void CPlayer::AddHp(_int _nHp)
@@ -447,21 +460,39 @@ void CPlayer::AddHpMax()
 	m_pHeartManager->SetHeartCount(m_nHpMax);
 }
 
-void CPlayer::TileSound(ESectorTileID _eID)
+void CPlayer::TileSound(const ETileID& _eID)
 {
 	switch (_eID)
 	{
-	case ESectorTileID::Sector1:
+	case ETileID::Nomal:
 		if (m_bsfxStep)
 			CSoundMgr::GetInstance()->Play(L"sfxStep1.mp3", CSoundMgr::Player_Action);
 		else
 			CSoundMgr::GetInstance()->Play(L"sfxStep2.mp3", CSoundMgr::Player_Action);
 		break;
-	case ESectorTileID::Sector2:
+	case ETileID::Sand:
 		if (m_bsfxStep)
 			CSoundMgr::GetInstance()->Play(L"sfxSandStep1.mp3", CSoundMgr::Player_Action);
 		else
 			CSoundMgr::GetInstance()->Play(L"sfxSandStep2.mp3", CSoundMgr::Player_Action);
+		break;
+	case ETileID::Grass:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxGrass1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxGrass2.mp3", CSoundMgr::Player_Action);
+		break;
+	case ETileID::Stone:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxStoneStep1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxStoneStep2.mp3", CSoundMgr::Player_Action);
+		break;
+	case ETileID::Metal:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxMetalStep1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxMetalStep2.mp3", CSoundMgr::Player_Action);
 		break;
 	}
 }
@@ -482,22 +513,29 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 	case ESoundID::Hit:
 		CSoundMgr::GetInstance()->Play(L"sfxHurt.wav", CSoundMgr::Player_Hit);
 		break;
+	case ESoundID::Trap:
+		CSoundMgr::GetInstance()->Play(L"sfxTrap.wav", CSoundMgr::Player_Hit);
+		break;
 	case ESoundID::AddHeart:
+		CSoundMgr::GetInstance()->Play(L"sfxHeart.mp3", CSoundMgr::Item_Heart);
 	case ESoundID::AddCoin:
-		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Player_Effect);
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Ammo);
 		break;
 	case ESoundID::Dash:
 		CSoundMgr::GetInstance()->Play(L"sfxDash.mp3", CSoundMgr::Player_Action);
 		break;
 	case ESoundID::Run:
 		m_bsfxStep = !m_bsfxStep;
-		TileSound(m_eSector);
+		TileSound(m_eTileID);
 		break;
 	case ESoundID::AddEnergy:
 		CSoundMgr::GetInstance()->Play(L"sfxEnergy.wav", CSoundMgr::Player_Effect);
 		break;
 	case ESoundID::LaserBullet:
 		CSoundMgr::GetInstance()->Play(L"sfxLaser.wav", CSoundMgr::Player_Bullet);
+		break;
+	case ESoundID::AddAmmo:
+		CSoundMgr::GetInstance()->Play(L"sfxEnergy.wav", CSoundMgr::Item_Ammo);
 		break;
 	default:
 		break;
@@ -566,6 +604,8 @@ HRESULT CPlayer::Awake()
 	m_fHitDelay = 0.5f;
 	m_fHitDelayTime = 0.f;
 	m_nDiscMax = 1;
+	m_nGem = 0;
+	m_nDisc = 0;
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(3.9f, 3.9f, 3.9f));
 
@@ -582,7 +622,6 @@ HRESULT CPlayer::Start()
 {
 
 	m_pGun = (CGun*)FindGameObjectOfType<CGun>();
-	SafeAddRef(m_pGun);
 	//Test
 
 	//Reference Setting
@@ -642,7 +681,9 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	KeyInput(_fDeltaTime);
 	m_pTransform->UpdateTransform();
 	UpdateState(_fDeltaTime);
-	//UpdateLight();
+	
+	
+	UpdateLight();
 
 	return OBJ_NOENVET;
 }
@@ -709,20 +750,19 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	if (m_eState != EState::Hit && m_fHitDelay < m_fHitDelayTime)
 	{
 
-		if (L"Monster" == _pGameObject->GetName())
+		if (L"Monster" == _pGameObject->GetName() || L"Slider" == _pGameObject->GetName())
 		{
 			m_eState = EState::Hit;
 			m_fHitDelayTime = 0.f;
 			AddHp(-1);
 			SoundPlay(ESoundID::Hit);
 		}
-		else if (L"Electric" == _pGameObject->GetName())
+		else if (L"Electric" == _pGameObject->GetName() || L"Lava" == _pGameObject->GetName() )
 		{
 			m_eState = EState::Hit;
 			m_fHitDelayTime = 0.f;
-	
 			AddHp(-1);
-			SoundPlay(ESoundID::Hit);
+			SoundPlay(ESoundID::Trap);
 		}
 		else if (L"Swamp" == _pGameObject->GetName())
 		{
@@ -730,7 +770,7 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 			m_bIsDeBuff = true;
 			m_fHitDelayTime = 0.f;
 			AddHp(-1);
-			SoundPlay(ESoundID::Hit);
+			SoundPlay(ESoundID::Trap);
 		}
 	}
 
@@ -755,7 +795,6 @@ void CPlayer::Free()
 	SafeRelease(m_pGemText);
 	SafeRelease(m_pDiscText);
 	SafeRelease(m_pFocus);
-	SafeRelease(m_pGun);
 	m_vecWeapons.clear();
 	m_vecWeapons.shrink_to_fit();
 	CGameObject::Free();

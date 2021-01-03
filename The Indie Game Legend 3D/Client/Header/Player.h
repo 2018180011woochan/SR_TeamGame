@@ -37,6 +37,7 @@ enum class ESoundID :_uint
 	FlameBullet,
 	LaserBullet,
 	Hit,
+	Trap,
 	AddHeart,
 	AddCoin,
 	AddAmmo,
@@ -45,12 +46,7 @@ enum class ESoundID :_uint
 	Run,
 };
 
-enum class ESectorTileID : _uint
-{
-	Sector1,
-	Sector2,
-	End
-};
+
 class CPlayer final: public CGameObject
 {
 private:
@@ -110,8 +106,10 @@ private:
 	 float				m_fDashDurationTime;
 
 	 bool				m_bsfxStep;
+	 bool				m_bSpotLightTrigger;
+
 	 wstring			m_sStepsfx; //나중에 타일에 따른 사운드 변화 줄떄 테스트용
-	 ESectorTileID		m_eSector;
+	 ETileID			m_eTileID;
 
 	 /****************************************/
 	 CGun*				m_pGun;
@@ -126,17 +124,16 @@ private:
 	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
 	void    ChangeWeapon();// 관련 세팅값 설정
 	void	UpdateLight();
-	void	TileSound(ESectorTileID _eID);
+	void	TileSound(const ETileID& _eID);
 	void	SoundPlay(const ESoundID& _eID);
-	void	UpdateUI();
-	void	UpdateAirStrikeFocus();
+
 public:
 	//Getter Setter
-	const float& GetAmmo() { return m_fAmmo; }
-	const float& GetAmmoMax() { return m_fAmmoMax; }
+	void	SetSpotLightTrigget(const bool& _bTrigger);
+	void	SetsfxTileID(const ETileID& _bool);
 	void	AddHp(_int _nHp);
 	void    AddHpMax();
-	void AddWeapon(const EWeaponType _eWeaponType);
+	void	AddWeapon(const EWeaponType _eWeaponType);
 protected:
 	explicit CPlayer();
 	explicit CPlayer(const CPlayer& _rOther);

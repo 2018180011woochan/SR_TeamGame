@@ -222,9 +222,15 @@ void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
 		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
 		pHeart->SetItemType(EItemID::sprBigCoin);
 
-		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
-		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		psqrCoin->SetItemType(EItemID::sprCoin);
+		pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
+
+		pHeart = (CItem*)AddGameObject<CItem>();
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetItemType(EItemID::sprBigCoin);
+
+
 		m_bDead = true;
 	}
 }

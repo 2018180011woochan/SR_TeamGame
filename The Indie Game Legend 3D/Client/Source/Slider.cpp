@@ -52,7 +52,7 @@ HRESULT CSlider::InitializePrototype()
 {
 	m_vDir = _vector(1, 0, 0);
 	m_fMoveSpeed = 40.f;
-	m_sName = L"Slide";
+	m_sName = L"Slider";
 	return S_OK;
 }
 
@@ -61,7 +61,7 @@ HRESULT CSlider::Awake()
 	CGameObject::Awake();
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	m_pTransform->Add_Position(_vector(0, 4, 0));
-	m_fMoveSpeed = 10.f;
+	m_fMoveSpeed = 50.f;
 	return S_OK;
 }
 

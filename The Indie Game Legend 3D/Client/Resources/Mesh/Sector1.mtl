@@ -55,13 +55,6 @@ Ks 1 1 1
 Ns 43.219
 illum 7
 
-newmtl Floors-mat_1_1_1_1
-Kd 0.80000001192093 0.80000001192093 0.80000001192093
-map_Kd Sector4_Floors-mat-_MainTex-atlas0.png
-Ks 1 1 1
-Ns 43.219
-illum 7
-
 newmtl Walls-mat9
 Kd 0.80000001192093 0.80000001192093 0.80000001192093
 map_Kd Sector2_WallPipes.png
@@ -279,20 +272,6 @@ Ks 1 1 1
 Ns 43.219
 illum 7
 
-newmtl WallPanels
-Kd 0.80000001192093 0.80000001192093 0.80000001192093
-map_Kd SectorZ_Wall.png
-Ks 1 1 1
-Ns 43.219
-illum 7
-
-newmtl Walls-mat4
-Kd 0.80000001192093 0.80000001192093 0.80000001192093
-map_Kd Sector2_WallSpecial.png
-Ks 1 1 1
-Ns 43.219
-illum 7
-
 newmtl Walls-mat6
 Kd 0.44705885648727 0.44705885648727 0.44705885648727
 Ks 1 1 1
@@ -301,26 +280,6 @@ illum 7
 
 newmtl Walls-mat5
 Kd 0.44705870747566 0.44705870747566 0.44705870747566
-Ks 1 1 1
-Ns 43.219
-illum 7
-
-newmtl Walls-mat7
-Kd 0.80000001192093 0.80000001192093 0.80000001192093
-map_Kd Sector5_WallSpecial.png
-Ks 1 1 1
-Ns 43.219
-illum 7
-
-newmtl Walls-mat6
-Kd 0.44705870747566 0.44705870747566 0.44705870747566
-Ks 1 1 1
-Ns 43.219
-illum 7
-
-newmtl Walls-mat9
-Kd 0.80000001192093 0.80000001192093 0.80000001192093
-map_Kd Sector4_WallSpecial.png
 Ks 1 1 1
 Ns 43.219
 illum 7

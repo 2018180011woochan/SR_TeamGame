@@ -26,6 +26,7 @@ private:
 	HRESULT	BillBord();
 public:
 	void    SetItemType(const EItemID& _eID);
+	void	SetItemRand();
 	// Mady by KWC
 	void	SetPos(const _vector _vPos);
 	void	Bounce(float _fDeltaTime);

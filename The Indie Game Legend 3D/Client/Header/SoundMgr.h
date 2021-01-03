@@ -9,8 +9,12 @@ public:
 	enum CHANNELID {BGM
 		,Player_Bullet
 		,Player_Effect
+		,Item_Ammo
+		,Item_Heart
+		,Item_Coin
 		,Player_Hit
 		,Player_Action
+		,Object_SFX
 		,BOSS
 		,HURT
 		,BULLET

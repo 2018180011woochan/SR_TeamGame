@@ -145,6 +145,9 @@
 
 #include "Loading.h"
 #include "ShootingMinigame.h"
+#include "Switch.h"
+#include "Door.h"
+#include "Scene.h"
 
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
@@ -153,7 +156,12 @@ CStage::CStage()
 
 HRESULT CStage::Awake()
 {
+	m_pPlayer = nullptr;
+	m_nPreRoomID = (_int)RoomID::End;
+	m_nCurRoomID = (_int)RoomID::End;
 
+
+#pragma region ProtoType
 	AddPrototype(CBlood::Create());
 	AddPrototype(CSmallExlode::Create());
 	AddPrototype(CExplosion::Create());
@@ -171,6 +179,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CEdragon::Create());
 
 	AddPrototype(CItem::Create());
+	//ok
 	AddPrototype(CBub::Create());
 	AddPrototype(CRub::Create());
 	AddPrototype(CsqrNub::Create());
@@ -204,12 +213,13 @@ HRESULT CStage::Awake()
 	AddPrototype(CFireBullet::Create());
 	AddPrototype(CIceBullet::Create());
 
-	AddPrototype(CSandTile::Create());
-	AddPrototype(CPiramid::Create());
 
 	AddPrototype(CElectricTile::Create());
+	AddPrototype(CSandTile::Create());
 	AddPrototype(CLavaTile::Create());
 	AddPrototype(CSwampTile::Create());
+
+	AddPrototype(CPiramid::Create());
 	AddPrototype(CPiramidUnBrake::Create());
 
 	AddPrototype(CSlider::Create());
@@ -232,6 +242,11 @@ HRESULT CStage::Awake()
 
 	AddPrototype(CBulletSpawn::Create());
 
+	//interaction obj
+	AddPrototype(CDoor::Create());
+	AddPrototype(CSwitch::Create());
+#pragma endregion
+
 
 
 #pragma region GUN_TEST
@@ -239,19 +254,19 @@ HRESULT CStage::Awake()
 	AddGameObject<CGun>();
 #pragma endregion
 
-
-
 	//Sector
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
-	pSector->SetSectorName(L"Sector1");
 
+	
 	AddLight();
 	AddUIObject();
 
-	AddGameObject<CPlayer>();
+	m_pPlayer = AddGameObject<CPlayer>();
+	SafeAddRef(m_pPlayer);
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();
@@ -265,28 +280,27 @@ HRESULT CStage::Awake()
 
 	//CSoundMgr::GetInstance()->PlayBGM(L"Sector1.wav");
 	//CSoundMgr::GetInstance()->StopAll();
-
 #ifdef _DEBUG
-
 	//CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
 	//CFactoryManager::GetInstance()->LoadScene(this);
 #else
-	CFactoryManager::GetInstance()->LoadDataFile(L"Sector1_Test1");
+	CFactoryManager::GetInstance()->LoadDataFile(L"Sector1");
+	CFactoryManager::GetInstance()->LoadInterationObj(this, L"Sector1_InterObj");;
 	CFactoryManager::GetInstance()->LoadScene(this);
 	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
 #endif // _DEBUG
 
 
 	CScene::Awake();
-	
-
 	return S_OK;
 }
 
 HRESULT CStage::Start()
 {
-	CScene::Start();
 
+	AttachObj();
+
+	CScene::Start();
 	return S_OK;
 }
 
@@ -294,11 +308,8 @@ UINT CStage::Update(float _fDeltaTime)
 {
 	CScene::Update(_fDeltaTime);
 
-	// Test용으로 return누르면 미니게임 전환
-	//if (GetAsyncKeyState(VK_RETURN) && 0x8000)
-	//{
-	//	//CManagement::GetInstance()->SetUpCurrentScene(CShootingMinigame::Create());
-	//}
+	CheckRoomEvent();
+
 
 	return 0;
 }
@@ -344,8 +355,8 @@ HRESULT CStage::AddLight()
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::World8, true);
 
 	//Point World Light
-	CLightMananger::GetInstance()->CreatePoint(CLightMananger::Player,
-		_vector(0, 10, 0), color*0.f, color* 0.8f, color*0.f);
+	CLightMananger::GetInstance()->CreateSpotlight(CLightMananger::Player,
+		_vector(0, 10, 0), _vector(0, -1, 0), color*0.f, color* 0.8f, color*0.f,D3DXToRadian(60.f), D3DXToRadian(90.f));
 	CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, false);
 	CLightMananger::GetInstance()->LightOn();
 	return S_OK;
@@ -463,6 +474,77 @@ HRESULT CStage::AddUIObject()
 	return S_OK;
 }
 
+HRESULT CStage::AttachObj()
+{
+	list<CGameObject*> listDoor;
+	list<CGameObject*> listSwitch;
+	listDoor = CManagement::GetInstance()->FindGameObjectsOfType<CDoor>(m_nSceneID);
+	listSwitch = CManagement::GetInstance()->FindGameObjectsOfType<CSwitch>(m_nSceneID);
+
+	for (auto& pDoor : listDoor)
+	{
+		for (auto& pSwitch : listSwitch)
+		{
+			CInteractionObj* pDoorObj = (CInteractionObj*)pDoor;
+			CInteractionObj* pSwitchObj = (CInteractionObj*)pSwitch;
+			if (pDoorObj->GetAttachID() == pSwitchObj->GetAttachID())
+			{
+				pSwitchObj->AddObserver(pDoorObj);
+			}
+		}
+	}
+	return S_OK;
+}
+
+void CStage::CheckRoomEvent()
+{
+
+	m_nCurRoomID = m_pPlayer->GetTag();
+
+	if (m_nPreRoomID == m_nCurRoomID)
+		return;
+
+	//최소한으로 건들려고 이전방이 미로방이 아니였다가 미로방 진입시에만 
+	if (m_nCurRoomID == (_int)RoomID::MazeRoom && m_nPreRoomID != (_int)RoomID::MazeRoom)
+	{
+		((CPlayer*)m_pPlayer)->SetSpotLightTrigget(true);
+		CLightMananger::GetInstance()->WorldOff();
+		CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, true);
+
+	}
+	//이전방이 미로방이 였다가 미로방 나갈때만
+	else if(m_nCurRoomID != (_int)RoomID::MazeRoom && m_nPreRoomID == (_int)RoomID::MazeRoom)
+	{
+		((CPlayer*)m_pPlayer)->SetSpotLightTrigget(false);
+		CLightMananger::GetInstance()->WorldOn();
+		CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, false);
+	}
+
+	//TileSound
+	switch ((RoomID)m_nCurRoomID)
+	{
+	case CStage::RoomID::SandRoom:
+		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Sand);
+		break;
+	case CStage::RoomID::SwampRoom:
+		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Stone);
+
+		break;
+	case CStage::RoomID::ForestRoom:
+		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Grass);
+		break;
+	case CStage::RoomID::MetalRoom:
+		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Metal);
+		break;
+	default:
+		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Nomal);
+		break;
+	}
+
+
+	m_nPreRoomID = m_nCurRoomID;
+}
+
 CStage * CStage::Create()
 {
 	CStage* pInstance = new CStage;
@@ -471,5 +553,6 @@ CStage * CStage::Create()
 
 void CStage::Free()
 {
+	SafeRelease(m_pPlayer);
 	CScene::Free();
 }

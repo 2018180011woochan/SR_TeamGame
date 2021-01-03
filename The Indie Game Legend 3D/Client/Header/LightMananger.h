@@ -11,10 +11,10 @@ public:
 	{
 		Player, World1, World2,World3, World4, World5, World6, World7, World8, End
 	};
+private:
 	// 이넘버전이 
-	D3DLIGHT9*	m_pLightChannel[(_uint)LightID::End]; 
-	//맵으로 짜는것도 되긴한데 이넘 버전이 더 땡김 혼용은 막히는 부분이 있어서 맵버전은 제작중단
-	map<wstring, D3DLIGHT9>		m_mapLights;
+	D3DLIGHT9*					m_pLightChannel[End]; 
+	bool						m_bEnable[End];
 
 	_uint						m_nUseLightCount; //켜져있는 라이트 수
 	bool						m_bLightEnable;
@@ -31,6 +31,9 @@ public:
 
 	D3DLIGHT9* GetLight(const LightID& _eID);
 	void	   SetLight(const LightID& _eID);
+
+	void		WorldOff();
+	void		WorldOn();
 	void	   LightOn();
 	void	   LightOff();
 private:

@@ -27,5 +27,15 @@ enum class EItemID : unsigned int
 	sprBigCoin,
 	End
 };
+
+enum class ETileID : unsigned int
+{
+	Nomal,
+	Sand,
+	Grass,
+	Stone,
+	Metal,
+	End
+};
 #define  __CLIENTENUM_H__
 #endif // !__CLIENTENUM_H__

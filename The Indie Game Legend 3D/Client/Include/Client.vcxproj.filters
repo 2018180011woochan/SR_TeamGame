@@ -229,9 +229,6 @@
     <Filter Include="02.GameObject\08.Objstacle\01.Piramid">
       <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\09.Item">
-      <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\10.Effect">
       <UniqueIdentifier>{f59f9308-2194-4032-ac94-b37a843981d1}</UniqueIdentifier>
     </Filter>
@@ -513,6 +510,9 @@
     </Filter>
     <Filter Include="02.GameObject\00.Monster\12.GreenBoy\07.BloodHand">
       <UniqueIdentifier>{978000bf-40f0-4aa2-bc27-06d833cfeba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\09.Item">
+      <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -891,7 +891,6 @@
     <ClInclude Include="..\Header\Switch.h">
       <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Door.h" />
     <ClInclude Include="..\Header\SandBurst.h">
       <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
     </ClInclude>
@@ -930,6 +929,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\BloodHand.h">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Door.h">
+      <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1290,7 +1292,6 @@
     <ClCompile Include="..\Source\Switch.cpp">
       <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Door.cpp" />
     <ClCompile Include="..\Source\SandBurst.cpp">
       <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
     </ClCompile>
@@ -1329,6 +1330,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\BloodHand.cpp">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Door.cpp">
+      <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

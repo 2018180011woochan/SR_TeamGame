@@ -112,12 +112,12 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-	//if (L"PlayerBullet" == _pGameObject->GetName())
-	//{
-	//	m_iHP--;
-	//	CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
-	//	pBlood->SetPos(m_pTransform->Get_Position());
-	//}
+	if (L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_iHP--;
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
 	if (m_iHP <= 0)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();
@@ -126,7 +126,7 @@ void CBub::OnCollision(CGameObject * _pGameObject)
 
 		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
 		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		psqrCoin->SetItemType(EItemID::sprCoin);
+		psqrCoin->SetItemType(EItemID::Ammo);
 		m_bDead = true;
 	}
 }

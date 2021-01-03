@@ -84,8 +84,7 @@ void CItem::SetItemType(const EItemID & _eID)
 		break;
 	case EItemID::sprBigCoin:
 		m_sTextureName = L"sprBigCoin";
-		break;
-	case EItemID::End:
+		m_pTransform->Set_Scale(_vector(2, 2, 2));
 		break;
 	}
 
@@ -93,6 +92,22 @@ void CItem::SetItemType(const EItemID & _eID)
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureName).size();
 	m_fAnimateOneCycleTime = 1.f;
 	m_fAnimateSpeed = (m_nMaxFrame + 1) / 1.f * m_fAnimateOneCycleTime;
+}
+
+void CItem::SetItemRand()
+{
+	int randValue = 0;
+
+	randValue = rand() % 10;
+
+	if (randValue < 2)
+		SetItemType(EItemID::Heart);
+	else if(randValue < 6)
+		SetItemType(EItemID::sprCoin);
+	else if (randValue < 8)
+		SetItemType(EItemID::sprBigCoin);
+	else
+		SetItemType(EItemID::Ammo);
 }
 
 void CItem::SetPos(const _vector _vPos)
