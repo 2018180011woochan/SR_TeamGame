@@ -243,8 +243,8 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 			SoundPlay(ESoundID::Run);
 			m_fRunningTime = 0.f;
 		}
-		float fPer = 0.9f;
 
+		float fPer = 0.9f;
 		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 10.f);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
@@ -263,13 +263,21 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 	}
 		break;
 	case EState::Hit:
-		m_fHitDelayTime += _fDeltaTime;
+	{
+		m_fHitAnimatTime += _fDeltaTime * 3.f;
 		//Camera 흔들림 코드 
+		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+		float fPer = 0.f;
+		float fInterval = 1.f;
+		fPer =  -0.5f + fabs(cosf((2 * PI)* (m_fHitAnimatTime / m_fHitDelay)));
+		fInterval *= fPer;
+		pCamera->SetShakeVertical(fInterval);
+		cout << fPer << endl;
 		if(m_bIsDeBuff)
 			Move(m_fMoveSpeed/2.f, _fDeltaTime);
 		else
 			Move(m_fMoveSpeed, _fDeltaTime);
-
+	}
 		break;
 	default:
 		break;
@@ -499,6 +507,7 @@ void CPlayer::TileSound(const ETileID& _eID)
 
 void CPlayer::SoundPlay(const ESoundID & _eID)
 {
+
 	switch (_eID)
 	{
 	case ESoundID::NormaBullet:
@@ -706,6 +715,8 @@ UINT CPlayer::LateUpdate(const float _fDeltaTime)
 	if (m_eState == EState::Hit && m_fHitDelay < m_fHitDelayTime)
 	{
 		//임시 
+		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+		pCamera->SetShakeVertical(0.f);
 		m_bIsDeBuff = false;
 		m_eState = EState::Move;
 	}
@@ -749,26 +760,23 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 
 	if (m_eState != EState::Hit && m_fHitDelay < m_fHitDelayTime)
 	{
+		m_fHitAnimatTime = 0.f;
+		m_fHitDelayTime = 0.f;
+		m_eState = EState::Hit;
 
 		if (L"Monster" == _pGameObject->GetName() || L"Slider" == _pGameObject->GetName())
 		{
-			m_eState = EState::Hit;
-			m_fHitDelayTime = 0.f;
 			AddHp(-1);
 			SoundPlay(ESoundID::Hit);
 		}
 		else if (L"Electric" == _pGameObject->GetName() || L"Lava" == _pGameObject->GetName() )
 		{
-			m_eState = EState::Hit;
-			m_fHitDelayTime = 0.f;
 			AddHp(-1);
 			SoundPlay(ESoundID::Trap);
 		}
 		else if (L"Swamp" == _pGameObject->GetName())
 		{
-			m_eState = EState::Hit;
 			m_bIsDeBuff = true;
-			m_fHitDelayTime = 0.f;
 			AddHp(-1);
 			SoundPlay(ESoundID::Trap);
 		}

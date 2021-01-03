@@ -126,8 +126,8 @@
 //Objct
 #include "Slider.h"
 
-//tset
 #include "SoundMgr.h"
+
 #include "RoomTrigger.h"
 #include "LightMananger.h"
 #include "Piramid.h"
@@ -247,6 +247,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CSwitch::Create());
 #pragma endregion
 
+	AddGameObject<CElectricTile>();
 
 
 #pragma region GUN_TEST
@@ -278,8 +279,7 @@ HRESULT CStage::Awake()
 #pragma endregion
 
 
-	//CSoundMgr::GetInstance()->PlayBGM(L"Sector1.wav");
-	//CSoundMgr::GetInstance()->StopAll();
+	
 #ifdef _DEBUG
 	//CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
 	//CFactoryManager::GetInstance()->LoadScene(this);
@@ -520,27 +520,36 @@ void CStage::CheckRoomEvent()
 		CLightMananger::GetInstance()->LightEnable(CLightMananger::Player, false);
 	}
 
-	//TileSound
+	//TileSound & BGM
 	switch ((RoomID)m_nCurRoomID)
 	{
+	case CStage::RoomID::MazeRoom:
+		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Nomal);
+		CSoundMgr::GetInstance()->PlayBGM(L"Sector3.wav");
+		break;
 	case CStage::RoomID::SandRoom:
 		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Sand);
+		CSoundMgr::GetInstance()->PlayBGM(L"Sector2.wav");
 		break;
 	case CStage::RoomID::SwampRoom:
 		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Stone);
-
+		CSoundMgr::GetInstance()->PlayBGM(L"Boss.wav");
 		break;
 	case CStage::RoomID::ForestRoom:
 		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Grass);
+		CSoundMgr::GetInstance()->PlayBGM(L"Sector4.wav");
 		break;
 	case CStage::RoomID::MetalRoom:
 		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Metal);
+		CSoundMgr::GetInstance()->PlayBGM(L"Sector5_loop.wav");
 		break;
 	default:
 		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Nomal);
+		CSoundMgr::GetInstance()->PlayBGM(L"Sector1.wav");
 		break;
 	}
 
+	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.1f);
 
 	m_nPreRoomID = m_nCurRoomID;
 }

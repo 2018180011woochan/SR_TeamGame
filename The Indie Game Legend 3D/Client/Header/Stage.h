@@ -6,10 +6,11 @@ class CStage : public CScene
 {
 	enum class RoomID : _int
 	{
-		MazeRoom = 29,
 		SandRoom = 6,
+		ShopRoom = 7,
 		SwampRoom = 10,
 		ForestRoom= 26,
+		MazeRoom = 29,
 		MetalRoom = 30,
 		End= -1
 	};

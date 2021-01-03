@@ -91,6 +91,8 @@ private:
 
 	 float						m_fHitDelay = 0.f;
 	 float						m_fHitDelayTime = 0.f;
+	 float						m_fHitAnimatTime = 0.f;
+
 	 float						m_fDebuffDuration = 0.f;
 	 float						m_fDebuffDurationTime = 0.f;
 	 bool						m_bIsDeBuff = false;

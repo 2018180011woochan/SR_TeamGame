@@ -31,10 +31,10 @@ public:
 	void Play(const wstring& pSoundKey, CHANNELID eID);
 	void PlayContinue(const wstring& pSoundKey, CHANNELID eID);
 
-	void PlayBGM(const wstring& pSoundKey);
+	void PlayBGM(const wstring& _strSoundKey);
 	void StopSound(CHANNELID eID);
 	void StopAll();
-	void SetVolume(CHANNELID eID, float Voluem);
+	void SetVolume(CHANNELID eID, float _Volume);
 	void SetPitch(CHANNELID _eID, float _fPitch);//ÀÛ¾÷Áß
 	void Pause(CHANNELID _eID, const FMOD_BOOL& _Bool);
 
@@ -46,6 +46,7 @@ private:
 	map<wstring, FMOD_SOUND*> m_mapSound; 
 	FMOD_CHANNEL* m_pChannelArr[MAXCHANNEL]; 
 	FMOD_SYSTEM* m_pSystem; 
+	wstring		m_wstrNowBGM;
 
 };
 #define __SOUNDMANAGER_H__
