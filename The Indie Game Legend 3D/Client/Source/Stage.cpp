@@ -160,7 +160,6 @@ HRESULT CStage::Awake()
 	m_nPreRoomID = (_int)RoomID::End;
 	m_nCurRoomID = (_int)RoomID::End;
 
-
 #pragma region ProtoType
 	AddPrototype(CBlood::Create());
 	AddPrototype(CSmallExlode::Create());
@@ -247,7 +246,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CSwitch::Create());
 #pragma endregion
 
-	AddGameObject<CElectricTile>();
+	AddGameObject<CBub>();
 
 
 #pragma region GUN_TEST
@@ -523,6 +522,9 @@ void CStage::CheckRoomEvent()
 	//TileSound & BGM
 	switch ((RoomID)m_nCurRoomID)
 	{
+	case CStage::RoomID::ShopRoom:
+		CSoundMgr::GetInstance()->PlayBGM(L"Shop.wav");
+		break;
 	case CStage::RoomID::MazeRoom:
 		((CPlayer*)m_pPlayer)->SetsfxTileID(ETileID::Nomal);
 		CSoundMgr::GetInstance()->PlayBGM(L"Sector3.wav");

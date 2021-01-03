@@ -135,11 +135,13 @@ void CDoomBird::OnCollision(CGameObject * _pGameObject)
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_iHP--;
+		m_bHit = true;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
 	}
 	if (m_iHP <= 0)
 	{
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
 
 		m_bDead = true;
 	}

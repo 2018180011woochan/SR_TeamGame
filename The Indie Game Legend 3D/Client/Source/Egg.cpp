@@ -107,6 +107,7 @@ void CEgg::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
+		m_bHit = true;
 		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
@@ -114,6 +115,8 @@ void CEgg::OnCollision(CGameObject * _pGameObject)
 	if (m_iHP <= 0)
 	{
 		EggDrop();
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+
 		m_bDead = true;
 	}
 }

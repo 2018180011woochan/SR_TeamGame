@@ -20,6 +20,7 @@ public:
 		,BULLET
 		,EFFECT
 		,PlayerSkill
+		,MonsterKill
 		,MONSTER_BULLET, BNT1,BNT2,UI,MOUSE, WALL, Floor, MONSTER, MAXCHANNEL};
 private:
 	explicit CSoundMgr();

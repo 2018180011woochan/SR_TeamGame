@@ -206,7 +206,7 @@ void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_iHP--;
-
+		m_bHit = true;
 		int iRandX = rand() % 5;
 		int iRandY = rand() % 5;
 		int iRandZ = rand() % 5;
@@ -230,6 +230,7 @@ void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
 		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
 		pHeart->SetItemType(EItemID::sprBigCoin);
 
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
 
 		m_bDead = true;
 	}

@@ -149,6 +149,8 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_iHP--;
+		m_bHit = true;
+
 	}
 	if (m_iHP <= 0)
 	{
@@ -186,6 +188,8 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 		pHeart->SetItemType(EItemID::Heart);
 
 		m_pBossHP->SetEnable(false);
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+
 		m_bDead = true;
 	}
 }

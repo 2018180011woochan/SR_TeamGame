@@ -115,7 +115,7 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_iHP--;
-
+		m_bHit = true;
 		int iRandX = rand() % 5;
 		int iRandY = rand() % 5;
 		int iRandZ = rand() % 5;
@@ -129,6 +129,8 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 	{
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
 		m_bDead = true;
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+
 	}
 }
 

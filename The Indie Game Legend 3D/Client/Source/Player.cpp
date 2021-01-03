@@ -760,25 +760,30 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 
 	if (m_eState != EState::Hit && m_fHitDelay < m_fHitDelayTime)
 	{
-		m_fHitAnimatTime = 0.f;
-		m_fHitDelayTime = 0.f;
-		m_eState = EState::Hit;
-
 		if (L"Monster" == _pGameObject->GetName() || L"Slider" == _pGameObject->GetName())
 		{
 			AddHp(-1);
 			SoundPlay(ESoundID::Hit);
+			m_fHitAnimatTime = 0.f;
+			m_fHitDelayTime = 0.f;
+			m_eState = EState::Hit;
 		}
 		else if (L"Electric" == _pGameObject->GetName() || L"Lava" == _pGameObject->GetName() )
 		{
 			AddHp(-1);
 			SoundPlay(ESoundID::Trap);
+			m_fHitAnimatTime = 0.f;
+			m_fHitDelayTime = 0.f;
+			m_eState = EState::Hit;
 		}
 		else if (L"Swamp" == _pGameObject->GetName())
 		{
 			m_bIsDeBuff = true;
 			AddHp(-1);
 			SoundPlay(ESoundID::Trap);
+			m_fHitAnimatTime = 0.f;
+			m_fHitDelayTime = 0.f;
+			m_eState = EState::Hit;
 		}
 	}
 

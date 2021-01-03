@@ -117,6 +117,7 @@ void CBub::OnCollision(CGameObject * _pGameObject)
 		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
+		m_bHit = true;
 	}
 	if (m_iHP <= 0)
 	{
@@ -128,6 +129,7 @@ void CBub::OnCollision(CGameObject * _pGameObject)
 		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
 		psqrCoin->SetItemType(EItemID::Ammo);
 		m_bDead = true;
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
 	}
 }
 

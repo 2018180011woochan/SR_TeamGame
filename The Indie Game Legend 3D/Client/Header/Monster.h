@@ -45,6 +45,11 @@ protected:
 	int					m_iMaxHP;
 	_vector				m_vecStartPos;
 	CBossHP*			m_pBossHP;
+
+	bool				m_bHit;
+	float				m_fHitDelay;
+	float				m_fHitDelayTime;
+
 };
 
 #define __MONSTER_H__
