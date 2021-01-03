@@ -425,62 +425,7 @@ void CPlayer::UpdateLight()
 {
 	D3DLIGHT9& playerLight = *CLightMananger::GetInstance()->GetLight(CLightMananger::Player);
 	playerLight.Position = m_pTransform->Get_Position();
-	float v = 0.0001f;
-	static float h = 100;
-
-	if (GetAsyncKeyState('1') & 0x8000)
-	{
-		h -= 1.f;
-	}
-	if (GetAsyncKeyState('2') & 0x8000)
-	{
-		h += 1.f;
-	}
-	h = CLAMP(h, 5, 200);
-	playerLight.Position.y = h;
-	if (GetAsyncKeyState('T') & 0x8000)
-	{
-		playerLight.Attenuation0 -= v;
-	}
-	if (GetAsyncKeyState('Y') & 0x8000)
-	{
-		playerLight.Attenuation0 += v;
-	}
-	if (GetAsyncKeyState('G') & 0x8000)
-	{
-		playerLight.Attenuation1 -= v;
-
-	}
-	if (GetAsyncKeyState('H') & 0x8000)
-	{
-		playerLight.Attenuation1 += v;
-
-	}
-	if (GetAsyncKeyState('B') & 0x8000)
-	{
-		playerLight.Attenuation2 -= v;
-
-	}
-	if (GetAsyncKeyState('N') & 0x8000)
-	{
-		playerLight.Attenuation2 += v;
-
-	}
-
-	playerLight.Attenuation0 = CLAMP(playerLight.Attenuation0, 0.f, 0.9f);
-	playerLight.Attenuation1 = CLAMP(playerLight.Attenuation1, 0.0001f, 0.9f);
-	playerLight.Attenuation2 = CLAMP(playerLight.Attenuation2, 0.f, 0.9f);
-	
-	if (GetAsyncKeyState('3') & 0x8000)
-	{
-
-	system("cls");
-	cout << "h : " << h<< endl;
-	cout <<" 0 : "  << playerLight.Attenuation0 << endl;
-	cout << "1 : " << playerLight.Attenuation1 << endl;
-	cout << "2 : " << playerLight.Attenuation2 << endl;
-	}
-
+	playerLight.Position.y = 15.f;
 	CLightMananger::GetInstance()->SetLight(CLightMananger::Player);
 }
 
@@ -488,12 +433,10 @@ void CPlayer::AddHp(_int _nHp)
 {
 	m_nHp += _nHp;
 	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
-
 	if (m_nHp < 1)
 	{
 		//Dead
 	}
-
 	m_pHeartManager->SetGauge(m_nHp);
 }
 
@@ -650,6 +593,11 @@ HRESULT CPlayer::Start()
 	m_pDiscText = (CDiscText*)FindGameObjectOfType<CDiscText>();
 	m_pFocus = (CFocus*)FindGameObjectOfType<CFocus>();
 	SafeAddRef(m_pAmmoHud);
+	SafeAddRef(m_pHeartManager);
+	SafeAddRef(m_pCrossHair);
+	SafeAddRef(m_pGemText);
+	SafeAddRef(m_pDiscText);
+	SafeAddRef(m_pFocus);
 
 
 	//스폰지점 세팅과 씬 초반 컬링
@@ -671,7 +619,8 @@ HRESULT CPlayer::Start()
 	 //weapon Setting
 	 m_vecWeapons.emplace_back(EWeaponType::Big);
 	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Big);
-
+	 m_pAmmoHud->SetAmmoLevel(0);
+	 m_pAmmoHud->SetSkillGauge(0);
 	 //------------
 	 m_pHeartManager->SetHeartCount(m_nHpMax);
 	 m_pHeartManager->SetGauge(m_nHp);
@@ -800,7 +749,12 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Free()
 {
-	//SafeRelease(m_pAmmobar);
+	SafeRelease(m_pAmmoHud);
+	SafeRelease(m_pHeartManager);
+	SafeRelease(m_pCrossHair);
+	SafeRelease(m_pGemText);
+	SafeRelease(m_pDiscText);
+	SafeRelease(m_pFocus);
 	SafeRelease(m_pGun);
 	m_vecWeapons.clear();
 	m_vecWeapons.shrink_to_fit();

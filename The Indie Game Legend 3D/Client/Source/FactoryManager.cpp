@@ -145,6 +145,72 @@ HRESULT CFactoryManager::LoadCollider(CScene* _pScene, const TSTRING & _sFileNam
 			}
 		}
 	}
+	fclose(pFile);
+	return S_OK;
+}
+
+HRESULT CFactoryManager::LoadInterationObj(CScene * _pScene, const TSTRING & _sFileName)
+{
+
+	FILE* pFile = nullptr;
+
+	TSTRING sPath = TEXT("../../Data/");
+	TSTRING sFormat = TEXT(".obj");
+	TSTRING sFullPath = sPath + _sFileName + sFormat;
+
+	if (0 != _tfopen_s(&pFile, sFullPath.c_str(), TEXT("r")))
+	{
+		TCHAR szBuf[128] = TEXT("");
+		_stprintf_s(szBuf, 128, TEXT("Failed to open %s file"), sFullPath.c_str());
+		PrintLog(TEXT("Warning"), szBuf);
+		return E_FAIL;
+	}
+
+	TCHAR szWord[MAX_PATH + 1] = TEXT("");
+	D3DXVECTOR3 vPosition = D3DXVECTOR3(0.f, 0.f, 0.f);
+	int	nRoomID = 0;
+	TSTRING sMeshKey = TEXT("");
+	TSTRING sDirection = TEXT("");
+	CGameObject* pGameObject = nullptr;
+
+	while (EOF != _ftscanf_s(pFile, TEXT("%s"), szWord, MAX_PATH))
+	{
+		if (0 == _tcscmp(TEXT("v"), szWord))
+		{
+			_ftscanf_s(pFile, TEXT("%f %f %f\n"), &vPosition.x, &vPosition.y, &vPosition.z);
+		}
+		else if (0 == _tcscmp(TEXT("o"), szWord))
+		{
+			_ftscanf_s(pFile, TEXT("%d_\n"), &nRoomID);
+		}
+		else if (0 == _tcscmp(TEXT("usemtl"), szWord))
+		{
+			_ftscanf_s(pFile, TEXT("%s"), szWord, MAX_PATH);
+
+			TSTRING sTotal = szWord;
+			int nIndex = sTotal.find(TEXT('_'));
+			sMeshKey = sTotal.substr(0, nIndex);
+			sDirection = sTotal.substr(nIndex + 1);
+
+			if ('W' == sMeshKey[0] || 'D' == sMeshKey[0])
+			{
+				pGameObject = _pScene->AddGameObject<CWall>();
+				((CWall*)pGameObject)->SetMesh(sMeshKey);
+				((CWall*)pGameObject)->SetDirection(sDirection);
+				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
+				pGameObject->SetTag(++nRoomID);
+			}
+			else
+			{
+				pGameObject = _pScene->AddGameObject<CFloor>();
+				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
+				pGameObject->SetTag(++nRoomID);
+			}
+		}
+	}
+	fclose(pFile);
+
+
 	return S_OK;
 }
 
