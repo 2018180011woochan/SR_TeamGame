@@ -85,11 +85,11 @@ void CPiramid::OnCollision(CGameObject * _pGameObject)
 	if (m_bDead)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();
-		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 1.5f, m_pTransform->Get_Position().z));
 		pHeart->SetItemType(EItemID::sprBigCoin);
 
 		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
-		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 1.5f, m_pTransform->Get_Position().z));
 		psqrCoin->SetItemType(EItemID::sprCoin);
 	}
 }

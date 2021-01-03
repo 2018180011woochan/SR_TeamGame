@@ -145,7 +145,7 @@ HRESULT CItem::Awake()
 	m_sTextureName = L"";
 
 	// Prod By Woochan
-	m_fJumpPower = 10.f;
+	m_fJumpPower = 5.f;
 	m_fJumpTime = 0.f;
 	m_fYTest = 3.f;
 	m_bJump = true;

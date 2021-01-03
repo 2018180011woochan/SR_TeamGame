@@ -105,6 +105,8 @@ HRESULT CFactoryManager::LoadCollider(CScene* _pScene, const TSTRING & _sFileNam
 
 	TCHAR szWord[MAX_PATH + 1] = TEXT("");
 	D3DXVECTOR3 vPosition = D3DXVECTOR3(0.f, 0.f, 0.f);
+	vector<D3DXVECTOR3> vecPosition;
+	vecPosition.reserve(5);
 	int	nRoomID = 0;
 	TSTRING sMeshKey = TEXT("");
 	TSTRING sDirection = TEXT("");
@@ -115,6 +117,7 @@ HRESULT CFactoryManager::LoadCollider(CScene* _pScene, const TSTRING & _sFileNam
 		if (0 == _tcscmp(TEXT("v"), szWord))
 		{
 			_ftscanf_s(pFile, TEXT("%f %f %f\n"), &vPosition.x, &vPosition.y, &vPosition.z);
+			vecPosition.emplace_back(vecPosition);
 		}
 		else if (0 == _tcscmp(TEXT("o"), szWord))
 		{
@@ -185,27 +188,13 @@ HRESULT CFactoryManager::LoadInterationObj(CScene * _pScene, const TSTRING & _sF
 		}
 		else if (0 == _tcscmp(TEXT("usemtl"), szWord))
 		{
-			_ftscanf_s(pFile, TEXT("%s"), szWord, MAX_PATH);
+			TSTRING Type;
+			_ftscanf_s(pFile, TEXT("%s\n"), &szWord, MAX_PATH);
+			Type = szWord;
+			TSTRING TypeID = L"C" + Type;
 
-			TSTRING sTotal = szWord;
-			int nIndex = sTotal.find(TEXT('_'));
-			sMeshKey = sTotal.substr(0, nIndex);
-			sDirection = sTotal.substr(nIndex + 1);
 
-			if ('W' == sMeshKey[0] || 'D' == sMeshKey[0])
-			{
-				pGameObject = _pScene->AddGameObject<CWall>();
-				((CWall*)pGameObject)->SetMesh(sMeshKey);
-				((CWall*)pGameObject)->SetDirection(sDirection);
-				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
-				pGameObject->SetTag(++nRoomID);
-			}
-			else
-			{
-				pGameObject = _pScene->AddGameObject<CFloor>();
-				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
-				pGameObject->SetTag(++nRoomID);
-			}
+
 		}
 	}
 	fclose(pFile);
