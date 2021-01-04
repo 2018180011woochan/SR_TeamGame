@@ -522,6 +522,9 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 
 	switch (_eID)
 	{
+	case ESoundID::AmmoLvUp:
+		CSoundMgr::GetInstance()->Play(L"sfxUpgrade.wav", CSoundMgr::Player_Event);
+		break;
 	case ESoundID::NormaBullet:
 		CSoundMgr::GetInstance()->Play(L"sfxBullet.wav", CSoundMgr::Player_Bullet);
 		break;
@@ -540,7 +543,7 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 	case ESoundID::AddHeart:
 		CSoundMgr::GetInstance()->Play(L"sfxHeart.mp3", CSoundMgr::Item_Heart);
 	case ESoundID::AddCoin:
-		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Ammo);
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Coin);
 		break;
 	case ESoundID::Dash:
 		CSoundMgr::GetInstance()->Play(L"sfxDash.mp3", CSoundMgr::Player_Action);
@@ -548,9 +551,6 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 	case ESoundID::Run:
 		m_bsfxStep = !m_bsfxStep;
 		TileSound(m_eTileID);
-		break;
-	case ESoundID::AddEnergy:
-		CSoundMgr::GetInstance()->Play(L"sfxEnergy.wav", CSoundMgr::Player_Effect);
 		break;
 	case ESoundID::LaserBullet:
 		CSoundMgr::GetInstance()->Play(L"sfxLaser.wav", CSoundMgr::Player_Bullet);
@@ -568,9 +568,11 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 
 void CPlayer::AmmoLvUp()
 {
+	//  [1/4/2021 wades]
 	++m_nAmmoLv;
 	m_fAmmoMax = float(50 + (m_nAmmoLv * 15));
 	m_nAmmoLv = CLAMP(m_nAmmoLv, 0, AmmoLvMax);
+	SoundPlay(ESoundID::AmmoLvUp);
 	m_pAmmoHud->SetAmmoLevel(m_nAmmoLv);
 }
 

@@ -137,7 +137,7 @@ void CTreeBoss::OnCollision(CGameObject * _pGameObject)
 	{
 		m_iHP--;
 		m_bHit = true;
-
+		CSoundMgr::GetInstance()->Play(L"sfxPlantHit.mp3", CSoundMgr::MonsterHitP);
 	}
 	if (m_iHP <= 0)
 	{

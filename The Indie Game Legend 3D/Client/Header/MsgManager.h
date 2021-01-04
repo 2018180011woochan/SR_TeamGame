@@ -28,6 +28,7 @@ private:
 	float		m_fSirenLightColor; // 경고등컬리
 	float		m_fSirenLightChangValue;
 
+
 	_vector		m_vAirStrikePos;
 	_uint		m_nAirStrikeCount;
 	_uint		m_nSceneID;

@@ -114,6 +114,15 @@ HRESULT CMonster::IsBillboarding()
 	return S_OK;
 }
 
+void CMonster::sfxMetalHit()
+{
+	int nSfx = rand() % 2;
+	if (nSfx)
+		CSoundMgr::GetInstance()->Play(L"sfxMetalHit1.mp3", CSoundMgr::MonsterHitM);
+	else
+		CSoundMgr::GetInstance()->Play(L"sfxMetalHit1.mp3", CSoundMgr::MonsterHitM);
+}
+
 void CMonster::OnCollision(CGameObject * _pGameObject)
 {
 }

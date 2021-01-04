@@ -215,6 +215,9 @@ void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
 		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
 			m_pTransform->Get_Position().y + iRandY
 			, m_pTransform->Get_Position().z + iRandZ));
+
+		sfxMetalHit();
+
 	}
 	if (m_iHP <= 0)
 	{

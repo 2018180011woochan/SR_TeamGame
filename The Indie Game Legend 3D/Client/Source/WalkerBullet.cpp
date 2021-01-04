@@ -30,7 +30,8 @@ HRESULT CWalkerBullet::Awake()
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
-
+	//  [1/4/2021 wades]
+	m_sName = L"Monster";
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
 	m_fBulletSpeed = 100.f;
 	m_eRenderID = ERenderID::Alpha;

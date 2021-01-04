@@ -48,6 +48,8 @@ HRESULT CRootAttack::Start()
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("RootAttack1"));
 	SafeAddRef(m_pTexturePool);
+	//  [1/4/2021 wades]
+	m_sName = L"Monster";
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 

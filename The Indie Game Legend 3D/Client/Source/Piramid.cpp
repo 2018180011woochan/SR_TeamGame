@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Piramid.h"
 #include "Item.h"
+#include "SoundMgr.h"
 
 CPiramid::CPiramid()
 {
@@ -80,6 +81,7 @@ void CPiramid::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
+		CSoundMgr::GetInstance()->Play(L"sfxRockBurst.mp3", CSoundMgr::Object_SFX);
 		m_bDead = true;
 	}
 	if (m_bDead)

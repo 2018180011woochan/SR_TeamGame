@@ -9,6 +9,7 @@ public:
 	enum CHANNELID {BGM
 		,Player_Bullet
 		,Player_Effect
+		,Player_Event
 		,Item_Ammo
 		,Item_Heart
 		,Item_Coin
@@ -22,7 +23,9 @@ public:
 		,EFFECT
 		,PlayerSkill
 		,MonsterKill
-		,MONSTER_BULLET, BNT1,BNT2,UI,MOUSE, WALL, Floor, MONSTER, MAXCHANNEL};
+		,MonsterHitM
+		,MonsterHitP
+		,MONSTER_BULLET,UI,MOUSE, Slider, MAXCHANNEL};
 private:
 	explicit CSoundMgr();
 	virtual ~CSoundMgr() = default;

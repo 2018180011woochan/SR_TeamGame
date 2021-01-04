@@ -44,7 +44,7 @@ enum class ESoundID :_uint
 	AddHeart,
 	AddCoin,
 	AddAmmo,
-	AddEnergy,
+	AmmoLvUp,
 	AddDisc,
 	Dash,
 	Run,

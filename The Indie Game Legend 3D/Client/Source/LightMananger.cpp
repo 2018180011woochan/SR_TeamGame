@@ -43,6 +43,9 @@ HRESULT CLightMananger::CreateDirction(const LightID & _eID, const _vector & _vD
 	
 	m_pLightChannel[_eID] = pLight;
 	m_pDevice->SetLight(_eID, m_pLightChannel[_eID]);
+	//  [1/4/2021 wades]
+	m_arrSaveColor[_eID] = pLight->Diffuse;
+
 	return S_OK;
 }
 
@@ -149,6 +152,11 @@ CLightMananger::CLightMananger()
 	{
 		bEnable = false;
 	}
+	//  [1/4/2021 wades]
+	for (auto& color : m_arrSaveColor)
+	{
+		color = D3DCOLOR_XRGB(0, 0, 0);
+	}
 	m_pDevice = nullptr;
 	m_pDevice = CManagement::GetInstance()->GetDevice();
 	//장치가 알아서 법선백터 관리 
@@ -162,6 +170,8 @@ void CLightMananger::Free()
 	{
 		SafeDelete(pChannel);
 	}
+
+
 	SafeRelease(m_pDevice);
 
 }

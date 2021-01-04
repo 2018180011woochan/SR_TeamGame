@@ -142,6 +142,8 @@ void CWalker::OnCollision(CGameObject * _pGameObject)
 		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
 			m_pTransform->Get_Position().y + iRandY
 			, m_pTransform->Get_Position().z + iRandZ));
+
+		sfxMetalHit();
 	}
 	if (m_iHP <= 0)
 	{
@@ -149,7 +151,7 @@ void CWalker::OnCollision(CGameObject * _pGameObject)
 		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
 		pHeart->SetItemType(EItemID::sprBigCoin);
 		m_bDead = true;
-		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+		CSoundMgr::GetInstance()->Play(L"sfxExplosion.mp3", CSoundMgr::MonsterKill);
 		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(2);
 
 	}

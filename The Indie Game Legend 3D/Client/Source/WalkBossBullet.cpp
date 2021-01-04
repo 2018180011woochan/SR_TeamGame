@@ -32,6 +32,8 @@ HRESULT CWalkBossBullet::Awake()
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
+	//  [1/4/2021 wades]
+	m_sName = L"Monster";
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Laser"));
 	SafeAddRef(m_pTexturePool);

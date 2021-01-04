@@ -22,7 +22,8 @@ public:
 
 public:
 	HRESULT IsBillboarding();
-
+	//  [1/4/2021 wades]
+	void	sfxMetalHit();
 public:
 	//Getter
 	bool	GetDead() { return m_bDead; };

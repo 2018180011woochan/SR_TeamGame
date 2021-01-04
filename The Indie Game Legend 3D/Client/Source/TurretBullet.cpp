@@ -19,7 +19,6 @@ HRESULT CTurretBullet::InitializePrototype()
 {
 	if (FAILED(CGameObject::InitializePrototype()))
 		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -30,7 +29,7 @@ HRESULT CTurretBullet::Awake()
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
-
+	m_sName = L"Monster";
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
 	m_fBulletSpeed = 100.f;
 	m_eRenderID = ERenderID::Alpha;

@@ -275,6 +275,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CWall::Create());
 	AddPrototype(CFloor::Create());
 #pragma endregion
+	AddGameObject<CFloor>();
 
 
 	
@@ -483,6 +484,8 @@ HRESULT CStage::AttachObj()
 		{
 			CInteractionObj* pDoorObj = (CInteractionObj*)pDoor;
 			CInteractionObj* pSwitchObj = (CInteractionObj*)pSwitch;
+			int a = pDoorObj->GetAttachID();
+			int b = pSwitchObj->GetAttachID();
 			if (pDoorObj->GetAttachID() == pSwitchObj->GetAttachID())
 			{
 				pSwitchObj->AddObserver(pDoorObj);

@@ -66,6 +66,7 @@ HRESULT CCryder::Start()
 	//Test
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->m_bIsRigid = true;
 	return S_OK;
 }
 
