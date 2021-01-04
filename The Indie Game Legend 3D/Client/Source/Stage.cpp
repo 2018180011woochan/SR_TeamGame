@@ -275,7 +275,6 @@ HRESULT CStage::Awake()
 	AddPrototype(CWall::Create());
 	AddPrototype(CFloor::Create());
 #pragma endregion
-	AddGameObject<CFloor>();
 
 
 	
