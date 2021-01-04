@@ -32,7 +32,7 @@ HRESULT CBloodHand::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	m_fBulletSpeed = 20.f;
+	m_fBulletSpeed = 30.f;
 	m_eRenderID = ERenderID::Alpha;
 	m_bDead = false;
 	return S_OK;

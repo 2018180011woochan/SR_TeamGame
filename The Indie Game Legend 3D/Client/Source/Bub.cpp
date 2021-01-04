@@ -35,7 +35,7 @@ HRESULT CBub::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bub"));
 	SafeAddRef(m_pTexturePool);
-	m_iHP = 3;
+	m_iHP = 7;
 	m_eRenderID = ERenderID::Alpha;
 	m_nTag = 0;
 	return S_OK;
@@ -118,6 +118,24 @@ void CBub::OnCollision(CGameObject * _pGameObject)
 	//	CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 	//	pBlood->SetPos(m_pTransform->Get_Position());
 	//}
+	if (L"Player" == _pGameObject->GetName())
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 5;
+			int iRandY = rand() % 5;
+			int iRandZ = rand() % 2;
+
+			CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+			pBlood->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
+		
+		m_bDead = true;
+	}
+
 	if (m_iHP <= 0)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();

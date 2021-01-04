@@ -6,6 +6,11 @@
 USING(Engine)
 class CGreenBoyRightHand;
 class CGreenBoyLeftHand;
+class CGreenBoyUpHand;
+class CGreenBoyDownHand;
+class CGreenBoyHead;
+class CGreenBoyFace;
+class CFlame;
 class CGreenBoyBody final : public CMonster
 {
 private:
@@ -44,6 +49,11 @@ private:
 	CTexturePool*  m_pTexturePool;
 	CGreenBoyRightHand* pRightHand;
 	CGreenBoyLeftHand* pLeftHand;
+	CGreenBoyUpHand*  pUpHand;
+	CGreenBoyDownHand*  pDownHand;
+	CGreenBoyHead* pHead;
+	CGreenBoyFace* pFace;
+	CFlame* pFlame;
 
 	float				m_fMoveSpeed;
 

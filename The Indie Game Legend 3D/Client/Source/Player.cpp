@@ -666,12 +666,12 @@ HRESULT CPlayer::Start()
 #ifdef _DEBUG
 
 #else
-	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
-	_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
-	m_pTransform->Set_Position(vPosition);
-	m_nTag = pSpawn->GetTag();
+	//CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
+	//_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
+	//m_pTransform->Set_Position(vPosition);
+	//m_nTag = pSpawn->GetTag();
 #endif
-	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
+	//CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 
 
 	m_pTransform->Set_Position(D3DXVECTOR3(0.f,2.5f,0.f));

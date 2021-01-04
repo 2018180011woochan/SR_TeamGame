@@ -3,6 +3,7 @@
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "Camera.h"
+#include "ShopKeeper.h"
 
 CArmor::CArmor()
 	: m_pTexturePool(nullptr)
@@ -48,14 +49,14 @@ HRESULT CArmor::Start()
 	m_pCollider->m_bIsRigid = true;
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
-
+	m_pShopKeeper = (CShopKeeper*)FindGameObjectOfType<CShopKeeper>();
 	return S_OK;
 }
 
 UINT CArmor::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
-
+	MoveMent(_fDeltaTime);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	m_pTransform->UpdateTransform();
 
@@ -126,6 +127,15 @@ HRESULT CArmor::IsBillboarding()
 void CArmor::Set_ItemPos(const _vector _vItemPos)
 {
 	m_pTransform->Set_Position(_vItemPos);
+}
+
+void CArmor::MoveMent(float _fDeltaTime)
+{
+	CTransform* pTransform = (CTransform*)m_pShopKeeper->GetComponent<CTransform>();
+
+	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x + 20.f,
+		pTransform->Get_Position().y - 5.f,
+		pTransform->Get_Position().z - 20.f));
 }
 
 

@@ -32,7 +32,7 @@ HRESULT CFireBullet::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	m_fBulletSpeed = 50.f;
+	m_fBulletSpeed = 70.f;
 	m_eRenderID = ERenderID::Alpha;
 	m_bDead = false;
 	return S_OK;

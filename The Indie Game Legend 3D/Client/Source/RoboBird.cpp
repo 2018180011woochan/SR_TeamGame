@@ -128,6 +128,23 @@ void CRoboBird::OnCollision(CGameObject * _pGameObject)
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
 	}
+	if (L"Player" == _pGameObject->GetName())
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 5;
+			int iRandY = rand() % 5;
+			int iRandZ = rand() % 2;
+
+			CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+			pBlood->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
+
+		m_bDead = true;
+	}
 	if (m_iHP <= 0)
 	{
 

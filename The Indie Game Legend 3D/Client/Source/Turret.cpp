@@ -40,7 +40,7 @@ HRESULT CTurret::Awake()
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
 
 
-	m_iHP = 3;
+	m_iHP = 5;
 	m_nTag = 0;
 	m_bDead = false;
 

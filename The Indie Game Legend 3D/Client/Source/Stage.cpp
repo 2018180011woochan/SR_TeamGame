@@ -29,7 +29,10 @@
 #include "Flame.h"
 #include "GreenBoyLeftHand.h"
 #include "GreenBoyRightHand.h"
+#include "GreenBoyUpHand.h"
+#include "GreenBoyDownHand.h"
 #include "BloodHand.h"
+#include "GreenBoyFace.h"
 #pragma endregion
 
 #pragma region SHOP
@@ -37,7 +40,24 @@
 #include "Ammo.h"
 #include "Armor.h"
 #include "BigShot.h"
+#include "SkillRunning.h"
+#include "Price.h"
 #pragma endregion
+
+#pragma region CONTAINER
+#include "ContainerBlack.h"
+#include "ContainerBlue.h"
+#include "ContainerNomal.h"
+#include "ContainerRed.h"
+#include "ContainerWhite.h"
+
+#include "LazerGun.h"
+#include "BigGun.h"
+#include "SpreadGun.h"
+#include "FireBat.h"
+#include "LapidGun.h"
+#pragma endregion
+
 
 #pragma region EFFECT
 #include "Blood.h"
@@ -69,6 +89,7 @@
 #include "LaserBullet.h"
 #include "FireBullet.h"
 #include "IceBullet.h"
+#include "PosionGas.h"
 
 #pragma region INCLUDE_UI
 #include "AmmoGauge.h"
@@ -164,6 +185,20 @@ HRESULT CStage::Awake()
 	AddPrototype(CAmmo::Create());
 	AddPrototype(CArmor::Create());
 	AddPrototype(CBigShot::Create());
+	AddPrototype(CSkillRunning::Create());
+	AddPrototype(CPrice::Create());
+
+	AddPrototype(CContainerBlack::Create());
+	AddPrototype(CContainerBlue::Create());
+	AddPrototype(CContainerNomal::Create());
+	AddPrototype(CContainerRed::Create());
+	AddPrototype(CContainerWhite::Create());
+
+	AddPrototype(CLazerGun::Create());
+	AddPrototype(CLapidGun::Create());
+	AddPrototype(CSpreadGun::Create());
+	AddPrototype(CFireBat::Create());
+	AddPrototype(CBigGun::Create());
 
 	AddPrototype(CPhubans::Create());
 	AddPrototype(CCactus::Create());
@@ -198,11 +233,14 @@ HRESULT CStage::Awake()
 	AddPrototype(CFlame::Create());
 	AddPrototype(CGreenBoyLeftHand::Create());
 	AddPrototype(CGreenBoyRightHand::Create());
+	AddPrototype(CGreenBoyUpHand::Create());
+	AddPrototype(CGreenBoyDownHand::Create());
+	AddPrototype(CGreenBoyFace::Create());
 	// 그린보이가 쏘는 총알
 	AddPrototype(CBloodHand::Create());
-
 	AddPrototype(CFireBullet::Create());
 	AddPrototype(CIceBullet::Create());
+	AddPrototype(CPosionGas::Create());
 
 	AddPrototype(CSandTile::Create());
 	AddPrototype(CPiramid::Create());
@@ -251,8 +289,8 @@ HRESULT CStage::Awake()
 	//AddGameObject<CSlider>();
 
 
-	CGameObject* pObj =  AddGameObject<CBub>();
-	((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(0, 0, 9));
+	//CGameObject* pObj =  AddGameObject<CBub>();
+	//((CTransform*)pObj->GetComponent<CTransform>())->Set_Position(_vector(0, 0, 9));
 	//pObj = AddGameObject<CBub>();
 
 	//CGameObject* pObj =  AddGameObject<CWormBoss>();
@@ -274,7 +312,7 @@ HRESULT CStage::Awake()
 	//AddGameObject<CCryder>();
 	//AddGameObject<CEgg>();
 	//AddGameObject<CWalkerBoss>();
-	AddGameObject<CNubBoss>();
+	//AddGameObject<CNubBoss>();
 	//AddGameObject<CRoboBird>();
 	//AddGameObject<CDoomBird>();
 
@@ -283,17 +321,29 @@ HRESULT CStage::Awake()
 
 	//AddGameObject<CTreeBoss>();
 
-	//AddGameObject<CShopKeeper>();
+	AddGameObject<CShopKeeper>();
+	AddGameObject<CAmmo>();
+	AddGameObject<CArmor>();
+	AddGameObject<CSkillRunning>();
+	AddGameObject<CPrice>();
 	//AddGameObject<CPhubans>();
 	//AddGameObject<CCactus>();
 
 	//AddGameObject<CDerek>();
 	//AddGameObject<CEdragon>();
 	//AddGameObject<CGreenBoyHead>();
+	//AddGameObject<CGreenBoyFace>();
 	//AddGameObject<CGreenBoyBody>();
 	//AddGameObject<CGreenBoyLeftHand>();
 	//AddGameObject<CGreenBoyRightHand>();
+	//AddGameObject<CGreenBoyUpHand>();
+	//AddGameObject<CGreenBoyDownHand>();
 	//AddGameObject<CFlame>();
+	//AddGameObject<CContainerBlack>();
+	//AddGameObject<CContainerBlue>();
+	//AddGameObject<CContainerNomal>();
+	//AddGameObject<CContainerRed>();
+	//AddGameObject<CContainerWhite>();
 
 
 	//컬링 테스트 
@@ -514,24 +564,24 @@ HRESULT CStage::AddUIObject()
 	AddGameObject<CFocus>()->SetEnable(false);
 
 #pragma endregion
-	AddPrototype(CWorm::Create());
-	AddPrototype(CWormBody::Create());
-	AddPrototype(CWormConnector::Create());
-	AddPrototype(CWormTail::Create());
-	AddPrototype(CWormBullet::Create());
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
-	AddGameObject<CWormConnector>();
+	//AddPrototype(CWorm::Create());
+	//AddPrototype(CWormBody::Create());
+	//AddPrototype(CWormConnector::Create());
+	//AddPrototype(CWormTail::Create());
+	//AddPrototype(CWormBullet::Create());
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
+	//AddGameObject<CWormConnector>();
 
-	AddGameObject<CWorm>()->SetEnable(true);
-	AddGameObject<CWormBody>();
-	AddGameObject<CWormBody>();
-	AddGameObject<CWormBody>();
-	AddGameObject<CWormBody>();
+	//AddGameObject<CWorm>()->SetEnable(true);
+	//AddGameObject<CWormBody>();
+	//AddGameObject<CWormBody>();
+	//AddGameObject<CWormBody>();
+	//AddGameObject<CWormBody>();
 
-	AddGameObject<CWormTail>();
+	//AddGameObject<CWormTail>();
 	return S_OK;
 }
 

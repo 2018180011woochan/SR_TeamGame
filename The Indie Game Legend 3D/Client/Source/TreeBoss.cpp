@@ -59,7 +59,7 @@ HRESULT CTreeBoss::Awake()
 	nCreateIndex = 0;
 	//m_bEnable = true;
 	m_nTag = 0;
-	m_iHP = 30;
+	m_iHP = 50;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
