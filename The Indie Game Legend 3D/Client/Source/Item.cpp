@@ -68,6 +68,22 @@ HRESULT CItem::BillBord()
 	return S_OK;
 }
 
+void CItem::Blink(const float _fDeltaTime)
+{
+	m_fLiveTime += _fDeltaTime;
+
+	if (m_fBlinkStart <  m_fLiveTime)
+		m_fBlinkTime += _fDeltaTime;
+
+	if (m_fBlinkInterval < m_fBlinkTime)
+	{
+		m_bRenderOff = !m_bRenderOff;
+		m_fBlinkTime = 0.f;
+	}
+	if (m_fLive < m_fLiveTime)
+		m_bDelete = true;
+}
+
 void CItem::SetItemType(const EItemID & _eID)
 {
 	m_eType = _eID;
@@ -167,6 +183,15 @@ HRESULT CItem::Awake()
 	m_fJumpTime = 0.f;
 	m_fYTest = 3.f;
 	m_bJump = true;
+
+	//  [1/4/2021 wades]
+	m_fLiveTime = 0.f;
+	m_fLive = 10.f;
+	m_fBlinkStart = 6.f;
+	m_bRenderOff = false;
+	m_fBlinkInterval = 0.2f;
+	m_fBlinkTime = 0.f;
+
 	return S_OK;
 }
 
@@ -203,6 +228,7 @@ UINT CItem::Update(const float _fDeltaTime)
 	if (m_bDelete)
 		return OBJ_DEAD;
 
+
 	if (FAILED(Animate(_fDeltaTime)))
 		return OBJ_NOENVET;
 
@@ -215,11 +241,21 @@ UINT CItem::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 
+
+	//  [1/4/2021 wades]
+	Blink(_fDeltaTime);
+
+
 	return OBJ_NOENVET;
 }
 
 HRESULT CItem::Render()
 {
+	//  [1/4/2021 wades]
+	if (m_bRenderOff)
+		return S_OK;
+
+
 	BillBord();
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();

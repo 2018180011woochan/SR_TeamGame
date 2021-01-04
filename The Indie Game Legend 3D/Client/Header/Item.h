@@ -21,9 +21,18 @@ private:
 	float						m_fJumpTime;
 	float						m_fYTest;
 	bool						m_bJump;
+
+	//Itme Delete
+	float						m_fLiveTime; // 지속시간 검사용 
+	float						m_fLive;   // 지속시간 
+	bool						m_bRenderOff; // 랜더 제어 
+	float						m_fBlinkInterval; //점멸 간격 
+	float						m_fBlinkTime; // 점멸 간격 검사용 시간 누적 
+	float						m_fBlinkStart; // 점멸 돌입 시간값
 private:
 	HRESULT Animate(const float _fDeltaTime);
 	HRESULT	BillBord();
+	void	Blink(const float _fDeltaTime);
 public:
 	void    SetItemType(const EItemID& _eID);
 	void	SetItemRand();

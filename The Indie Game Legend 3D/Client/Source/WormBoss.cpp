@@ -53,6 +53,9 @@ HRESULT CWormBoss::Awake()
 	m_fJumpSpeed = 2.f;
 	m_eCurDirState = LEFT;
 	m_eRenderID = ERenderID::Alpha;
+
+
+
 	return S_OK;
 }
 
