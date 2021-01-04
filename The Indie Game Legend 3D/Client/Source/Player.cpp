@@ -455,7 +455,7 @@ void CPlayer::SetsfxTileID(const ETileID & _eID)
 void CPlayer::AddHp(_int _nHp)
 {
 	m_nHp += _nHp;
-	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
+	m_nHp = CLAMP(m_nHp, 0, m_nHpMax *4 );
 
 	m_pHeartManager->SetGauge(m_nHp);
 }
@@ -475,7 +475,7 @@ void CPlayer::AddSkillGauge(_int _nPoint)
 
 void CPlayer::AddHpMax()
 {
-	m_nHpMax += 4;
+	++m_nHpMax;
 	m_nHpMax = CLAMP(m_nHpMax, 0, HPMax);
 	m_pHeartManager->SetHeartCount(m_nHpMax);
 }
@@ -619,8 +619,8 @@ HRESULT CPlayer::Awake()
 	m_fDashDuration = 0.4f;
 
 	//State
-	m_nHp = 8;
-	m_nHpMax = 12;
+	m_nHp = 12;
+	m_nHpMax = 4;
 	m_fHitDelay = 0.5f;
 	m_fHitDelayTime = 0.f;
 	m_nDiscMax = 1;

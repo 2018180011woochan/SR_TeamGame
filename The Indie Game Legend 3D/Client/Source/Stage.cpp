@@ -465,7 +465,6 @@ HRESULT CStage::AddUIObject()
 	//AddGameObject<CWormBody>();
 	//AddGameObject<CWormBody>();
 	//AddGameObject<CWormBody>();
-
 	//AddGameObject<CWormTail>();
 	return S_OK;
 }

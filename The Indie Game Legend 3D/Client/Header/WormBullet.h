@@ -19,6 +19,7 @@ private:
 	D3DXVECTOR3		m_vDir;
 
 	float			m_fMoveSpeed;
+	bool			m_bDead = false;
 private:
 	explicit CWormBullet();
 	explicit CWormBullet(const CWormBullet& _rOther);
@@ -38,6 +39,7 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnCollision(CGameObject* _pGameObject)override;
 public:
 	void SetBullet(D3DXVECTOR3 _vStart, D3DXVECTOR3 _vTarget);
 	void Move(const float _fDeltaTime);

@@ -94,7 +94,8 @@ HRESULT CWalkerBullet::Render()
 
 void CWalkerBullet::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"Obstacle" == _pGameObject->GetName() || L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
+	if (L"Obstacle" == _pGameObject->GetName() || L"Player" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
 	{
 		m_bDead = true;
 	}

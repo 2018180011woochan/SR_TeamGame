@@ -12,7 +12,7 @@ class CGun;
 #define RunCameraYCycle 0.3f
 #define FlameDelay 0.1f
 #define LaserDelay 0.5f
-#define HPMax 24
+#define HPMax 6
 #define SkillPGaugeMax 20
 #define DiscMax 4
 #define AmmoLvMax 3
