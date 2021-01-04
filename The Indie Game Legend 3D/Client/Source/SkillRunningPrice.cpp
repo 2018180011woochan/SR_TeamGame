@@ -1,23 +1,21 @@
 #include "stdafx.h"
-#include "ShopKeeper.h"
+#include "SkillRunningPrice.h"
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "Camera.h"
-#include "Ammo.h"
-#include "Armor.h"
-#include "BigShot.h"
+#include "ShopKeeper.h"
 
-CShopKeeper::CShopKeeper()
+CSkillRunningPrice::CSkillRunningPrice()
 	: m_pTexturePool(nullptr)
 {
 }
 
-CShopKeeper::CShopKeeper(const CShopKeeper & other)
+CSkillRunningPrice::CSkillRunningPrice(const CSkillRunningPrice & other)
 	: CGameObject(other)
 {
 }
 
-HRESULT CShopKeeper::InitializePrototype()
+HRESULT CSkillRunningPrice::InitializePrototype()
 {
 	if (FAILED(CGameObject::InitializePrototype()))
 		return E_FAIL;
@@ -25,7 +23,7 @@ HRESULT CShopKeeper::InitializePrototype()
 	return S_OK;
 }
 
-HRESULT CShopKeeper::Awake()
+HRESULT CSkillRunningPrice::Awake()
 {
 	if (FAILED(CGameObject::Awake()))
 		return E_FAIL;
@@ -33,57 +31,43 @@ HRESULT CShopKeeper::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI_ShopKeeper"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Price"));
 	SafeAddRef(m_pTexturePool);
 
-	m_pTransform->Set_Position(_vector(0.f, 7.f, 220.f));
-	m_pTransform->Set_Scale(_vector(15, 15, 15));
+	m_pTransform->Set_Scale(_vector(5, 3, 5));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
 
-HRESULT CShopKeeper::Start()
+HRESULT CSkillRunningPrice::Start()
 {
 	CGameObject::Start();
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
-	//m_pCollider = (CCollider*)AddComponent<CCollider>();
-	//m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
-	//m_pCollider->m_bIsRigid = true;
-
-	//CAmmo* pAmmo = (CAmmo*)AddGameObject<CAmmo>();
-	//pAmmo->Set_ItemPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y - 5.f, m_pTransform->Get_Position().z - 20.f));
-
-	//CArmor* pArmor = (CArmor*)AddGameObject<CArmor>();
-	//pArmor->Set_ItemPos(_vector(m_pTransform->Get_Position().x - 20.f, m_pTransform->Get_Position().y - 5.f, m_pTransform->Get_Position().z - 20.f));
-
-	//CBigShot* pBigShot = (CBigShot*)AddGameObject<CBigShot>();
-	//pBigShot->Set_ItemPos(_vector(m_pTransform->Get_Position().x + 20.f, m_pTransform->Get_Position().y - 5.f, m_pTransform->Get_Position().z - 20.f));
-
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
-
+	m_pShopKeeper = (CShopKeeper*)FindGameObjectOfType<CShopKeeper>();
 	return S_OK;
 }
 
-UINT CShopKeeper::Update(const float _fDeltaTime)
+UINT CSkillRunningPrice::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
-
+	MoveMent(_fDeltaTime);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	m_pTransform->UpdateTransform();
 
 	return _uint();
 }
 
-UINT CShopKeeper::LateUpdate(const float _fDeltaTime)
+UINT CSkillRunningPrice::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 	IsBillboarding();
 	return _uint();
 }
 
-HRESULT CShopKeeper::Render()
+HRESULT CSkillRunningPrice::Render()
 {
 	if (FAILED(CGameObject::Render()))
 		return E_FAIL;
@@ -93,15 +77,12 @@ HRESULT CShopKeeper::Render()
 	return S_OK;
 }
 
-void CShopKeeper::OnCollision(CGameObject * _pGameObject)
+void CSkillRunningPrice::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
-	{
-		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[2]);
-	}
+
 }
 
-HRESULT CShopKeeper::IsBillboarding()
+HRESULT CSkillRunningPrice::IsBillboarding()
 {
 	CCamera* pCamera = (CCamera*)FindGameObjectOfType<CCamera>();
 	if (pCamera == nullptr)
@@ -140,20 +121,34 @@ HRESULT CShopKeeper::IsBillboarding()
 	return S_OK;
 }
 
-
-CGameObject * CShopKeeper::Clone()
+void CSkillRunningPrice::Set_ItemPos(const _vector _vItemPos)
 {
-	CShopKeeper* pClone = new CShopKeeper(*this);
+	m_pTransform->Set_Position(_vItemPos);
+}
+
+void CSkillRunningPrice::MoveMent(float _fDeltaTime)
+{
+	CTransform* pTransform = (CTransform*)m_pShopKeeper->GetComponent<CTransform>();
+	
+	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x - 20.f,
+		pTransform->Get_Position().y + 1.f,
+		pTransform->Get_Position().z - 20.f));
+}
+
+
+CGameObject * CSkillRunningPrice::Clone()
+{
+	CSkillRunningPrice* pClone = new CSkillRunningPrice(*this);
 	return pClone;
 }
 
-CShopKeeper * CShopKeeper::Create()
+CSkillRunningPrice * CSkillRunningPrice::Create()
 {
-	CShopKeeper* pInstance = new CShopKeeper();
+	CSkillRunningPrice* pInstance = new CSkillRunningPrice();
 	return pInstance;
 }
 
-void CShopKeeper::Free()
+void CSkillRunningPrice::Free()
 {
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();

@@ -42,6 +42,8 @@
 #include "BigShot.h"
 #include "SkillRunning.h"
 #include "Price.h"
+#include "ArmorPrice.h"
+#include "SkillRunningPrice.h"
 #pragma endregion
 
 #pragma region CONTAINER
@@ -187,6 +189,8 @@ HRESULT CStage::Awake()
 	AddPrototype(CBigShot::Create());
 	AddPrototype(CSkillRunning::Create());
 	AddPrototype(CPrice::Create());
+	AddPrototype(CArmorPrice::Create());
+	AddPrototype(CSkillRunningPrice::Create());
 
 	AddPrototype(CContainerBlack::Create());
 	AddPrototype(CContainerBlue::Create());
@@ -321,11 +325,7 @@ HRESULT CStage::Awake()
 
 	//AddGameObject<CTreeBoss>();
 
-	AddGameObject<CShopKeeper>();
-	AddGameObject<CAmmo>();
-	AddGameObject<CArmor>();
-	AddGameObject<CSkillRunning>();
-	AddGameObject<CPrice>();
+
 	//AddGameObject<CPhubans>();
 	//AddGameObject<CCactus>();
 
@@ -345,6 +345,15 @@ HRESULT CStage::Awake()
 	//AddGameObject<CContainerRed>();
 	//AddGameObject<CContainerWhite>();
 
+#pragma region SHOP
+	AddGameObject<CShopKeeper>();
+	AddGameObject<CAmmo>();
+	AddGameObject<CArmor>();
+	AddGameObject<CSkillRunning>();
+	AddGameObject<CPrice>();
+	AddGameObject<CArmorPrice>();
+	AddGameObject<CSkillRunningPrice>();
+#pragma endregion
 
 	//컬링 테스트 
 	
