@@ -282,7 +282,7 @@ HRESULT CStage::Awake()
 	//CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
 	//CFactoryManager::GetInstance()->LoadScene(this);
 #else
-	CFactoryManager::GetInstance()->LoadDataFile(L"Sector1");
+	CFactoryManager::GetInstance()->LoadDataFile(L"111");
 	CFactoryManager::GetInstance()->LoadInterationObj(this, L"Sector1_InterObj");;
 	CFactoryManager::GetInstance()->LoadScene(this);
 	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));

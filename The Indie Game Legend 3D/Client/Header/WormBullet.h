@@ -19,6 +19,7 @@ private:
 	D3DXVECTOR3		m_vDir;
 
 	float			m_fMoveSpeed;
+	//  [1/4/2021 wades]
 	bool			m_bDead = false;
 private:
 	explicit CWormBullet();

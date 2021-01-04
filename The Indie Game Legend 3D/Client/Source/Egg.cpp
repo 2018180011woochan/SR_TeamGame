@@ -55,7 +55,11 @@ HRESULT CEgg::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
+#ifdef _DEBUG
+
 	m_nTag = 0;
+#endif // _DEBUG
+
 
 	return S_OK;
 }

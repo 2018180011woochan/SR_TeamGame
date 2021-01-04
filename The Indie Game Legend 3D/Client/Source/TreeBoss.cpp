@@ -58,7 +58,11 @@ HRESULT CTreeBoss::Awake()
 	nIndex = 0;
 	nCreateIndex = 0;
 	//m_bEnable = true;
+
+#ifndef _DEBUG
+
 	m_nTag = 0;
+#endif // !_DEB
 	m_iHP = 30;
 	m_iMaxHP = m_iHP;
 

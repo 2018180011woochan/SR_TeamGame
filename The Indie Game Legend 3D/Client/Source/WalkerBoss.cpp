@@ -29,7 +29,10 @@ HRESULT CWalkerBoss::Awake()
 {
 	if (FAILED(CMonster::Awake()))
 		return E_FAIL;
+#ifndef _DEBUG
 
+	m_nTag = 0;
+#endif // !_DEB
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 

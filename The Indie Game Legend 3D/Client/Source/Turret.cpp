@@ -41,7 +41,11 @@ HRESULT CTurret::Awake()
 
 
 	m_iHP = 3;
+#ifndef _DEBUG
+		
 	m_nTag = 0;
+#endif // !_DEB
+
 	m_bDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
