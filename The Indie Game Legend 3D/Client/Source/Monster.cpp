@@ -10,7 +10,7 @@ CMonster::CMonster()
 CMonster::CMonster(const CMonster & other)
 	: CGameObject(other)
 	, m_bHit(false)
-	, m_fHitDelay(0.f)
+	, m_fHitDelay(0.6f)
 	, m_fHitDelayTime(0.f)
 {
 }

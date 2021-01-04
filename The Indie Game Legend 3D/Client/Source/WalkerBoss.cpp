@@ -203,7 +203,7 @@ bool CWalkerBoss::isCloseToPlayer()
 
 void CWalkerBoss::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
 	{
 		m_iHP--;
 		m_bHit = true;

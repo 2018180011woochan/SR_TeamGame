@@ -242,7 +242,6 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 			SoundPlay(ESoundID::Run);
 			m_fRunningTime = 0.f;
 		}
-
 		float fPer = 0.9f;
 		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 10.f);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
@@ -271,7 +270,6 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 		fPer =  -0.5f + fabs(cosf((2 * PI)* (m_fHitAnimatTime / m_fHitDelay)));
 		fInterval *= fPer;
 		pCamera->SetShakeVertical(fInterval);
-		cout << fPer << endl;
 		if(m_bIsDeBuff)
 			Move(m_fMoveSpeed/2.f, _fDeltaTime);
 		else

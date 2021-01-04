@@ -13,6 +13,7 @@ CPiramid::CPiramid(const CPiramid & _rOther)
 
 HRESULT CPiramid::InitializePrototype()
 {
+	CObstacle::InitializePrototype();
 	return S_OK;
 }
 

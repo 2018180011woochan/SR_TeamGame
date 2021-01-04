@@ -258,6 +258,8 @@ HRESULT CStage::Awake()
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 
 	AddGameObject<CBub>();
+	AddGameObject<CPiramidUnBrake>();
+
 	AddLight();
 	AddUIObject();
 

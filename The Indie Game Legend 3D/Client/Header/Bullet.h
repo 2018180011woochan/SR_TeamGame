@@ -10,6 +10,7 @@ class CBullet : public CGameObject
 protected:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool = nullptr;
+	CCollider*		m_pCollider = nullptr;
 	_vector			m_vDiraction;
 
 	float			m_fLive;

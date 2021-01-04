@@ -112,12 +112,15 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+
+
+	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName() ))
 	{
+		m_bHit = true;
 		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
-		m_bHit = true;
+		
 	}
 	if (m_iHP <= 0)
 	{

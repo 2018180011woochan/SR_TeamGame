@@ -35,6 +35,7 @@ private:
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
+	CCollider*	  m_pCollider;
 
 
 

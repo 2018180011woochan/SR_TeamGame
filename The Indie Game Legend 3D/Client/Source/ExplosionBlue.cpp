@@ -9,11 +9,14 @@
 
 CExplosionBlue::CExplosionBlue()
 	:m_pTexturePool(nullptr)
+	, m_pCollider(nullptr)
+
 {
 }
 
 CExplosionBlue::CExplosionBlue(const CExplosionBlue & other)
 	: CGameObject(other)
+	, m_pCollider(nullptr)
 {
 }
 
@@ -21,7 +24,7 @@ HRESULT CExplosionBlue::InitializePrototype()
 {
 	if (FAILED(CGameObject::InitializePrototype()))
 		return E_FAIL;
-
+	m_sName = L"ExplosionBlue";
 	return S_OK;
 }
 
@@ -73,6 +76,9 @@ HRESULT CExplosionBlue::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->SetRadius(7.f);
 	return S_OK;
 }
 

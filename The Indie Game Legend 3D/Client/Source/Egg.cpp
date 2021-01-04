@@ -105,7 +105,8 @@ HRESULT CEgg::Render()
 
 void CEgg::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+
+	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
 	{
 		m_bHit = true;
 		m_iHP--;

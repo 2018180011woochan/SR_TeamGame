@@ -13,6 +13,7 @@ CPiramidUnBrake::CPiramidUnBrake(const CPiramidUnBrake & _rOther)
 
 HRESULT CPiramidUnBrake::InitializePrototype()
 {
+	CObstacle::InitializePrototype();
 	return S_OK;
 }
 

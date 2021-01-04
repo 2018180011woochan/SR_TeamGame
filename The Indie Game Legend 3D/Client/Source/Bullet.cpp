@@ -50,8 +50,8 @@ HRESULT CBullet::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_eRenderID = ERenderID::Alpha;
 
-	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
+	m_pCollider = (CCollider*)(AddComponent<CCollider>());
+	m_pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
 
 	return S_OK;
 }

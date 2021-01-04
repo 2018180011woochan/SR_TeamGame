@@ -73,6 +73,8 @@ HRESULT CFlameBullet::Start()
 	m_fMaxScale = 15.f;
 	m_fScale = 8.f;
 	m_fScaleDelta = 2.f;
+
+	m_pCollider->SetRadius(7.f);
 	return S_OK;
 }
 
@@ -125,7 +127,7 @@ HRESULT CFlameBullet::Fire()
 
 void CFlameBullet::OnCollision(CGameObject * _pGameObject)
 {
-	if ( L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
+	if ( L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName() ||L"Obstacle" == _pGameObject->GetName())
 	{
 		m_bDead = true;
 	}
