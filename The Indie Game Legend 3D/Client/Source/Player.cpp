@@ -48,7 +48,6 @@ CPlayer::CPlayer()
 	, m_eState(EState::Move)
 	, m_eTileID(ETileID::Nomal)
 	, m_pGun(nullptr)
-
 {
 }
 
@@ -104,7 +103,19 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 			AirStrikePos.y = 0.1f;
 			m_pFocus->SetFocusPos(AirStrikePos);
 		}
-		else
+		//맥크리궁//  [1/5/2021 wades]
+		else if (CMsgManager::GetInstance()->GetAutoAimEnable())
+		{
+			//계속 UI 호출 
+			list<CGameObject*> list; 
+			CUtilityManger::AutoAim(m_nSceneID, list);
+
+			if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
+			{
+				
+			}
+		}
+		else // 기본상태 
 		{
 			//플레임 건이 아닐경우 반동 필요 
 			if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))

@@ -23,7 +23,9 @@ protected:
 	float	m_fAnimateSpeed = 0.f;
 	float	m_fAnimateOneCycleTime = 0.f; 
 	_uint   m_nMaxTexture;
-
+	_int	m_nDmg;
+public:
+	void SetBulletSpeed(const float& _fSpeed) { m_fMoveSpeed = _fSpeed; }
 public:
 	explicit CBullet();
 	explicit CBullet(const CBullet& _rOther);
