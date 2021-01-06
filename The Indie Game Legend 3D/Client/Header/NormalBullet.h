@@ -1,4 +1,6 @@
 #pragma once
+#ifndef __NORMALBULLET_H__
+
 #include "Bullet.h"
 class CNormalBullet final : public CBullet
 {
@@ -15,7 +17,7 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 	virtual CGameObject * Clone() override;
-	virtual HRESULT Fire() override;
+	//virtual HRESULT Fire() override;
 
 public:
 	virtual void Free() override;
@@ -24,4 +26,5 @@ public:
 	// CBullet을(를) 통해 상속됨
 	virtual void OnCollision(CGameObject * _pGameObject) override;
 };
-
+#define __NORMALBULLET_H__
+#endif // !__NORMALBULLET_H__

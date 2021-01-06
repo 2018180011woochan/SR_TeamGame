@@ -88,43 +88,43 @@ HRESULT CBullet::Fire()
 {
 	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
-	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
-	_vector vBulletPos = pSpawnTrans->Get_WorldPosition();
+
+	_vector  SpawnPos;
+	if (FAILED(pSpawn->GetWorldPos(SpawnPos)))
+		return E_FAIL;
+
 	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
 
 	_vector PickPos;
-	CGameObject* pGameObj = nullptr;
 
-	if (CMsgManager::GetInstance()->GetAutoAimEnable() && CUtilityManger::AutoAim(m_nSceneID,pGameObj))
+	if (CUtilityManger::CrossHairPicking(m_nSceneID, PickPos))
 	{
-		if (nullptr != pGameObj)
-		{
-			auto  pMobTrans = ((CTransform*)pGameObj->GetComponent<CTransform>());
-			m_vDiraction = pMobTrans->Get_WorldPosition() - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-			//UiÃß°¡
-		}
-		else
-		{
-			m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-		}
+		m_vDiraction = PickPos - SpawnPos;
+		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
 	}
-	else
+	else 
 	{
-		if (CUtilityManger::CrossHairPicking(m_nSceneID, PickPos))
-		{
-			m_vDiraction = PickPos - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-		}
-		else
-		{
-			m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-		}
+		m_vDiraction = CameraDesc.vAt - SpawnPos;
+		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	}
 
-	}
-	m_pTransform->Set_Position(vBulletPos);
+	m_pTransform->Set_Position(SpawnPos);
+	return S_OK;
+}
+
+HRESULT CBullet::Fire(CGameObject * _pTarget)
+{
+	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
+	_vector  MobPos , SpawnPos;
+	if (FAILED(pSpawn->GetWorldPos(SpawnPos)))
+		return E_FAIL;
+	if (FAILED(_pTarget->GetWorldPos(MobPos)))
+		return E_FAIL;
+
+	m_vDiraction = MobPos - SpawnPos;
+	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	m_pTransform->Set_Position(SpawnPos);
 	return S_OK;
 }
 

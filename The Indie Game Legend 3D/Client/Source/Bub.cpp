@@ -37,7 +37,12 @@ HRESULT CBub::Awake()
 	SafeAddRef(m_pTexturePool);
 	m_iHP = 3;
 	m_eRenderID = ERenderID::Alpha;
+
+#ifdef _DEBUG
 	m_nTag = 0;
+#endif // _DEBUG
+
+
 	return S_OK;
 }
 
@@ -83,8 +88,8 @@ UINT CBub::Update(const float _fDeltaTime)
 		m_fJumpingCnt = 0.f;
 	}
 
-	if (FAILED(Movement(_fDeltaTime)))
-		return 0;
+	//if (FAILED(Movement(_fDeltaTime)))
+	//	return 0;
 
 
 	m_pTransform->UpdateTransform();
@@ -112,15 +117,13 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-
-
-	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName() ))
+	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
 	{
 		m_bHit = true;
 		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
-		
+
 	}
 	if (m_iHP <= 0)
 	{
@@ -129,7 +132,7 @@ void CBub::OnCollision(CGameObject * _pGameObject)
 		pHeart->SetItemType(EItemID::sprCoin);
 
 		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
-		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x +1, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x + 1, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
 		psqrCoin->SetItemType(EItemID::Ammo);
 		m_bDead = true;
 		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);

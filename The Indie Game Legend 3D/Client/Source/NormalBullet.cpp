@@ -87,11 +87,10 @@ CGameObject * CNormalBullet::Clone()
 	return pIns;
 }
 
-HRESULT CNormalBullet::Fire()
-{
-	CBullet::Fire();
-	return S_OK;
-}
+//HRESULT CNormalBullet::Fire()
+//{
+//	return CBullet::Fire();
+//}
 
 void CNormalBullet::Free()
 {

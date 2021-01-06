@@ -10,6 +10,7 @@ CGameObject::CGameObject()
 	, m_eRenderID(ERenderID::End)
 	, m_bEnable(true)
 	, m_sName(L"")
+	, m_bDelete(false)
 {
 	SafeAddRef(m_pDevice);
 	SafeAddRef(m_pManagement);
@@ -22,6 +23,7 @@ CGameObject::CGameObject(const CGameObject & _rOther)
 	, m_nTag(_rOther.m_nTag)
 	, m_eRenderID(_rOther.m_eRenderID)
 	, m_bEnable(true)
+	, m_bDelete(false)
 	, m_sName(_rOther.m_sName)
 {
 	SafeAddRef(m_pDevice);
@@ -147,4 +149,24 @@ void CGameObject::SetEnable(const bool _bEnable)
 		OnEnable();
 	else
 		OnDisable();
+}
+
+HRESULT CGameObject::GetWorldPos(OUT D3DXVECTOR3& _vWorldPos)
+{
+	if (m_pTransform != nullptr)
+	{
+		_vWorldPos = m_pTransform->Get_WorldPosition();
+		return S_OK;
+	}
+	return E_FAIL;
+}
+
+HRESULT CGameObject::SetPosition(const D3DXVECTOR3 & _vPosition)
+{
+	if (m_pTransform != nullptr)
+	{
+		 m_pTransform->Set_Position(_vPosition);
+		return S_OK;
+	}
+	return E_FAIL;
 }

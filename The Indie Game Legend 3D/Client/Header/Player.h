@@ -16,6 +16,9 @@ class CGun;
 #define SkillPGaugeMax 20
 #define DiscMax 4
 #define AmmoLvMax 3
+#define HighNoonAmount 30.f
+#define HighNoonMaxDmg 100.f
+
 
 enum class EState : _uint
 {
@@ -41,6 +44,7 @@ enum class ESoundID :_uint
 	LaserBullet,
 	Hit,
 	Trap,
+	EmptyShot,
 	AddHeart,
 	AddCoin,
 	AddAmmo,
@@ -54,28 +58,26 @@ enum class ESoundID :_uint
 class CPlayer final: public CGameObject
 {
 private:
-	 class CKeyManager* m_pKeyMgr;
-	 float				m_fMoveSpeed = 0.f;
-	 float				m_fDashSpeed = 0.f;
-	 float				m_fRunSpeed = 0.f;
-	 float				m_fMouseSpeedX = 0.f;
+	// Reference [1/6/2021 wades]
+	 class CKeyManager*			m_pKeyMgr;
+	 class CPlayerCamera*		m_pPlayerCamera;
 	 //Skill
-	 vector<ESkillID>	m_vecSkillID;
+	 vector<ESkillID>			m_vecSkillID;
 	//weapon
-	 vector<EWeaponType>	m_vecWeapons; 
-	 EWeaponType	    m_eCurWeaponType;
-	 EWeaponType	    m_ePreWeaponType;
-	 
-	 _int				m_nSetWeaponID;
+	 vector<EWeaponType>		m_vecWeapons; 
+	 EWeaponType			    m_eCurWeaponType;
+	 EWeaponType			    m_ePreWeaponType;
+
+	 _int						m_nSetWeaponID;
 
 
-	 bool				m_bUseWeapon;
-	 float				m_fBulletFireDelay = 0.f;
-	 float				m_fBulletFireTime = 0.f;
+	 bool						m_bUseWeapon;
+	 float						m_fBulletFireDelay = 0.f;
+	 float						m_fBulletFireTime = 0.f;
 
-	 float				m_fAmmo;
-	 float				m_fAmmoMax;
-	 _uint				m_nAmmoDecrease;
+	 float						m_fAmmo;
+	 float						m_fAmmoMax;
+	 _uint						m_nAmmoDecrease;
 
 	 //UI
 	 class CAmmoHUD*            m_pAmmoHud = nullptr;
@@ -95,6 +97,10 @@ private:
 	 _int						m_nSkillPoint = 0;
 	 _int						m_nAmmoLv= 0;
 
+	 float						m_fMoveSpeed = 0.f;
+	 float						m_fDashSpeed = 0.f;
+	 float						m_fRunSpeed = 0.f;
+	 float						m_fMouseSpeedX = 0.f;
 
 	 float						m_fHitDelay = 0.f;
 	 float						m_fHitDelayTime = 0.f;
@@ -104,6 +110,10 @@ private:
 	 float						m_fDebuffDurationTime = 0.f;
 	 bool						m_bIsDeBuff = false;
 	 bool						m_bEnableSkill = false;
+
+	 // HighNoon [1/6/2021 wades]
+	 float						m_fHighNoonDmg;
+	 list<CGameObject*>			m_listHighNoon;
 	 //Action
 	 EState				m_eState;
 	 float				m_fRunningTime = 0.f;
@@ -125,7 +135,7 @@ private:
 private:
 	HRESULT KeyInput(const float _fDeltaTime);
 	HRESULT MoveCheck();
-	void	Move(const float& _fSpeed , const float _fDeltaTime);
+	void	Move(float _fResultSpeed , const float _fDeltaTime);
 	void	UpdateState(const float _fDeltaTime);
 	
 	void	TakeItem(const EItemID& _eID);

@@ -26,6 +26,8 @@ protected:
 	_int	m_nDmg;
 public:
 	void SetBulletSpeed(const float& _fSpeed) { m_fMoveSpeed = _fSpeed; }
+	void SetBulletDmg(const _int& _nDmg) { m_nDmg = _nDmg; }
+	void SetDiractino(const _vector& _vDir) { m_vDiraction = _vDir; }
 public:
 	explicit CBullet();
 	explicit CBullet(const CBullet& _rOther);
@@ -40,7 +42,8 @@ public:
 	virtual HRESULT Render() PURE;
 	virtual CGameObject * Clone() PURE;
 
-	virtual HRESULT Fire() PURE;
+	virtual HRESULT Fire();
+	virtual HRESULT Fire(CGameObject* _pTarget);
 
 	HRESULT Animate(const float _fDeltaTime);
 

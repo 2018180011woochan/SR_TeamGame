@@ -48,6 +48,7 @@ CPlayer::CPlayer()
 	, m_eState(EState::Move)
 	, m_eTileID(ETileID::Nomal)
 	, m_pGun(nullptr)
+	, m_pPlayerCamera(nullptr)
 {
 }
 
@@ -71,6 +72,8 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 	, m_eTileID(_rOther.m_eTileID)
 	, m_pGun(nullptr)
 	, m_bSpotLightTrigger(false)
+	, m_fHighNoonDmg(0.f)
+	, m_pPlayerCamera(nullptr)
 {
 
 }
@@ -97,22 +100,34 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 			if (CUtilityManger::AirstrikePicking(m_nSceneID, AirStrikePos) 
 				&& m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
-				CMsgManager::GetInstance()->AirStrikeSetting(m_nSceneID, AirStrikePos);
+				CMsgManager::GetInstance()->AirStrikeStart(m_nSceneID, AirStrikePos);
 				m_pCrossHair->SetEnable(true);
 			}
 			AirStrikePos.y = 0.1f;
 			m_pFocus->SetFocusPos(AirStrikePos);
 		}
 		//맥크리궁//  [1/5/2021 wades]
-		else if (CMsgManager::GetInstance()->GetAutoAimEnable())
+		else if (CMsgManager::GetInstance()->GetHighNoonReady())
 		{
-			//계속 UI 호출 
-			list<CGameObject*> list; 
-			CUtilityManger::AutoAim(m_nSceneID, list);
+			m_bIsDeBuff = true;
+			m_listHighNoon.clear();
 
-			if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
+			if (CUtilityManger::AutoAim(m_nSceneID, m_listHighNoon))
 			{
-				
+				//계속 UI 호출 
+				m_fHighNoonDmg += HighNoonAmount * _fDeltaTime;
+				m_fHighNoonDmg = CLAMP(m_fHighNoonDmg, 0, HighNoonMaxDmg);
+
+				// Log [1/6/2021 wades]
+				cout << "Target Count : " << m_listHighNoon.size() << ", Dmg: " << m_fHighNoonDmg << endl;
+				if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
+				{
+					m_pPlayerCamera->StopCameraWorking();
+					m_bIsDeBuff = false;
+					CMsgManager::GetInstance()->HighNoonStart(m_nSceneID, m_listHighNoon, (_int)m_fHighNoonDmg);
+					m_fHighNoonDmg = 0;
+					m_listHighNoon.clear();
+				}
 			}
 		}
 		else // 기본상태 
@@ -136,6 +151,7 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		m_bUseWeapon = !m_bUseWeapon;
 		ChangeWeaponUISetting();
 		m_pAmmoHud->SetActive(m_bUseWeapon);
+		m_pGun->SetActive(m_bUseWeapon);
 	}
 	//weapon Change
 	if (m_pKeyMgr->Key_Down(KEY_Q) && m_vecWeapons.empty() == false)
@@ -152,19 +168,24 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	}
 
 	//Use Skill
-	if (m_pKeyMgr->Key_Down(KEY_1)  /*&& m_bEnableSkill*/)
+	if (true  /*m_bEnableSkill*/)
 	{
-		CMsgManager::GetInstance()->FreezingStart(5.f);
-	}
-	if (m_pKeyMgr->Key_Down(KEY_2)  /*&& m_bEnableSkill*/ )
-	{
-		CMsgManager::GetInstance()->AutoAimStart(5.f);
-	}
-	else if (m_pKeyMgr->Key_Down(KEY_3) /*&& m_bEnableSkill*/)
-	{
-		CMsgManager::GetInstance()->AirStrikeReady();
-		m_pFocus->SetEnable(true);
-		m_pCrossHair->SetEnable(false);
+		if (m_pKeyMgr->Key_Down(KEY_1))
+		{
+			CMsgManager::GetInstance()->FreezingStart(5.f);
+		}
+		if (m_pKeyMgr->Key_Down(KEY_2))
+		{
+			CMsgManager::GetInstance()->HighNoonReady(5.f);
+			m_pPlayerCamera->SetCameraZoomIn(60.f, 5.f);
+			m_fHighNoonDmg = 0;
+		}
+		else if (m_pKeyMgr->Key_Down(KEY_3))
+		{
+			CMsgManager::GetInstance()->AirStrikeReady();
+			m_pFocus->SetEnable(true);
+			m_pCrossHair->SetEnable(false);
+		}
 	}
 
 	return S_OK;
@@ -225,10 +246,16 @@ HRESULT CPlayer::MoveCheck()
 	return S_OK;
 }
 
-void CPlayer::Move(const float& _fSpeed,  const float _fDeltaTime)
+void CPlayer::Move(float _fResultSpeed,  const float _fDeltaTime)
 {
 	D3DXVec3Normalize(&m_vMoveDir, &m_vMoveDir);
-	m_pTransform->Add_Position(m_vMoveDir * _fSpeed *_fDeltaTime);
+
+	//  [1/6/2021 wades] 디버프 종류에 따른 속도 변화를 줘야할듯 분기 때려서 
+	if (m_bIsDeBuff)
+	{
+		_fResultSpeed /= 2.f;
+	}
+	m_pTransform->Add_Position(m_vMoveDir * _fResultSpeed *_fDeltaTime);
 
 	if (D3DXVECTOR3(0.f, 0.f, 0.f) != m_vMoveDir)
 		m_pGun->SetState(CGun::STATE::MOVE);
@@ -281,10 +308,7 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 		fPer =  -0.5f + fabs(cosf((2 * PI)* (m_fHitAnimatTime / m_fHitDelay)));
 		fInterval *= fPer;
 		pCamera->SetShakeVertical(fInterval);
-		if(m_bIsDeBuff)
-			Move(m_fMoveSpeed/2.f, _fDeltaTime);
-		else
-			Move(m_fMoveSpeed, _fDeltaTime);
+		Move(m_fMoveSpeed/2.f, _fDeltaTime);
 	}
 		break;
 	default:
@@ -337,7 +361,11 @@ void CPlayer::BulletFire()
 	if (m_bUseWeapon)
 	{
 		if (m_fAmmo <= 0)
+		{
+			SoundPlay(ESoundID::EmptyShot);
+			m_pGun->SetFire();
 			return;
+		}
 		switch (m_eCurWeaponType)
 		{
 		case EWeaponType::Multiple:
@@ -533,6 +561,9 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 
 	switch (_eID)
 	{
+	case ESoundID::EmptyShot:
+		CSoundMgr::GetInstance()->Play(L"sfxGunEmpty.wav", CSoundMgr::Player_Bullet);
+		break;
 	case ESoundID::AmmoLvUp:
 		CSoundMgr::GetInstance()->Play(L"sfxUpgrade.wav", CSoundMgr::Player_Event);
 		break;
@@ -624,7 +655,9 @@ HRESULT CPlayer::Awake()
 	m_fDashSpeed = 60.f;
 	m_fMouseSpeedX = 200.f;
 	m_fAmmoMax = 50.f;
-	m_fAmmo = m_fAmmoMax;
+	// test [1/6/2021 wades]
+	//m_fAmmo = m_fAmmoMax;
+	m_fAmmo = 10;
 	m_fDashDelay = 2.f;
 	m_fDashDelayTime = m_fDashDelay;
 	m_fDashDuration = 0.4f;
@@ -656,12 +689,16 @@ HRESULT CPlayer::Start()
 
 	//Reference Setting
 #pragma region Reference Setting
+	m_pPlayerCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+
 	m_pAmmoHud = (CAmmoHUD*)FindGameObjectOfType<CAmmoHUD>();
 	m_pHeartManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
 	m_pCrossHair = FindGameObjectOfType<CCrossHair>();
 	m_pGemText = (CGemText*)FindGameObjectOfType<CGemText>();
 	m_pDiscText = (CDiscText*)FindGameObjectOfType<CDiscText>();
 	m_pFocus = (CFocus*)FindGameObjectOfType<CFocus>();
+
+	//SafeAddRef(m_pPlayerCamera);
 	SafeAddRef(m_pAmmoHud);
 	SafeAddRef(m_pHeartManager);
 	SafeAddRef(m_pCrossHair);
@@ -674,6 +711,7 @@ HRESULT CPlayer::Start()
 	//스폰지점 세팅과 씬 초반 컬링
 #ifdef _DEBUG
 	m_nTag = 0;
+	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 #else
 	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
 	_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
@@ -688,6 +726,7 @@ HRESULT CPlayer::Start()
 	 //UI Setting
 	 m_vecWeapons.emplace_back(EWeaponType::Big);
 	 //Ammo
+	 m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
 	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Rapid);
 	 m_pAmmoHud->SetAmmoLevel(0);
 	 m_pAmmoHud->SetActive(false);
@@ -699,7 +738,8 @@ HRESULT CPlayer::Start()
 	 //hp
 	 m_pHeartManager->SetHeartCount(m_nHpMax);
 	 m_pHeartManager->SetGauge(m_nHp);
-
+	 // gun
+	 m_pGun->SetActive(false);
 
 	 AddWeapon(EWeaponType::Rapid);
 	 AddWeapon(EWeaponType::Multiple);
@@ -783,7 +823,6 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	}
 
 	//Dmg 
-
 	if (m_eState != EState::Hit && m_fHitDelay < m_fHitDelayTime)
 	{
 		if (L"Monster" == _pGameObject->GetName() || L"Slider" == _pGameObject->GetName())
@@ -828,6 +867,7 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Free()
 {
+	//SafeRelease(m_pPlayerCamera);
 	SafeRelease(m_pAmmoHud);
 	SafeRelease(m_pHeartManager);
 	SafeRelease(m_pCrossHair);

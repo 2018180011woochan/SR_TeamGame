@@ -179,7 +179,7 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT list<CGameObject*>& _listGameO
 		++IterMob;
 	}
 
-	return false;
+	return !_listGameObj.empty();
 }
 
 bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)

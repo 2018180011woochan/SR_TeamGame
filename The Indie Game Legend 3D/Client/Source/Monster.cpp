@@ -30,6 +30,12 @@ HRESULT CMonster::Awake()
 	if (FAILED(CGameObject::Awake()))
 		return E_FAIL;
 	m_fHitDelay = 0.5f;
+
+	//  [1/6/2021 wades]
+#ifdef _DEBUG
+	SetMonsterPos();
+#endif // !_DEBUG
+
 	return S_OK;
 }
 
@@ -130,7 +136,8 @@ void CMonster::OnCollision(CGameObject * _pGameObject)
 void CMonster::SetMonsterPos()
 {
 	m_vecStartPos = m_pTransform->Get_Position();
-	m_vecStartPos.y += 3.f;
+	//  [1/6/2021 wades]
+	m_vecStartPos.y += 1.f;
 }
 
 void CMonster::ResetMonsterPos()

@@ -106,7 +106,7 @@ HRESULT CLaserBullet::Fire()
 	m_pTransform->Set_Position(vBulletPos);
 	m_bAutoEnable = false;
 	
-	if (CMsgManager::GetInstance()->GetAutoAimEnable() &&CUtilityManger::AutoAim(m_nSceneID, pGameObj))
+	if (CMsgManager::GetInstance()->GetHighNoon() &&CUtilityManger::AutoAim(m_nSceneID, pGameObj))
 	{
 		//UiÃß°¡
 		auto  pMobTrans = ((CTransform*)pGameObj->GetComponent<CTransform>());

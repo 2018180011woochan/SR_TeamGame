@@ -246,9 +246,6 @@ HRESULT CStage::Awake()
 	AddPrototype(CSwitch::Create());
 #pragma endregion
 
-
-
-
 #pragma region GUN_TEST
 	AddPrototype(CGun::Create());
 	AddGameObject<CGun>();
@@ -265,6 +262,14 @@ HRESULT CStage::Awake()
 	AddGameObject<CPlayerCamera>();
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+
+	if(FAILED(AddGameObject<CBub>()->SetPosition(_vector(0,0,10))))
+		return E_FAIL;
+
+	if (FAILED(AddGameObject<CBub>()->SetPosition(_vector(-12, 0, 10))))
+		return E_FAIL;
+	if (FAILED(AddGameObject<CBub>()->SetPosition(_vector(12, 0, 10))))
+		return E_FAIL;
 
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
