@@ -89,7 +89,7 @@ void CAmmo::OnCollision(CGameObject * _pGameObject)
 	if (L"Player" == _pGameObject->GetName())
 	{
 		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
-		if (pPlayer->GetGem() <= m_nPrice)
+		if (pPlayer->GetGem() < m_nPrice)
 			return;
 
 		pPlayer->SetBuyItem(m_nPrice);
