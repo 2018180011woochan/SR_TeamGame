@@ -72,7 +72,7 @@ HRESULT CTreeBoss::Start()
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = false;
 
 	m_pTransform->Add_Position(_vector(10, 10, 10));
@@ -108,6 +108,8 @@ UINT CTreeBoss::Update(const float _fDeltaTime)
 
 	RootAttack(_fDeltaTime);
 	YukPoongHyul(_fDeltaTime);
+
+	m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 10.f, m_pTransform->Get_Position().z));
 
 	m_pTransform->UpdateTransform();
 
@@ -196,7 +198,7 @@ void CTreeBoss::RootAttack(float _fDeltaTime)
 		if (m_fAttackSpeed <= m_fAttackDeltaTime)
 		{
 			CRootAttack* pRootAttack = (CRootAttack*)AddGameObject<CRootAttack>();
-			RootPos = { m_pTransform->Get_Position().x, m_pTransform->Get_Position().y - 7.f, m_pTransform->Get_Position().z };
+			RootPos = { m_pTransform->Get_Position().x, m_pTransform->Get_Position().y, m_pTransform->Get_Position().z };
 			pRootAttack->SetRootPos(RootPos);
 
 			m_fAttackDeltaTime -= m_fAttackSpeed;

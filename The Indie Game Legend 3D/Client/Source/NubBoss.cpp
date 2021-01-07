@@ -121,6 +121,7 @@ UINT CNubBoss::Update(const float _fDeltaTime)
 
 	if (!isCloseToPlayer())
 		m_fMoveSpeed = 8.f;
+	m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 10.f, m_pTransform->Get_Position().z));
 
 	m_pTransform->UpdateTransform();
 
