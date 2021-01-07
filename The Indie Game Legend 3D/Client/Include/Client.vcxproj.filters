@@ -553,6 +553,9 @@
     <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion">
       <UniqueIdentifier>{440dc142-10a8-4ec0-88c7-e6edad79313f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\13.InterectionObject\06.Computer">
+      <UniqueIdentifier>{8d258d19-70fd-45a8-8c80-ad5809cfb04b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
