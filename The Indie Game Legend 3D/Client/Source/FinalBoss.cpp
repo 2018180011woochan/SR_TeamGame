@@ -75,7 +75,7 @@ HRESULT CFinalBoss::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(25.f, 25.f, 25.f));
-	m_pTransform->Set_Position(D3DXVECTOR3(30.f, 0.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(150.f, 0.f, 0.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(90.f, 0.f, 0.f));
 	m_pTransform->UpdateTransform();
 
@@ -99,7 +99,7 @@ HRESULT CFinalBoss::Start()
 
 	m_pPlayerTransform = ((CTransform*)(FindGameObjectOfType<CBattleShip>()->GetComponent<CTransform>()));
 
-	SetPattern(PATTERN::NORMAL);
+	SetPattern(PATTERN::IDLE);
 
 	m_bTest = true;
 
@@ -284,7 +284,7 @@ void CFinalBoss::Idle(const float _fDeltaTime)
 		++m_nViaIndex;
 	}
 
-	if (fContinuanceTime > 1.f)
+	if (m_pTransform->Get_Position().x < 35.f && fContinuanceTime > 1.f)
 	{
 		SetPattern((PATTERN)(1 + rand() % (PATTERN::PATTERN_END - 2)));
 		fContinuanceTime = 0.f;
@@ -368,12 +368,15 @@ void CFinalBoss::Dead(const float _fDeltaTime)
 
 void CFinalBoss::ExplosionLaser(const float _fDeltaTime)
 {
+	if (m_nHP >= 90)
+		return;
+
 	static int nTest = 0;
 	static float fTime = 0;
 	fTime += _fDeltaTime;
-	if (fTime > 10.f)
+	if (fTime > 5.f)
 	{
-		fTime -= 10.f;
+		fTime -= 5.f;
 		nTest = 0;
 	}
 	if (nTest != 0)
