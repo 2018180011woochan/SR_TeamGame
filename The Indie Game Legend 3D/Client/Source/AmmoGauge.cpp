@@ -63,12 +63,12 @@ HRESULT CAmmoGauge::Awake()
 HRESULT CAmmoGauge::Start()
 {
 	CGameObject::Start();
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
-	m_sTextureKey = TEXT("AmmoGauge");
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("AmmoGauge"));
+	m_sTextureKey = TEXT("Off");
 	SafeAddRef(m_pTexturePool);
 
-	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[1]);
-
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
+	m_nIndex = 0;
 	return S_OK;
 }
 
@@ -95,10 +95,20 @@ HRESULT CAmmoGauge::Render()
 void CAmmoGauge::SetAmmoLevel(const UINT _nLevel)
 {
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[_nLevel]);
+	m_nIndex = _nLevel;
 }
 
 void CAmmoGauge::SetAmmoCount(const float _fFillAmount)
 {
 	m_pImage->SetFillAmount(_fFillAmount);
+}
+
+void CAmmoGauge::SetActive(const bool _bActive)
+{
+	if (true == _bActive)
+		m_sTextureKey = TEXT("On");
+	else
+		m_sTextureKey = TEXT("Off");
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
 }
 

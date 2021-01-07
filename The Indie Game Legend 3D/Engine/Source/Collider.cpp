@@ -14,6 +14,7 @@ CCollider::CCollider(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _
 	, m_pCollisionMesh(nullptr)
 	, m_pDrawMesh(nullptr)
 	, m_bIsRigid(false)
+	, m_bExcept(false)
 	, m_bIsStand(false)
 {
 	SafeAddRef(m_pMeshManager);

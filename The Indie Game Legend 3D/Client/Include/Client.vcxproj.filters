@@ -376,9 +376,6 @@
     <Filter Include="02.GameObject\12.Shop\01.Armor">
       <UniqueIdentifier>{8a9907b8-cc7b-4fbd-84cd-d22e030eda33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\12.Shop\02.BigShot">
-      <UniqueIdentifier>{68cabca7-fc75-454d-88cd-f4f5103fd925}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\11.Npc\01.Cactus">
       <UniqueIdentifier>{cfb8d0fa-7184-4eb2-a2ed-0743c62ad2e8}</UniqueIdentifier>
     </Filter>
@@ -478,17 +475,77 @@
     <Filter Include="02.GameObject\00.Monster\12.GreenBoy\03.GreenBoyRightHand">
       <UniqueIdentifier>{6afa4e7a-2199-4fc8-b22f-3c42f0891a97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\04.Flame">
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\04.GreenBoyUpHand">
+      <UniqueIdentifier>{8e2ae2bb-d3b8-4e36-801b-4b58c0d3976f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\05.04.GreenBoyDownHand">
+      <UniqueIdentifier>{c1abe8dc-a6ca-4007-a000-5a427273035d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\06.Flame">
       <UniqueIdentifier>{8a9aacca-c434-4023-8775-3f2ef8be1005}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\05.FireBullet">
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\07.FireBullet">
       <UniqueIdentifier>{59cac894-9169-448d-9b07-38969ae7d6c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\06.IceBullet">
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\08.IceBullet">
       <UniqueIdentifier>{bd3b8ee8-bb97-4302-929e-7d0cba91be38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\07.BloodHand">
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\09.BloodHand">
       <UniqueIdentifier>{978000bf-40f0-4aa2-bc27-06d833cfeba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\10.GreenBoyFace">
+      <UniqueIdentifier>{0f82bb9c-837e-4285-bdf6-419a70b83e63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\12.GreenBoy\11.PosionGas">
+      <UniqueIdentifier>{37b8bf0f-6d67-4130-8039-8d9efec34ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container">
+      <UniqueIdentifier>{93962a5f-08b0-4565-95a7-f4f5a9c6937c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\00.Container_Black">
+      <UniqueIdentifier>{f48975b8-8001-473d-9f49-8ea86480ce29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\01.Container_Blue">
+      <UniqueIdentifier>{68eabd3c-e805-476a-84a9-d03497ac1a4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\02.Container_Nomal">
+      <UniqueIdentifier>{e2d4d9fc-8a01-4001-98d3-34b15ab3176f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\03.Container_Red">
+      <UniqueIdentifier>{a5853544-843c-4e0c-8b82-b87790d65361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\04.Container_White">
+      <UniqueIdentifier>{b6cf4a06-3ec0-428d-9aac-880a24289ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\03.Container_Red\FireBat">
+      <UniqueIdentifier>{f25bcb6a-cab2-406f-8f1c-d7293133d85e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\01.Container_Blue\SpreadGun">
+      <UniqueIdentifier>{10bd8da1-a9f1-4c6b-9e8f-a40bcdf34e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\00.Container_Black\LazerGun">
+      <UniqueIdentifier>{30d78586-558e-4a89-b713-19f24aab6400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\02.Container_Nomal\LapidGun">
+      <UniqueIdentifier>{6dd3ca49-eef9-46aa-a15d-3dc80f204d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.Container\04.Container_White\BigGun">
+      <UniqueIdentifier>{6c0ddd46-aaff-424b-922a-11f3cf7d7e8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\02.SkillRunning">
+      <UniqueIdentifier>{387b1ac5-8f6e-4393-aaa5-757550b25be5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\03.Price">
+      <UniqueIdentifier>{eff6190d-445b-41d0-84fd-30ed158ea435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\03.Price\00.AmmoPrice">
+      <UniqueIdentifier>{0775fd80-6b60-4b59-a2e7-446080ab02d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\03.Price\01.ArmorPrice">
+      <UniqueIdentifier>{5e1bb888-e876-4d4d-9dcb-39f1694980df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\12.Shop\03.Price\02.SkillRunningPrice">
+      <UniqueIdentifier>{a7bc47fe-5cbd-431b-8fda-1f126eb61242}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\09.Item">
       <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
@@ -555,6 +612,15 @@
     </Filter>
     <Filter Include="02.GameObject\13.InterectionObject\06.Computer">
       <UniqueIdentifier>{8d258d19-70fd-45a8-8c80-ad5809cfb04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\10.Effect\06.Sand">
+      <UniqueIdentifier>{c0a24ae7-09b6-4316-993d-38ec7b7edb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\04.Ending">
+      <UniqueIdentifier>{d1c1a4bb-1bfe-4a52-93b6-072449a8dc1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\15.EndingText">
+      <UniqueIdentifier>{5cd60849-4365-45cc-b538-da07f66dd62e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -885,9 +951,6 @@
     <ClInclude Include="..\Header\Armor.h">
       <Filter>02.GameObject\12.Shop\01.Armor</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BigShot.h">
-      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Cactus.h">
       <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
     </ClInclude>
@@ -949,7 +1012,7 @@
       <Filter>02.GameObject\00.Monster\12.GreenBoy\01.GreenBoyBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Flame.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.Flame</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\06.Flame</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GreenBoyLeftHand.h">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\02.GreenBoyLeftHand</Filter>
@@ -958,13 +1021,13 @@
       <Filter>02.GameObject\00.Monster\12.GreenBoy\03.GreenBoyRightHand</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FireBullet.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.FireBullet</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\07.FireBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\IceBullet.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\06.IceBullet</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\08.IceBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BloodHand.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\09.BloodHand</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Door.h">
       <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
@@ -1010,6 +1073,74 @@
     </ClInclude>
     <ClInclude Include="..\Header\SlideBlock.h">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClInclude>
+
+    <ClInclude Include="..\Header\FinalExplosion.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Sand.h">
+      <Filter>02.GameObject\10.Effect\06.Sand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ending.h">
+      <Filter>03.Scene\04.Ending</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EndingText.h">
+      <Filter>02.GameObject\04.UI\15.EndingText</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigShot.h" />
+    <ClInclude Include="..\Header\GreenBoyFace.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\10.GreenBoyFace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyDownHand.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.04.GreenBoyDownHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyUpHand.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.GreenBoyUpHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PosionGas.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\11.PosionGas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ArmorPrice.h">
+      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillRunningPrice.h">
+      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillRunning.h">
+      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerBlack.h">
+      <Filter>02.GameObject\14.Container\00.Container_Black</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerBlue.h">
+      <Filter>02.GameObject\14.Container\01.Container_Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerNomal.h">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerRed.h">
+      <Filter>02.GameObject\14.Container\03.Container_Red</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerWhite.h">
+      <Filter>02.GameObject\14.Container\04.Container_White</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LazerGun.h">
+      <Filter>02.GameObject\14.Container\00.Container_Black\LazerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpreadGun.h">
+      <Filter>02.GameObject\14.Container\01.Container_Blue\SpreadGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LapidGun.h">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal\LapidGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FireBat.h">
+      <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigGun.h">
+      <Filter>02.GameObject\14.Container\04.Container_White\BigGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Price.h">
+      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1319,9 +1450,6 @@
     <ClCompile Include="..\Source\Ammo.cpp">
       <Filter>02.GameObject\12.Shop\00.Ammo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\BigShot.cpp">
-      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Armor.cpp">
       <Filter>02.GameObject\12.Shop\01.Armor</Filter>
     </ClCompile>
@@ -1386,7 +1514,7 @@
       <Filter>02.GameObject\00.Monster\12.GreenBoy\01.GreenBoyBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Flame.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.Flame</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\06.Flame</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\GreenBoyLeftHand.cpp">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\02.GreenBoyLeftHand</Filter>
@@ -1395,13 +1523,13 @@
       <Filter>02.GameObject\00.Monster\12.GreenBoy\03.GreenBoyRightHand</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\FireBullet.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.FireBullet</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\07.FireBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\IceBullet.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\06.IceBullet</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\08.IceBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\BloodHand.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\09.BloodHand</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Door.cpp">
       <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
@@ -1447,6 +1575,73 @@
     </ClCompile>
     <ClCompile Include="..\Source\SlideBlock.cpp">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalExplosion.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sand.cpp">
+      <Filter>02.GameObject\10.Effect\06.Sand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Ending.cpp">
+      <Filter>03.Scene\04.Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\EndingText.cpp">
+      <Filter>02.GameObject\04.UI\15.EndingText</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BigShot.cpp" />
+    <ClCompile Include="..\Source\GreenBoyFace.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\10.GreenBoyFace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyDownHand.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.04.GreenBoyDownHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyUpHand.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.GreenBoyUpHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PosionGas.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\11.PosionGas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Price.cpp">
+      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SkillRunning.cpp">
+      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SkillRunningPrice.cpp">
+      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ArmorPrice.cpp">
+      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerBlack.cpp">
+      <Filter>02.GameObject\14.Container\00.Container_Black</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerBlue.cpp">
+      <Filter>02.GameObject\14.Container\01.Container_Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerNomal.cpp">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerRed.cpp">
+      <Filter>02.GameObject\14.Container\03.Container_Red</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerWhite.cpp">
+      <Filter>02.GameObject\14.Container\04.Container_White</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LazerGun.cpp">
+      <Filter>02.GameObject\14.Container\00.Container_Black\LazerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SpreadGun.cpp">
+      <Filter>02.GameObject\14.Container\01.Container_Blue\SpreadGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LapidGun.cpp">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal\LapidGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FireBat.cpp">
+      <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BigGun.cpp">
+      <Filter>02.GameObject\14.Container\04.Container_White\BigGun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -36,7 +36,7 @@ HRESULT CShopKeeper::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI_ShopKeeper"));
 	SafeAddRef(m_pTexturePool);
 
-	m_pTransform->Set_Position(_vector(0.f, 8.f, 0.f));
+	//m_pTransform->Set_Position(_vector(0.f, 7.f, 220.f));
 	m_pTransform->Set_Scale(_vector(15, 15, 15));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -47,18 +47,9 @@ HRESULT CShopKeeper::Start()
 	CGameObject::Start();
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
-	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
-	m_pCollider->m_bIsRigid = true;
-
-	CAmmo* pAmmo = (CAmmo*)AddGameObject<CAmmo>();
-	pAmmo->Set_ItemPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y - 5.f, m_pTransform->Get_Position().z - 20.f));
-
-	CArmor* pArmor = (CArmor*)AddGameObject<CArmor>();
-	pArmor->Set_ItemPos(_vector(m_pTransform->Get_Position().x - 20.f, m_pTransform->Get_Position().y - 5.f, m_pTransform->Get_Position().z - 20.f));
-
-	CBigShot* pBigShot = (CBigShot*)AddGameObject<CBigShot>();
-	pBigShot->Set_ItemPos(_vector(m_pTransform->Get_Position().x + 20.f, m_pTransform->Get_Position().y - 5.f, m_pTransform->Get_Position().z - 20.f));
+	//m_pCollider = (CCollider*)AddComponent<CCollider>();
+	//m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	//m_pCollider->m_bIsRigid = true;
 
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);

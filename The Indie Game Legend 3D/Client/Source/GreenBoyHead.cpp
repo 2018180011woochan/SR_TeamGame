@@ -8,7 +8,7 @@
 #include "Item.h"
 #include "Blood.h"
 #include "GreenBoyBody.h"
-#include "BossHP.h"
+
 
 CGreenBoyHead::CGreenBoyHead()
 	:m_pTexturePool(nullptr)
@@ -52,14 +52,12 @@ HRESULT CGreenBoyHead::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
-	m_nTag = 0;
 	m_bDead = false;
-	nIndex = 0;
-
-
-
-	m_iHP = 20;
+	m_nTag = 30;
+	m_iHP = 30;
 	m_iMaxHP = m_iHP;
+
+	m_bIsBossDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -70,27 +68,23 @@ HRESULT CGreenBoyHead::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(5, 5, 5));
 	// Test
-	m_pTransform->Set_Position(_vector(0.f, 20.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("GreenBoy_Head"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
-
+	//m_nTag = 0;
 	//Test
-	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
-	SafeAddRef(m_pBossHP);
+
 
 	return S_OK;
 }
 
 UINT CGreenBoyHead::Update(const float _fDeltaTime)
 {
-	/* 보스 hp 업데이트 */
-	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
 
-	if (m_bDead)
+
+	if (m_bIsBossDead)
 		return OBJ_DEAD;
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 	CMonster::Update(_fDeltaTime);
@@ -149,14 +143,8 @@ void CGreenBoyHead::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
-		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
-	}
-	if (m_iHP <= 0)
-	{
-		m_pBossHP->SetEnable(false);
-		m_bDead = true;
 	}
 }
 
@@ -214,6 +202,11 @@ bool CGreenBoyHead::isCloseToPlayer()
 void CGreenBoyHead::SetEggPos(const _vector _EggPos)
 {
 	m_pTransform->Set_Position(_EggPos);
+}
+
+void CGreenBoyHead::SetBossDead(const bool _isBossDead)
+{
+	m_bIsBossDead = _isBossDead;
 }
 
 CGameObject * CGreenBoyHead::Clone()

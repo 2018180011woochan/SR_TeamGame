@@ -29,6 +29,12 @@ USING(Engine)
 #include "Monster.h"
 #include "SlideBlock.h"
 
+void CPlayer::SetBuyItem(_int _Price)
+{
+	m_nGem -= _Price;
+	m_pGemText->SetCount(m_nGem);
+}
+
 CPlayer::CPlayer()
 	:CGameObject()
 	, m_fMoveSpeed(0.f)
@@ -183,37 +189,47 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		m_pGun->SetActive(m_bUseWeapon);
 	}
 	//weapon Change
-	if (m_pKeyMgr->Key_Down(KEY_Q) && m_vecWeapons.empty() == false)
+	// Feat. Woochan
+	// 형 이거 상점에서 무기추가 구매 안하면 그냥 여기가 안먹게 해놀게요
+	if (m_bIsBuyWeapon)
 	{
-		--m_nSetWeaponID;
-		m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size()-1));
-		ChangeWeaponUISetting();
-	}
-	else if (m_pKeyMgr->Key_Down(KEY_E) && m_vecWeapons.empty() == false)
-	{
-		++m_nSetWeaponID;
-		m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
-		ChangeWeaponUISetting();
+		if (m_pKeyMgr->Key_Down(KEY_Q) && m_vecWeapons.empty() == false)
+		{
+			--m_nSetWeaponID;
+			m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
+			ChangeWeaponUISetting();
+		}
+		else if (m_pKeyMgr->Key_Down(KEY_E) && m_vecWeapons.empty() == false)
+		{
+			++m_nSetWeaponID;
+			m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
+			ChangeWeaponUISetting();
+		}
 	}
 
 	//Use Skill
-	if (true  /*m_bEnableSkill*/)
+	// Made By Woochan
+	// 형 이거도 상점에서 스킬 뚫어야지 사용 가능하게 해놀겓요
+	if (m_bIsBuySkillRunning)
 	{
-		if (m_pKeyMgr->Key_Down(KEY_1))
+		if (true  /*m_bEnableSkill*/)
 		{
-			CMsgManager::GetInstance()->FreezingStart(5.f);
-		}
-		if (m_pKeyMgr->Key_Down(KEY_2))
-		{
-			CMsgManager::GetInstance()->HighNoonReady(5.f);
-			m_pPlayerCamera->SetCameraZoomIn(80.f, 5.f);
-			m_fHighNoonDmg = 0;
-		}
-		else if (m_pKeyMgr->Key_Down(KEY_3))
-		{
-			CMsgManager::GetInstance()->AirStrikeReady();
-			m_pFocus->SetEnable(true);
-			m_pCrossHair->SetEnable(false);
+			if (m_pKeyMgr->Key_Down(KEY_1))
+			{
+				CMsgManager::GetInstance()->FreezingStart(5.f);
+			}
+			if (m_pKeyMgr->Key_Down(KEY_2))
+			{
+				CMsgManager::GetInstance()->HighNoonReady(5.f);
+				m_pPlayerCamera->SetCameraZoomIn(80.f, 5.f);
+				m_fHighNoonDmg = 0;
+			}
+			else if (m_pKeyMgr->Key_Down(KEY_3))
+			{
+				CMsgManager::GetInstance()->AirStrikeReady();
+				m_pFocus->SetEnable(true);
+				m_pCrossHair->SetEnable(false);
+			}
 		}
 	}
 
@@ -804,6 +820,10 @@ HRESULT CPlayer::Start()
 	 //Skill Setting
 
 	// m_vecSkillID.push_back(ESkillID::TimeStop);
+
+	 // By Woochan
+	 m_bIsBuyWeapon = false;
+	 m_bIsBuySkillRunning = false;
 	 return S_OK;
 }
 

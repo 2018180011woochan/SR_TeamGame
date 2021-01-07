@@ -28,6 +28,7 @@ private:
 	
 public:
 	void SetEggPos(const _vector _EggPos);
+	void SetBossDead(const bool _isBossDead);
 
 public:
 	virtual CGameObject * Clone() override;
@@ -51,6 +52,8 @@ private:
 
 	float				m_fJumpSpeed;
 	float				m_fJumpDeltaTime;
+
+	bool				m_bIsBossDead;
 
 	UINT nIndex;
 

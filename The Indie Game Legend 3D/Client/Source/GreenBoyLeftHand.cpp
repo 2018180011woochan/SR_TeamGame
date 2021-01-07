@@ -58,12 +58,13 @@ HRESULT CGreenBoyLeftHand::Awake()
 
 	m_fYTest = 0.f; 
 
-	m_nTag = 0;
 	m_bDead = false;
 	m_bisAttack = false;
 	m_bCrush = false;
-
+	m_nTag = 30;
 	m_iHP = 2;
+
+	m_bIsBossDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -74,22 +75,21 @@ HRESULT CGreenBoyLeftHand::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(7, 7, 7));
 	// Test
-	//m_pTransform->Set_Position(_vector(0.f, 12.f, 0.f));
-	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Hand"))[0]);
 
-	//m_pCollider = (CCollider*)AddComponent<CCollider>();
-	//m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
-	//m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->m_bIsRigid = true;
+	//m_nTag = 0;
 	return S_OK;
 }
 
 UINT CGreenBoyLeftHand::Update(const float _fDeltaTime)
 {
-	if (m_bDead)
+	if (m_bIsBossDead)
 		return OBJ_DEAD;
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
+	pBodyTransform = (CTransform*)(FindGameObjectOfType<CGreenBoyBody>()->GetComponent<CTransform>());
 	CMonster::Update(_fDeltaTime);
 
 	// 나중에 head 다른 조각 찾으면??
@@ -164,23 +164,16 @@ void CGreenBoyLeftHand::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
-		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
-	}
-	if (m_iHP <= 0)
-	{
-
-		m_bDead = true;
 	}
 }
 
 
 HRESULT CGreenBoyLeftHand::Movement(float fDeltaTime)
 {
-	CTransform* pBodyTransform = (CTransform*)(FindGameObjectOfType<CGreenBoyBody>()->GetComponent<CTransform>());
 	_vector vDir;
-	vDir = _vector(pBodyTransform->Get_Position().x - 6.f, pBodyTransform->Get_Position().y, pBodyTransform->Get_Position().z)
+	vDir = _vector(pBodyTransform->Get_Position().x - 8.f, pBodyTransform->Get_Position().y, pBodyTransform->Get_Position().z)
 		- m_pTransform->Get_Position();
 	//vDir.y = 0.f;
 	D3DXVec3Normalize(&vDir, &vDir);
@@ -248,9 +241,9 @@ void CGreenBoyLeftHand::Crush(float fDeltaTime)
 
 	m_pTransform->Add_Position(_vector(0.f, -0.3f, 0.f));
 	m_pTransform->Set_RotationZ(90.f);
-	if (m_pTransform->Get_Position().y < 3.f)
+	if (m_pTransform->Get_Position().y < 5.f)
 	{
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
+		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 5.f, m_pTransform->Get_Position().z));
 
 		m_fFireDeltaTime += fDeltaTime;
 		if (m_fFireSpeed <= m_fFireDeltaTime)
@@ -261,7 +254,7 @@ void CGreenBoyLeftHand::Crush(float fDeltaTime)
 
 			pGameObject = (CBloodHand*)AddGameObject<CBloodHand>();
 			pGameObject->SetTurretPos(m_pTransform->Get_Position(), _vector(m_pPlayerTransform->Get_Position().x - 5.f, m_pPlayerTransform->Get_Position().y, m_pPlayerTransform->Get_Position().z));
-
+			
 			pGameObject = (CBloodHand*)AddGameObject<CBloodHand>();
 			pGameObject->SetTurretPos(m_pTransform->Get_Position(), _vector(m_pPlayerTransform->Get_Position().x + 5.f, m_pPlayerTransform->Get_Position().y, m_pPlayerTransform->Get_Position().z));
 		}
@@ -283,6 +276,11 @@ void CGreenBoyLeftHand::SetIsAttack(const bool _bAttack)
 void CGreenBoyLeftHand::SetIsCrush(const bool _bAttack)
 {
 	m_bCrush = _bAttack;
+}
+
+void CGreenBoyLeftHand::SetBossDead(const bool _isBossDead)
+{
+	m_bIsBossDead = _isBossDead;
 }
 
 CGameObject * CGreenBoyLeftHand::Clone()

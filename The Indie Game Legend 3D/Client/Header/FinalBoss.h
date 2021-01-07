@@ -4,14 +4,16 @@
 USING(Engine)
 class CTexturePool;
 class CBattleShip;
+class CBossHP;
 class CFinalBoss final : public CMonster
 {
 private:
-	enum PATTERN { IDLE, NORMAL, PATTERN_END};
+	enum PATTERN { IDLE, NORMAL,DEAD, PATTERN_END};
 private:
 	CBattleShip*	m_pPlayer;
 	CMeshRenderer*	m_pMeshRenderer;
-	
+	CCollider*			m_pCollider;
+
 	CTexturePool*	m_pTexturePool;
 	TSTRING			m_sTextureKey;
 
@@ -37,6 +39,16 @@ private:
 	D3DXVECTOR3		m_vViaStart;
 
 	bool			m_bTest;
+
+	int				m_nHP;
+	int				m_nMaxHP;
+
+	CBossHP*		m_pBossHP;
+
+	float			m_fEffectTime;
+	UINT			m_nEffectCount;
+
+	bool			m_bRemove;
 private:
 	explicit CFinalBoss();
 	explicit CFinalBoss(const CFinalBoss& _rOther);
@@ -55,7 +67,11 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
+	
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 
+public:
+	int		GetHP() { return m_nHP; }
 private:
 	void Animate(const float _fDeltaTime);
 
@@ -68,9 +84,12 @@ private:
 
 	void Idle(const float _fDeltaTime);
 	void Normal(const float _fDeltaTime);
+	void Dead(const float _fDeltaTime);
 
 	void ExplosionLaser(const float _fDeltaTime);
 	void InputTest(const float _fDeltaTime);
+
+	void SetHP(int _nHP);
 };
 #define __FINAL_BOSS_H__
 #endif // !__FINAL_BOSS_H__

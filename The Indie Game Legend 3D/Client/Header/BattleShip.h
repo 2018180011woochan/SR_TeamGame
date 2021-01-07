@@ -4,12 +4,17 @@
 USING(Engine)
 class CKeyManager;
 class CTexturePool;
+class CHeartManager;
+class CFinalBoss;
 class CBattleShip final : public CGameObject
 {
+private:
+	CFinalBoss*			m_pFinalBoss;
 private:
 	CKeyManager*		m_pKeyManager;
 	
 	CMeshRenderer*		m_pMeshRenderer;
+	CCollider*			m_pCollider;
 
 	CTexturePool*		m_pTexturePool;
 	TSTRING				m_sTextureKey;
@@ -27,6 +32,14 @@ private:
 	float				m_fFireInterval;
 
 	D3DXVECTOR3			m_vBulletOffset;
+	
+	CHeartManager*		m_pHeartManager;
+
+	UINT				m_nHP;
+
+	bool				m_bHit;
+	float				m_fHitDelay;
+	float				m_fHitDelayTime;
 private:
 	explicit CBattleShip();
 	explicit CBattleShip(const CBattleShip& _rOther);
@@ -45,12 +58,16 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
-
+	virtual void OnCollision(CGameObject* _pGameObject) override;
+public:
+	void	SetHP(int _nHP);
 private:
 	void	Input(const float _fDeltaTime);
 	void	Move(const float _fDeltaTime);
 	void	Animate(const float _fDeltaTime);
 	void	Fire(const float _fDeltaTime);
+
+	void	ClearMission(const float _fDeltaTime);
 };
 #define __BATTLE_SHIP_H__
 #endif // !__BATTLE_SHIP_H__

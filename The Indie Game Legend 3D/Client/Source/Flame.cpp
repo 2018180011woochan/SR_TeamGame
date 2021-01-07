@@ -51,10 +51,11 @@ HRESULT CFlame::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
-	m_nTag = 0;
 	m_bDead = false;
 
 	m_iHP = 2;
+
+	m_bIsBossDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -65,20 +66,18 @@ HRESULT CFlame::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(8, 8, 8));
 	// Test
-	//m_pTransform->Set_Position(_vector(0.f, 12.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Flame"))[0]);
-
-	//m_pCollider = (CCollider*)AddComponent<CCollider>();
-	//m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
-	//m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
-
+	m_nTag = 17;
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->m_bIsRigid = true;
+	//m_nTag = 0;
 	return S_OK;
 }
 
 UINT CFlame::Update(const float _fDeltaTime)
 {
-	if (m_bDead)
+	if (m_bIsBossDead)
 		return OBJ_DEAD;
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 	CMonster::Update(_fDeltaTime);
@@ -135,17 +134,17 @@ HRESULT CFlame::Render()
 
 void CFlame::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
-	{
-		m_iHP--;
-		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
-		pBlood->SetPos(m_pTransform->Get_Position());
-	}
-	if (m_iHP <= 0)
-	{
+	//if (L"PlayerBullet" == _pGameObject->GetName())
+	//{
+	//	m_iHP--;
+	//	CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+	//	pBlood->SetPos(m_pTransform->Get_Position());
+	//}
+	//if (m_iHP <= 0)
+	//{
 
-		m_bDead = true;
-	}
+	//	m_bDead = true;
+	//}
 }
 
 
@@ -203,6 +202,11 @@ bool CFlame::isCloseToPlayer()
 void CFlame::SetPos(const _vector _Pos)
 {
 	m_pTransform->Set_Position(_Pos);
+}
+
+void CFlame::SetBossDead(const bool _isBossDead)
+{
+	m_bIsBossDead = _isBossDead;
 }
 
 CGameObject * CFlame::Clone()

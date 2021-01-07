@@ -35,14 +35,9 @@ HRESULT CBub::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bub"));
 	SafeAddRef(m_pTexturePool);
-	m_iHP = 3;
+	m_iHP = 7;
 	m_eRenderID = ERenderID::Alpha;
-
-#ifdef _DEBUG
-	m_nTag = 0;
-#endif // _DEBUG
-
-
+	//m_nTag = 0;
 	return S_OK;
 }
 
@@ -50,8 +45,7 @@ HRESULT CBub::Start()
 {
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(4, 4, 4));
-	m_pTransform->Add_Position(_vector(0, 3, 0));
-
+	//m_pTransform->Add_Position(_vector(0, -3, 0));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	//Test
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -88,9 +82,9 @@ UINT CBub::Update(const float _fDeltaTime)
 		m_fJumpingCnt = 0.f;
 	}
 
-	//if (FAILED(Movement(_fDeltaTime)))
-	//	return 0;
-
+	/*if (FAILED(Movement(_fDeltaTime)))
+		return 0;
+*/
 
 	m_pTransform->UpdateTransform();
 
@@ -100,6 +94,7 @@ UINT CBub::Update(const float _fDeltaTime)
 
 UINT CBub::LateUpdate(const float _fDeltaTime)
 {
+
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
@@ -117,26 +112,40 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
+	//if (L"PlayerBullet" == _pGameObject->GetName())
+	//{
+	//	m_iHP--;
+	//	CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+	//	pBlood->SetPos(m_pTransform->Get_Position());
+	//}
+	if (L"Player" == _pGameObject->GetName())
 	{
-		m_bHit = true;
-		m_iHP--;
-		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
-		pBlood->SetPos(m_pTransform->Get_Position());
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 5;
+			int iRandY = rand() % 5;
+			int iRandZ = rand() % 2;
+
+			CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+			pBlood->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
+		
+		m_bDead = true;
 	}
+
 	if (m_iHP <= 0)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();
 		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		pHeart->SetItemType(EItemID::sprCoin);
+		pHeart->SetItemType(EItemID::sprBigCoin);
 
 		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
-		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x + 1, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		psqrCoin->SetItemType(EItemID::Ammo);
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemType(EItemID::sprCoin);
 		m_bDead = true;
-		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
-		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(1);
-
 	}
 }
 
@@ -151,6 +160,7 @@ HRESULT CBub::Movement(float fDeltaTime)
 	D3DXVec3Normalize(&vDir, &vDir);
 
 	m_pTransform->Add_Position(vDir * fDeltaTime * m_fMoveSpeed);
+
 	return S_OK;
 }
 

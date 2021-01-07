@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "TexturePoolManager.h"
 USING(Engine)
+class CShopKeeper;
 class CAmmo final : public CGameObject
 {
 private:
@@ -24,6 +25,8 @@ public:
 public:
 	HRESULT IsBillboarding();
 	void Set_ItemPos(const _vector _vItemPos);
+	void MoveMent(float _fDeltaTime);
+	bool GetIsDead() { return m_bDead; }
 
 public:
 	virtual CGameObject * Clone() override;
@@ -35,6 +38,11 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 	CCollider*		m_pCollider;
+	CShopKeeper*	m_pShopKeeper;
+	bool			m_isBuyItem;
+	bool			m_bDead;
+	_int			m_nPrice;
+
 };
 
 #define __AMMO_H__

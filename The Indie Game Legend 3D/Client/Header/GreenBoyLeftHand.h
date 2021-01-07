@@ -32,6 +32,7 @@ public:
 	void SetPos(const _vector _Pos);
 	void SetIsAttack(const bool _bAttack);
 	void SetIsCrush(const bool _bAttack);
+	void SetBossDead(const bool _isBossDead);
 
 public:
 	virtual CGameObject * Clone() override;
@@ -42,6 +43,7 @@ private:
 private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
+	CTransform* pBodyTransform;
 
 	float				m_fMoveSpeed;
 
@@ -60,6 +62,8 @@ private:
 
 	float				m_fJumpSpeed;
 	float				m_fJumpDeltaTime;
+
+	bool				m_bIsBossDead;
 
 	UINT nIndex;
 

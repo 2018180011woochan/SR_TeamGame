@@ -52,8 +52,6 @@ HRESULT CDoomBird::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
-	nIndex = 0;
-
 	m_iHP = 2;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -71,7 +69,6 @@ HRESULT CDoomBird::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
 
 	return S_OK;
 }
@@ -138,6 +135,23 @@ void CDoomBird::OnCollision(CGameObject * _pGameObject)
 		m_bHit = true;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	if (L"Player" == _pGameObject->GetName())
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 5;
+			int iRandY = rand() % 5;
+			int iRandZ = rand() % 2;
+
+			CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+			pBlood->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
+
+		m_bDead = true;
 	}
 	if (m_iHP <= 0)
 	{

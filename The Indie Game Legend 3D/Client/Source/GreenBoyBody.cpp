@@ -10,6 +10,13 @@
 #include "Flame.h"
 #include "GreenBoyLeftHand.h"
 #include "GreenBoyRightHand.h"
+#include "GreenBoyUpHand.h"
+#include "GreenBoyDownHand.h"
+#include "GreenBoyHead.h"
+#include "GreenBoyFace.h"
+#include "Explosion.h"
+#include "ExplosionBlue.h"
+#include "BossHP.h"
 
 CGreenBoyBody::CGreenBoyBody()
 	:m_pTexturePool(nullptr)
@@ -57,14 +64,16 @@ HRESULT CGreenBoyBody::Awake()
 
 	m_fYTest = 0.f;
 
-	m_nTag = 0;
 	m_bDead = false;
-
-	m_iHP = 2;
+	m_nTag = 30;
+	m_iHP = 30;
+	m_iMaxHP = m_iHP;
 	m_bIsAttack = false;
 	m_eAttackBeem = LEFTBEEM;
 
 	m_eRenderID = ERenderID::Alpha;
+
+	
 	return S_OK;
 }
 
@@ -73,22 +82,30 @@ HRESULT CGreenBoyBody::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
 	// Test
-	//m_pTransform->Set_Position(_vector(0.f, 12.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Body"))[0]);
 
-	//m_pCollider = (CCollider*)AddComponent<CCollider>();
-	//m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
-	//m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->m_bIsRigid = true;
 
-	pRightHand = (CGreenBoyRightHand*)AddGameObject<CGreenBoyRightHand>();
-	pLeftHand = (CGreenBoyLeftHand*)AddGameObject<CGreenBoyLeftHand>();
+	pRightHand = (CGreenBoyRightHand*)FindGameObjectOfType<CGreenBoyRightHand>();
+	pLeftHand = (CGreenBoyLeftHand*)FindGameObjectOfType<CGreenBoyLeftHand>();
+	pUpHand = (CGreenBoyUpHand*)FindGameObjectOfType<CGreenBoyUpHand>();
+	pDownHand = (CGreenBoyDownHand*)FindGameObjectOfType<CGreenBoyDownHand>();
+	pHead = (CGreenBoyHead*)FindGameObjectOfType<CGreenBoyHead>();
+	pFace = (CGreenBoyFace*)FindGameObjectOfType<CGreenBoyFace>();
+	pFlame = (CFlame*)FindGameObjectOfType<CFlame>();
 
+	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
+	SafeAddRef(m_pBossHP);
+	//m_nTag = 0;
 	return S_OK;
 }
 
 UINT CGreenBoyBody::Update(const float _fDeltaTime)
 {
+	/* 보스 hp 업데이트 */
+	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
 
 	if (m_bDead)
 		return OBJ_DEAD;
@@ -144,27 +161,43 @@ UINT CGreenBoyBody::Update(const float _fDeltaTime)
 	{
 		pLeftHand->SetIsCrush(false);
 		pRightHand->SetIsCrush(false);
+		pUpHand->SetIsCrush(false);
+		pDownHand->SetIsCrush(false);
 
 		pLeftHand->SetIsAttack(true);
 		pRightHand->SetIsAttack(false);
+		pUpHand->SetIsAttack(true);
+		pDownHand->SetIsAttack(false);
 	}
 	if (m_eAttackBeem == RIGHTBEEM)
 	{
 		pLeftHand->SetIsAttack(false);
 		pRightHand->SetIsAttack(true);
+
+		pUpHand->SetIsAttack(false);
+		pDownHand->SetIsAttack(true);
 	}
 	if (m_eAttackBeem == DOUBLEBEEM)
 	{
 		pLeftHand->SetIsAttack(true);
 		pRightHand->SetIsAttack(true);
+
+		pUpHand->SetIsAttack(true);
+		pDownHand->SetIsAttack(true);
 	}
 	if (m_eAttackBeem == BEEMEND)
 	{
 		pLeftHand->SetIsAttack(false);
 		pRightHand->SetIsAttack(false);
 		
+		pUpHand->SetIsAttack(false);
+		pDownHand->SetIsAttack(false);
+
 		pLeftHand->SetIsCrush(true);
 		pRightHand->SetIsCrush(true);
+
+		pUpHand->SetIsCrush(true);
+		pDownHand->SetIsCrush(true);
 	}
 
 	return _uint();
@@ -197,7 +230,39 @@ void CGreenBoyBody::OnCollision(CGameObject * _pGameObject)
 	}
 	if (m_iHP <= 0)
 	{
+		pRightHand->SetBossDead(true);
+		pLeftHand->SetBossDead(true);
+		pUpHand->SetBossDead(true);
+		pDownHand->SetBossDead(true);
+		pHead->SetBossDead(true);
+		pFace->SetBossDead(true);
+		pFlame->SetBossDead(true);
 
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 15;
+			int iRandY = rand() % 15;
+			int iRandZ = rand() % 15;
+
+			CExplosion* pExplosion1 = (CExplosion*)AddGameObject<CExplosion>();
+			pExplosion1->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 15;
+			int iRandY = rand() % 15;
+			int iRandZ = rand() % 15;
+
+			CExplosionBlue* pExplosion3 = (CExplosionBlue*)AddGameObject<CExplosionBlue>();
+			pExplosion3->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+		}
+		m_pBossHP->SetEnable(false);
 		m_bDead = true;
 	}
 }
@@ -227,11 +292,11 @@ void CGreenBoyBody::Jumping(float fDeltaTime)
 
 		m_fJumpTime += 0.01f;
 
-		if (fY < 12.f)
+		if (fY < 11.f)
 		{
 			m_bJump = false;
 			m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x,
-				12.f,
+				11.f,
 				m_pTransform->Get_Position().z));
 			m_fJumpTime = 0.f;
 		}

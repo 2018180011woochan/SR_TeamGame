@@ -3,6 +3,7 @@
 #include "GameObject.h"
 USING(Engine)
 class CTexturePool;
+class CFinalExplosion;
 class CFinalLaser final : public CGameObject
 {
 public:
@@ -24,6 +25,8 @@ private:
 	D3DXVECTOR3			m_vDirection;
 
 	bool				m_bRemove;
+
+	vector<CFinalExplosion*>	m_vecFinalExplosion;
 private:
 	explicit CFinalLaser();
 	explicit CFinalLaser(const CFinalLaser& _rOther);
@@ -47,6 +50,7 @@ public:
 private:
 	void	Animate(const float _fDeltaTime);
 	void	Explosion(const float _fDeltaTime);
+	void	SetTextureKey(const TSTRING _sTextureKey);
 };
 #define __FINAL_LASER_H__
 #endif // !__FINAL_LASER_H__

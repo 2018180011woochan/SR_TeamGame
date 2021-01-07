@@ -14,7 +14,17 @@
 #include "FinalBoss.h"
 #include "FinalNormal.h"
 #include "FinalLaser.h"
+#include "FinalExplosion.h"
 
+#include "BossHPFrame.h"
+#include "BossText.h"
+#include "BossHPBar.h"
+#include "BossHP.h"
+
+#include "HeartManager.h"
+#include "Heart.h"
+
+#include "Explosion.h"
 CFinalStage::CFinalStage()
 	: CScene(GetTypeHashCode<CFinalStage>())
 {
@@ -45,6 +55,32 @@ HRESULT CFinalStage::Awake()
 	AddPrototype(CFinalBoss::Create());
 	AddPrototype(CFinalNormal::Create());
 	AddPrototype(CFinalLaser::Create());
+	AddPrototype(CFinalExplosion::Create());
+
+	AddPrototype(CBossHPFrame::Create());
+	AddPrototype(CBossText::Create());
+	AddPrototype(CBossHPBar::Create());
+	AddPrototype(CBossHP::Create());
+
+	AddPrototype(CHeart::Create());
+	AddPrototype(CHeartManager::Create());
+
+	AddPrototype(CExplosion::Create());
+
+	AddGameObject<CBossHPFrame>()->SetEnable(true);
+	AddGameObject<CBossText>()->SetEnable(true);
+	AddGameObject<CBossHPBar>()->SetEnable(true);
+	AddGameObject<CBossHP>()->SetEnable(true);
+
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+	AddGameObject< CHeart>();
+
+	AddGameObject<CHeartManager>();
+
 
 	AddGameObject<CBattleShip>();
 	AddGameObject<CBoost>();
@@ -52,12 +88,15 @@ HRESULT CFinalStage::Awake()
 	CGameObject* pSkyBox = AddGameObject<CSkyBox>();
 	((CTransform*)pSkyBox->GetComponent<CTransform>())->Set_Rotation(D3DXVECTOR3(0.f, 60.f, 0.f));
 
-	for (UINT i = 0; i < 1; ++i)
+	for (UINT i = 0; i < 50; ++i)
 		AddGameObject<CStarParticle>();
 
 	AddGameObject<CStarPool>();
 
 	AddGameObject<CFinalBoss>();
+
+
+
 	CScene::Awake();
 	return S_OK;
 }

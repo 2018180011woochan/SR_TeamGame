@@ -85,6 +85,7 @@ HRESULT CFinalNormal::Start()
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
+	m_sName = TEXT("FinalBullet");
 	return S_OK;
 }
 
@@ -110,6 +111,14 @@ HRESULT CFinalNormal::Render()
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CFinalNormal::OnCollision(CGameObject * _pGameObject)
+{
+	if ((L"Player" == _pGameObject->GetName()))
+	{
+		m_bRemove = true;
+	}
 }
 
 void CFinalNormal::SetBullet(D3DXVECTOR3 _vStart)

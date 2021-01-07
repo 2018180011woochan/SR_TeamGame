@@ -58,12 +58,7 @@ HRESULT CTreeBoss::Awake()
 	nIndex = 0;
 	nCreateIndex = 0;
 	//m_bEnable = true;
-
-#ifndef _DEBUG
-
-	m_nTag = 0;
-#endif // !_DEB
-	m_iHP = 30;
+	m_iHP = 50;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -137,11 +132,9 @@ HRESULT CTreeBoss::Render()
 
 void CTreeBoss::OnCollision(CGameObject * _pGameObject)
 {
-	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
+	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_iHP--;
-		m_bHit = true;
-		CSoundMgr::GetInstance()->Play(L"sfxPlantHit.mp3", CSoundMgr::MonsterHitP);
 	}
 	if (m_iHP <= 0)
 	{
@@ -170,17 +163,6 @@ void CTreeBoss::OnCollision(CGameObject * _pGameObject)
 				, m_pTransform->Get_Position().z + iRandZ));
 		}
 
-		CItem* pHeart = (CItem*)AddGameObject<CItem>();
-		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		pHeart->SetItemType(EItemID::Ammo);
-		pHeart = (CItem*)AddGameObject<CItem>();
-		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		pHeart->SetItemType(EItemID::Ammo);
-		pHeart = (CItem*)AddGameObject<CItem>();
-		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		pHeart->SetItemType(EItemID::Ammo);
-
-		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
 		m_pBossHP->SetEnable(false);
 		m_bDead = true;
 	}

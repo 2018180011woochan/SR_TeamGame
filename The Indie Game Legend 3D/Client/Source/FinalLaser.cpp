@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\FinalLaser.h"
 #include "TexturePoolManager.h"
+#include "FinalExplosion.h"
 
 CFinalLaser::CFinalLaser()
 	: m_pMeshRenderer(nullptr)
@@ -21,7 +22,7 @@ CFinalLaser::CFinalLaser(const CFinalLaser & _rOther)
 	, m_nIndex(0)
 	, m_nMaxFrame(0)
 	, m_fTime(0.f)
-	, m_fAnimationSpeed(0.1f)
+	, m_fAnimationSpeed(0.05f)
 {
 }
 
@@ -61,7 +62,7 @@ HRESULT CFinalLaser::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Rotation(D3DXVECTOR3(90.f, 0.f, 0.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 2.1f, 1.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 1.f, 1.f));
 	m_pTransform->UpdateTransform();
 
 	m_eRenderID = ERenderID::Alpha;
@@ -74,7 +75,7 @@ HRESULT CFinalLaser::Start()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("FinalBossBullet"));
 	SafeAddRef(m_pTexturePool);
 
-	m_sTextureKey = TEXT("Laser");
+	m_sTextureKey = TEXT("Wrap");
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
 	m_nIndex = 0;
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
@@ -89,8 +90,8 @@ UINT CFinalLaser::Update(const float _fDeltaTime)
 	CGameObject::Update(_fDeltaTime);
 	if (true == m_bRemove)
 		return OBJ_DEAD;
-	Animate(_fDeltaTime);
 	Explosion(_fDeltaTime);
+	Animate(_fDeltaTime);
 	return 0;
 }
 
@@ -175,7 +176,21 @@ void CFinalLaser::Animate(const float _fDeltaTime)
 
 		if (m_nIndex >= m_nMaxFrame)
 		{
-			m_bRender = false;
+			if (TEXT("Wrap") == m_sTextureKey)
+			{
+				SetTextureKey(TEXT("Laser"));
+				m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 2.f, 1.f));
+				m_pTransform->UpdateTransform();
+			}
+			else
+			{
+				m_bRender = false;
+				m_bRemove = true;
+				for (auto pFinalExplosion : m_vecFinalExplosion)
+					pFinalExplosion->Remove();
+				m_vecFinalExplosion.clear();
+				m_vecFinalExplosion.shrink_to_fit();
+			}
 			return;
 		}
 
@@ -185,9 +200,54 @@ void CFinalLaser::Animate(const float _fDeltaTime)
 
 void CFinalLaser::Explosion(const float _fDeltaTime)
 {
-	if (true == m_bRender)
+	if (m_vecFinalExplosion.size() != 0 || TEXT("Laser") != m_sTextureKey)
 		return;
-	m_bRemove = true;
+	CFinalExplosion* pFinalExplosion = nullptr;
+
+	D3DXVECTOR3 vDir = m_vDirection;
+	float		fDistance = 5.f;
+
+	UINT		nCount = 0;
+
+	D3DXVECTOR3 vPosition;
+	while (true)
+	{
+		vPosition = m_pTransform->Get_Position() + vDir * fDistance * float(nCount);
+
+		if (vPosition.x < -47.f || vPosition.x > 47.f || vPosition.z < -27.f || vPosition.z > 27.f)
+		{
+			break;
+		}
+		pFinalExplosion = (CFinalExplosion*)AddGameObject<CFinalExplosion>();
+		pFinalExplosion->SetPosition(vPosition);
+		m_vecFinalExplosion.push_back(pFinalExplosion);
+		++nCount;
+	}
+
+	vDir = -m_vDirection;
+	nCount = 1;
+	while (true)
+	{
+		vPosition = m_pTransform->Get_Position() + vDir * fDistance * float(nCount);
+
+		if (vPosition.x < -47.f || vPosition.x > 47.f || vPosition.z < -27.f || vPosition.z > 27.f)
+		{
+			break;
+		}
+
+		pFinalExplosion = (CFinalExplosion*)AddGameObject<CFinalExplosion>();
+		pFinalExplosion->SetPosition(vPosition);
+		m_vecFinalExplosion.push_back(pFinalExplosion);
+		++nCount;
+	}
+}
+
+void CFinalLaser::SetTextureKey(const TSTRING _sTextureKey)
+{
+	m_sTextureKey = _sTextureKey;
+	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
+	m_nIndex = 0;
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
 }
 
 

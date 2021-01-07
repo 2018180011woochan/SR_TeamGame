@@ -146,6 +146,10 @@ private:
 	 ETileID					m_eTileID;
 
 	 CGun*						m_pGun;
+
+	 // by Woochan
+	 bool						m_bIsBuyWeapon;
+	 bool						m_bIsBuySkillRunning;
 private:
 	HRESULT KeyInput(const float _fDeltaTime);
 	HRESULT MoveCheck();
@@ -169,6 +173,13 @@ public:
 	void    AddHpMax();
 	void	AddWeapon(const EWeaponType _eWeaponType);
 	bool	GetDashAttack() { return m_bDashDmg; };
+
+	// Prod By Woochan
+	void	SetByWeapon() { m_bIsBuyWeapon = true; }
+	void	SetBySkillRunning() { m_bIsBuySkillRunning = true; }
+	void	SetBuyItem(_int _Price);
+	_int	GetGem() { return m_nGem; }
+
 protected:
 	explicit CPlayer();
 	explicit CPlayer(const CPlayer& _rOther);
