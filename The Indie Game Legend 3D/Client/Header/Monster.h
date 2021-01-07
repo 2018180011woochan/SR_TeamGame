@@ -34,6 +34,8 @@ public:
 	// 컬링 꺼지면 위치 초기화
 	virtual void	ResetMonsterPos();
 	virtual void	OnEnable() override;
+	//  [1/7/2021 wades]
+	void AddHp(const _int& _nHp);
 protected:
 	const CTransform*	m_pPlayerTransform;
 	class CVIBuffer*	m_pVIBufferCom = nullptr;

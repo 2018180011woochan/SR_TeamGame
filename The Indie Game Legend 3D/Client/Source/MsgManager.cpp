@@ -233,6 +233,7 @@ void CMsgManager::WargingLight(const float& _fTimeDelta)
 
 CMsgManager::CMsgManager()
 	:m_fSkillDuration(0.f)
+	, m_fSkillDurationTime(0.f)
 	, m_bFreezeTrigger(false)
 	, m_bHighNoonTrigger(false)
 	, m_bHighNoonTriggerReady(false)

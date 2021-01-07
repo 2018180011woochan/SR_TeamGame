@@ -177,6 +177,9 @@
     <ClInclude Include="..\Header\BulletSpark.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
     <ClInclude Include="..\Header\Door.h" />
+    <ClInclude Include="..\Header\Gate.h" />
+    <ClInclude Include="..\Header\Pillar.h" />
+    <ClInclude Include="..\Header\PuzzleRoomCamera.h" />
     <ClInclude Include="..\Header\Switch.h" />
     <ClInclude Include="..\Header\CameraManager.h" />
     <ClInclude Include="..\Header\Cactus.h" />
@@ -316,6 +319,9 @@
     <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\Door.cpp" />
+    <ClCompile Include="..\Source\Gate.cpp" />
+    <ClCompile Include="..\Source\Pillar.cpp" />
+    <ClCompile Include="..\Source\PuzzleRoomCamera.cpp" />
     <ClCompile Include="..\Source\Switch.cpp" />
     <ClCompile Include="..\Source\CameraManager.cpp" />
     <ClCompile Include="..\Source\Cactus.cpp" />

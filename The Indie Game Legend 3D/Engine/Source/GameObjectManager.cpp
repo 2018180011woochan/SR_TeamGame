@@ -103,7 +103,8 @@ UINT CGameObjectManager::Update(const size_t _nSceneID, const float _fDeltaTime)
 			continue;
 		}
 		_uint nEvent = (*iter_Obj)->Update(_fDeltaTime);
-		if (nEvent == OBJ_DEAD)
+		//  [1/7/2021 wades]
+		if (nEvent == OBJ_DEAD || (*iter_Obj)->IsDelete())
 		{
 			SafeRelease((*iter_Obj));
 			iter_Obj = iter->second.erase(iter_Obj);

@@ -272,7 +272,11 @@ void CItem::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Player" == _pGameObject->GetName())
 	{
-		m_bDelete = true;
+		//  [1/7/2021 wades]
+		if (static_cast<CPlayer*>(_pGameObject)->GetDashAttack() == false)
+		{
+			m_bDelete = true;
+		}
 	}
 }
 

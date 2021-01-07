@@ -110,6 +110,11 @@ TSTRING CGameObject::GetName()
 	return m_sName;
 }
 
+bool CGameObject::IsDelete()
+{
+	return m_bDelete;
+}
+
 CComponent * CGameObject::GetComponent(const TSTRING & _sTypeName)
 {
 	auto iter = m_Components.find(_sTypeName);

@@ -220,15 +220,6 @@
     <Filter Include="02.GameObject\99.Trigger\01.RoomTrigger">
       <UniqueIdentifier>{9b80813f-ef7b-40ad-9d8d-f622faef8a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\08.Objstacle">
-      <UniqueIdentifier>{1403aea3-afc2-4c34-9859-eb2b782f80c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\00.Base">
-      <UniqueIdentifier>{56a0b881-2444-4695-a7f0-710b63b4f147}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\01.Piramid">
-      <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\10.Effect">
       <UniqueIdentifier>{f59f9308-2194-4032-ac94-b37a843981d1}</UniqueIdentifier>
     </Filter>
@@ -252,9 +243,6 @@
     </Filter>
     <Filter Include="02.GameObject\10.Effect\04.BulletSpark">
       <UniqueIdentifier>{cfdf14c4-dcef-4919-bcac-26a9209ac4e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\02.PiramidUnbreak">
-      <UniqueIdentifier>{770120dd-2c36-4539-9cfe-5ba3d13d60dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\04.UI\07.WeaponHUD">
       <UniqueIdentifier>{8a7424f0-12ea-477b-b5ba-60cae37285ec}</UniqueIdentifier>
@@ -514,6 +502,30 @@
     <Filter Include="02.GameObject\09.Item">
       <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\08.Obstacle">
+      <UniqueIdentifier>{1403aea3-afc2-4c34-9859-eb2b782f80c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\00.Base">
+      <UniqueIdentifier>{56a0b881-2444-4695-a7f0-710b63b4f147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\01.Piramid">
+      <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\02.PiramidUnbreak">
+      <UniqueIdentifier>{770120dd-2c36-4539-9cfe-5ba3d13d60dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\03.Pillar">
+      <UniqueIdentifier>{420d7f5b-c55d-41b9-8f18-5cb80b9576c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\04.Gate">
+      <UniqueIdentifier>{c99ac1e9-ee1f-4822-b1d8-bad9257f6b09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Camera\01.PuzzleRoomCamera">
+      <UniqueIdentifier>{1950680b-394f-4806-84db-6a792aa9bd39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\05.SlideBlock">
+      <UniqueIdentifier>{c3ed037a-299a-4bad-9374-56953f393f1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -703,7 +715,7 @@
       <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Obstacle.h">
-      <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
+      <Filter>02.GameObject\08.Obstacle\00.Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Item.h">
       <Filter>02.GameObject\09.Item</Filter>
@@ -721,13 +733,13 @@
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PiramidUnBrake.h">
-      <Filter>02.GameObject\08.Objstacle\02.PiramidUnbreak</Filter>
+      <Filter>02.GameObject\08.Obstacle\02.PiramidUnbreak</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BulletSpark.h">
       <Filter>02.GameObject\10.Effect\04.BulletSpark</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Piramid.h">
-      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+      <Filter>02.GameObject\08.Obstacle\01.Piramid</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\WeaponHUD.h">
       <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
@@ -933,6 +945,15 @@
     <ClInclude Include="..\Header\Door.h">
       <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Pillar.h">
+      <Filter>02.GameObject\08.Obstacle\03.Pillar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PuzzleRoomCamera.h">
+      <Filter>02.GameObject\01.Camera\01.PuzzleRoomCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Gate.h">
+      <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1104,7 +1125,7 @@
       <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Obstacle.cpp">
-      <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
+      <Filter>02.GameObject\08.Obstacle\00.Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Item.cpp">
       <Filter>02.GameObject\09.Item</Filter>
@@ -1122,13 +1143,13 @@
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\PiramidUnBrake.cpp">
-      <Filter>02.GameObject\08.Objstacle\02.PiramidUnbreak</Filter>
+      <Filter>02.GameObject\08.Obstacle\02.PiramidUnbreak</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\BulletSpark.cpp">
       <Filter>02.GameObject\10.Effect\04.BulletSpark</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Piramid.cpp">
-      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+      <Filter>02.GameObject\08.Obstacle\01.Piramid</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\WeaponHUD.cpp">
       <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
@@ -1333,6 +1354,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Door.cpp">
       <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Pillar.cpp">
+      <Filter>02.GameObject\08.Obstacle\03.Pillar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PuzzleRoomCamera.cpp">
+      <Filter>02.GameObject\01.Camera\01.PuzzleRoomCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gate.cpp">
+      <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ public:
 		,Item_Disc
 		,Player_Hit
 		,Player_Action
+		,Player_ActionSub
 		,Object_SFX
 		,BOSS
 		,HURT
@@ -25,6 +26,7 @@ public:
 		,MonsterKill
 		,MonsterHitM
 		,MonsterHitP
+		,MonsterHitN
 		,MONSTER_BULLET,UI,MOUSE, Slider, MAXCHANNEL};
 private:
 	explicit CSoundMgr();

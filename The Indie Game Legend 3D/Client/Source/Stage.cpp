@@ -125,9 +125,7 @@
 
 //Objct
 #include "Slider.h"
-
-#include "SoundMgr.h"
-
+#include "Pillar.h"
 #include "RoomTrigger.h"
 #include "LightMananger.h"
 #include "Piramid.h"
@@ -135,8 +133,14 @@
 #include "BulletSpark.h"
 #include "PlayerSpawn.h"
 #include "PiramidUnBrake.h"
+
 #include "KeyManager.h"
+#include "SoundMgr.h"
+
+
 #include "WeaponHUD.h"
+
+
 
 #include "Gun.h"
 
@@ -148,7 +152,11 @@
 #include "Switch.h"
 #include "Door.h"
 #include "Scene.h"
+#include "Gate.h"
 
+
+#include "PuzzleRoomCamera.h"
+#include "CameraManager.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -240,10 +248,15 @@ HRESULT CStage::Awake()
 	AddPrototype(CLaserBullet::Create());
 
 	AddPrototype(CBulletSpawn::Create());
+	AddPrototype(CPillar::Create());
+	AddPrototype(CGate::Create());
+
 
 	//interaction obj
 	AddPrototype(CDoor::Create());
 	AddPrototype(CSwitch::Create());
+	AddPrototype(CPuzzleRoomCamera::Create());
+
 #pragma endregion
 
 #pragma region GUN_TEST
@@ -258,18 +271,17 @@ HRESULT CStage::Awake()
 	AddUIObject();
 
 	m_pPlayer = AddGameObject<CPlayer>();
-	SafeAddRef(m_pPlayer);
-	AddGameObject<CPlayerCamera>();
+	//SafeAddRef(m_pPlayer);
+
+	//AddGameObject<CPlayerCamera>();
+	CCameraManager::GetInstance()->RegisteCamera(CCameraManager::ECameraID::Player, (CCamera*)AddGameObject<CPlayerCamera>());
+	auto pTest = AddGameObject<CPuzzleRoomCamera>();
+	CCameraManager::GetInstance()->RegisteCamera(CCameraManager::ECameraID::PuzzleRoom, (CCamera*)pTest);
+
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+	CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
 
-	if(FAILED(AddGameObject<CBub>()->SetPosition(_vector(0,0,10))))
-		return E_FAIL;
-
-	if (FAILED(AddGameObject<CBub>()->SetPosition(_vector(-12, 0, 10))))
-		return E_FAIL;
-	if (FAILED(AddGameObject<CBub>()->SetPosition(_vector(12, 0, 10))))
-		return E_FAIL;
 
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
@@ -320,7 +332,14 @@ UINT CStage::Update(float _fDeltaTime)
 UINT CStage::LateUpdate(float _fDeltaTime)
 {
 	CScene::LateUpdate(_fDeltaTime);
-
+	if (GetKeyState('Z'))
+	{
+		CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::PuzzleRoom);
+	}
+	else
+	{
+		CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
+	}
 	return 0;
 }
 
@@ -554,7 +573,7 @@ void CStage::CheckRoomEvent()
 		break;
 	}
 
-	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.1f);
+	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.05f);
 
 	m_nPreRoomID = m_nCurRoomID;
 }
@@ -567,6 +586,6 @@ CStage * CStage::Create()
 
 void CStage::Free()
 {
-	SafeRelease(m_pPlayer);
+	//SafeRelease(m_pPlayer);
 	CScene::Free();
 }

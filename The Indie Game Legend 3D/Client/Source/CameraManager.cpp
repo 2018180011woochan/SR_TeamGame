@@ -2,7 +2,7 @@
 #include "CameraManager.h"
 
 IMPLEMENT_SINGLETON(CCameraManager)
-HRESULT CCameraManager::SetCurrentMainCamera(const ECameraID & _eCameraID)
+HRESULT CCameraManager::SetCurrentMainCamera(const ECameraID& _eCameraID)
 {
 	//같은 값 회피
 	if (m_eCurMainCameraID == _eCameraID)
@@ -12,7 +12,7 @@ HRESULT CCameraManager::SetCurrentMainCamera(const ECameraID & _eCameraID)
 	}
 
 	//등록안된 카메라 예외
-	if (nullptr == m_pCameraList[_eCameraID])
+	if (nullptr == m_vecCameras[_eCameraID])
 	{
 		PrintLog(L"Error", L"Element has Nullptr");
 		return E_FAIL;
@@ -23,9 +23,9 @@ HRESULT CCameraManager::SetCurrentMainCamera(const ECameraID & _eCameraID)
 	{
 		//이전 카메라는 꺼둠 대신 처음은 end값이니 예외처리
 		if(m_ePreMainCameraID != ECameraID::End)
-			m_pCameraList[m_ePreMainCameraID]->SetEnable(false);
+			m_vecCameras[m_ePreMainCameraID]->SetEnable(false);
 
-		m_pCameraList[m_eCurMainCameraID]->SetEnable(true);
+		m_vecCameras[m_eCurMainCameraID]->SetEnable(true);
 
 		m_ePreMainCameraID = m_eCurMainCameraID;
 	}
@@ -34,7 +34,7 @@ HRESULT CCameraManager::SetCurrentMainCamera(const ECameraID & _eCameraID)
 
 HRESULT CCameraManager::RegisteCamera(const ECameraID & _eCameraID, const CCamera * pCamera)
 {
-	if (nullptr != m_pCameraList[_eCameraID])
+	if (nullptr != m_vecCameras[_eCameraID])
 	{
 		PrintLog(L"Warning", L"Element has an address");
 		return E_FAIL;
@@ -44,8 +44,9 @@ HRESULT CCameraManager::RegisteCamera(const ECameraID & _eCameraID, const CCamer
 		PrintLog(L"Warning", L"pCamera is Null");
 		return E_FAIL;
 	}
-	m_pCameraList[_eCameraID] = const_cast<CCamera*>(pCamera);
-	SafeAddRef(m_pCameraList[_eCameraID]);
+	m_vecCameras[_eCameraID] =  const_cast<CCamera*>(pCamera);
+	m_vecCameras[_eCameraID]->SetEnable(false);
+	SafeAddRef(m_vecCameras[_eCameraID]);
 	return S_OK;
 }
 
@@ -53,13 +54,18 @@ CCameraManager::CCameraManager()
 	:m_eCurMainCameraID(ECameraID::End)
      ,m_ePreMainCameraID(ECameraID::End)
 {
-	ZeroMemory(m_pCameraList, sizeof(CCamera*) * (_uint)ECameraID::End);
+	for (int i = 0; i < ECameraID::End; ++i)
+	{
+		m_vecCameras.emplace_back(nullptr);
+	}
 }
 
 void CCameraManager::Free()
 {
-	for (auto& pCamera : m_pCameraList)
+	for (auto& pCamera : m_vecCameras)
 	{
 		SafeRelease(pCamera);
 	}
+	m_vecCameras.clear();
+	m_vecCameras.shrink_to_fit();
 }

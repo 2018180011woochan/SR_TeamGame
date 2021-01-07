@@ -64,10 +64,10 @@ bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	for (auto& pGameObject : CollisionList)
 	{
 		if (pGameObject->IsEnable() == false)
-		{
 			continue;
-		}
 		pCollider = (CCollider*)pGameObject->GetComponent<CCollider>();
+		if(pCollider == nullptr)
+			continue;
 		if (pCollider->IsRayPicking(vPickPos, fDis, vRayPivot, vRayDirection))
 		{
 			bIsPicking = true;

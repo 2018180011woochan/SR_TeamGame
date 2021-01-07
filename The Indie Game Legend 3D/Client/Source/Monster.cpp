@@ -150,3 +150,15 @@ void CMonster::OnEnable()
 	ResetMonsterPos();
 }
 
+void CMonster::AddHp(const _int & _nHp)
+{
+	m_iHP += _nHp;
+	m_iHP = CLAMP(m_iHP, 0, m_iMaxHP);
+	if (m_iHP < 1)
+	{
+		m_bDead = true;
+		m_bDelete = true;
+	}
+
+}
+

@@ -18,7 +18,7 @@ class CGun;
 #define AmmoLvMax 3
 #define HighNoonAmount 30.f
 #define HighNoonMaxDmg 100.f
-
+#define DashDmg 10
 
 enum class EState : _uint
 {
@@ -26,6 +26,7 @@ enum class EState : _uint
 	Dash,
 	Run,
 	Hit,
+	DashAttack,
 	End
 };
 
@@ -40,9 +41,11 @@ enum class ESoundID :_uint
 {
 	NormaBullet,
 	BigBullet,
+	DashHit,
 	FlameBullet,
 	LaserBullet,
 	Hit,
+	YoShi,
 	Trap,
 	EmptyShot,
 	AddHeart,
@@ -51,6 +54,7 @@ enum class ESoundID :_uint
 	AmmoLvUp,
 	AddDisc,
 	Dash,
+	DashAttack,
 	Run,
 };
 
@@ -87,7 +91,6 @@ private:
 	 class CDiscText*			m_pDiscText = nullptr;
 	 class CFocus*				m_pFocus = nullptr;
 
-
 	 //State
 	 _int						m_nHp = 0;
 	 _int						m_nHpMax = 0;
@@ -111,6 +114,9 @@ private:
 	 bool						m_bIsDeBuff = false;
 	 bool						m_bEnableSkill = false;
 
+	 // Grap [1/7/2021 wades]
+	 bool						m_bGrapEnable;
+
 	 // HighNoon [1/6/2021 wades]
 	 float						m_fHighNoonDmg;
 	 list<CGameObject*>			m_listHighNoon;
@@ -119,19 +125,30 @@ private:
 	 float				m_fRunningTime = 0.f;
 	 _vector			m_vMoveDir;
 
-	 float				m_fDashDelay;
-	 float				m_fDashDelayTime;
-	 float				m_fDashDuration;
-	 float				m_fDashDurationTime;
+	 //  [1/7/2021 wades]
+	 float						m_fDashAttackSpeed;
+	 // 대쉬어택 지속시간
+	 float						m_fDashAttackDruation;
+	 float						m_fDashMoveDuration;
+	 //대쉬 관련 엑션 입력 딜레이 
+	 float						m_fDashActionDelay;
+	 float						m_fDashActionDelayTime;
 
-	 bool				m_bsfxStep;
-	 bool				m_bSpotLightTrigger;
+	 // 대쉬관련 행동 시간 겹칠 일이 없기에 공용함
+	 float						m_fDashDurationTime;
 
-	 wstring			m_sStepsfx; //나중에 타일에 따른 사운드 변화 줄떄 테스트용
-	 ETileID			m_eTileID;
+	 bool						m_bDashDmg;
 
-	 /****************************************/
-	 CGun*				m_pGun;
+	 //요시는 대쉬어택으로 공격을 했을 때만 나오게 할거임
+	 bool						m_bDashAttacked;
+
+	 bool						m_bsfxStep; // 걷는 소리가 두가지로 표현할거라 스위칭용
+	 bool						m_bSpotLightTrigger;
+
+	 wstring					m_sStepsfx; //나중에 타일에 따른 사운드 변화 줄떄 테스트용
+	 ETileID					m_eTileID;
+
+	 CGun*						m_pGun;
 private:
 	HRESULT KeyInput(const float _fDeltaTime);
 	HRESULT MoveCheck();
@@ -154,6 +171,7 @@ public:
 	void	AddSkillGauge(_int _nPoint);
 	void    AddHpMax();
 	void	AddWeapon(const EWeaponType _eWeaponType);
+	bool	GetDashAttack() { return m_bDashDmg; };
 protected:
 	explicit CPlayer();
 	explicit CPlayer(const CPlayer& _rOther);

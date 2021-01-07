@@ -40,8 +40,6 @@ private:
 
 	//  [1/6/2021 wades]
 	void CameraWorking(const float& _fTimeDelta);
-
-
 public:
 	//Camera Work
 	void SetHeghitPersent(const float& _fHeight);

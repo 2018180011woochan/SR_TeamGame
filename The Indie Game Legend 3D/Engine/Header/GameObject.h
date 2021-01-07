@@ -34,7 +34,8 @@ public:
 	void			SetTag(const _int& _nTag);
 	_int			GetTag();
 	TSTRING			GetName();
-
+	//  [1/7/2021 wades]
+	bool			IsDelete();
 public:
 	virtual HRESULT			InitializePrototype()					PURE;
 	virtual HRESULT			Awake()									PURE;

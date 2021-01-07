@@ -10,13 +10,14 @@ USING(Engine)
 
 class CCameraManager : public CBase
 {
-	enum  ECameraID : _uint
+public:
+	enum  ECameraID
 	{
-		Player,UFO,End
+		Player,UFO,PuzzleRoom,End
 	};
 	DECLARE_SINGLETON(CCameraManager)
 private:
-	CCamera*	m_pCameraList[ECameraID::End];
+	vector<CCamera*>	m_vecCameras;
 	ECameraID	m_eCurMainCameraID;
 	ECameraID	m_ePreMainCameraID;
 

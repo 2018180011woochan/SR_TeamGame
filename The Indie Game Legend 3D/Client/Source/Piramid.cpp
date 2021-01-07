@@ -21,7 +21,6 @@ HRESULT CPiramid::InitializePrototype()
 HRESULT CPiramid::Awake()
 {
 	CObstacle::Awake();
-	m_bDead = false;
 #ifdef _DEBUG
 	m_nTag = 0;
 #endif // DEBUG
