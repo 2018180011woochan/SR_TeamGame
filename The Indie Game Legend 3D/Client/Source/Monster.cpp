@@ -9,6 +9,9 @@ CMonster::CMonster()
 
 CMonster::CMonster(const CMonster & other)
 	: CGameObject(other)
+	, m_bHit(false)
+	, m_fHitDelay(0.6f)
+	, m_fHitDelayTime(0.f)
 {
 }
 
@@ -26,7 +29,7 @@ HRESULT CMonster::Awake()
 {
 	if (FAILED(CGameObject::Awake()))
 		return E_FAIL;
-
+	m_fHitDelay = 0.5f;
 	return S_OK;
 }
 
@@ -45,14 +48,22 @@ UINT CMonster::Update(const float _fDeltaTime)
 	CGameObject::Update(_fDeltaTime);
 	
 
-
-
 	return _uint();
 }
 
 UINT CMonster::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
+	if (m_bHit)
+		m_fHitDelayTime += _fDeltaTime;
+
+
+	if (m_bHit  && m_fHitDelay < m_fHitDelayTime)
+	{
+		m_bHit = false;
+		m_fHitDelayTime = 0.f;
+	}
+
 	IsBillboarding();
 	return _uint();
 }
@@ -101,6 +112,15 @@ HRESULT CMonster::IsBillboarding()
 	m_pTransform->Set_WorldMatrix(NewWorld);
 
 	return S_OK;
+}
+
+void CMonster::sfxMetalHit()
+{
+	int nSfx = rand() % 2;
+	if (nSfx)
+		CSoundMgr::GetInstance()->Play(L"sfxMetalHit1.mp3", CSoundMgr::MonsterHitM);
+	else
+		CSoundMgr::GetInstance()->Play(L"sfxMetalHit1.mp3", CSoundMgr::MonsterHitM);
 }
 
 void CMonster::OnCollision(CGameObject * _pGameObject)

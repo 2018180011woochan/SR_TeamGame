@@ -37,7 +37,6 @@ void CMsgManager::AirStrikeFire()
 	static uniform_real_distribution<> distribution(-fInterval, fInterval);    // 생성 범위	
 	static auto RandomValue = bind(distribution, engine);
 	_vector vFirePos = _vector(m_vAirStrikePos.x + (float)RandomValue(), 100.f, m_vAirStrikePos.z + (float)RandomValue());
-	cout << vFirePos.x << "," << vFirePos.y << "," << vFirePos.z << endl;
 	CGameObject* pBullet =  CManagement::GetInstance()->Instantiate<CBigBullet>(m_nSceneID);
 	((CBigBullet*)pBullet)->Fire(vFirePos,_vector(0, -1, 0));
 }
@@ -74,22 +73,19 @@ void CMsgManager::UpdateSkillTime(const float & _fTimeDelta)
 		if(m_bAirStrikeSceneTrigger)
 			WargingLight(_fTimeDelta);
 
-		//UFO 씬 시간
 		if (m_bAirStrikeSceneTrigger  && m_fAirStrikeCutSceneDuration < m_fAirStrikeTime)
 		{
 			m_bAirStrikeSceneTrigger = false;
 			m_fAirStrikeTime = 0.f;
-			//카메라 메니저 플레이어로 전환 
 
 			//light Reset
 			D3DLIGHT9* pLight;
-			D3DXCOLOR color = D3DCOLOR_XRGB(255, 255, 255);
-			color*0.9f;
-			for (int i = 0; i < 7; ++i)
+		
+			for (int i = CLightMananger::World1; i < CLightMananger::World5; ++i)
 			{
-				pLight = CLightMananger::GetInstance()->GetLight(CLightMananger::LightID(CLightMananger::World1 + i));
-				pLight->Diffuse = color;
-				CLightMananger::GetInstance()->SetLight(CLightMananger::LightID(CLightMananger::World1 + i));
+				pLight = CLightMananger::GetInstance()->GetLight(CLightMananger::LightID(i));
+				pLight->Diffuse = CLightMananger::GetInstance()->GetSaveColor(CLightMananger::LightID(i));
+				CLightMananger::GetInstance()->SetLight(CLightMananger::LightID(i));
 			}
 
 			//focus off
@@ -118,19 +114,20 @@ void CMsgManager::WargingLight(const float& _fTimeDelta)
 {
 	D3DLIGHT9* pLight;
 	m_fSirenLightColor += m_fSirenLightChangValue * _fTimeDelta;
-	if (m_fSirenLightColor > 255)
+
+	if (m_fSirenLightColor > 150.f)
 		m_fSirenLightChangValue *= -1;
-	else if (m_fSirenLightColor < 10)
+	else if (m_fSirenLightColor < 0)
 		m_fSirenLightChangValue *= -1;
 
-	m_fSirenLightColor = CLAMP(m_fSirenLightColor, 10.f, 255.f);
+	m_fSirenLightColor = CLAMP(m_fSirenLightColor, 0.f, 150.f);
 	cout << (int)m_fSirenLightColor << endl;
-	D3DXCOLOR color = D3DCOLOR_XRGB(255, (int)m_fSirenLightColor, (int)m_fSirenLightColor);
-	for (int i = 0; i < 7; ++i)
+	D3DXCOLOR color = D3DCOLOR_XRGB(230, (int)m_fSirenLightColor, (int)m_fSirenLightColor);
+	for (int i = CLightMananger::World1; i < CLightMananger::World5; ++i)
 	{
-		pLight = CLightMananger::GetInstance()->GetLight(CLightMananger::LightID(CLightMananger::World1 + i));
+		pLight = CLightMananger::GetInstance()->GetLight(CLightMananger::LightID(i));
 		pLight->Diffuse = color;
-		CLightMananger::GetInstance()->SetLight(CLightMananger::LightID(CLightMananger::World1 + i));
+		CLightMananger::GetInstance()->SetLight(CLightMananger::LightID(i));
 	}
 }
 
@@ -165,6 +162,7 @@ void CMsgManager::AirStrikeSetting(const _uint& _nSceneID, const _vector& _vPosi
 	m_bAirStrikeReady = false;
 	m_nAirStrikeCount = 0;
 	m_fAirStrikeTime = 0.f;
+	m_fSirenLightColor = 255.f;
 	CSoundMgr::GetInstance()->Play(L"sfxSiren4.MP3", CSoundMgr::PlayerSkill);
 }
 
@@ -187,7 +185,7 @@ CMsgManager::CMsgManager()
 	, m_nAirStrikeCount(0)
 	, m_fAirStrikeDelay(0.1f)
 	, m_fAirStrikeTime(0.f)
-	, m_fAirStrikeCutSceneDuration(3.5f)
+	, m_fAirStrikeCutSceneDuration(8.0f)
 	, m_bAirStrikeSceneTrigger(false)
 	, m_fSirenLightChangValue(400.f)
 	, m_bSkillCooldown(false)

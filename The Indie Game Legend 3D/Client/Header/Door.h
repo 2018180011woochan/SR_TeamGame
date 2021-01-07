@@ -9,6 +9,7 @@ private:
 	float			m_fAnimateSpeed = 0.f;
 	float			m_fAnimateOneCycleTime = 0.f; // 한번 순회하는데 몇초로 설정할거냐	
 	_uint			m_nMaxFrame = 0;
+	bool			m_bAnimate;
 	bool			m_bOpen;
 public:
 	void Open();

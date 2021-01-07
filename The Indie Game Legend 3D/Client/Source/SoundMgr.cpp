@@ -9,6 +9,7 @@ CSoundMgr::CSoundMgr()
 void CSoundMgr::Initialize()
 {
 	m_pSystem = nullptr;
+	m_wstrNowBGM = L"";
 	FMOD_System_Create(&m_pSystem);
 
 	FMOD_System_Init(m_pSystem, 32, FMOD_INIT_NORMAL, NULL);
@@ -65,17 +66,22 @@ void CSoundMgr::PlayContinue(const wstring & pSoundKey, CHANNELID eID)
 	FMOD_System_Update(m_pSystem);
 }
 
-void CSoundMgr::PlayBGM(const wstring& pSoundKey)
+void CSoundMgr::PlayBGM(const wstring& _strSoundKey)
 {
 	map<wstring, FMOD_SOUND*>::iterator iter;
 
 	iter = find_if(m_mapSound.begin(), m_mapSound.end(), [&](auto& iter)
 	{
-		return pSoundKey ==  iter.first;
+		return _strSoundKey ==  iter.first;
 	});
 
 	if (iter == m_mapSound.end())
 		return;
+
+	if (m_wstrNowBGM == _strSoundKey)
+		return;
+
+	m_wstrNowBGM = _strSoundKey;
 
 	FMOD_Channel_Stop(m_pChannelArr[BGM]);
 	FMOD_System_PlaySound(m_pSystem, FMOD_CHANNEL_FREE, iter->second, FALSE, &m_pChannelArr[BGM]);
@@ -94,10 +100,10 @@ void CSoundMgr::StopAll()
 		FMOD_Channel_Stop(m_pChannelArr[i]);
 }
 
-void CSoundMgr::SetVolume(CHANNELID eID,float Voluem)
+void CSoundMgr::SetVolume(CHANNELID eID,float _Volume)
 {
-	Voluem = (Voluem > 1.f) ? 1.f : (Voluem < 0.f) ? 0.f : Voluem;
-	FMOD_Channel_SetVolume(m_pChannelArr[eID], Voluem);
+	_Volume = (_Volume > 1.f) ? 1.f : (_Volume < 0.f) ? 0.f : _Volume;
+	FMOD_Channel_SetVolume(m_pChannelArr[eID], _Volume);
 }
 void CSoundMgr::SetPitch(CHANNELID _eID, float _fPitch)
 {

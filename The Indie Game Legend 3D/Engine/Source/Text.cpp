@@ -20,7 +20,7 @@ CText::CText(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice)
 {
 	SafeAddRef(m_pFontManager);
 }
-
+ 
 void CText::Free()
 {
 	CComponent::Free();

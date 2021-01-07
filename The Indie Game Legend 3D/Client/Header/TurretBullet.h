@@ -18,7 +18,7 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
-
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 public:
 	virtual CGameObject * Clone() override;
 	static CTurretBullet* Create();
@@ -42,6 +42,7 @@ private:
 	CCollider*				m_pCollider;
 	UINT					nIndex = 0;
 	float					m_fBulletSpeed;
+	bool					m_bDead;
 };
 
 #define __TURRETBULLET_H__

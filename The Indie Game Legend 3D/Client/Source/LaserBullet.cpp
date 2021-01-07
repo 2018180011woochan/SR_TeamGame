@@ -41,7 +41,7 @@ HRESULT CLaserBullet::Start()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bullet"));
 	SafeAddRef(m_pTexturePool);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("LaserBullet"))[0]);
-	m_fMoveSpeed = 10.f;
+	m_fMoveSpeed = 100.f;
 
 	//아직 충돌 이외의 삭제 처리가 필요 함
 	m_fLive = 5.f;
@@ -120,11 +120,8 @@ HRESULT CLaserBullet::Fire()
 
 		//스포너랑 몹 투영좌표로 
 		D3DXVec3TransformCoord(&vMobProj, &vMobProj, &matView);
-		//D3DXVec3TransformCoord(&vMobProj, &vMobProj, &matProj);
 		D3DXVec3TransformCoord(&vSpawnProj, &vSpawnProj, &matView);
-		//D3DXVec3TransformCoord(&vSpawnProj, &vSpawnProj, &matProj);
 		//투영좌표의 방향
-//		_vector vProjDir = vMobProj - vSpawnProj;
 		_vector vProjDir;
 		 D3DXVec3TransformNormal(&vProjDir,&m_vDiraction,&matView);
 

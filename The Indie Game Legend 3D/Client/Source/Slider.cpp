@@ -2,6 +2,7 @@
 #include "..\Header\Slider.h"
 #include "TexturePoolManager.h"
 #include "Camera.h"
+#include "SoundMgr.h"
 
 
 
@@ -52,7 +53,7 @@ HRESULT CSlider::InitializePrototype()
 {
 	m_vDir = _vector(1, 0, 0);
 	m_fMoveSpeed = 40.f;
-	m_sName = L"Slide";
+	m_sName = L"Slider";
 	return S_OK;
 }
 
@@ -61,7 +62,7 @@ HRESULT CSlider::Awake()
 	CGameObject::Awake();
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	m_pTransform->Add_Position(_vector(0, 4, 0));
-	m_fMoveSpeed = 10.f;
+	m_fMoveSpeed = 80.f;
 	return S_OK;
 }
 
@@ -115,6 +116,7 @@ void CSlider::OnCollision(CGameObject * _pGameObject)
 	if (L"Wall" == _pGameObject->GetName())
 	{
 		m_bReverse = !m_bReverse;
+		CSoundMgr::GetInstance()->Play(L"sfxslider.wav", CSoundMgr::Slider);
 	}
 }
 

@@ -19,7 +19,7 @@ public:
 	virtual UINT Update(const float _fDeltaTime) override;
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
-
+	virtual void OnCollision(CGameObject* _pGameObject)override;
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Jumping(float fDeltaTime);
@@ -57,6 +57,7 @@ private:
 	UINT nIndex;
 
 	bool m_bIsTPS;
+	bool m_bDead;
 };
 
 #define __WALKBOSSBULLET_H__

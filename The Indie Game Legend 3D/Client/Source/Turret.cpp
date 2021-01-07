@@ -41,7 +41,11 @@ HRESULT CTurret::Awake()
 
 
 	m_iHP = 3;
+#ifndef _DEBUG
+		
 	m_nTag = 0;
+#endif // !_DEB
+
 	m_bDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -112,10 +116,12 @@ HRESULT CTurret::Render()
 
 void CTurret::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
-	{
-		m_iHP--;
 
+	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
+	{
+		m_bHit = true;
+		m_iHP--;
+		m_bHit = true;
 		int iRandX = rand() % 5;
 		int iRandY = rand() % 5;
 		int iRandZ = rand() % 5;
@@ -124,11 +130,17 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
 			m_pTransform->Get_Position().y + iRandY
 			, m_pTransform->Get_Position().z + iRandZ));
+
+		sfxMetalHit();
+
 	}
 	if (m_iHP <= 0)
 	{
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
 		m_bDead = true;
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(3);
+
 	}
 }
 

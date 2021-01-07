@@ -28,7 +28,7 @@ public:
 	virtual HRESULT Render() PURE;
 	virtual CGameObject * Clone() PURE;
 	virtual void OnCollision(CGameObject* _pGameObject) PURE;
-	virtual void Free() PURE;
+	virtual void Free() override;
 protected:
 	virtual void OnNotify()PURE;
 public:

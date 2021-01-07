@@ -36,7 +36,7 @@ HRESULT CSector::Awake()
 	if (FAILED(CGameObject::Awake()))
 		return E_FAIL;
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
-	m_pMeshRenderer->SetMesh(m_sSectorName);
+	m_pMeshRenderer->SetMesh(L"Sector1");
 	m_eRenderID = ERenderID::NoAlpha;
 
 	return S_OK;
@@ -56,7 +56,7 @@ UINT CSector::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	Animate(_fDeltaTime);
-	//m_pTransform->UpdateTransform();
+	m_pTransform->UpdateTransform();
 	return OBJ_NOENVET;
 }
 

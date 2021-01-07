@@ -9,14 +9,23 @@ public:
 	enum CHANNELID {BGM
 		,Player_Bullet
 		,Player_Effect
+		,Player_Event
+		,Item_Ammo
+		,Item_Heart
+		,Item_Coin
+		,Item_Disc
 		,Player_Hit
 		,Player_Action
+		,Object_SFX
 		,BOSS
 		,HURT
 		,BULLET
 		,EFFECT
 		,PlayerSkill
-		,MONSTER_BULLET, BNT1,BNT2,UI,MOUSE, WALL, Floor, MONSTER, MAXCHANNEL};
+		,MonsterKill
+		,MonsterHitM
+		,MonsterHitP
+		,MONSTER_BULLET,UI,MOUSE, Slider, MAXCHANNEL};
 private:
 	explicit CSoundMgr();
 	virtual ~CSoundMgr() = default;
@@ -27,10 +36,10 @@ public:
 	void Play(const wstring& pSoundKey, CHANNELID eID);
 	void PlayContinue(const wstring& pSoundKey, CHANNELID eID);
 
-	void PlayBGM(const wstring& pSoundKey);
+	void PlayBGM(const wstring& _strSoundKey);
 	void StopSound(CHANNELID eID);
 	void StopAll();
-	void SetVolume(CHANNELID eID, float Voluem);
+	void SetVolume(CHANNELID eID, float _Volume);
 	void SetPitch(CHANNELID _eID, float _fPitch);//ÀÛ¾÷Áß
 	void Pause(CHANNELID _eID, const FMOD_BOOL& _Bool);
 
@@ -42,6 +51,7 @@ private:
 	map<wstring, FMOD_SOUND*> m_mapSound; 
 	FMOD_CHANNEL* m_pChannelArr[MAXCHANNEL]; 
 	FMOD_SYSTEM* m_pSystem; 
+	wstring		m_wstrNowBGM;
 
 };
 #define __SOUNDMANAGER_H__

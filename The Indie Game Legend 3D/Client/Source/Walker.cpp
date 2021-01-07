@@ -128,10 +128,12 @@ HRESULT CWalker::Render()
 
 void CWalker::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
-	{
-		m_iHP--;
 
+	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
+	{
+		m_bHit = true;
+		m_iHP--;
+		m_bHit = true;
 		int iRandX = rand() % 5;
 		int iRandY = rand() % 5;
 		int iRandZ = rand() % 5;
@@ -140,17 +142,18 @@ void CWalker::OnCollision(CGameObject * _pGameObject)
 		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
 			m_pTransform->Get_Position().y + iRandY
 			, m_pTransform->Get_Position().z + iRandZ));
+
+		sfxMetalHit();
 	}
 	if (m_iHP <= 0)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();
 		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
 		pHeart->SetItemType(EItemID::sprBigCoin);
-
-		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
-		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		psqrCoin->SetItemType(EItemID::sprCoin);
 		m_bDead = true;
+		CSoundMgr::GetInstance()->Play(L"sfxExplosion.mp3", CSoundMgr::MonsterKill);
+		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(2);
+
 	}
 }
 

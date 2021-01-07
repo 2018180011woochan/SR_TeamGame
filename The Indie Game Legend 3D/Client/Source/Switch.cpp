@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\Switch.h"
+#include "SoundMgr.h"
 
 
 CSwitch::CSwitch()
@@ -23,7 +24,7 @@ HRESULT CSwitch::InitializePrototype()
 
 HRESULT CSwitch::Awake()
 {
-	m_eRenderID = ERenderID::Alpha;
+	m_eRenderID = ERenderID::NoAlpha;
 	m_bPress = false;
 	return S_OK;
 }
@@ -37,8 +38,8 @@ HRESULT CSwitch::Start()
 	m_pCollider->SetMesh(TEXT("SwitchUp"), BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
+	m_pTransform->Add_Position(_vector(0, 0, 0));
 	m_pTransform->UpdateTransform();
-	m_pTransform->UpdateWorld();
 	return S_OK;
 }
 
@@ -55,6 +56,7 @@ UINT CSwitch::LateUpdate(const float _fDeltaTime)
 
 HRESULT CSwitch::Render()
 {
+	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
 }
@@ -63,13 +65,13 @@ void CSwitch::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Player" == _pGameObject->GetName() && m_bPress == false )
 	{
+		CSoundMgr::GetInstance()->Play(L"sfxSwitch.wav", CSoundMgr::Object_SFX);
 		SwitchDown();
 		Notify();
 	}
 }
 void CSwitch::SwitchUp()
 {
-	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("SwitchUp"));
 	m_bPress = false;
 }
@@ -77,7 +79,6 @@ void CSwitch::SwitchUp()
 void CSwitch::SwitchDown()
 {
 	m_bPress = true;
-	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("SwitchDown"));
 }
 
@@ -88,7 +89,7 @@ void CSwitch::OnNotify()
 
 void CSwitch::Free()
 {
-
+	CInteractionObj::Free();
 }
 
 CGameObject * CSwitch::Clone()

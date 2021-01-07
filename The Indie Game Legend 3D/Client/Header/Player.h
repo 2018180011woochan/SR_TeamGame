@@ -12,7 +12,10 @@ class CGun;
 #define RunCameraYCycle 0.3f
 #define FlameDelay 0.1f
 #define LaserDelay 0.5f
-#define HPMax 24
+#define HPMax 6
+#define SkillPGaugeMax 20
+#define DiscMax 4
+#define AmmoLvMax 3
 
 enum class EState : _uint
 {
@@ -37,20 +40,17 @@ enum class ESoundID :_uint
 	FlameBullet,
 	LaserBullet,
 	Hit,
+	Trap,
 	AddHeart,
 	AddCoin,
 	AddAmmo,
-	AddEnergy,
+	AmmoLvUp,
+	AddDisc,
 	Dash,
 	Run,
 };
 
-enum class ESectorTileID : _uint
-{
-	Sector1,
-	Sector2,
-	End
-};
+
 class CPlayer final: public CGameObject
 {
 private:
@@ -92,13 +92,18 @@ private:
 	 _int						m_nGem = 0;
 	 _int						m_nDisc = 0;
 	 _int						m_nDiscMax = 0;
+	 _int						m_nSkillPoint = 0;
+	 _int						m_nAmmoLv= 0;
+
 
 	 float						m_fHitDelay = 0.f;
 	 float						m_fHitDelayTime = 0.f;
+	 float						m_fHitAnimatTime = 0.f;
+
 	 float						m_fDebuffDuration = 0.f;
 	 float						m_fDebuffDurationTime = 0.f;
 	 bool						m_bIsDeBuff = false;
-
+	 bool						m_bEnableSkill = false;
 	 //Action
 	 EState				m_eState;
 	 float				m_fRunningTime = 0.f;
@@ -110,8 +115,10 @@ private:
 	 float				m_fDashDurationTime;
 
 	 bool				m_bsfxStep;
+	 bool				m_bSpotLightTrigger;
+
 	 wstring			m_sStepsfx; //나중에 타일에 따른 사운드 변화 줄떄 테스트용
-	 ESectorTileID		m_eSector;
+	 ETileID			m_eTileID;
 
 	 /****************************************/
 	 CGun*				m_pGun;
@@ -126,17 +133,17 @@ private:
 	void	ChangeWeaponUISetting();// 무기 교체 ui관련 콜 
 	void    ChangeWeapon();// 관련 세팅값 설정
 	void	UpdateLight();
-	void	TileSound(ESectorTileID _eID);
+	void	TileSound(const ETileID& _eID);
 	void	SoundPlay(const ESoundID& _eID);
-	void	UpdateUI();
-	void	UpdateAirStrikeFocus();
+	void	AmmoLvUp();
 public:
 	//Getter Setter
-	const float& GetAmmo() { return m_fAmmo; }
-	const float& GetAmmoMax() { return m_fAmmoMax; }
+	void	SetSpotLightTrigget(const bool& _bTrigger);
+	void	SetsfxTileID(const ETileID& _bool);
 	void	AddHp(_int _nHp);
+	void	AddSkillGauge(_int _nPoint);
 	void    AddHpMax();
-	void AddWeapon(const EWeaponType _eWeaponType);
+	void	AddWeapon(const EWeaponType _eWeaponType);
 protected:
 	explicit CPlayer();
 	explicit CPlayer(const CPlayer& _rOther);

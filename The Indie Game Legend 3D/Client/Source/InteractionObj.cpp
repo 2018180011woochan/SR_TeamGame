@@ -48,6 +48,16 @@ HRESULT CInteractionObj::Render()
 	return S_OK;
 }
 
+void CInteractionObj::Free()
+{
+	CGameObject::Free();
+	//for (auto& pObj : m_listObservers)
+	//{
+
+	//}
+	m_listObservers.clear();
+}
+
 void CInteractionObj::AddObserver(CInteractionObj * _pObj)
 {
 	m_listObservers.emplace_back(_pObj);

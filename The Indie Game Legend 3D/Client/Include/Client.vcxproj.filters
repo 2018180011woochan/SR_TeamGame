@@ -229,9 +229,6 @@
     <Filter Include="02.GameObject\08.Objstacle\01.Piramid">
       <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\09.Item">
-      <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\10.Effect">
       <UniqueIdentifier>{f59f9308-2194-4032-ac94-b37a843981d1}</UniqueIdentifier>
     </Filter>
@@ -481,12 +478,6 @@
     <Filter Include="02.GameObject\10.Effect\05.SandBurst">
       <UniqueIdentifier>{1ae4060c-92a9-4485-b666-e665e2f19f6d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.Scene\03.ShootingMinigame">
-      <UniqueIdentifier>{679daad6-50f2-4c5d-9fab-6722000871a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\00.Player\02.PlayerShip">
-      <UniqueIdentifier>{d86a0827-97ca-477c-b644-756956567cde}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\00.Monster\12.GreenBoy">
       <UniqueIdentifier>{792fcf4e-1174-41dd-bc0c-70f83a3b28b9}</UniqueIdentifier>
     </Filter>
@@ -513,6 +504,45 @@
     </Filter>
     <Filter Include="02.GameObject\00.Monster\12.GreenBoy\07.BloodHand">
       <UniqueIdentifier>{978000bf-40f0-4aa2-bc27-06d833cfeba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\09.Item">
+      <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\03.FinalStage">
+      <UniqueIdentifier>{62c8078e-edb1-4f51-b968-6fac40576137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\02.BattleShip">
+      <UniqueIdentifier>{7906bd34-7827-4788-b54f-3093ac32a728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Camera\01.FinalCamera">
+      <UniqueIdentifier>{f12f5949-be0a-4155-a753-030826be173f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.StarParticle">
+      <UniqueIdentifier>{626452ce-caaa-44fa-b5d1-520e06860735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.StarParticle\Pool">
+      <UniqueIdentifier>{9497941d-3952-4435-a1ef-ecfac35cf105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss">
+      <UniqueIdentifier>{101a6db0-01e2-44db-88f0-695c5216e54c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\02.BattleShip\00.Boost">
+      <UniqueIdentifier>{6bbe9fef-7dcd-4bbf-a7b8-d66261110c12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\02.BattleShip\01.Bullet">
+      <UniqueIdentifier>{b466bb5c-1ec7-4199-a1c9-7057a02c5105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet">
+      <UniqueIdentifier>{76e5bbc4-ef58-43a5-b064-a93addc5e551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\00.Normal">
+      <UniqueIdentifier>{e8c69ad7-bb81-43cc-a3e9-0fa7f02b36fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser">
+      <UniqueIdentifier>{2dc3a12b-68e0-4e94-a5db-9d0bfed29d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion">
+      <UniqueIdentifier>{440dc142-10a8-4ec0-88c7-e6edad79313f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -891,7 +921,6 @@
     <ClInclude Include="..\Header\Switch.h">
       <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Door.h" />
     <ClInclude Include="..\Header\SandBurst.h">
       <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
     </ClInclude>
@@ -900,12 +929,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Edragon.h">
       <Filter>02.GameObject\11.Npc\03.Edragon</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShootingMinigame.h">
-      <Filter>03.Scene\03.ShootingMinigame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PlayerShip.h">
-      <Filter>02.GameObject\00.Player\02.PlayerShip</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GreenBoyHead.h">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\00.GreenBoyHead</Filter>
@@ -931,6 +954,40 @@
     <ClInclude Include="..\Header\BloodHand.h">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Door.h">
+      <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalStage.h">
+      <Filter>03.Scene\03.FinalStage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleShip.h">
+      <Filter>02.GameObject\00.Player\02.BattleShip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalCamera.h">
+      <Filter>02.GameObject\01.Camera\01.FinalCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StarParticle.h">
+      <Filter>02.GameObject\14.StarParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StarPool.h">
+      <Filter>02.GameObject\14.StarParticle\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalBoss.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Boost.h">
+      <Filter>02.GameObject\00.Player\02.BattleShip\00.Boost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleShipBullet.h">
+      <Filter>02.GameObject\00.Player\02.BattleShip\01.Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalNormal.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\00.Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalLaser.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalExplosion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1290,7 +1347,6 @@
     <ClCompile Include="..\Source\Switch.cpp">
       <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Door.cpp" />
     <ClCompile Include="..\Source\SandBurst.cpp">
       <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
     </ClCompile>
@@ -1299,12 +1355,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Edragon.cpp">
       <Filter>02.GameObject\11.Npc\03.Edragon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ShootingMinigame.cpp">
-      <Filter>03.Scene\03.ShootingMinigame</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\PlayerShip.cpp">
-      <Filter>02.GameObject\00.Player\02.PlayerShip</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\GreenBoyHead.cpp">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\00.GreenBoyHead</Filter>
@@ -1330,6 +1380,40 @@
     <ClCompile Include="..\Source\BloodHand.cpp">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\07.BloodHand</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Door.cpp">
+      <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalStage.cpp">
+      <Filter>03.Scene\03.FinalStage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BattleShip.cpp">
+      <Filter>02.GameObject\00.Player\02.BattleShip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalCamera.cpp">
+      <Filter>02.GameObject\01.Camera\01.FinalCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\StarParticle.cpp">
+      <Filter>02.GameObject\14.StarParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\StarPool.cpp">
+      <Filter>02.GameObject\14.StarParticle\Pool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalBoss.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Boost.cpp">
+      <Filter>02.GameObject\00.Player\02.BattleShip\00.Boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BattleShipBullet.cpp">
+      <Filter>02.GameObject\00.Player\02.BattleShip\01.Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalNormal.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\00.Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalLaser.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

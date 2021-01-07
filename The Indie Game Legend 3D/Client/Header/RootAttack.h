@@ -19,6 +19,7 @@ public:
 	virtual UINT LateUpdate(const float _fDeltaTime) override;
 	virtual HRESULT Render() override;
 
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 public:
 	virtual CGameObject * Clone() override;
 	static CRootAttack* Create();
@@ -45,6 +46,8 @@ private:
 
 	float				m_fWalkSpeed;
 	float				m_fWalkDeltaTime;
+
+	bool				m_bDead;
 };
 
 #define __ROOTATTACK_H__

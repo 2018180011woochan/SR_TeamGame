@@ -4,6 +4,23 @@
 USING(Engine)
 class CStage : public CScene
 {
+	enum class RoomID : _int
+	{
+		SandRoom = 6,
+		ShopRoom = 7,
+		SwampRoom = 10,
+		ForestRoom= 26,
+		MazeRoom = 29,
+		MetalRoom = 30,
+		End= -1
+	};
+
+
+private:
+	CGameObject* m_pPlayer;
+	_int		 m_nPreRoomID;
+	_int		 m_nCurRoomID;
+
 private:
 	explicit CStage();
 	virtual ~CStage() = default;
@@ -17,6 +34,9 @@ public:
 private:
 	HRESULT AddLight();
 	HRESULT AddUIObject();
+	HRESULT AttachObj();
+
+	void	CheckRoomEvent();
 public:
 	static CStage* Create();
 	virtual void Free() override;

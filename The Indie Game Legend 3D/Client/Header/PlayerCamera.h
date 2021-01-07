@@ -14,6 +14,7 @@ private:
 	float	m_fCameraAngleX = 0.f;
 	float	m_fCameraAngleSpeed = 1.f;
 	float	m_fCameraHeight = 0.f;
+	float	m_fcameraVertical = 0.f;
 	class CPlayer* m_pPlayer;
 	class CMouse*  m_pMouse;
 
@@ -26,7 +27,7 @@ private:
 public:
 	//Camera Work
 	void SetHeghitPersent(const float& _fHeight);
-
+	void SetShakeVertical(const float& _fVertical);
 public:
 	virtual ~CPlayerCamera() = default;
 

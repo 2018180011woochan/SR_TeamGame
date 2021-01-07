@@ -13,6 +13,7 @@ CWalkBossBullet::CWalkBossBullet()
 
 CWalkBossBullet::CWalkBossBullet(const CWalkBossBullet & other)
 	: CGameObject(other)
+	
 {
 }
 
@@ -31,6 +32,8 @@ HRESULT CWalkBossBullet::Awake()
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
+	//  [1/4/2021 wades]
+	m_sName = L"Monster";
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Laser"));
 	SafeAddRef(m_pTexturePool);
@@ -48,6 +51,7 @@ HRESULT CWalkBossBullet::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 	m_fBulletSpeed = 30.f;
+	m_bDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -64,7 +68,6 @@ HRESULT CWalkBossBullet::Start()
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
-	m_pCollider->m_bIsRigid = true;
 	m_nTag = 0;
 
 	return S_OK;
@@ -72,6 +75,8 @@ HRESULT CWalkBossBullet::Start()
 
 UINT CWalkBossBullet::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
 	CGameObject::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -111,6 +116,15 @@ HRESULT CWalkBossBullet::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CWalkBossBullet::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"Obstacle" == _pGameObject->GetName() || L"Player" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
+	{
+		m_bDead = true;
+	}
 }
 
 

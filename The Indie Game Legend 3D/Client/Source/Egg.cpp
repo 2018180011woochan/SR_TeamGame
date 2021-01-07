@@ -55,7 +55,11 @@ HRESULT CEgg::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
+#ifdef _DEBUG
+
 	m_nTag = 0;
+#endif // _DEBUG
+
 
 	return S_OK;
 }
@@ -105,8 +109,10 @@ HRESULT CEgg::Render()
 
 void CEgg::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+
+	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
 	{
+		m_bHit = true;
 		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
@@ -114,6 +120,8 @@ void CEgg::OnCollision(CGameObject * _pGameObject)
 	if (m_iHP <= 0)
 	{
 		EggDrop();
+		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
+
 		m_bDead = true;
 	}
 }

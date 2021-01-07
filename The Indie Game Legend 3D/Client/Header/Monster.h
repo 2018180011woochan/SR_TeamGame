@@ -1,6 +1,7 @@
 #pragma once
 #ifndef __MONSTER_H__
 #include "GameObject.h"
+#include "SoundMgr.h"
 USING(Engine)
 class CBossHP;
 class CMonster : public CGameObject
@@ -21,7 +22,8 @@ public:
 
 public:
 	HRESULT IsBillboarding();
-
+	//  [1/4/2021 wades]
+	void	sfxMetalHit();
 public:
 	//Getter
 	bool	GetDead() { return m_bDead; };
@@ -44,6 +46,11 @@ protected:
 	int					m_iMaxHP;
 	_vector				m_vecStartPos;
 	CBossHP*			m_pBossHP;
+
+	bool				m_bHit;
+	float				m_fHitDelay;
+	float				m_fHitDelayTime;
+
 };
 
 #define __MONSTER_H__

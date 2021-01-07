@@ -22,6 +22,7 @@ CBullet::CBullet(const CBullet & _rOther)
 	, m_fAnimateSpeed(_rOther.m_fAnimateSpeed)
 	, m_fAnimateOneCycleTime(_rOther.m_fAnimateOneCycleTime)
 	, m_nMaxTexture(_rOther.m_nMaxTexture)
+	, m_nDmg(_rOther.m_nDmg)
 
 {
 }
@@ -39,6 +40,7 @@ HRESULT CBullet::InitializePrototype()
 	m_fAnimateSpeed = 0.f;
 	m_fAnimateOneCycleTime = 0.f;
 	m_nMaxTexture = 0;
+	m_nDmg = 0;
 	return S_OK;
 }
 //레이저는 부모 호출하지말고 box로 바꿔야함
@@ -50,8 +52,8 @@ HRESULT CBullet::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_eRenderID = ERenderID::Alpha;
 
-	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
+	m_pCollider = (CCollider*)(AddComponent<CCollider>());
+	m_pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
 
 	return S_OK;
 }

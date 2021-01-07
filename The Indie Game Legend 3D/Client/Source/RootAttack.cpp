@@ -38,6 +38,7 @@ HRESULT CRootAttack::Awake()
 	m_fWalkDeltaTime = 0.f;
 
 	m_eRenderID = ERenderID::Alpha;
+	m_bDead = false;
 	return S_OK;
 }
 
@@ -47,6 +48,8 @@ HRESULT CRootAttack::Start()
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("RootAttack1"));
 	SafeAddRef(m_pTexturePool);
+	//  [1/4/2021 wades]
+	m_sName = L"Monster";
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
@@ -60,6 +63,8 @@ HRESULT CRootAttack::Start()
 
 UINT CRootAttack::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
 	CGameObject::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -96,6 +101,15 @@ HRESULT CRootAttack::Render()
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CRootAttack::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"Obstacle" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
+	{
+		m_bDead = true;
+	}
 }
 
 CGameObject * CRootAttack::Clone()
