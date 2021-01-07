@@ -35,7 +35,6 @@ HRESULT CMonster::Awake()
 #ifdef _DEBUG
 	SetMonsterPos();
 #endif // !_DEBUG
-
 	return S_OK;
 }
 

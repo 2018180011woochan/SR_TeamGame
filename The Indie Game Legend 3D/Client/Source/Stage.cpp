@@ -126,6 +126,9 @@
 //Objct
 #include "Slider.h"
 #include "Pillar.h"
+
+#include "SoundMgr.h"
+
 #include "RoomTrigger.h"
 #include "LightMananger.h"
 #include "Piramid.h"
@@ -154,6 +157,9 @@
 #include "Scene.h"
 #include "Gate.h"
 
+#include "Switch.h"
+#include "Door.h"
+#include "Scene.h"
 
 #include "PuzzleRoomCamera.h"
 #include "CameraManager.h"
@@ -251,6 +257,12 @@ HRESULT CStage::Awake()
 	AddPrototype(CPillar::Create());
 	AddPrototype(CGate::Create());
 
+	//interaction obj
+	AddPrototype(CDoor::Create());
+	AddPrototype(CSwitch::Create());
+#pragma endregion
+
+
 
 	//interaction obj
 	AddPrototype(CDoor::Create());
@@ -272,7 +284,6 @@ HRESULT CStage::Awake()
 
 	m_pPlayer = AddGameObject<CPlayer>();
 	//SafeAddRef(m_pPlayer);
-
 	//AddGameObject<CPlayerCamera>();
 	CCameraManager::GetInstance()->RegisteCamera(CCameraManager::ECameraID::Player, (CCamera*)AddGameObject<CPlayerCamera>());
 	auto pTest = AddGameObject<CPuzzleRoomCamera>();
@@ -281,8 +292,6 @@ HRESULT CStage::Awake()
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
 	CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
-
-
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
 	AddGameObject<CSkyBox>();
@@ -574,7 +583,6 @@ void CStage::CheckRoomEvent()
 	}
 
 	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.05f);
-
 	m_nPreRoomID = m_nCurRoomID;
 }
 
@@ -587,5 +595,6 @@ CStage * CStage::Create()
 void CStage::Free()
 {
 	//SafeRelease(m_pPlayer);
+	SafeRelease(m_pPlayer);
 	CScene::Free();
 }

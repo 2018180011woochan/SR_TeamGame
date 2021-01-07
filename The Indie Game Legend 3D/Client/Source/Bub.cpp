@@ -123,7 +123,6 @@ void CBub::OnCollision(CGameObject * _pGameObject)
 		m_iHP--;
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
-
 	}
 	if (m_iHP <= 0)
 	{
