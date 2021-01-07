@@ -186,7 +186,6 @@
     <ClInclude Include="..\Header\SlideBlock.h" />
     <ClInclude Include="..\Header\FinalBoss.h" />
     <ClInclude Include="..\Header\FinalCamera.h" />
-    <ClInclude Include="..\Header\FinalExplosion.h" />
     <ClInclude Include="..\Header\FinalLaser.h" />
     <ClInclude Include="..\Header\FinalNormal.h" />
     <ClInclude Include="..\Header\FinalStage.h" />
@@ -338,7 +337,6 @@
     <ClCompile Include="..\Source\SlideBlock.cpp" />
     <ClCompile Include="..\Source\FinalBoss.cpp" />
     <ClCompile Include="..\Source\FinalCamera.cpp" />
-    <ClCompile Include="..\Source\FinalExplosion.cpp" />
     <ClCompile Include="..\Source\FinalLaser.cpp" />
     <ClCompile Include="..\Source\FinalNormal.cpp" />
     <ClCompile Include="..\Source\FinalStage.cpp" />

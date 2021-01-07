@@ -1005,9 +1005,6 @@
     <ClInclude Include="..\Header\FinalLaser.h">
       <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FinalExplosion.h">
-      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SlideBlock.h">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
     </ClInclude>
@@ -1444,9 +1441,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\FinalLaser.cpp">
       <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\FinalExplosion.cpp">
-      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\SlideBlock.cpp">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
