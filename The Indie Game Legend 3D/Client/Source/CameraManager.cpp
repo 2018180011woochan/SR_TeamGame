@@ -50,6 +50,17 @@ HRESULT CCameraManager::RegisteCamera(const ECameraID & _eCameraID, const CCamer
 	return S_OK;
 }
 
+HRESULT CCameraManager::GetCurCameraDesc(CAMERA_DESC*& _rDesc)
+{
+	if (m_eCurMainCameraID == ECameraID::End || nullptr == m_vecCameras[m_eCurMainCameraID])
+	{
+		PrintLog(L"Warning", L"Element has an address");
+		return E_FAIL;
+	}
+	_rDesc = const_cast<CAMERA_DESC*>(&m_vecCameras[m_eCurMainCameraID]->Get_Camera());
+	return S_OK;
+}
+
 CCameraManager::CCameraManager()
 	:m_eCurMainCameraID(ECameraID::End)
      ,m_ePreMainCameraID(ECameraID::End)

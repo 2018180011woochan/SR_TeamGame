@@ -37,6 +37,7 @@ private:
 	_vector						m_vAirStrikePos;
 	_uint						m_nAirStrikeCount;
 	_uint						m_nSceneID;
+	bool						m_bMouseMode;
 public:	
 	_vector GetClientCenterVector() { return m_vClinetCenterPos; };
 	RECT	GetClientRc() { return m_tClinetRect; }
@@ -44,7 +45,7 @@ public:
 	bool	GetHighNoon(){return m_bHighNoonTrigger;}
 	bool	GetHighNoonReady() { return m_bHighNoonTriggerReady; }
 	bool	GetAirStrikeReady() { return m_bAirStrikeReady; }
-
+	bool	GetMouseMode() { return m_bMouseMode; }
 	void	Freeze(const float* _fTimeDeleta);
 	void	ReSizeClient();
 	void    AirStrikeStart(const _uint& _nSceneID,const _vector& _vPosition);
@@ -57,6 +58,7 @@ public:
 	void	FreezingStart(const float& _fTime);
 	void    HighNoonReady(const float& _fTime);
 
+	void	MouseModeOnOff();
 private:
 	void	HighNoon(const float& _fTime);
 private:

@@ -14,6 +14,7 @@ CCollider::CCollider(CGameObject * const _pGameObject, LPDIRECT3DDEVICE9 const _
 	, m_pCollisionMesh(nullptr)
 	, m_pDrawMesh(nullptr)
 	, m_bIsRigid(false)
+	, m_bIsStand(false)
 {
 	SafeAddRef(m_pMeshManager);
 	ZeroMemory(&m_tBound, sizeof(BOUND));
@@ -78,8 +79,8 @@ HRESULT CCollider::Draw()
 	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
 	return m_pDrawMesh->Draw();
-}
 
+}
 void CCollider::SetBound()
 {
 	if (nullptr == m_pCollisionMesh)

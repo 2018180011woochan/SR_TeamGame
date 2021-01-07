@@ -15,7 +15,6 @@ class CStage : public CScene
 		End= -1
 	};
 
-
 private:
 	CGameObject* m_pPlayer;
 	_int		 m_nPreRoomID;
@@ -37,6 +36,7 @@ private:
 	HRESULT AttachObj();
 
 	void	CheckRoomEvent();
+	void	AddSlideBlock();
 public:
 	static CStage* Create();
 	virtual void Free() override;

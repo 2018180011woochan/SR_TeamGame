@@ -29,7 +29,7 @@ HRESULT CPuzzleRoomCamera::Awake()
 HRESULT CPuzzleRoomCamera::Start()
 {
 	m_pTransform->Set_Rotation(_vector(90, 0, 0));
-	m_pTransform->Set_Position(_vector(0, 50, 0));
+	m_pTransform->Set_Position(_vector(-240, 50, -104));
 
 	return S_OK;
 }

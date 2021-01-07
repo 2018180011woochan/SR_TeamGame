@@ -5,10 +5,24 @@
 class CSlideBlock final : public CObstacle
 {
 public:
+	enum class eMoveDir
+	{
+		UD,LR,End
+	};
+private:
+	eMoveDir	m_eMoveDir;
+	bool		m_bPick;
+	float		m_fSpeed;
+public:
+public:
+	void SetBlockMoveDir(const eMoveDir& _eID);
+	void SetPicking(const bool& _bPick);
+	void SetSize(float _x , float _y);
+public:
 	explicit CSlideBlock();
 	explicit CSlideBlock(const CSlideBlock& _rOther);
-	virtual ~CSlideBlock();
-
+	virtual ~CSlideBlock() =default;
+	
 	// CObstacle을(를) 통해 상속됨
 	virtual HRESULT InitializePrototype() override;
 	virtual HRESULT Awake() override;
@@ -18,6 +32,7 @@ public:
 	virtual HRESULT Render() override;
 	virtual CGameObject * Clone() override;
 
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 	static CSlideBlock* Create();
 private:
 	virtual void Free() override;

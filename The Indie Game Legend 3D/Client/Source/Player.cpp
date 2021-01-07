@@ -27,6 +27,7 @@ USING(Engine)
 #include "CrossHair.h"
 #include "AmmoHUD.h"
 #include "Monster.h"
+#include "SlideBlock.h"
 
 CPlayer::CPlayer()
 	:CGameObject()
@@ -82,6 +83,35 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 
 HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 {
+
+	if (m_pKeyMgr->Key_Down(KEY_F1))
+		CMsgManager::GetInstance()->MouseModeOnOff();
+
+	// 퍼즐모드인지 확인하는 조건으로 변경 해야함 [1/7/2021 wades]
+	if (CMsgManager::GetInstance()->GetMouseMode())
+	{
+		if (GetKeyState(VK_F2))
+		{
+			if (m_pKeyMgr->Key_Press(KEY_LBUTTON))
+			{
+				CUtilityManger::MouseBlockPicking(m_nSceneID);
+			}
+			if (m_pKeyMgr->Key_Up(KEY_LBUTTON))
+			{
+				list<CGameObject*> CollisionList;
+				CollisionList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CSlideBlock>(m_nSceneID);
+
+				for (auto& pGameObject : CollisionList)
+				{
+					if (pGameObject->IsEnable() == false)
+						continue;
+					((CSlideBlock*)pGameObject)->SetPicking(false);
+				}
+			}
+		}
+		return S_OK;
+	}
+
 	//Move Code
 	MoveCheck();
 
@@ -90,12 +120,6 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	m_pTransform->Add_RotationY(pMouse->Get_MouseDir().x *  m_fMouseSpeedX * _fDeltaTime);
 
 	//Fire & airStrike
-	// 퍼즐모드인지 확인하는 조건으로 변경 해야함 [1/7/2021 wades]
-	if (!m_pKeyMgr->Key_Toggle(VK_F2))
-	{
-		// 피킹용 유틸 또 불러야겠다 [1/7/2021 wades]
-		return S_OK;
-	}
 
 		//공습스킬 사용 눌렀는지 체크
 		if (CMsgManager::GetInstance()->GetAirStrikeReady())
@@ -236,9 +260,6 @@ HRESULT CPlayer::MoveCheck()
 		m_vMoveDir += (m_pTransform->Get_Right());
 	}
 
-	//  [1/7/2021 wades]
-	if (m_bGrapEnable)
-		return S_OK;
 
 	if (m_eState != EState::Hit &&  m_pKeyMgr->Key_Press(KEY_LSHIFT))
 		m_eState = EState::Run;
