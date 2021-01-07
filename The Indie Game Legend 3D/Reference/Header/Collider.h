@@ -26,6 +26,7 @@ private:
 public:
 	bool			m_bIsRigid;
 	bool			m_bExcept;
+	bool			m_bIsStand;
 private:
 	explicit CCollider(CGameObject* const _pGameObject, LPDIRECT3DDEVICE9 const _pDevice);
 	virtual ~CCollider() = default;

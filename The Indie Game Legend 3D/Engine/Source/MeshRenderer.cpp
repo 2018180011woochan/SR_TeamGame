@@ -73,6 +73,7 @@ HRESULT CMeshRenderer::SetTexture(const UINT _nGroupIndex, CTexture* const _pTex
 
 HRESULT CMeshRenderer::SetMaterial(const UINT _nSubSet, const D3DMATERIAL9 _tMaterial)
 {
+
 	if (nullptr == m_pMesh)
 		return E_FAIL;
 	return m_pMesh->SetMaterial(_nSubSet, _tMaterial);

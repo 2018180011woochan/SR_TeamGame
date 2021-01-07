@@ -183,6 +183,7 @@
 
 #include "PuzzleRoomCamera.h"
 #include "CameraManager.h"
+#include "SlideBlock.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -299,6 +300,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CDoor::Create());
 	AddPrototype(CSwitch::Create());
 	AddPrototype(CPuzzleRoomCamera::Create());
+	AddPrototype(CSlideBlock::Create());
 #pragma endregion
 
 #pragma region SHOP
@@ -329,7 +331,10 @@ HRESULT CStage::Awake()
 
 	//Sector
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
+	
 
+//	AddGameObject<CPiramid>()->SetPosition(_vector(10,0,5));
+	AddSlideBlock();
 	AddLight();
 	AddUIObject();
 
@@ -358,7 +363,7 @@ HRESULT CStage::Awake()
 	//CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
 	//CFactoryManager::GetInstance()->LoadScene(this);
 #else
-	CFactoryManager::GetInstance()->LoadDataFile(L"111");
+	CFactoryManager::GetInstance()->LoadDataFile(L"ppp");
 	CFactoryManager::GetInstance()->LoadInterationObj(this, L"Sector1_InterObj");;
 	CFactoryManager::GetInstance()->LoadScene(this);
 	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
@@ -641,6 +646,59 @@ void CStage::CheckRoomEvent()
 	m_nPreRoomID = m_nCurRoomID;
 }
 
+void CStage::AddSlideBlock()
+{
+	auto pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-264, 0, -92));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::UD);
+	((CSlideBlock*)pObj)->SetSize(1, 2);
+	pObj->SetTag(21);
+
+	pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-256, 0, -116));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::UD);
+	((CSlideBlock*)pObj)->SetSize(1, 2);
+	pObj->SetTag(21);
+
+	pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-240, 0, -92));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::UD);
+	((CSlideBlock*)pObj)->SetSize(1, 2);
+	pObj->SetTag(21);
+
+	pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-248, 0, -104));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::LR);
+	((CSlideBlock*)pObj)->SetSize(3, 1);
+	pObj->SetTag(21);
+
+	pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-216, 0, -108));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::UD);
+	((CSlideBlock*)pObj)->SetSize(1, 2);
+	pObj->SetTag(21);
+
+	pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-224, 0, -88));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::LR);
+	((CSlideBlock*)pObj)->SetSize(3, 1);
+	pObj->SetTag(21);
+
+	pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-240, 0, -112));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::LR);
+	((CSlideBlock*)pObj)->SetSize(3, 1);
+	pObj->SetTag(21);
+
+
+	pObj = AddGameObject<CSlideBlock>();
+	pObj->SetPosition(_vector(-224, 0, -112));
+	((CSlideBlock*)pObj)->SetBlockMoveDir(CSlideBlock::eMoveDir::UD);
+	((CSlideBlock*)pObj)->SetSize(1, 3);
+	pObj->SetTag(21);
+
+}
+
 CStage * CStage::Create()
 {
 	CStage* pInstance = new CStage;
@@ -650,6 +708,5 @@ CStage * CStage::Create()
 void CStage::Free()
 {
 	//SafeRelease(m_pPlayer);
-	SafeRelease(m_pPlayer);
 	CScene::Free();
 }

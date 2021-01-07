@@ -98,6 +98,10 @@ void CKeyManager::Update_KeyManager()
 		m_dwKeyState |= KEY_2;
 	if (GetAsyncKeyState('3') & 0x8000)
 		m_dwKeyState |= KEY_3;
+
+	if (GetAsyncKeyState(VK_F1) & 0x8000)
+		m_dwKeyState |= KEY_F1;
+
 }
 
 void CKeyManager::Free()

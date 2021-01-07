@@ -6,7 +6,7 @@ class CMouse final : public CGameObject
 {
 private:
 	_vector		m_vMouseDir;
-
+	POINT		m_tPreCursor;
 private:
 	explicit CMouse();
 	explicit CMouse(const CMouse& _rOther);

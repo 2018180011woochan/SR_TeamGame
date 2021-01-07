@@ -36,6 +36,7 @@ HRESULT CPiramidUnBrake::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Pyramid_Level2"),BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
+	m_pCollider->m_bIsStand = true;
 
 	m_pTransform->UpdateTransform();
 	return S_OK;
