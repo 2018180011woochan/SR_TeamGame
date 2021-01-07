@@ -356,7 +356,7 @@ void CFinalBoss::Dead(const float _fDeltaTime)
 			D3DXVECTOR3 vPosition = m_pTransform->Get_Position();
 			vPosition.x += iRandX;
 			vPosition.z += iRandZ;
-			m_pEffect->SetPosition(vPosition);
+			m_pEffect->SetPos(vPosition);
 			m_nEffectCount++;
 		}
 		else

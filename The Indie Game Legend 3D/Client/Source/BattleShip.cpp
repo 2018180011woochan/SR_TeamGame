@@ -8,6 +8,8 @@
 #include "Management.h"
 #include "Ending.h"
 
+#include "SoundMgr.h"
+
 CBattleShip::CBattleShip()
 	: m_pKeyManager(nullptr)
 	, m_pMeshRenderer(nullptr)
@@ -118,6 +120,8 @@ HRESULT CBattleShip::Start()
 
 	m_pFinalBoss = (CFinalBoss*)FindGameObjectOfType<CFinalBoss>();
 	SafeAddRef(m_pFinalBoss);
+
+	CSoundMgr::GetInstance()->Initialize();
 	return S_OK;
 }
 
@@ -172,6 +176,8 @@ void CBattleShip::OnCollision(CGameObject * _pGameObject)
 {
 	if (m_bHit == false && (L"FinalBullet" == _pGameObject->GetName()))
 	{
+		CSoundMgr::GetInstance()->Play(L"sfxBreak.wav", CSoundMgr::CHANNELID::Player_Hit);
+
 		m_bHit = true;
 		SetHP(-1);
 	}
@@ -246,6 +252,8 @@ void CBattleShip::Fire(const float _fDeltaTime)
 		pBullet->SetBullet(vPosition);
 		m_vBulletOffset.z = -m_vBulletOffset.z;
 		m_fFireTime = m_fFireInterval;
+		CSoundMgr::GetInstance()->Play(L"sfxBullet.wav",CSoundMgr::CHANNELID::BULLET);
+
 	}
 }
 

@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Camera.h"
 
+#include "SoundMgr.h"
 
 CExplosion::CExplosion()
 	:m_pTexturePool(nullptr)
@@ -138,6 +139,8 @@ void CExplosion::IsBillBording()
 void CExplosion::SetPos(const _vector _EggPos)
 {
 	m_pTransform->Set_Position(_EggPos);
+	CSoundMgr::GetInstance()->Play(L"sfxExplode.wav", CSoundMgr::CHANNELID::EFFECT);
+
 }
 
 CGameObject * CExplosion::Clone()

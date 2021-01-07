@@ -25,6 +25,9 @@
 #include "Heart.h"
 
 #include "Explosion.h"
+
+#include "SoundMgr.h"
+
 CFinalStage::CFinalStage()
 	: CScene(GetTypeHashCode<CFinalStage>())
 {
@@ -104,6 +107,8 @@ HRESULT CFinalStage::Awake()
 HRESULT CFinalStage::Start()
 {
 	CScene::Start();
+	CSoundMgr::GetInstance()->Initialize();
+	CSoundMgr::GetInstance()->PlayBGM(L"Finalboss4.wav");
 	return S_OK;
 }
 

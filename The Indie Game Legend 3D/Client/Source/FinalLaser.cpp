@@ -3,6 +3,8 @@
 #include "TexturePoolManager.h"
 #include "FinalExplosion.h"
 
+#include "SoundMgr.h"
+
 CFinalLaser::CFinalLaser()
 	: m_pMeshRenderer(nullptr)
 	, m_pTexturePool(nullptr)
@@ -162,6 +164,9 @@ void CFinalLaser::SetLaser(DIRECTION _eDirection)
 	D3DXMatrixRotationY(&matRY, D3DXToRadian(fDegree));
 
 	D3DXVec3TransformNormal(&m_vDirection, &m_vDirection, &matRY);
+
+	CSoundMgr::GetInstance()->Play(L"sfxLaser.wav", CSoundMgr::CHANNELID::EFFECT);
+
 }
 
 void CFinalLaser::Animate(const float _fDeltaTime)
@@ -181,6 +186,8 @@ void CFinalLaser::Animate(const float _fDeltaTime)
 				SetTextureKey(TEXT("Laser"));
 				m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 2.f, 1.f));
 				m_pTransform->UpdateTransform();
+				CSoundMgr::GetInstance()->Play(L"sfxExplode.wav", CSoundMgr::CHANNELID::EFFECT);
+
 			}
 			else
 			{

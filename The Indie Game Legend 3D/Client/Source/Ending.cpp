@@ -5,6 +5,9 @@
 #include "Star.h"
 #include "EndingText.h"
 
+#include "SoundMgr.h"
+
+
 CEnding::CEnding()
 	: CScene(GetTypeHashCode<CEnding>())
 {
@@ -73,6 +76,8 @@ HRESULT CEnding::Awake()
 HRESULT CEnding::Start()
 {
 	CScene::Start();
+	CSoundMgr::GetInstance()->Initialize();
+	CSoundMgr::GetInstance()->PlayBGM(L"Ending.wav");
 	return S_OK;
 }
 
