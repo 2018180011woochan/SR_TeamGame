@@ -80,7 +80,7 @@ HRESULT CIntro::Start()
 	CScene::Start();
 
 	CSoundMgr::GetInstance()->Initialize();
-	//CSoundMgr::GetInstance()->PlayBGM(L"Title.wav");
+	CSoundMgr::GetInstance()->PlayBGM(L"Title.wav");
 	return S_OK;
 }
 
