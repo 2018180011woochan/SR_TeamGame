@@ -53,7 +53,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(ReadyDefaultSetting()))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->SetUpCurrentScene(CFinalStage::Create())))
+	if (FAILED(m_pManagement->SetUpCurrentScene(CIntro::Create())))
 	{
 		PrintLog(L"Error", L"Failed To SetUpCurrentScene");
 		return E_FAIL;

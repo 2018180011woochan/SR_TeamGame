@@ -151,7 +151,6 @@
 
 
 #include "Loading.h"
-#include "ShootingMinigame.h"
 #include "Switch.h"
 #include "Door.h"
 #include "Scene.h"
@@ -260,14 +259,9 @@ HRESULT CStage::Awake()
 	//interaction obj
 	AddPrototype(CDoor::Create());
 	AddPrototype(CSwitch::Create());
+	AddPrototype(CPuzzleRoomCamera::Create());
 #pragma endregion
 
-
-
-	//interaction obj
-	AddPrototype(CDoor::Create());
-	AddPrototype(CSwitch::Create());
-	AddPrototype(CPuzzleRoomCamera::Create());
 
 #pragma endregion
 
@@ -288,7 +282,6 @@ HRESULT CStage::Awake()
 	CCameraManager::GetInstance()->RegisteCamera(CCameraManager::ECameraID::Player, (CCamera*)AddGameObject<CPlayerCamera>());
 	auto pTest = AddGameObject<CPuzzleRoomCamera>();
 	CCameraManager::GetInstance()->RegisteCamera(CCameraManager::ECameraID::PuzzleRoom, (CCamera*)pTest);
-
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
 	CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
