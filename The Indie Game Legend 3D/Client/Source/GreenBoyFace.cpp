@@ -74,7 +74,6 @@ HRESULT CGreenBoyFace::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	// Test
-	m_pTransform->Set_Position(_vector(-240.f, 17.f, -240.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("GreenBoy_Head"))[1]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();

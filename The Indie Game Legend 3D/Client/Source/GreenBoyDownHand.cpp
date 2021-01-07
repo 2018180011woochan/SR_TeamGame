@@ -75,7 +75,6 @@ HRESULT CGreenBoyDownHand::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(7, 7, 7));
 	// Test
-	m_pTransform->Set_Position(_vector(-240.f, 12.f, -240.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Hand"))[0]);
 
 

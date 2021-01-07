@@ -298,14 +298,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CSwitch::Create());
 	AddPrototype(CPuzzleRoomCamera::Create());
 #pragma endregion
-	//AddGameObject<CGreenBoyHead>();
-	//AddGameObject<CGreenBoyBody>();
-	//AddGameObject<CGreenBoyLeftHand>();
-	//AddGameObject<CGreenBoyRightHand>();
-	//AddGameObject<CGreenBoyUpHand>();
-	//AddGameObject<CGreenBoyDownHand>();
-	//AddGameObject<CGreenBoyFace>();
-	//AddGameObject<CFlame>();
+
 	//AddGameObject<CContainerBlack>();
 	//AddGameObject<CContainerBlue>();
 	//AddGameObject<CContainerNomal>();
@@ -323,7 +316,14 @@ HRESULT CStage::Awake()
 #pragma endregion
 
 #pragma region GREENBOYBOSS
-
+	AddGameObject<CGreenBoyHead>()->SetPosition(_vector(-240.f, 20.f, -240.f));
+	AddGameObject<CGreenBoyBody>()->SetPosition(_vector(-240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyLeftHand>()->SetPosition(_vector(-240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyRightHand>()->SetPosition(_vector(-240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyUpHand>()->SetPosition(_vector(-240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyDownHand>()->SetPosition(_vector(-240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyFace>()->SetPosition(_vector(-240.f, 17.f, -240.f));
+	AddGameObject<CFlame>()->SetPosition(_vector(-240.f, 12.f, -240.f));
 #pragma endregion
 
 #pragma region GUN_TEST

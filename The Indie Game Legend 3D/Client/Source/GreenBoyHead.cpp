@@ -53,9 +53,6 @@ HRESULT CGreenBoyHead::Awake()
 	m_fYTest = 0.f;
 
 	m_bDead = false;
-	nIndex = 0;
-
-
 
 	m_iHP = 30;
 	m_iMaxHP = m_iHP;
@@ -71,8 +68,6 @@ HRESULT CGreenBoyHead::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(5, 5, 5));
 	// Test
-	m_pTransform->Set_Position(_vector(-240.f, 20.f, -240.f));
-	//m_pTransform->Set_Position(_vector(0, 20.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("GreenBoy_Head"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();

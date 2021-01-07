@@ -53,7 +53,7 @@ HRESULT CTurret::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
 	return S_OK;
@@ -67,25 +67,20 @@ UINT CTurret::Update(const float _fDeltaTime)
 	}
 	CMonster::Update(_fDeltaTime);
 
-	/*
-	if (ÅÍ·¿ÀÌ ºÎ¼ÅÁö¸é)
-		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
-	*/
 
-	if (m_pTransform->Get_Position().y > 5.f || m_pTransform->Get_Position().y < 3.f)
-	{
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
-	}
+
+	m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 5.f, m_pTransform->Get_Position().z));
+
 
 	if (!m_bDead)
 	{
 		//off Test
-		/*m_fFireDeltaTime += _fDeltaTime;
+		m_fFireDeltaTime += _fDeltaTime;
 		if (m_fFireSpeed <= m_fFireDeltaTime)
 		{
 			m_fFireDeltaTime -= m_fFireSpeed;
 			BulletFire();
-		}*/
+		}
 	}
 
 	m_pTransform->UpdateTransform();

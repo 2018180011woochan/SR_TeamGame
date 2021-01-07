@@ -130,7 +130,7 @@ void CWalkerBullet::SetTurretPos(const _vector _TurretPos)
 	vecTarget = ((CTransform*)pGameObject->GetComponent<CTransform>())->Get_Position();
 
 	m_vecDir = vecTarget - _TurretPos;
-	m_vecDir.y = 5.f;
+	m_vecDir.y = 4.f;
 	D3DXVec3Normalize(&m_vecDir, &m_vecDir);
 }
 

@@ -88,7 +88,7 @@ void CLapidGun::OnCollision(CGameObject * _pGameObject)
 	if (L"Player" == _pGameObject->GetName())
 	{
 		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
-		pPlayer->AddWeapon(EWeaponType::Lazer);
+		pPlayer->AddWeapon(EWeaponType::Rapid);
 
 		m_bDead = true;
 	}
