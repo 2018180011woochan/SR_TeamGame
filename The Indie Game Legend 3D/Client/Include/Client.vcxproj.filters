@@ -954,6 +954,7 @@
     <ClInclude Include="..\Header\Gate.h">
       <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SlideBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1364,6 +1365,7 @@
     <ClCompile Include="..\Source\Gate.cpp">
       <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\SlideBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
