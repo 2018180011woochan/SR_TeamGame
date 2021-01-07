@@ -38,6 +38,7 @@ private:
 	CTexturePool*  m_pTexturePool;
 	CCollider*		m_pCollider;
 	CShopKeeper*	m_pShopKeeper;
+	bool			m_isBuyItem;
 };
 
 #define __SKILLRUNNING_H__

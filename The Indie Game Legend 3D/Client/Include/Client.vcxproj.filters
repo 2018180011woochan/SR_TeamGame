@@ -391,9 +391,6 @@
     <Filter Include="02.GameObject\12.Shop\01.Armor">
       <UniqueIdentifier>{8a9907b8-cc7b-4fbd-84cd-d22e030eda33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\12.Shop\02.BigShot">
-      <UniqueIdentifier>{68cabca7-fc75-454d-88cd-f4f5103fd925}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\11.Npc\01.Cactus">
       <UniqueIdentifier>{cfb8d0fa-7184-4eb2-a2ed-0743c62ad2e8}</UniqueIdentifier>
     </Filter>
@@ -559,19 +556,19 @@
     <Filter Include="02.GameObject\14.Container\04.Container_White\BigGun">
       <UniqueIdentifier>{6c0ddd46-aaff-424b-922a-11f3cf7d7e8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\12.Shop\03.SkillRunning">
+    <Filter Include="02.GameObject\12.Shop\02.SkillRunning">
       <UniqueIdentifier>{387b1ac5-8f6e-4393-aaa5-757550b25be5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\12.Shop\04.Price">
+    <Filter Include="02.GameObject\12.Shop\03.Price">
       <UniqueIdentifier>{eff6190d-445b-41d0-84fd-30ed158ea435}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\12.Shop\04.Price\00.AmmoPrice">
+    <Filter Include="02.GameObject\12.Shop\03.Price\00.AmmoPrice">
       <UniqueIdentifier>{0775fd80-6b60-4b59-a2e7-446080ab02d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\12.Shop\04.Price\01.ArmorPrice">
+    <Filter Include="02.GameObject\12.Shop\03.Price\01.ArmorPrice">
       <UniqueIdentifier>{5e1bb888-e876-4d4d-9dcb-39f1694980df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\12.Shop\04.Price\02.SkillRunningPrice">
+    <Filter Include="02.GameObject\12.Shop\03.Price\02.SkillRunningPrice">
       <UniqueIdentifier>{a7bc47fe-5cbd-431b-8fda-1f126eb61242}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -903,9 +900,6 @@
     <ClInclude Include="..\Header\Armor.h">
       <Filter>02.GameObject\12.Shop\01.Armor</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BigShot.h">
-      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Cactus.h">
       <Filter>02.GameObject\11.Npc\01.Cactus</Filter>
     </ClInclude>
@@ -1034,16 +1028,16 @@
       <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SkillRunning.h">
-      <Filter>02.GameObject\12.Shop\03.SkillRunning</Filter>
+      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Price.h">
-      <Filter>02.GameObject\12.Shop\04.Price\00.AmmoPrice</Filter>
+      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ArmorPrice.h">
-      <Filter>02.GameObject\12.Shop\04.Price\01.ArmorPrice</Filter>
+      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SkillRunningPrice.h">
-      <Filter>02.GameObject\12.Shop\04.Price\02.SkillRunningPrice</Filter>
+      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1353,9 +1347,6 @@
     <ClCompile Include="..\Source\Ammo.cpp">
       <Filter>02.GameObject\12.Shop\00.Ammo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\BigShot.cpp">
-      <Filter>02.GameObject\12.Shop\02.BigShot</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Armor.cpp">
       <Filter>02.GameObject\12.Shop\01.Armor</Filter>
     </ClCompile>
@@ -1487,16 +1478,16 @@
       <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\SkillRunning.cpp">
-      <Filter>02.GameObject\12.Shop\03.SkillRunning</Filter>
+      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Price.cpp">
-      <Filter>02.GameObject\12.Shop\04.Price\00.AmmoPrice</Filter>
+      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\ArmorPrice.cpp">
-      <Filter>02.GameObject\12.Shop\04.Price\01.ArmorPrice</Filter>
+      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\SkillRunningPrice.cpp">
-      <Filter>02.GameObject\12.Shop\04.Price\02.SkillRunningPrice</Filter>
+      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

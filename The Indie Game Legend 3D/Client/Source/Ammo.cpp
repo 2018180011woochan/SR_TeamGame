@@ -34,6 +34,7 @@ HRESULT CAmmo::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Ammo"));
 	SafeAddRef(m_pTexturePool);
 
+	m_isBuyItem = false;
 	m_pTransform->Set_Scale(_vector(5, 5, 5));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -82,7 +83,10 @@ HRESULT CAmmo::Render()
 
 void CAmmo::OnCollision(CGameObject * _pGameObject)
 {
-
+	if (L"Player" == _pGameObject->GetName())
+	{
+		
+	}
 }
 
 HRESULT CAmmo::IsBillboarding()

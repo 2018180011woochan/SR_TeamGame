@@ -167,7 +167,6 @@
     <ClInclude Include="..\Header\BigBullet.h" />
     <ClInclude Include="..\Header\Armor.h" />
     <ClInclude Include="..\Header\BigGun.h" />
-    <ClInclude Include="..\Header\BigShot.h" />
     <ClInclude Include="..\Header\Blood.h" />
     <ClInclude Include="..\Header\BloodHand.h" />
     <ClInclude Include="..\Header\BossHP.h" />
@@ -325,7 +324,6 @@
     <ClCompile Include="..\Source\BigBullet.cpp" />
     <ClCompile Include="..\Source\Armor.cpp" />
     <ClCompile Include="..\Source\BigGun.cpp" />
-    <ClCompile Include="..\Source\BigShot.cpp" />
     <ClCompile Include="..\Source\Blood.cpp" />
     <ClCompile Include="..\Source\BloodHand.cpp" />
     <ClCompile Include="..\Source\BossHP.cpp" />

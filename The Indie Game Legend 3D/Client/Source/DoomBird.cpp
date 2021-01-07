@@ -52,8 +52,6 @@ HRESULT CDoomBird::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
-	nIndex = 0;
-
 	m_iHP = 2;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -71,7 +69,6 @@ HRESULT CDoomBird::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
 
 	return S_OK;
 }

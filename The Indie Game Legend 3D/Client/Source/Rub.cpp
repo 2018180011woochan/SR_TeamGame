@@ -77,7 +77,7 @@ HRESULT CRub::Start()
 	m_pCollider->m_bIsRigid = true;
 
 	//Test
-	m_nTag = 0;
+	//m_nTag = 0;
 	return S_OK;
 }
 

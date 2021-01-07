@@ -58,7 +58,6 @@ HRESULT CGreenBoyRightHand::Awake()
 
 	m_fYTest = 0.f;
 
-	m_nTag = 0;
 	m_bDead = false;
 	m_bisAttack = false;
 	m_bCrush = false;
@@ -76,14 +75,13 @@ HRESULT CGreenBoyRightHand::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(7, 7, 7));
 	// Test
-	//m_pTransform->Set_Position(_vector(0.f, 12.f, 0.f));
+	m_pTransform->Set_Position(_vector(-240.f, 12.f, -240.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Hand"))[0]);
 
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
 
 	return S_OK;
 }

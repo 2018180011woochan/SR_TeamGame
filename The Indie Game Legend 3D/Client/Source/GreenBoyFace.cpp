@@ -56,9 +56,7 @@ HRESULT CGreenBoyFace::Awake()
 	m_fFireDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
-	m_nTag = 0;
 	m_bDead = false;
-	nIndex = 0;
 
 	m_eAttackState = NONATTACK;
 
@@ -76,13 +74,12 @@ HRESULT CGreenBoyFace::Start()
 	CMonster::Start();
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
 	// Test
-	m_pTransform->Set_Position(_vector(0.f, 17.f, 0.f));
+	m_pTransform->Set_Position(_vector(-240.f, 17.f, -240.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("GreenBoy_Head"))[1]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
 
 	//Test
 	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();

@@ -39,7 +39,6 @@
 #include "ShopKeeper.h"
 #include "Ammo.h"
 #include "Armor.h"
-#include "BigShot.h"
 #include "SkillRunning.h"
 #include "Price.h"
 #include "ArmorPrice.h"
@@ -186,7 +185,6 @@ HRESULT CStage::Awake()
 	AddPrototype(CShopKeeper::Create());
 	AddPrototype(CAmmo::Create());
 	AddPrototype(CArmor::Create());
-	AddPrototype(CBigShot::Create());
 	AddPrototype(CSkillRunning::Create());
 	AddPrototype(CPrice::Create());
 	AddPrototype(CArmorPrice::Create());
@@ -353,6 +351,17 @@ HRESULT CStage::Awake()
 	AddGameObject<CPrice>();
 	AddGameObject<CArmorPrice>();
 	AddGameObject<CSkillRunningPrice>();
+#pragma endregion
+
+#pragma region GREENBOYBOSS
+	//AddGameObject<CGreenBoyHead>();
+	//AddGameObject<CGreenBoyFace>();
+	//AddGameObject<CGreenBoyBody>();
+	//AddGameObject<CGreenBoyLeftHand>();
+	//AddGameObject<CGreenBoyRightHand>();
+	//AddGameObject<CGreenBoyUpHand>();
+	//AddGameObject<CGreenBoyDownHand>();
+	//AddGameObject<CFlame>();
 #pragma endregion
 
 	//컬링 테스트 

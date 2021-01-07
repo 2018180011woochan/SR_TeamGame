@@ -55,7 +55,6 @@ HRESULT CNubBoss::Awake()
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 
-	m_nTag = 0;
 	m_iHP = 40;
 	m_iMaxHP = m_iHP;
 

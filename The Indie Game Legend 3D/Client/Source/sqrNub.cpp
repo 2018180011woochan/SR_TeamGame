@@ -52,9 +52,6 @@ HRESULT CsqrNub::Awake()
 
 	m_iHP = 3;
 
-	nIndex = 0;
-
-
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }

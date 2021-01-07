@@ -37,7 +37,7 @@ HRESULT CBub::Awake()
 	SafeAddRef(m_pTexturePool);
 	m_iHP = 7;
 	m_eRenderID = ERenderID::Alpha;
-	m_nTag = 0;
+	//m_nTag = 0;
 	return S_OK;
 }
 

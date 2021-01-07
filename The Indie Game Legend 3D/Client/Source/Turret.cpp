@@ -41,7 +41,6 @@ HRESULT CTurret::Awake()
 
 
 	m_iHP = 5;
-	m_nTag = 0;
 	m_bDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
