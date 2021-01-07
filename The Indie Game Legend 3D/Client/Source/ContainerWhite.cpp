@@ -34,7 +34,7 @@ HRESULT CContainerWhite::Awake()
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Container_White"));
 	SafeAddRef(m_pTexturePool);
 
-	m_pTransform->Set_Position(_vector(0.f, 0.f, 0.f));
+	//m_pTransform->Set_Position(_vector(0.f, 0.f, 0.f));
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
 	m_bIsHit = false;
 	nIndex = 0;

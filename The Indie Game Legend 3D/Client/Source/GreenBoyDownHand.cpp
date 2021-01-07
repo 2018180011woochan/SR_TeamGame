@@ -77,7 +77,7 @@ HRESULT CGreenBoyDownHand::Start()
 	// Test
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Hand"))[0]);
 
-
+	m_nTag = 30;
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;

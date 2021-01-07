@@ -76,7 +76,7 @@ HRESULT CGreenBoyRightHand::Start()
 	m_pTransform->Set_Scale(_vector(7, 7, 7));
 	// Test
 
-
+	m_nTag = 30;
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;

@@ -61,7 +61,7 @@ HRESULT CGreenBoyLeftHand::Awake()
 	m_bDead = false;
 	m_bisAttack = false;
 	m_bCrush = false;
-
+	m_nTag = 30;
 	m_iHP = 2;
 
 	m_bIsBossDead = false;

@@ -53,7 +53,7 @@ HRESULT CGreenBoyHead::Awake()
 	m_fYTest = 0.f;
 
 	m_bDead = false;
-
+	m_nTag = 30;
 	m_iHP = 30;
 	m_iMaxHP = m_iHP;
 

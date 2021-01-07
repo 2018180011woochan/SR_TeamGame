@@ -67,7 +67,7 @@ HRESULT CFlame::Start()
 	m_pTransform->Set_Scale(_vector(8, 8, 8));
 	// Test
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Flame"))[0]);
-
+	m_nTag = 17;
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
