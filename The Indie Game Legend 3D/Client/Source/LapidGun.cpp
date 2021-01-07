@@ -32,7 +32,7 @@ HRESULT CLapidGun::Awake()
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
 	SafeAddRef(m_pTexturePool);
-
+	m_bDead = false;
 	m_pTransform->Set_Scale(_vector(8, 8, 8));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -54,6 +54,9 @@ HRESULT CLapidGun::Start()
 
 UINT CLapidGun::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CGameObject::Update(_fDeltaTime);
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("WeaponHUD"))[2]);
@@ -82,7 +85,13 @@ HRESULT CLapidGun::Render()
 
 void CLapidGun::OnCollision(CGameObject * _pGameObject)
 {
+	if (L"Player" == _pGameObject->GetName())
+	{
+		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
+		pPlayer->AddWeapon(EWeaponType::Lazer);
 
+		m_bDead = true;
+	}
 }
 
 HRESULT CLapidGun::IsBillboarding()

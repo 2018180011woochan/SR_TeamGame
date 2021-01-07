@@ -35,6 +35,7 @@ private:
 	CMeshRenderer* m_pMeshRenderer = nullptr;
 	CTexturePool*  m_pTexturePool;
 	CCollider*		m_pCollider;
+	bool			m_bDead;
 };
 
 #define __BIGGUN_H__
