@@ -64,14 +64,16 @@ HRESULT CAmmoIcon::Awake()
 HRESULT CAmmoIcon::Start()
 {
 	CGameObject::Start();
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("WeaponHUD"));
 	SafeAddRef(m_pTexturePool);
 
-	m_sTextureKey = TEXT("WeaponHUD");
+	m_sTextureKey = TEXT("Off");
 
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureKey).size();
 
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[0]);
+
+	m_nIndex = 0;
 	return S_OK;
 }
 
@@ -100,4 +102,14 @@ void CAmmoIcon::SetAmmoIcon(const UINT _nWeaponID)
 	if (_nWeaponID >= m_nMaxFrame)
 		return;
 	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[_nWeaponID]);
+	m_nIndex = _nWeaponID;
+}
+
+void CAmmoIcon::SetActive(const bool _bActive)
+{
+	if (true == _bActive)
+		m_sTextureKey = TEXT("On");
+	else
+		m_sTextureKey = TEXT("Off");
+	m_pImage->SetTexture(m_pTexturePool->GetTexture(m_sTextureKey)[m_nIndex]);
 }

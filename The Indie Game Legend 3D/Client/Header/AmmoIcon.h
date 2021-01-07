@@ -10,6 +10,8 @@ private:
 	CTexturePool*	m_pTexturePool;
 	TSTRING			m_sTextureKey;
 	UINT			m_nMaxFrame;
+
+	UINT			m_nIndex;
 private:
 	explicit CAmmoIcon();
 	explicit CAmmoIcon(const CAmmoIcon& _rOther);
@@ -31,6 +33,7 @@ public:
 
 public:
 	void SetAmmoIcon(const UINT _nWeaponID);
+	void SetActive(const bool _bActive);
 };
 #define __AMMO_ICON_H__
 #endif // !__AMMO_ICON_H__

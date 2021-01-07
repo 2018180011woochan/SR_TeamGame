@@ -24,6 +24,7 @@ private:
 public:
 	HRESULT SetCurrentMainCamera(const ECameraID& _eCameraID);
 	HRESULT RegisteCamera(const ECameraID& _eCameraID, const CCamera* pCamera);
+	HRESULT GetCurCameraDesc(CAMERA_DESC*& _rDesc);
 private:
 	explicit CCameraManager();
 	virtual ~CCameraManager() = default;

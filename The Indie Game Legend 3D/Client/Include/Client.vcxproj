@@ -187,6 +187,9 @@
     <ClInclude Include="..\Header\ContainerRed.h" />
     <ClInclude Include="..\Header\ContainerWhite.h" />
     <ClInclude Include="..\Header\Door.h" />
+    <ClInclude Include="..\Header\Ending.h" />
+    <ClInclude Include="..\Header\EndingText.h" />
+    <ClInclude Include="..\Header\FinalExplosion.h" />
     <ClInclude Include="..\Header\FireBat.h" />
     <ClInclude Include="..\Header\Gate.h" />
     <ClInclude Include="..\Header\GreenBoyDownHand.h" />
@@ -198,6 +201,7 @@
     <ClInclude Include="..\Header\PosionGas.h" />
     <ClInclude Include="..\Header\Price.h" />
     <ClInclude Include="..\Header\PuzzleRoomCamera.h" />
+    <ClInclude Include="..\Header\Sand.h" />
     <ClInclude Include="..\Header\SkillRunning.h" />
     <ClInclude Include="..\Header\SkillRunningPrice.h" />
     <ClInclude Include="..\Header\SlideBlock.h" />
@@ -356,6 +360,9 @@
     <ClCompile Include="..\Source\ContainerRed.cpp" />
     <ClCompile Include="..\Source\ContainerWhite.cpp" />
     <ClCompile Include="..\Source\Door.cpp" />
+    <ClCompile Include="..\Source\Ending.cpp" />
+    <ClCompile Include="..\Source\EndingText.cpp" />
+    <ClCompile Include="..\Source\FinalExplosion.cpp" />
     <ClCompile Include="..\Source\FireBat.cpp" />
     <ClCompile Include="..\Source\Gate.cpp" />
     <ClCompile Include="..\Source\GreenBoyDownHand.cpp" />
@@ -367,6 +374,7 @@
     <ClCompile Include="..\Source\PosionGas.cpp" />
     <ClCompile Include="..\Source\Price.cpp" />
     <ClCompile Include="..\Source\PuzzleRoomCamera.cpp" />
+    <ClCompile Include="..\Source\Sand.cpp" />
     <ClCompile Include="..\Source\SkillRunning.cpp" />
     <ClCompile Include="..\Source\SkillRunningPrice.cpp" />
     <ClCompile Include="..\Source\SlideBlock.cpp" />

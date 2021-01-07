@@ -125,6 +125,12 @@ void CMsgManager::HighNoonReady(const float & _fTime)
 	}
 }
 
+void CMsgManager::MouseModeOnOff()
+{
+	m_bMouseMode = !m_bMouseMode;
+	ShowCursor(m_bMouseMode);
+}
+
 void CMsgManager::HighNoonStart(const _uint & _nSceneID, list<CGameObject*>& _listGameObj, const _int& _nDmg)
 {
 	m_bHighNoonTriggerReady = false;
@@ -248,6 +254,7 @@ CMsgManager::CMsgManager()
 	, m_bSkillCooldown(false)
 	, m_nHighNoonBulletCount(0)
 	, m_nHighNoonDmg(0)
+	, m_bMouseMode(false)
 
 {
 	ZeroMemory(&m_tClinetRect, sizeof(RECT));

@@ -90,7 +90,7 @@ void CArmor::OnCollision(CGameObject * _pGameObject)
 	if (L"Player" == _pGameObject->GetName())
 	{
 		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
-		CGemText* pGemText;
+		CGemText* pGemText = nullptr;
 	
 		if (pPlayer->GetGem() < m_nPrice)
 			return;

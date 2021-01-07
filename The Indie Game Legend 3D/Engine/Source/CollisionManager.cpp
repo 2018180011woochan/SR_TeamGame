@@ -39,7 +39,8 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 	{
 		for (UINT j = i + 1; j < nSize; ++j)
 		{
-			if (false == Collider[i]->m_bIsRigid && false == Collider[j]->m_bIsRigid)
+			if (false == Collider[i]->m_bIsRigid && false == Collider[j]->m_bIsRigid
+				&&false == Collider[i]->m_bExcept && false == Collider[j]->m_bExcept)
 				continue;
 
 			BOUND tOrigin = Collider[i]->GetBound();
@@ -47,7 +48,18 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 
 			if (BOUND::BOUNDTYPE::BOX == tOrigin.eType &&BOUND::BOUNDTYPE::BOX == tTarget.eType)
 			{
-				continue;
+				if (AABBToAABB(tOrigin, tTarget, vPenetration))
+				{
+					if (Collider[i]->m_bIsStand == false && Collider[j]->m_bIsStand)
+					{
+						((CTransform*)(Collider[i]->GetGameObject()->GetComponent<CTransform>()))->Add_Position(vPenetration);
+					}
+					else if (Collider[i]->m_bIsStand  && Collider[j]->m_bIsStand == false)
+					{
+						AABBToAABB(tTarget, tOrigin, vPenetration);
+						((CTransform*)(Collider[j]->GetGameObject()->GetComponent<CTransform>()))->Add_Position(vPenetration);
+					}
+				}
 			}
 			else if (BOUND::BOUNDTYPE::SPHERE == tOrigin.eType &&BOUND::BOUNDTYPE::SPHERE == tTarget.eType)
 				bCollision = SphereToSphere(tOrigin, tTarget);
@@ -85,14 +97,44 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 	}
 }
 
-bool CCollisionManager::AABBToAABB(BOUND _tOriginBound, BOUND _tTargetBound)
+bool CCollisionManager::AABBToAABB(BOUND _tOriginBound, BOUND _tTargetBound, D3DXVECTOR3& _vPenetration)
 {
+
 	if (_tOriginBound.vMax.x < _tTargetBound.vMin.x || _tOriginBound.vMin.x > _tTargetBound.vMax.x)
 		return false;
 	if (_tOriginBound.vMax.y < _tTargetBound.vMin.y || _tOriginBound.vMin.y > _tTargetBound.vMax.y)
 		return false;
 	if (_tOriginBound.vMax.z < _tTargetBound.vMin.z || _tOriginBound.vMin.z > _tTargetBound.vMax.z)
 		return false;
+	_vPenetration = _vector(0, 0, 0);
+	float	fleft =		max(_tOriginBound.vMin.x, _tTargetBound.vMin.x);
+	float	fright =	min(_tOriginBound.vMax.x, _tTargetBound.vMax.x);
+	float	ftop  =		min(_tOriginBound.vMax.z, _tTargetBound.vMax.z);
+	float	fbottom =	max(_tOriginBound.vMin.z, _tTargetBound.vMin.z);
+	float	fW = fright - fleft;
+	float	fH = ftop - fbottom;
+	if (fW > fH)
+	{
+		if ((int)ftop == (int)_tTargetBound.vMax.z)
+		{
+			_vPenetration.z += fH;
+		}
+		else if ((int)fbottom == (int)_tTargetBound.vMin.z)
+		{
+			_vPenetration.z -= fH;
+		}
+	}
+	else
+	{
+		if ((int)fright == (int)_tTargetBound.vMax.x)
+		{
+			_vPenetration.x += fW;
+		}
+		else if ((int)fleft == (int)_tTargetBound.vMin.x)
+		{
+			_vPenetration.x -= fW;
+		}
+	}
 	return true;
 }
 

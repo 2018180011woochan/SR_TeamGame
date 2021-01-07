@@ -27,11 +27,19 @@ void CMouse::UpdateMouseDir()
 	POINT tMousePos;
 	GetCursorPos(&tMousePos);
 	ScreenToClient(g_hWnd, &tMousePos);
+	
 
 	_vector vMousePos = _vector(float(tMousePos.x), float(tMousePos.y), 0.f);
-	m_vMouseDir = vMousePos - vClinetCenter;
-	D3DXVec3Normalize(&m_vMouseDir, &m_vMouseDir);
+	if (CMsgManager::GetInstance()->GetMouseMode())
+	{
+		_vector vPreMousePos = _vector(float(m_tPreCursor.x), float(m_tPreCursor.y), 0.f);
+		m_vMouseDir = vMousePos - vPreMousePos;
+	}
+	else
+		m_vMouseDir = vMousePos - vClinetCenter;
 
+	m_tPreCursor = tMousePos;
+	D3DXVec3Normalize(&m_vMouseDir, &m_vMouseDir);
 }
 
 _vector CMouse::Get_MouseDir()
@@ -47,6 +55,7 @@ HRESULT CMouse::InitializePrototype()
 
 HRESULT CMouse::Awake()
 {
+	ZeroMemory(&m_tPreCursor, sizeof(POINT));
 	return S_OK;
 }
 
@@ -58,9 +67,9 @@ HRESULT CMouse::Start()
 UINT CMouse::Update(const float _fDeltaTime)
 {
 	m_vMouseDir = vZero;
-	if (CKeyManager::GetInstance()->Key_Toggle(VK_F1))
+	UpdateMouseDir();
+	if (CMsgManager::GetInstance()->GetMouseMode()==false)
 	{
-		UpdateMouseDir();
 		MoveToCentorCursor();
 	}
 	return OBJ_NOENVET;

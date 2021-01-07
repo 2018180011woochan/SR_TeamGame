@@ -6,7 +6,7 @@ USING(Engine)
 
 CRenderer::CRenderer(LPDIRECT3DDEVICE9 _pDevice)
 	: m_pDevice(_pDevice)
-	, m_bDrawCollider(false)
+	, m_bDrawCollider(true)
 {
 	SafeAddRef(_pDevice);
 }

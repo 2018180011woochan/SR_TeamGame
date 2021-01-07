@@ -10,6 +10,7 @@
 #include "CameraManager.h"
 
 #include "FinalStage.h"
+#include "Ending.h"
 
 CMainApp::CMainApp()
 	: m_pManagement(CManagement::GetInstance())
@@ -53,7 +54,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(ReadyDefaultSetting()))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->SetUpCurrentScene(CIntro::Create())))
+	if (FAILED(m_pManagement->SetUpCurrentScene(CFinalStage::Create())))
 	{
 		PrintLog(L"Error", L"Failed To SetUpCurrentScene");
 		return E_FAIL;

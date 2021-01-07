@@ -9,6 +9,7 @@ private:
 	CTexturePool* m_pTexturePool;
 	Image*		  m_pImage = nullptr;
 	TSTRING		  m_sTextureKey;
+	UINT		  m_nIndex;
 private:
 	explicit CAmmoGauge();
 	explicit CAmmoGauge(const CAmmoGauge& _rOther);
@@ -31,6 +32,7 @@ public:
 public:
 	void SetAmmoLevel(const UINT _nLevel);
 	void SetAmmoCount(const float _fFillAmount);
+	void SetActive(const bool _bActive);
 };
 #define __AMMO_GAUGE_H__
 #endif // !__AMMO_GAUGE_H__

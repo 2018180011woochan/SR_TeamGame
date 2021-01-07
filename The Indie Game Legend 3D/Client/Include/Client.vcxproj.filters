@@ -610,6 +610,15 @@
     <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion">
       <UniqueIdentifier>{440dc142-10a8-4ec0-88c7-e6edad79313f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\10.Effect\06.Sand">
+      <UniqueIdentifier>{c0a24ae7-09b6-4316-993d-38ec7b7edb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\04.Ending">
+      <UniqueIdentifier>{d1c1a4bb-1bfe-4a52-93b6-072449a8dc1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\15.EndingText">
+      <UniqueIdentifier>{5cd60849-4365-45cc-b538-da07f66dd62e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1061,6 +1070,19 @@
     </ClInclude>
     <ClInclude Include="..\Header\SlideBlock.h">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClInclude>
+
+    <ClInclude Include="..\Header\FinalExplosion.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Sand.h">
+      <Filter>02.GameObject\10.Effect\06.Sand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ending.h">
+      <Filter>03.Scene\04.Ending</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EndingText.h">
+      <Filter>02.GameObject\04.UI\15.EndingText</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigShot.h" />
     <ClInclude Include="..\Header\GreenBoyFace.h">
@@ -1550,6 +1572,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\SlideBlock.cpp">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalExplosion.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sand.cpp">
+      <Filter>02.GameObject\10.Effect\06.Sand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Ending.cpp">
+      <Filter>03.Scene\04.Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\EndingText.cpp">
+      <Filter>02.GameObject\04.UI\15.EndingText</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\BigShot.cpp" />
     <ClCompile Include="..\Source\GreenBoyFace.cpp">

@@ -8,6 +8,7 @@ public:
 public:
 	static bool CrossHairPicking(_uint _nSceneID,OUT _vector& _vPickingPos/*,const _uint _nRoomID*/);
 	static bool AirstrikePicking(_uint _nSceneID, OUT _vector& _vPickingPos/*,const _uint _nRoomID*/);
+	static bool MouseBlockPicking(_uint _nSceneID);
 
 	static bool AutoAim(_uint _nSceneID, OUT list<CGameObject*>& _listGameObj);
 	static bool AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject);

@@ -9,6 +9,7 @@ CPiramid::CPiramid()
 
 CPiramid::CPiramid(const CPiramid & _rOther)
 	:CObstacle(_rOther)
+	, m_bDead(false)
 {
 }
 

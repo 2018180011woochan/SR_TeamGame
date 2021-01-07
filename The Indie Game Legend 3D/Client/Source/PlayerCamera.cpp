@@ -3,6 +3,7 @@
 #include "Mouse.h"
 #include "Player.h"
 #include "Transform.h"
+#include "MsgManager.h"
 
 
 
@@ -118,9 +119,11 @@ HRESULT CPlayerCamera::UpdateCamera(float _fDeletaTime)
 		h += 1.f;
 	}
 	//Cheat
-
-	m_fCameraAngleX += m_pMouse->Get_MouseDir().y  * m_fCameraAngleSpeed * _fDeletaTime;
-	m_fCameraAngleX = CLAMP(m_fCameraAngleX, CameraYMin, CameraYMax);
+	if (CMsgManager::GetInstance()->GetMouseMode() == false)
+	{
+		m_fCameraAngleX += m_pMouse->Get_MouseDir().y  * m_fCameraAngleSpeed * _fDeletaTime;
+		m_fCameraAngleX = CLAMP(m_fCameraAngleX, CameraYMin, CameraYMax);
+	}
 
 
 	CTransform* pPlayerTransFomr = (CTransform*)(m_pPlayer->GetComponent<CTransform>());

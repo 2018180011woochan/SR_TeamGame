@@ -10,6 +10,9 @@
 #include "Wall.h"
 #include "Slider.h"
 
+#include "SlideBlock.h"
+#include "CameraManager.h"
+
 list<CGameObject*> CUtilityManger::m_RoomMobList;
 
 bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos/*,const _uint _nRoomID*/)
@@ -139,6 +142,69 @@ bool CUtilityManger::AirstrikePicking(_uint _nSceneID, OUT _vector & _vPickingPo
 			bIsPicking = true;
 		}
 	}
+	return bIsPicking;
+}
+
+bool CUtilityManger::MouseBlockPicking(_uint _nSceneID)
+{
+	POINT tMousePos;
+	GetCursorPos(&tMousePos);
+	ScreenToClient(g_hWnd, &tMousePos);
+
+	RECT tClientRC = CMsgManager::GetInstance()->GetClientRc();
+	_uint nWinCX = tClientRC.right - tClientRC.left;
+	_uint nWinCY = tClientRC.bottom - tClientRC.top;
+	CCollider* pCollider = nullptr;
+	bool	bIsPicking = false;
+	CGameObject* pGameObject = nullptr;
+	float fDis = 0.f;
+	//CCameraManager::GetInstance()->
+	CAMERA_DESC* pCameraDecs = nullptr;
+	if (FAILED(CCameraManager::GetInstance()->GetCurCameraDesc(pCameraDecs)))
+		return false;
+	_vector vPosition = vZero;
+	_vector vViewPortPt = vZero;
+	/* 뷰포트 -> 투영 스페이스 */
+	vViewPortPt.x = tMousePos.x / (nWinCX * 0.5f) - 1.f;
+	vViewPortPt.y = 1.f - tMousePos.y / (nWinCY * 0.5f);
+	vViewPortPt.z = pCameraDecs->fNear; //  근평면 near
+
+	/* 투영 > 뷰  */
+	_matrix matInvProj = pCameraDecs->matProj;
+	D3DXMatrixInverse(&matInvProj, 0, &matInvProj);
+	D3DXVec3TransformCoord(&vViewPortPt, &vViewPortPt, &matInvProj);
+
+
+	//Ray setting
+	_vector vRayPivot = vZero;
+	_vector vRayDirection = vViewPortPt - vRayPivot;
+	D3DXVec3Normalize(&vRayDirection, &vRayDirection);
+
+	/* 뷰 > 월드 */
+	_matrix matInvView = pCameraDecs->matView;
+	D3DXMatrixInverse(&matInvView, 0, &matInvView);
+	D3DXVec3TransformCoord(&vRayPivot, &vRayPivot, &matInvView);
+	D3DXVec3TransformNormal(&vRayDirection, &vRayDirection, &matInvView);
+	D3DXVec3Normalize(&vRayDirection, &vRayDirection);
+
+	list<CGameObject*> CollisionList;
+	CollisionList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CSlideBlock>(_nSceneID);
+
+	for (auto& pGameObject : CollisionList)
+	{
+		if (pGameObject->IsEnable() == false)
+			continue;
+
+		//((CSlideBlock*)pGameObject)->SetPicking(false);
+		pCollider = (CCollider*)pGameObject->GetComponent<CCollider>();
+		if (pCollider->IsRayPicking(vPosition, fDis, vRayPivot, vRayDirection))
+		{
+			((CSlideBlock*)pGameObject)->SetPicking(true);
+			bIsPicking = true;
+			break;
+		}
+	}
+
 	return bIsPicking;
 }
 

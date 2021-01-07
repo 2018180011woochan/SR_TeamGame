@@ -7,6 +7,7 @@
 #include "WormBullet.h"
 #include "Player.h"
 #include "BossHP.h"
+#include "Sand.h"
 
 CWorm::CWorm()
 	: m_nMaxCount(0)
@@ -15,6 +16,7 @@ CWorm::CWorm()
 	, m_fAnimationSpeed(0.1f)
 	, m_ePattern(PATTERN::IDLE)
 	, m_pBossHP(nullptr)
+	, m_pSand{ nullptr,nullptr }
 {
 }
 
@@ -26,13 +28,18 @@ CWorm::CWorm(const CWorm & _rOther)
 	, m_fAnimationSpeed(0.1f)
 	, m_ePattern(PATTERN::IDLE)
 	, m_pBossHP(nullptr)
+	, m_pSand{ nullptr,nullptr }
 {
 }
 
 void CWorm::Free()
 {
 	CWormPart::Free();
+	if (m_pBossHP)
+		m_pBossHP->SetEnable(false);
 	SafeRelease(m_pBossHP);
+	SafeRelease(m_pSand[0]);
+	SafeRelease(m_pSand[1]);
 }
 
 CWorm * CWorm::Create()
@@ -65,16 +72,17 @@ HRESULT CWorm::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(8.6f, 5.6f, 1.f));
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -5.f, 0.f));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 
 	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->SetRadius(3.f);
+	m_pCollider->m_bExcept = true;
 	m_vMove = D3DXVECTOR3(0.f, 0.f, 0.f);
 
-	m_tAreaRect = { -60,52,60,-52 };
+	m_tAreaRect = { -300,260,240,208 };
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -83,6 +91,8 @@ HRESULT CWorm::Awake()
 HRESULT CWorm::Start()
 {
 	CWormPart::Start();
+	m_nTag = 6;
+
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("WormHead"));
 	SafeAddRef(m_pTexturePool);
 	m_sTextureKey = TEXT("Side");
@@ -97,17 +107,19 @@ HRESULT CWorm::Start()
 	
 	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
 	SafeAddRef(m_pBossHP);
+
+	m_nCurrentHP = 3;
+	m_nMaxHP = 100;
+
+	m_pBossHP->SetEnable(true);
 	return S_OK;
 }
 
 UINT CWorm::Update(const float _fDeltaTime)
 {
 	CWormPart::Update(_fDeltaTime);
-
-	if (GetAsyncKeyState(VK_NUMPAD8) & 0x8000)
-	{
-		SetPattern(PATTERN::BURROW);
-	}
+	if (true == m_bRemove)
+		return OBJ_DEAD;
 
 	DoPattern(_fDeltaTime);
 	SetTextureKey();
@@ -131,16 +143,48 @@ void CWorm::OnEnable()
 {
 	if (nullptr != m_pChild)
 		m_pChild->SetEnable(true);
+	if (nullptr != m_pBossHP)
+	{
+		m_pBossHP->SetEnable(true);
+		m_pBossHP->SetHPBar(float(m_nCurrentHP) / float(m_nMaxHP));
+	}
 }
 
 void CWorm::OnDisable()
 {
 	if (nullptr != m_pChild)
 		m_pChild->SetEnable(false);
+	if (nullptr != m_pBossHP)
+		m_pBossHP->SetEnable(false);
+}
+
+void CWorm::SetHP(int _nHP)
+{
+	m_nCurrentHP += _nHP;
+
+	m_pBossHP->SetHPBar(float(m_nCurrentHP) / float(m_nMaxHP));
+
+	if (m_nCurrentHP <= 0)
+	{
+		SetPattern(PATTERN::DEAD);
+		m_pSand[0]->Remove();
+		m_pSand[1]->Remove();
+		if (m_pBossHP)
+			m_pBossHP->SetEnable(false);
+	}
 }
 
 void CWorm::ConnectBody()
 {
+	list<CGameObject*> pSand = FindGameObjectsOfType<CSand>();
+	int nIndex = 0;
+	for (list<CGameObject*>::iterator iter = pSand.begin(); iter != pSand.end(); ++iter)
+	{
+		m_pSand[nIndex] = (CSand*)(*iter);
+		SafeAddRef(m_pSand[nIndex]);
+		++nIndex;
+	}
+
 	list<CGameObject*>		pBodyList;
 	list<CGameObject*>		pConnectorList;
 	CWormTail*				pWormTail = nullptr;
@@ -157,6 +201,9 @@ void CWorm::ConnectBody()
 		if (nSize - 1 == i)
 		{
 			pCurrPart = pWormTail;
+			m_pWormTail = pWormTail;
+			m_pSand[0]->SetSand(CSand::Direction::UP, this, pWormTail);
+			m_pSand[1]->SetSand(CSand::Direction::DOWN, this, pWormTail);
 		}
 		else if (i % 2 == 0)
 		{
@@ -171,7 +218,7 @@ void CWorm::ConnectBody()
 
 		pPrevPart->SetChild(pCurrPart);
 		pCurrPart->SetParent(pPrevPart);
-
+		pCurrPart->SetTag(m_nTag);
 		pPrevPart = pCurrPart;
 	}
 
@@ -265,6 +312,8 @@ void CWorm::DoPattern(const float _fDeltaTime)
 	case CWorm::FIRE:
 		Fire(_fDeltaTime);
 		break;
+	case CWorm::DEAD:
+		Dead(_fDeltaTime);
 	default:
 		break;
 	}
@@ -480,5 +529,6 @@ void CWorm::SetTextureKey()
 	}
 	m_pTransform->UpdateTransform();
 }
+
 
 

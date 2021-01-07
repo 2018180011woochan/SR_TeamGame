@@ -114,9 +114,6 @@ private:
 	 bool						m_bIsDeBuff = false;
 	 bool						m_bEnableSkill = false;
 
-	 // Grap [1/7/2021 wades]
-	 bool						m_bGrapEnable;
-
 	 // HighNoon [1/6/2021 wades]
 	 float						m_fHighNoonDmg;
 	 list<CGameObject*>			m_listHighNoon;

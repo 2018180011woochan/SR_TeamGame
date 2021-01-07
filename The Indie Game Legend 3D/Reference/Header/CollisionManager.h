@@ -17,7 +17,7 @@ public:
 	void CollisionCheck(list<CGameObject*> _GameObjects);
 
 private:
-	bool AABBToAABB(BOUND _tOriginBound, BOUND _tTargetBound);
+	bool AABBToAABB(BOUND _tOriginBound, BOUND _tTargetBound ,D3DXVECTOR3& _vPenetration);
 	bool AABBToSphere(BOUND _tAABB, BOUND _tSphere, D3DXVECTOR3& _vPenetration);
 	bool SphereToSphere(BOUND _tOriginBound, BOUND _tTargetBound);
 };

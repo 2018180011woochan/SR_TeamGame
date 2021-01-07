@@ -110,6 +110,11 @@ TSTRING CGameObject::GetName()
 	return m_sName;
 }
 
+void CGameObject::SetDelete()
+{
+	m_bDelete = true;
+}
+
 bool CGameObject::IsDelete()
 {
 	return m_bDelete;
