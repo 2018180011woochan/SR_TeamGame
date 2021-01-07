@@ -124,7 +124,7 @@ UINT CFinalBoss::Update(const float _fDeltaTime)
 		return OBJ_DEAD;
 
 	m_vMoveDirection = D3DXVECTOR3(0.f, 0.f, 0.f);
-	InputTest(_fDeltaTime);
+	//InputTest(_fDeltaTime);
 	DoPattern(_fDeltaTime);
 	Animate(_fDeltaTime);
 	Move(_fDeltaTime);
