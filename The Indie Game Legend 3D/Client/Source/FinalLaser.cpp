@@ -212,7 +212,7 @@ void CFinalLaser::Explosion(const float _fDeltaTime)
 	D3DXVECTOR3 vPosition;
 	while (true)
 	{
-		vPosition = m_pTransform->Get_Position() + vDir * fDistance * nCount;
+		vPosition = m_pTransform->Get_Position() + vDir * fDistance * float(nCount);
 
 		if (vPosition.x < -47.f || vPosition.x > 47.f || vPosition.z < -27.f || vPosition.z > 27.f)
 		{
@@ -228,7 +228,7 @@ void CFinalLaser::Explosion(const float _fDeltaTime)
 	nCount = 1;
 	while (true)
 	{
-		vPosition = m_pTransform->Get_Position() + vDir * fDistance * nCount;
+		vPosition = m_pTransform->Get_Position() + vDir * fDistance * float(nCount);
 
 		if (vPosition.x < -47.f || vPosition.x > 47.f || vPosition.z < -27.f || vPosition.z > 27.f)
 		{
