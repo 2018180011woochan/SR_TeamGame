@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Include\Engine.vcxproj", "{E915D7BE-A6EB-41CC-B647-E647667814B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Engine", "01.Engine", "{F8E1FAE4-30D1-48C4-B336-4BEEF7840320}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Client", "00.Client", "{448163BF-5FE3-4AF8-A045-220F2B6857CE}"
+	ProjectSection(SolutionItems) = preProject
+		Client\Source\FinalExplosion.cpp = Client\Source\FinalExplosion.cpp
+		Client\Header\FinalExplosion.h = Client\Header\FinalExplosion.h
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Include\Client.vcxproj", "{AB20107F-A656-4081-A902-8F6EC58C2708}"
 EndProject
@@ -42,5 +46,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E915D7BE-A6EB-41CC-B647-E647667814B3} = {F8E1FAE4-30D1-48C4-B336-4BEEF7840320}
 		{AB20107F-A656-4081-A902-8F6EC58C2708} = {448163BF-5FE3-4AF8-A045-220F2B6857CE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E83DF9D-1CE9-46AD-B3A9-0EF3A39E2B35}
 	EndGlobalSection
 EndGlobal

@@ -220,15 +220,6 @@
     <Filter Include="02.GameObject\99.Trigger\01.RoomTrigger">
       <UniqueIdentifier>{9b80813f-ef7b-40ad-9d8d-f622faef8a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\08.Objstacle">
-      <UniqueIdentifier>{1403aea3-afc2-4c34-9859-eb2b782f80c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\00.Base">
-      <UniqueIdentifier>{56a0b881-2444-4695-a7f0-710b63b4f147}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\01.Piramid">
-      <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\10.Effect">
       <UniqueIdentifier>{f59f9308-2194-4032-ac94-b37a843981d1}</UniqueIdentifier>
     </Filter>
@@ -462,9 +453,6 @@
     </Filter>
     <Filter Include="02.GameObject\13.InterectionObject\00.Base">
       <UniqueIdentifier>{75d969d3-1b9a-4b96-8c10-c4a72440af39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="97.Interface">
-      <UniqueIdentifier>{ec497771-82c6-4695-9ba2-96caf03eea5f}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\13.InterectionObject\02.Switch">
       <UniqueIdentifier>{3a8a6179-31ae-4bbc-9032-9a035c09259b}</UniqueIdentifier>
@@ -987,7 +975,6 @@
     <ClInclude Include="..\Header\Gate.h">
       <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\SlideBlock.h" />
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>03.Scene\03.FinalStage</Filter>
     </ClInclude>
@@ -1018,7 +1005,12 @@
     <ClInclude Include="..\Header\FinalLaser.h">
       <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FinalExplosion.h" />
+    <ClInclude Include="..\Header\FinalExplosion.h">
+      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SlideBlock.h">
+      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1423,7 +1415,6 @@
     <ClCompile Include="..\Source\Gate.cpp">
       <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\SlideBlock.cpp" />
     <ClCompile Include="..\Source\FinalStage.cpp">
       <Filter>03.Scene\03.FinalStage</Filter>
     </ClCompile>
@@ -1454,7 +1445,12 @@
     <ClCompile Include="..\Source\FinalLaser.cpp">
       <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\FinalExplosion.cpp" />
+    <ClCompile Include="..\Source\FinalExplosion.cpp">
+      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SlideBlock.cpp">
+      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
