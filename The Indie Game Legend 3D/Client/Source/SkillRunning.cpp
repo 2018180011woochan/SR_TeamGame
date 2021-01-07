@@ -33,8 +33,9 @@ HRESULT CSkillRunning::Awake()
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("SkillRunning"));
 	SafeAddRef(m_pTexturePool);
-
+	m_nPrice = 50;
 	m_isBuyItem = false;
+	m_bDead = false;
 	m_pTransform->Set_Scale(_vector(5, 5, 5));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -56,6 +57,8 @@ HRESULT CSkillRunning::Start()
 
 UINT CSkillRunning::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
 	CGameObject::Update(_fDeltaTime);
 	MoveMent(_fDeltaTime);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
@@ -85,7 +88,14 @@ void CSkillRunning::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Player" == _pGameObject->GetName())
 	{
+		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
+		if (pPlayer->GetGem() <= m_nPrice)
+			return;
 
+		pPlayer->SetBuyItem(m_nPrice);
+		pPlayer->SetBySkillRunning();
+		m_isBuyItem = true;
+		m_bDead = true;
 	}
 } 
 
@@ -137,9 +147,9 @@ void CSkillRunning::MoveMent(float _fDeltaTime)
 {
 	CTransform* pTransform = (CTransform*)m_pShopKeeper->GetComponent<CTransform>();
 	
-	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x - 20.f,
+	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x + 5.f,
 		pTransform->Get_Position().y - 5.f,
-		pTransform->Get_Position().z - 20.f));
+		pTransform->Get_Position().z + 32.f));
 }
 
 

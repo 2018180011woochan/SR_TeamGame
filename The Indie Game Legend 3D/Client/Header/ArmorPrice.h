@@ -4,6 +4,7 @@
 #include "TexturePoolManager.h"
 USING(Engine)
 class CShopKeeper;
+class CArmor;
 class CArmorPrice final : public CGameObject
 {
 private:
@@ -38,6 +39,7 @@ private:
 	CTexturePool*  m_pTexturePool;
 	CCollider*		m_pCollider;
 	CShopKeeper*	m_pShopKeeper;
+	CArmor*			m_pArmor;
 };
 
 #define __ARMORPRICE_H__

@@ -4,6 +4,7 @@
 #include "TexturePoolManager.h"
 USING(Engine)
 class CShopKeeper;
+class CSkillRunning;
 class CSkillRunningPrice final : public CGameObject
 {
 private:
@@ -38,6 +39,7 @@ private:
 	CTexturePool*  m_pTexturePool;
 	CCollider*		m_pCollider;
 	CShopKeeper*	m_pShopKeeper;
+	CSkillRunning*	m_pSkillRunning;
 };
 
 #define __SKILLRUNNINGPRICE_H__

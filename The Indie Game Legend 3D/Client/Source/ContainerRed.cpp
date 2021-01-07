@@ -29,18 +29,18 @@ HRESULT CContainerRed::Awake()
 		return E_FAIL;
 
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
-	m_pMeshRenderer->SetMesh(TEXT("Quad"));
+	m_pMeshRenderer->SetMesh(TEXT("Container"));
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Container_Red"));
 	SafeAddRef(m_pTexturePool);
 
-	m_pTransform->Set_Position(_vector(0.f, 5.f, 0.f));
-	m_pTransform->Set_Scale(_vector(5, 8, 5));
+	m_pTransform->Set_Position(_vector(0.f, 0.f, 0.f));
+	m_pTransform->Set_Scale(_vector(1, 1, 1));
 	m_bIsHit = false;
 	nIndex = 0;
 	m_fWalkSpeed = 0.1f;
 	m_fWalkDeltaTime = 0.f;
-	m_nTag = 0;
+	//m_nTag = 0;
 	m_bEnable = true;
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -52,7 +52,7 @@ HRESULT CContainerRed::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->SetMesh(TEXT("Container"), BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
@@ -71,7 +71,7 @@ UINT CContainerRed::Update(const float _fDeltaTime)
 		{
 			nIndex++;
 			if (nIndex >= 6)
-				nIndex = 5;
+				return OBJ_DEAD;
 			m_fWalkDeltaTime -= m_fWalkSpeed;
 		}
 	}
@@ -84,7 +84,7 @@ UINT CContainerRed::Update(const float _fDeltaTime)
 UINT CContainerRed::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
-	IsBillboarding();
+	//IsBillboarding();
 	return _uint();
 }
 
@@ -103,7 +103,7 @@ void CContainerRed::OnCollision(CGameObject * _pGameObject)
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
 		CFireBat* pItem = (CFireBat*)AddGameObject<CFireBat>();
-		pItem->Set_ItemPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y, m_pTransform->Get_Position().z));
+		pItem->Set_ItemPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 5.f, m_pTransform->Get_Position().z));
 
 		m_bIsHit = true;
 	}

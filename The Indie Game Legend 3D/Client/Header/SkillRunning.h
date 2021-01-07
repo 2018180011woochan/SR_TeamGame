@@ -26,6 +26,7 @@ public:
 	HRESULT IsBillboarding();
 	void Set_ItemPos(const _vector _vItemPos);
 	void MoveMent(float _fDeltaTime);
+	bool GetIsDead() { return m_bDead; }
 
 public:
 	virtual CGameObject * Clone() override;
@@ -39,6 +40,8 @@ private:
 	CCollider*		m_pCollider;
 	CShopKeeper*	m_pShopKeeper;
 	bool			m_isBuyItem;
+	bool			m_bDead;
+	_int			m_nPrice;
 };
 
 #define __SKILLRUNNING_H__

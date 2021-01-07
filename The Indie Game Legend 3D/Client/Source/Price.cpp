@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "ShopKeeper.h"
+#include "Ammo.h"
 
 CPrice::CPrice()
 	: m_pTexturePool(nullptr)
@@ -47,11 +48,14 @@ HRESULT CPrice::Start()
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 	m_pShopKeeper = (CShopKeeper*)FindGameObjectOfType<CShopKeeper>();
+	m_pAmmo = (CAmmo*)FindGameObjectOfType<CAmmo>();
 	return S_OK;
 }
 
 UINT CPrice::Update(const float _fDeltaTime)
 {
+	if (m_pAmmo->GetIsDead())
+		return OBJ_DEAD;
 	CGameObject::Update(_fDeltaTime);
 	MoveMent(_fDeltaTime);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
@@ -130,9 +134,9 @@ void CPrice::MoveMent(float _fDeltaTime)
 {
 	CTransform* pTransform = (CTransform*)m_pShopKeeper->GetComponent<CTransform>();
 	
-	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x,
+	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x + 5.f,
 		pTransform->Get_Position().y + 1.f,
-		pTransform->Get_Position().z - 20.f));
+		pTransform->Get_Position().z - 31.f));
 }
 
 

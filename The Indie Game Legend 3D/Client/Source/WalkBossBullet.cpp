@@ -49,6 +49,7 @@ HRESULT CWalkBossBullet::Awake()
 	m_fYTest = 0.f;
 	m_fBulletSpeed = 30.f;
 
+	m_bDead = false;
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -71,6 +72,9 @@ HRESULT CWalkBossBullet::Start()
 
 UINT CWalkBossBullet::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		OBJ_DEAD;
+
 	CGameObject::Update(_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
@@ -111,6 +115,16 @@ HRESULT CWalkBossBullet::Render()
 	m_pMeshRenderer->Render();
 	return S_OK;
 }
+
+void CWalkBossBullet::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"Player" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName())
+	{
+		m_bDead = true;
+	}
+}
+
 
 
 HRESULT CWalkBossBullet::Movement(float fDeltaTime)

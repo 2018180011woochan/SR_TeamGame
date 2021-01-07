@@ -35,6 +35,7 @@ private:
 	CTexturePool*  m_pTexturePool;
 	CCollider*		m_pCollider;
 	bool m_bIsHit;
+	
 
 	float				m_fWalkSpeed;
 	float				m_fWalkDeltaTime;

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "ShopKeeper.h"
+#include "Armor.h"
 
 CArmorPrice::CArmorPrice()
 	: m_pTexturePool(nullptr)
@@ -47,11 +48,15 @@ HRESULT CArmorPrice::Start()
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 	m_pShopKeeper = (CShopKeeper*)FindGameObjectOfType<CShopKeeper>();
+	m_pArmor = (CArmor*)FindGameObjectOfType<CArmor>();
 	return S_OK;
 }
 
 UINT CArmorPrice::Update(const float _fDeltaTime)
 {
+	if (m_pArmor->GetIsDead())
+		return OBJ_DEAD;
+
 	CGameObject::Update(_fDeltaTime);
 	MoveMent(_fDeltaTime);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
@@ -130,9 +135,9 @@ void CArmorPrice::MoveMent(float _fDeltaTime)
 {
 	CTransform* pTransform = (CTransform*)m_pShopKeeper->GetComponent<CTransform>();
 	
-	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x + 20.f,
+	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x + 5.f,
 		pTransform->Get_Position().y + 1.f,
-		pTransform->Get_Position().z - 20.f));
+		pTransform->Get_Position().z));
 }
 
 

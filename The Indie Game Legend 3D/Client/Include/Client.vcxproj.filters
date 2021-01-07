@@ -1017,60 +1017,6 @@
     <ClInclude Include="..\Header\BloodHand.h">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\09.BloodHand</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\GreenBoyFace.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\10.GreenBoyFace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\GreenBoyUpHand.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.GreenBoyUpHand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\GreenBoyDownHand.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.04.GreenBoyDownHand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PosionGas.h">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\11.PosionGas</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ContainerBlack.h">
-      <Filter>02.GameObject\14.Container\00.Container_Black</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\BigGun.h">
-      <Filter>02.GameObject\14.Container\04.Container_White\BigGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\LazerGun.h">
-      <Filter>02.GameObject\14.Container\00.Container_Black\LazerGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ContainerWhite.h">
-      <Filter>02.GameObject\14.Container\04.Container_White</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ContainerRed.h">
-      <Filter>02.GameObject\14.Container\03.Container_Red</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ContainerNomal.h">
-      <Filter>02.GameObject\14.Container\02.Container_Nomal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ContainerBlue.h">
-      <Filter>02.GameObject\14.Container\01.Container_Blue</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SpreadGun.h">
-      <Filter>02.GameObject\14.Container\01.Container_Blue\SpreadGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\LapidGun.h">
-      <Filter>02.GameObject\14.Container\02.Container_Nomal\LapidGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\FireBat.h">
-      <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SkillRunning.h">
-      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Price.h">
-      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ArmorPrice.h">
-      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SkillRunningPrice.h">
-      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Door.h">
       <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
     </ClInclude>
@@ -1115,6 +1061,61 @@
     </ClInclude>
     <ClInclude Include="..\Header\SlideBlock.h">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigShot.h" />
+    <ClInclude Include="..\Header\GreenBoyFace.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\10.GreenBoyFace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyDownHand.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.04.GreenBoyDownHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenBoyUpHand.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.GreenBoyUpHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PosionGas.h">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\11.PosionGas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ArmorPrice.h">
+      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillRunningPrice.h">
+      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillRunning.h">
+      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerBlack.h">
+      <Filter>02.GameObject\14.Container\00.Container_Black</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerBlue.h">
+      <Filter>02.GameObject\14.Container\01.Container_Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerNomal.h">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerRed.h">
+      <Filter>02.GameObject\14.Container\03.Container_Red</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ContainerWhite.h">
+      <Filter>02.GameObject\14.Container\04.Container_White</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LazerGun.h">
+      <Filter>02.GameObject\14.Container\00.Container_Black\LazerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpreadGun.h">
+      <Filter>02.GameObject\14.Container\01.Container_Blue\SpreadGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LapidGun.h">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal\LapidGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FireBat.h">
+      <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigGun.h">
+      <Filter>02.GameObject\14.Container\04.Container_White\BigGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Price.h">
+      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1505,60 +1506,6 @@
     <ClCompile Include="..\Source\BloodHand.cpp">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\09.BloodHand</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\GreenBoyFace.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\10.GreenBoyFace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GreenBoyUpHand.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.GreenBoyUpHand</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GreenBoyDownHand.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.04.GreenBoyDownHand</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\PosionGas.cpp">
-      <Filter>02.GameObject\00.Monster\12.GreenBoy\11.PosionGas</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ContainerBlack.cpp">
-      <Filter>02.GameObject\14.Container\00.Container_Black</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\BigGun.cpp">
-      <Filter>02.GameObject\14.Container\04.Container_White\BigGun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\LazerGun.cpp">
-      <Filter>02.GameObject\14.Container\00.Container_Black\LazerGun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ContainerBlue.cpp">
-      <Filter>02.GameObject\14.Container\01.Container_Blue</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ContainerNomal.cpp">
-      <Filter>02.GameObject\14.Container\02.Container_Nomal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ContainerRed.cpp">
-      <Filter>02.GameObject\14.Container\03.Container_Red</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ContainerWhite.cpp">
-      <Filter>02.GameObject\14.Container\04.Container_White</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\SpreadGun.cpp">
-      <Filter>02.GameObject\14.Container\01.Container_Blue\SpreadGun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\LapidGun.cpp">
-      <Filter>02.GameObject\14.Container\02.Container_Nomal\LapidGun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\FireBat.cpp">
-      <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\SkillRunning.cpp">
-      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Price.cpp">
-      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ArmorPrice.cpp">
-      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\SkillRunningPrice.cpp">
-      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Door.cpp">
       <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
     </ClCompile>
@@ -1603,6 +1550,61 @@
     </ClCompile>
     <ClCompile Include="..\Source\SlideBlock.cpp">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BigShot.cpp" />
+    <ClCompile Include="..\Source\GreenBoyFace.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\10.GreenBoyFace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyDownHand.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\05.04.GreenBoyDownHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GreenBoyUpHand.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\04.GreenBoyUpHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PosionGas.cpp">
+      <Filter>02.GameObject\00.Monster\12.GreenBoy\11.PosionGas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Price.cpp">
+      <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SkillRunning.cpp">
+      <Filter>02.GameObject\12.Shop\02.SkillRunning</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SkillRunningPrice.cpp">
+      <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ArmorPrice.cpp">
+      <Filter>02.GameObject\12.Shop\03.Price\01.ArmorPrice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerBlack.cpp">
+      <Filter>02.GameObject\14.Container\00.Container_Black</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerBlue.cpp">
+      <Filter>02.GameObject\14.Container\01.Container_Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerNomal.cpp">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerRed.cpp">
+      <Filter>02.GameObject\14.Container\03.Container_Red</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ContainerWhite.cpp">
+      <Filter>02.GameObject\14.Container\04.Container_White</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LazerGun.cpp">
+      <Filter>02.GameObject\14.Container\00.Container_Black\LazerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SpreadGun.cpp">
+      <Filter>02.GameObject\14.Container\01.Container_Blue\SpreadGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\LapidGun.cpp">
+      <Filter>02.GameObject\14.Container\02.Container_Nomal\LapidGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FireBat.cpp">
+      <Filter>02.GameObject\14.Container\03.Container_Red\FireBat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BigGun.cpp">
+      <Filter>02.GameObject\14.Container\04.Container_White\BigGun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

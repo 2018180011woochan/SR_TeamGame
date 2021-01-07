@@ -83,6 +83,7 @@ HRESULT CGreenBoyBody::Start()
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
 	// Test
 	m_pTransform->Set_Position(_vector(-240.f, 12.f, -240.f));
+	//m_pTransform->Set_Position(_vector(0, 12.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Body"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -99,7 +100,7 @@ HRESULT CGreenBoyBody::Start()
 
 	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
 	SafeAddRef(m_pBossHP);
-
+	//m_nTag = 0;
 	return S_OK;
 }
 

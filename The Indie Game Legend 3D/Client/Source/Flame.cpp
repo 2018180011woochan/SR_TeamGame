@@ -67,12 +67,13 @@ HRESULT CFlame::Start()
 	m_pTransform->Set_Scale(_vector(8, 8, 8));
 	// Test
 	m_pTransform->Set_Position(_vector(-240.f, 12.f, -240.f));
+	//m_pTransform->Set_Position(_vector(0, 12.f, 0.f));
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Flame"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-
+	//m_nTag = 0;
 	return S_OK;
 }
 
