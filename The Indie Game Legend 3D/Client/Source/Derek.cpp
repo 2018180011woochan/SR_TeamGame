@@ -67,7 +67,7 @@ HRESULT CDerek::Start()
 
 	m_pTransform->Add_Position(_vector(0.f, -3.f, 0.f));
 	//Test
-	m_pTransform->Set_Position(_vector(15.f, 4.f, 0.f));
+	m_pTransform->Set_Position(_vector(5.f, 4.f, 0.f));
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	

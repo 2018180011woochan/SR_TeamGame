@@ -55,8 +55,7 @@ HRESULT CNubBoss::Awake()
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 
-	m_nTag = 0;
-	m_iHP = 10;
+	m_iHP = 40;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -76,8 +75,8 @@ HRESULT CNubBoss::Start()
 	//Test
 	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
 	SafeAddRef(m_pBossHP);
-	m_pBossHP->Start();
-	m_pBossHP->SetEnable(true);
+	//m_pBossHP->Start();
+	//m_pBossHP->SetEnable(true);
 
 	m_pTransform->Add_Position(_vector(0, 10.f, 0));
 	return S_OK;

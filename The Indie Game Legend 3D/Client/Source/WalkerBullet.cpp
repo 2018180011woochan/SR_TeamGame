@@ -51,7 +51,6 @@ HRESULT CWalkerBullet::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
-	m_nTag = 0;
 
 	return S_OK;
 }
@@ -131,7 +130,7 @@ void CWalkerBullet::SetTurretPos(const _vector _TurretPos)
 	vecTarget = ((CTransform*)pGameObject->GetComponent<CTransform>())->Get_Position();
 
 	m_vecDir = vecTarget - _TurretPos;
-	m_vecDir.y = 5.f;
+	m_vecDir.y = 4.f;
 	D3DXVec3Normalize(&m_vecDir, &m_vecDir);
 }
 

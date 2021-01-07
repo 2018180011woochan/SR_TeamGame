@@ -3,6 +3,7 @@
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "Camera.h"
+#include "ShopKeeper.h"
 
 CAmmo::CAmmo()
 	: m_pTexturePool(nullptr)
@@ -32,7 +33,9 @@ HRESULT CAmmo::Awake()
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Ammo"));
 	SafeAddRef(m_pTexturePool);
-
+	m_nPrice = 50;
+	m_isBuyItem = false;
+	m_bDead = false;
 	m_pTransform->Set_Scale(_vector(5, 5, 5));
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -48,14 +51,16 @@ HRESULT CAmmo::Start()
 	m_pCollider->m_bIsRigid = true;
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
-
+	m_pShopKeeper = (CShopKeeper*)FindGameObjectOfType<CShopKeeper>();
 	return S_OK;
 }
 
 UINT CAmmo::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
 	CGameObject::Update(_fDeltaTime);
-
+	MoveMent(_fDeltaTime);
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	m_pTransform->UpdateTransform();
 
@@ -81,7 +86,17 @@ HRESULT CAmmo::Render()
 
 void CAmmo::OnCollision(CGameObject * _pGameObject)
 {
+	if (L"Player" == _pGameObject->GetName())
+	{
+		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
+		if (pPlayer->GetGem() < m_nPrice)
+			return;
 
+		pPlayer->SetBuyItem(m_nPrice);
+		pPlayer->SetByWeapon();
+		m_isBuyItem = true;
+		m_bDead = true;
+	}
 }
 
 HRESULT CAmmo::IsBillboarding()
@@ -126,6 +141,15 @@ HRESULT CAmmo::IsBillboarding()
 void CAmmo::Set_ItemPos(const _vector _vItemPos)
 {
 	m_pTransform->Set_Position(_vItemPos);
+}
+
+void CAmmo::MoveMent(float _fDeltaTime)
+{
+	CTransform* pTransform = (CTransform*)m_pShopKeeper->GetComponent<CTransform>();
+	
+	m_pTransform->Set_Position(_vector(pTransform->Get_Position().x + 5.f,
+		pTransform->Get_Position().y - 5.f,
+		pTransform->Get_Position().z - 31.f));
 }
 
 

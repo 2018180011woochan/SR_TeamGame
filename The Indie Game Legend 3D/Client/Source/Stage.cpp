@@ -29,6 +29,9 @@
 #include "Flame.h"
 #include "GreenBoyLeftHand.h"
 #include "GreenBoyRightHand.h"
+#include "GreenBoyUpHand.h"
+#include "GreenBoyDownHand.h"
+#include "GreenBoyFace.h"
 #include "BloodHand.h"
 #pragma endregion
 
@@ -36,7 +39,23 @@
 #include "ShopKeeper.h"
 #include "Ammo.h"
 #include "Armor.h"
-#include "BigShot.h"
+#include "SkillRunning.h"
+#include "Price.h"
+#include "ArmorPrice.h"
+#include "SkillRunningPrice.h"
+#pragma endregion
+
+#pragma region CONTAINER
+#include "ContainerBlack.h"
+#include "ContainerBlue.h"
+#include "ContainerNomal.h"
+#include "ContainerRed.h"
+#include "ContainerWhite.h"
+#include "LazerGun.h"
+#include "SpreadGun.h"
+#include "FireBat.h"
+#include "LapidGun.h"
+#include "BigGun.h"
 #pragma endregion
 
 #pragma region EFFECT
@@ -70,6 +89,7 @@
 #include "LaserBullet.h"
 #include "FireBullet.h"
 #include "IceBullet.h"
+#include "PosionGas.h"
 
 #pragma region INCLUDE_UI
 #include "AmmoGauge.h"
@@ -184,8 +204,23 @@ HRESULT CStage::Awake()
 	AddPrototype(CShopKeeper::Create());
 	AddPrototype(CAmmo::Create());
 	AddPrototype(CArmor::Create());
-	AddPrototype(CBigShot::Create());
+	AddPrototype(CSkillRunning::Create());
+	AddPrototype(CPrice::Create());
+	AddPrototype(CArmorPrice::Create());
+	AddPrototype(CSkillRunningPrice::Create());
 
+	AddPrototype(CContainerBlack::Create());
+	AddPrototype(CContainerBlue::Create());
+	AddPrototype(CContainerNomal::Create());
+	AddPrototype(CContainerRed::Create());
+	AddPrototype(CContainerWhite::Create());
+	AddPrototype(CLazerGun::Create());
+	AddPrototype(CSpreadGun::Create());
+	AddPrototype(CLapidGun::Create());
+	AddPrototype(CFireBat::Create());
+	AddPrototype(CBigGun::Create());
+
+	
 	AddPrototype(CPhubans::Create());
 	AddPrototype(CCactus::Create());
 	AddPrototype(CDerek::Create());
@@ -220,9 +255,12 @@ HRESULT CStage::Awake()
 	AddPrototype(CFlame::Create());
 	AddPrototype(CGreenBoyLeftHand::Create());
 	AddPrototype(CGreenBoyRightHand::Create());
+	AddPrototype(CGreenBoyUpHand::Create());
+	AddPrototype(CGreenBoyDownHand::Create());
+	AddPrototype(CGreenBoyFace::Create());
 	// ±×¸°º¸ÀÌ°¡ ½î´Â ÃÑ¾Ë
 	AddPrototype(CBloodHand::Create());
-
+	AddPrototype(CPosionGas::Create());
 	AddPrototype(CFireBullet::Create());
 	AddPrototype(CIceBullet::Create());
 
@@ -263,7 +301,25 @@ HRESULT CStage::Awake()
 	AddPrototype(CPuzzleRoomCamera::Create());
 #pragma endregion
 
+#pragma region SHOP
+	AddGameObject<CShopKeeper>()->SetPosition(_vector(-165.f, 7.f, 207.f));
+	AddGameObject<CAmmo>();
+	AddGameObject<CArmor>();
+	AddGameObject<CSkillRunning>();
+	AddGameObject<CPrice>();
+	AddGameObject<CArmorPrice>();
+	AddGameObject<CSkillRunningPrice>();
+#pragma endregion
 
+#pragma region GREENBOYBOSS
+	AddGameObject<CGreenBoyHead>()->SetPosition(_vector(240.f, 20.f, -240.f));
+	AddGameObject<CGreenBoyBody>()->SetPosition(_vector(240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyLeftHand>()->SetPosition(_vector(240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyRightHand>()->SetPosition(_vector(240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyUpHand>()->SetPosition(_vector(240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyDownHand>()->SetPosition(_vector(240.f, 12.f, -240.f));
+	AddGameObject<CGreenBoyFace>()->SetPosition(_vector(240.f, 17.f, -240.f));
+	AddGameObject<CFlame>()->SetPosition(_vector(240.f, 12.f, 300.f));
 #pragma endregion
 
 #pragma region GUN_TEST

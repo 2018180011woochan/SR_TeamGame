@@ -57,7 +57,7 @@ HRESULT CWalkerBoss::Awake()
 	//m_pTransform->Add_Position(_vector(-5.f, 5.f, 10.f));
 	m_pTransform->Set_Position(_vector(-15.f, 5.f, 10.f));
 
-	m_iHP = 10;
+	m_iHP = 20;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;

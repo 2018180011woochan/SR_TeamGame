@@ -40,12 +40,7 @@ HRESULT CTurret::Awake()
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
 
 
-	m_iHP = 3;
-#ifndef _DEBUG
-		
-	m_nTag = 0;
-#endif // !_DEB
-
+	m_iHP = 5;
 	m_bDead = false;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -58,7 +53,7 @@ HRESULT CTurret::Start()
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
 
 	return S_OK;
@@ -72,25 +67,20 @@ UINT CTurret::Update(const float _fDeltaTime)
 	}
 	CMonster::Update(_fDeltaTime);
 
-	/*
-	if (ÅÍ·¿ÀÌ ºÎ¼ÅÁö¸é)
-		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
-	*/
 
-	if (m_pTransform->Get_Position().y > 5.f || m_pTransform->Get_Position().y < 3.f)
-	{
-		m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 3.f, m_pTransform->Get_Position().z));
-	}
+
+	m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 5.f, m_pTransform->Get_Position().z));
+
 
 	if (!m_bDead)
 	{
 		//off Test
-		/*m_fFireDeltaTime += _fDeltaTime;
+		m_fFireDeltaTime += _fDeltaTime;
 		if (m_fFireSpeed <= m_fFireDeltaTime)
 		{
 			m_fFireDeltaTime -= m_fFireSpeed;
 			BulletFire();
-		}*/
+		}
 	}
 
 	m_pTransform->UpdateTransform();
@@ -116,12 +106,10 @@ HRESULT CTurret::Render()
 
 void CTurret::OnCollision(CGameObject * _pGameObject)
 {
-
-	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
+	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
-		m_bHit = true;
 		m_iHP--;
-		m_bHit = true;
+
 		int iRandX = rand() % 5;
 		int iRandY = rand() % 5;
 		int iRandZ = rand() % 5;
@@ -130,17 +118,11 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
 			m_pTransform->Get_Position().y + iRandY
 			, m_pTransform->Get_Position().z + iRandZ));
-
-		sfxMetalHit();
-
 	}
 	if (m_iHP <= 0)
 	{
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
 		m_bDead = true;
-		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
-		((CPlayer*)FindGameObjectOfType<CPlayer>())->AddSkillGauge(3);
-
 	}
 }
 
