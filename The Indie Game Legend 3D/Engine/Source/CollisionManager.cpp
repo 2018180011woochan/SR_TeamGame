@@ -39,7 +39,8 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 	{
 		for (UINT j = i + 1; j < nSize; ++j)
 		{
-			if (false == Collider[i]->m_bIsRigid && false == Collider[j]->m_bIsRigid)
+			if (false == Collider[i]->m_bIsRigid && false == Collider[j]->m_bIsRigid
+				&&false == Collider[i]->m_bExcept && false == Collider[j]->m_bExcept)
 				continue;
 
 			BOUND tOrigin = Collider[i]->GetBound();
@@ -85,7 +86,7 @@ void CCollisionManager::CollisionCheck(list<CGameObject*> _GameObjects)
 	}
 }
 
-bool CCollisionManager::AABBToAABB(BOUND _tOriginBound, BOUND _tTargetBound)
+bool CCollisionManager::AABBToAABB(BOUND _tOriginBound, BOUND _tTargetBound, D3DXVECTOR3& _vPenetration)
 {
 	if (_tOriginBound.vMax.x < _tTargetBound.vMin.x || _tOriginBound.vMin.x > _tTargetBound.vMax.x)
 		return false;

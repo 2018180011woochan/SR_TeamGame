@@ -6,6 +6,8 @@
 #include "FinalNormal.h"
 #include "FinalLaser.h"
 
+#include "BossHP.h"
+#include "Explosion.h"
 CFinalBoss::CFinalBoss()
 	: m_pPlayer(nullptr)
 	, m_pMeshRenderer(nullptr)
@@ -31,6 +33,8 @@ CFinalBoss::CFinalBoss(const CFinalBoss & _rOther)
 	, m_bLoop(true)
 	, m_bReverse(false)
 	, m_fMoveSpeed(10.f)
+	, m_fEffectTime(0.f)
+	, m_nEffectCount(0)
 {
 }
 
@@ -75,6 +79,11 @@ HRESULT CFinalBoss::Awake()
 	m_pTransform->Set_Rotation(D3DXVECTOR3(90.f, 0.f, 0.f));
 	m_pTransform->UpdateTransform();
 
+	m_pCollider = (CCollider*)AddComponent<CCollider>();
+	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
+	m_pCollider->SetRadius(9.f);
+	m_pCollider->m_bExcept = true;
+
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -93,12 +102,27 @@ HRESULT CFinalBoss::Start()
 	SetPattern(PATTERN::NORMAL);
 
 	m_bTest = true;
+
+	m_sName = true;
+
+	m_nHP = 100;
+	m_nMaxHP = 100;
+
+	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
+	m_pBossHP->SetHPBar(float(m_nHP) / float(m_nMaxHP));
+
+	m_sName = TEXT("FinalBoss");
+
+	m_bRemove = false;
 	return S_OK;
 }
 
 UINT CFinalBoss::Update(const float _fDeltaTime)
 {
 	//CMonster::Update(_fDeltaTime);
+	if (true == m_bRemove)
+		return OBJ_DEAD;
+
 	m_vMoveDirection = D3DXVECTOR3(0.f, 0.f, 0.f);
 	InputTest(_fDeltaTime);
 	DoPattern(_fDeltaTime);
@@ -121,6 +145,14 @@ HRESULT CFinalBoss::Render()
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CFinalBoss::OnCollision(CGameObject * _pGameObject)
+{
+	if ((L"PlayerBullet" == _pGameObject->GetName()))
+	{
+		SetHP(-1);
+	}
 }
 
 void CFinalBoss::Animate(const float _fDeltaTime)
@@ -183,6 +215,9 @@ void CFinalBoss::DoPattern(const float _fDeltaTime)
 		break;
 	case CFinalBoss::NORMAL:
 		Normal(_fDeltaTime);
+		break;
+	case CFinalBoss::DEAD:
+		Dead(_fDeltaTime);
 		break;
 	default:
 		break;
@@ -249,9 +284,9 @@ void CFinalBoss::Idle(const float _fDeltaTime)
 		++m_nViaIndex;
 	}
 
-	if (fContinuanceTime > 0.5f)
+	if (fContinuanceTime > 1.f)
 	{
-		SetPattern((PATTERN)(1 + rand() % (PATTERN::PATTERN_END - 1)));
+		SetPattern((PATTERN)(1 + rand() % (PATTERN::PATTERN_END - 2)));
 		fContinuanceTime = 0.f;
 		fInterpolation = 0.f;
 	}
@@ -305,14 +340,40 @@ void CFinalBoss::Normal(const float _fDeltaTime)
 
 }
 
+void CFinalBoss::Dead(const float _fDeltaTime)
+{
+	m_fEffectTime += _fDeltaTime;
+
+	if (m_fEffectTime > 0.2f)
+	{
+		m_fEffectTime -= 0.2f;
+
+		if (m_nEffectCount < 10)
+		{
+			CExplosion * m_pEffect = (CExplosion*)AddGameObject<CExplosion>();
+			int iRandX = -10 + rand() % 20;
+			int iRandZ = -10 + rand() % 20;
+			D3DXVECTOR3 vPosition = m_pTransform->Get_Position();
+			vPosition.x += iRandX;
+			vPosition.z += iRandZ;
+			m_pEffect->SetPosition(vPosition);
+			m_nEffectCount++;
+		}
+		else
+		{
+			m_bRemove = true;
+		}
+	}
+}
+
 void CFinalBoss::ExplosionLaser(const float _fDeltaTime)
 {
 	static int nTest = 0;
 	static float fTime = 0;
 	fTime += _fDeltaTime;
-	if (fTime > 1.f)
+	if (fTime > 10.f)
 	{
-		fTime -= 1.f;
+		fTime -= 10.f;
 		nTest = 0;
 	}
 	if (nTest != 0)
@@ -358,4 +419,16 @@ void CFinalBoss::InputTest(const float _fDeltaTime)
 	D3DXVec3Normalize(&vDir, &vDir);
 	m_pTransform->Add_Position(vDir * 30.f * _fDeltaTime);
 	m_pTransform->UpdateTransform();
+}
+
+void CFinalBoss::SetHP(int _nHP)
+{
+	m_nHP += _nHP;
+	m_pBossHP->SetHPBar(float(m_nHP) / float(m_nMaxHP));
+	
+	if (m_nHP <= 0)
+	{
+		SetPattern(PATTERN::DEAD);
+		m_pBossHP->SetEnable(false);
+	}
 }

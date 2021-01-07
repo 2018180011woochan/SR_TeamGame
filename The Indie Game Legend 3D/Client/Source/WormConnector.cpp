@@ -46,13 +46,14 @@ HRESULT CWormConnector::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(4.6f, 4.0f, 1.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -5.f, 0.f));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 
 	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->SetRadius(3.f);
-
+	m_pCollider->m_bExcept = true;
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
@@ -65,13 +66,14 @@ HRESULT CWormConnector::Start()
 	m_sTextureKey = TEXT("Side");
 
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(m_sTextureKey)[0]);
-
 	return S_OK;
 }
 
 UINT CWormConnector::Update(const float _fDeltaTime)
 {
 	CWormPart::Update(_fDeltaTime);
+	if (true == m_bRemove)
+		return OBJ_DEAD;
 	return 0;
 }
 

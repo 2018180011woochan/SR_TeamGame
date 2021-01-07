@@ -84,6 +84,8 @@ HRESULT CBattleShipBullet::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->SetRadius(1.5f);
+
+	m_sName = TEXT("PlayerBullet");
 	return S_OK;
 }
 
@@ -110,6 +112,14 @@ HRESULT CBattleShipBullet::Render()
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CBattleShipBullet::OnCollision(CGameObject * _pGameObject)
+{
+	if ((L"FinalBoss" == _pGameObject->GetName()))
+	{
+		m_bRemove = true;
+	}
 }
 
 void CBattleShipBullet::SetBullet(D3DXVECTOR3 _vStart)

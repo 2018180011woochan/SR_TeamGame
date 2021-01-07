@@ -45,6 +45,7 @@
 #include "Explosion.h"
 #include "ExplosionBlue.h"
 #include "SandBurst.h"
+#include "Sand.h"
 #pragma endregion
 
 #pragma region NPC
@@ -480,18 +481,23 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CWormConnector::Create());
 	AddPrototype(CWormTail::Create());
 	AddPrototype(CWormBullet::Create());
-	//AddGameObject<CWormConnector>();
-	//AddGameObject<CWormConnector>();
-	//AddGameObject<CWormConnector>();
-	//AddGameObject<CWormConnector>();
-	//AddGameObject<CWormConnector>();
+	AddPrototype(CSand::Create());
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
+	AddGameObject<CWormConnector>();
 
-	//AddGameObject<CWorm>()->SetEnable(true);
-	//AddGameObject<CWormBody>();
-	//AddGameObject<CWormBody>();
-	//AddGameObject<CWormBody>();
-	//AddGameObject<CWormBody>();
-	//AddGameObject<CWormTail>();
+	AddGameObject<CWorm>();
+	AddGameObject<CWormBody>();
+	AddGameObject<CWormBody>();
+	AddGameObject<CWormBody>();
+	AddGameObject<CWormBody>();
+	AddGameObject<CWormTail>();
+
+	AddGameObject<CSand>();
+	AddGameObject<CSand>();
+
 	return S_OK;
 }
 

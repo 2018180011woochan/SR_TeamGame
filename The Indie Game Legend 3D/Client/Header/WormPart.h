@@ -3,6 +3,8 @@
 #include "Monster.h"
 USING(Engine)
 class CTexturePool;
+class CWorm;
+class CExplosion;
 class CWormPart : public CMonster
 {
 protected:
@@ -18,6 +20,15 @@ protected:
 	float			m_fInterval;
 
 	D3DXVECTOR3		m_vMoveDir;
+
+	CWorm*			m_pWorm;
+
+	float			m_fEffectTime;
+	UINT			m_nEffectCount;
+
+	CExplosion*		m_pEffect;
+
+	bool			m_bRemove;
 protected:
 	explicit CWormPart();
 	explicit CWormPart(const CWormPart& _rOther);
@@ -39,11 +50,14 @@ public:
 
 	virtual void OnEnable() override;
 	virtual void OnDisable() override;
+	virtual void OnCollision(CGameObject* _pGameObject) override;
 public:
 	//진행 방향 회전
 	void RotationZ(D3DXVECTOR3 _vMoveDir);
 	//
 	void Move(const float _fDistance);
+
+	void Dead(const float _fDeltaTime);
 public:
 	void SetParent(CWormPart* _pParent);
 	void SetChild(CWormPart* _pChild);

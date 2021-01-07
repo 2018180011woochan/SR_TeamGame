@@ -180,9 +180,13 @@
     <ClInclude Include="..\Header\BulletSpark.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
     <ClInclude Include="..\Header\Door.h" />
+    <ClInclude Include="..\Header\Ending.h" />
+    <ClInclude Include="..\Header\EndingText.h" />
+    <ClInclude Include="..\Header\FinalExplosion.h" />
     <ClInclude Include="..\Header\Gate.h" />
     <ClInclude Include="..\Header\Pillar.h" />
     <ClInclude Include="..\Header\PuzzleRoomCamera.h" />
+    <ClInclude Include="..\Header\Sand.h" />
     <ClInclude Include="..\Header\SlideBlock.h" />
     <ClInclude Include="..\Header\FinalBoss.h" />
     <ClInclude Include="..\Header\FinalCamera.h" />
@@ -331,9 +335,13 @@
     <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
     <ClCompile Include="..\Source\Door.cpp" />
+    <ClCompile Include="..\Source\Ending.cpp" />
+    <ClCompile Include="..\Source\EndingText.cpp" />
+    <ClCompile Include="..\Source\FinalExplosion.cpp" />
     <ClCompile Include="..\Source\Gate.cpp" />
     <ClCompile Include="..\Source\Pillar.cpp" />
     <ClCompile Include="..\Source\PuzzleRoomCamera.cpp" />
+    <ClCompile Include="..\Source\Sand.cpp" />
     <ClCompile Include="..\Source\SlideBlock.cpp" />
     <ClCompile Include="..\Source\FinalBoss.cpp" />
     <ClCompile Include="..\Source\FinalCamera.cpp" />

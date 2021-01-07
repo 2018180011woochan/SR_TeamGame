@@ -138,9 +138,13 @@ void CAmmoHUD::SetActive(const bool _bActive)
 	if (true == _bActive)
 	{
 		m_pAmmoIconHighlight->SetEnable(true);
+		m_pAmmoIcon->SetActive(true);
+		m_pAmmoGauge->SetActive(true);
 	}
 	else
 	{
 		m_pAmmoIconHighlight->SetEnable(false);
+		m_pAmmoIcon->SetActive(false);
+		m_pAmmoGauge->SetActive(false);
 	}
 }

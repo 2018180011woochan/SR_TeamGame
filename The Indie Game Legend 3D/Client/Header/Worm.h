@@ -3,10 +3,11 @@
 #include "WormPart.h"
 USING(Engine)
 class CBossHP;
+class CSand;
 class CWorm final : public CWormPart
 {
 private:
-	enum PATTERN { IDLE, BURROW, FARAWAY, TRACE, FIRE, PATTERN_END};
+	enum PATTERN { IDLE, BURROW, FARAWAY, TRACE, FIRE, DEAD,PATTERN_END};
 private:
 	CBossHP* m_pBossHP;
 
@@ -34,6 +35,13 @@ private:
 
 	float		m_fFireInterval;
 	UINT		m_nFireCount;
+
+	CWormPart*	m_pWormTail;
+
+	CSand*		m_pSand[2];
+
+	int		m_nCurrentHP;
+	int		m_nMaxHP;
 private:
 	explicit CWorm();
 	explicit CWorm(const CWorm& _rOther);
@@ -55,6 +63,9 @@ public:
 
 	virtual void OnEnable() override;
 	virtual void OnDisable() override;
+
+public:
+	void SetHP(int _nHP);
 private:
 	void ConnectBody();
 	void Animate(const float _fDeltaTime);
@@ -73,6 +84,7 @@ private:
 	D3DXVECTOR3 CalculateFarAwayEnd();
 
 	void SetTextureKey();
+
 };
 #define __WORM_H__
 #endif // !__WORM_H__
