@@ -19,8 +19,9 @@ protected:
 	_int				m_nTag;
 
 	bool				m_bEnable;
-	//Test
 	TSTRING				m_sName;
+	//  [1/5/2021 wades]
+	bool				m_bDelete;
 protected:
 	explicit CGameObject();
 	explicit CGameObject(const CGameObject& _rOther);
@@ -33,7 +34,8 @@ public:
 	void			SetTag(const _int& _nTag);
 	_int			GetTag();
 	TSTRING			GetName();
-
+	//  [1/7/2021 wades]
+	bool			IsDelete();
 public:
 	virtual HRESULT			InitializePrototype()					PURE;
 	virtual HRESULT			Awake()									PURE;
@@ -68,6 +70,9 @@ public:
 	virtual void			OnDisable();
 
 	void					SetEnable(const bool _bEnable);
+	//  [1/5/2021 wades]
+	HRESULT					GetWorldPos(OUT D3DXVECTOR3& _vWorldPos);
+	HRESULT					SetPosition(const D3DXVECTOR3& _vPosition);
 };
 END
 #include "GameObject.hpp"

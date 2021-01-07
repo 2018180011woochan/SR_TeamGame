@@ -25,6 +25,8 @@ USING(Engine)
 #include "Gun.h"
 #include "Focus.h"
 #include "CrossHair.h"
+#include "AmmoHUD.h"
+#include "Monster.h"
 
 CPlayer::CPlayer()
 	:CGameObject()
@@ -40,14 +42,14 @@ CPlayer::CPlayer()
 	, m_fBulletFireTime(0.f)
 	, m_eCurWeaponType(EWeaponType::Big)
 	, m_ePreWeaponType(EWeaponType::End)
-	, m_fDashDelay(0.f)
-	, m_fDashDelayTime(0.f)
-	, m_fDashDuration(0.f)
+	, m_fDashActionDelay(0.f)
+	, m_fDashActionDelayTime(0.f)
+	, m_fDashMoveDuration(0.f)
 	, m_fDashDurationTime(0.f)
 	, m_eState(EState::Move)
-	, m_eSector(ESectorTileID::Sector1)
+	, m_eTileID(ETileID::Nomal)
 	, m_pGun(nullptr)
-
+	, m_pPlayerCamera(nullptr)
 {
 }
 
@@ -68,8 +70,12 @@ CPlayer::CPlayer(const CPlayer & _rOther)
 	, m_vecWeapons(_rOther.m_vecWeapons)
 	, m_eState(_rOther.m_eState)
 	, m_fDashDurationTime(_rOther.m_fDashDurationTime)
-	, m_eSector(_rOther.m_eSector)
+	, m_eTileID(_rOther.m_eTileID)
 	, m_pGun(nullptr)
+	, m_bSpotLightTrigger(false)
+	, m_fHighNoonDmg(0.f)
+	, m_pPlayerCamera(nullptr)
+	, m_bDashDmg(false)
 {
 
 }
@@ -84,9 +90,13 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	m_pTransform->Add_RotationY(pMouse->Get_MouseDir().x *  m_fMouseSpeedX * _fDeltaTime);
 
 	//Fire & airStrike
-	//디버깅 하기 편하게 좌클릭 제어 걸어둠 
-	if (m_pKeyMgr->Key_Toggle(VK_F2))
+	// 퍼즐모드인지 확인하는 조건으로 변경 해야함 [1/7/2021 wades]
+	if (!m_pKeyMgr->Key_Toggle(VK_F2))
 	{
+		// 피킹용 유틸 또 불러야겠다 [1/7/2021 wades]
+		return S_OK;
+	}
+
 		//공습스킬 사용 눌렀는지 체크
 		if (CMsgManager::GetInstance()->GetAirStrikeReady())
 		{
@@ -96,36 +106,57 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 			if (CUtilityManger::AirstrikePicking(m_nSceneID, AirStrikePos) 
 				&& m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
-				CMsgManager::GetInstance()->AirStrikeSetting(m_nSceneID, AirStrikePos);
+				CMsgManager::GetInstance()->AirStrikeStart(m_nSceneID, AirStrikePos);
 				m_pCrossHair->SetEnable(true);
 			}
 			AirStrikePos.y = 0.1f;
 			m_pFocus->SetFocusPos(AirStrikePos);
 		}
-		else
+		//맥크리궁//  [1/5/2021 wades]
+		else if (CMsgManager::GetInstance()->GetHighNoonReady())
 		{
-			//BulletFire();
-			//m_pGun->SetFire();
+			m_bIsDeBuff = true;
+			m_listHighNoon.clear();
+
+			if (CUtilityManger::AutoAim(m_nSceneID, m_listHighNoon))
+			{
+				//계속 UI 호출 
+				m_fHighNoonDmg += HighNoonAmount * _fDeltaTime;
+				m_fHighNoonDmg = CLAMP(m_fHighNoonDmg, 0, HighNoonMaxDmg);
+
+				// Log [1/6/2021 wades]
+				cout << "Target Count : " << m_listHighNoon.size() << ", Dmg: " << m_fHighNoonDmg << endl;
+				if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
+				{
+					m_pPlayerCamera->StopCameraWorking();
+					m_bIsDeBuff = false;
+					CMsgManager::GetInstance()->HighNoonStart(m_nSceneID, m_listHighNoon, (_int)m_fHighNoonDmg);
+					m_fHighNoonDmg = 0;
+					m_listHighNoon.clear();
+				}
+			}
+		}
+		else // 기본상태 
+		{
 			//플레임 건이 아닐경우 반동 필요 
 			if (m_ePreWeaponType != EWeaponType::Flame &&  m_pKeyMgr->Key_Down(KEY_LBUTTON))
 			{
 				BulletFire();
-				m_pGun->SetFire();
 			}
 			//플레임 건일경우 반동 무필요 
 			else if (m_ePreWeaponType == EWeaponType::Flame &&  m_pKeyMgr->Key_Press(KEY_LBUTTON))
 			{
 				BulletFire();
 			}
-
 		}
-	}
 
 	//Use Weapon
 	if (m_pKeyMgr->Key_Down(KEY_RBUTTON)  && m_vecWeapons.empty() == false)
 	{
 		m_bUseWeapon = !m_bUseWeapon;
 		ChangeWeaponUISetting();
+		m_pAmmoHud->SetActive(m_bUseWeapon);
+		m_pGun->SetActive(m_bUseWeapon);
 	}
 	//weapon Change
 	if (m_pKeyMgr->Key_Down(KEY_Q) && m_vecWeapons.empty() == false)
@@ -142,22 +173,25 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	}
 
 	//Use Skill
-	if (m_pKeyMgr->Key_Down(KEY_1) && m_vecWeapons.empty() == false)
+	if (true  /*m_bEnableSkill*/)
 	{
-		CMsgManager::GetInstance()->FreezingStart(5.f);
+		if (m_pKeyMgr->Key_Down(KEY_1))
+		{
+			CMsgManager::GetInstance()->FreezingStart(5.f);
+		}
+		if (m_pKeyMgr->Key_Down(KEY_2))
+		{
+			CMsgManager::GetInstance()->HighNoonReady(5.f);
+			m_pPlayerCamera->SetCameraZoomIn(80.f, 5.f);
+			m_fHighNoonDmg = 0;
+		}
+		else if (m_pKeyMgr->Key_Down(KEY_3))
+		{
+			CMsgManager::GetInstance()->AirStrikeReady();
+			m_pFocus->SetEnable(true);
+			m_pCrossHair->SetEnable(false);
+		}
 	}
-	if (m_pKeyMgr->Key_Down(KEY_2))
-	{
-		CMsgManager::GetInstance()->AutoAimStart(5.f);
-	}
-	else if (m_pKeyMgr->Key_Down(KEY_3) && m_vecWeapons.empty() == false)
-	{
-		CMsgManager::GetInstance()->AirStrikeReady();
-		m_pFocus->SetEnable(true);
-		m_pCrossHair->SetEnable(false);
-	}
-
-
 
 	return S_OK;
 }
@@ -202,25 +236,43 @@ HRESULT CPlayer::MoveCheck()
 		m_vMoveDir += (m_pTransform->Get_Right());
 	}
 
+	//  [1/7/2021 wades]
+	if (m_bGrapEnable)
+		return S_OK;
+
 	if (m_eState != EState::Hit &&  m_pKeyMgr->Key_Press(KEY_LSHIFT))
 		m_eState = EState::Run;
 
-	if (m_pKeyMgr->Key_Down(KEY_SPACE) && m_fDashDelay <= m_fDashDelayTime)
+	if (m_pKeyMgr->Key_Down(KEY_SPACE) && m_fDashActionDelay <= m_fDashActionDelayTime)
 	{
 		m_eState = EState::Dash;
 		m_fDashDurationTime = 0.f;
-		m_fDashDelayTime = 0.f;
+		m_fDashActionDelayTime = 0.f;
 		SoundPlay(ESoundID::Dash);
 	}
 
-
+	if (m_pKeyMgr->Key_Down(KEY_F) && m_fDashActionDelay <= m_fDashActionDelayTime)
+	{
+		m_bDashDmg = true;
+		m_eState = EState::DashAttack;
+		m_fDashDurationTime = 0.f;
+		m_fDashActionDelayTime = 0.f;
+		SoundPlay(ESoundID::DashAttack);
+		m_pGun->SetEnable(false);
+	}
 	return S_OK;
 }
 
-void CPlayer::Move(const float& _fSpeed,  const float _fDeltaTime)
+void CPlayer::Move(float _fResultSpeed,  const float _fDeltaTime)
 {
 	D3DXVec3Normalize(&m_vMoveDir, &m_vMoveDir);
-	m_pTransform->Add_Position(m_vMoveDir * _fSpeed *_fDeltaTime);
+
+	//  [1/6/2021 wades] 디버프 종류에 따른 속도 변화를 줘야할듯 분기 때려서 
+	if (m_bIsDeBuff)
+	{
+		_fResultSpeed /= 2.f;
+	}
+	m_pTransform->Add_Position(m_vMoveDir * _fResultSpeed *_fDeltaTime);
 
 	if (D3DXVECTOR3(0.f, 0.f, 0.f) != m_vMoveDir)
 		m_pGun->SetState(CGun::STATE::MOVE);
@@ -246,11 +298,16 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 			m_fRunningTime = 0.f;
 		}
 		float fPer = 0.9f;
-
 		fPer += fabs(cosf(PI* (m_fRunningTime / RunCameraYCycle) ) / 10.f);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 		pCamera->SetHeghitPersent(fPer);
+	}
+		break;
+	case EState::DashAttack:
+	{
+		m_fDashDurationTime += _fDeltaTime;
+		Move(m_fDashAttackSpeed, _fDeltaTime);
 	}
 		break;
 	case EState::Dash:
@@ -259,19 +316,23 @@ void CPlayer::UpdateState(const float _fDeltaTime)
 		m_fDashDurationTime += _fDeltaTime;
 		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 		float fPer = 0.7f;
-		fPer += fabs(0.3f - m_fDashDurationTime / m_fDashDuration);
+		fPer += fabs(0.3f - m_fDashDurationTime / m_fDashMoveDuration);
 		fPer = CLAMP(fPer, 0.5f, 1.f);
 		pCamera->SetHeghitPersent(fPer);
 	}
 		break;
 	case EState::Hit:
-		m_fHitDelayTime += _fDeltaTime;
+	{
+		m_fHitAnimatTime += _fDeltaTime * 3.f;
 		//Camera 흔들림 코드 
-		if(m_bIsDeBuff)
-			Move(m_fMoveSpeed/2.f, _fDeltaTime);
-		else
-			Move(m_fMoveSpeed, _fDeltaTime);
-
+		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+		float fPer = 0.f;
+		float fInterval = 1.f;
+		fPer =  -0.5f + fabs(cosf((2 * PI)* (m_fHitAnimatTime / m_fHitDelay)));
+		fInterval *= fPer;
+		pCamera->SetShakeVertical(fInterval);
+		Move(m_fMoveSpeed/2.f, _fDeltaTime);
+	}
 		break;
 	default:
 		break;
@@ -282,23 +343,28 @@ void CPlayer::TakeItem(const EItemID & _eID)
 {
 	switch (_eID)
 	{
+	case EItemID::Disc :
+		++m_nDisc;
+		m_nDisc = CLAMP(m_nDisc, 0, DiscMax);
+		m_pDiscText->SetCount(m_nDisc);
+		break;
 	case EItemID::Heart:
-		AddHp(1);
+		AddHp(4);
 		break;
 	case EItemID::Ammo:
-		break;
-	case EItemID::sprCoin:
 		++m_fAmmo;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
-		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
-		//++m_nCoin;
+		m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
+		SoundPlay(ESoundID::AddAmmo);
+		break;
+	case EItemID::sprCoin:
+		++m_nGem;
+		m_pGemText->SetCount(m_nGem);
 		SoundPlay(ESoundID::AddCoin);
 		break;
 	case EItemID::sprBigCoin:
-		//m_nCoin += 10;
-		m_fAmmo += 3;
-		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
-		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
+		m_nGem += 10;
+		m_pGemText->SetCount(m_nGem);
 		SoundPlay(ESoundID::AddCoin);
 		break;
 	case EItemID::End:
@@ -310,29 +376,37 @@ void CPlayer::BulletFire()
 {
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 		return;
-	if (m_fAmmo <= 0)
-		return;
+	
 	// 현재 저 조건 아니면 발사 했다는 경우이니 초기화
 	m_fBulletFireTime = 0.f;
 	CBullet* pBullet = nullptr;
 
 	if (m_bUseWeapon)
 	{
+		if (m_fAmmo <= 0)
+		{
+			SoundPlay(ESoundID::EmptyShot);
+			m_pGun->SetFire();
+			return;
+		}
 		switch (m_eCurWeaponType)
 		{
 		case EWeaponType::Multiple:
 			pBullet = (CTripleBullet*)AddGameObject<CTripleBullet>();
-			pBullet->Fire();
+			pBullet->Fire();			
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::NormaBullet);
 			break;
 		case EWeaponType::Big:
 			 pBullet = (CBigBullet*)AddGameObject<CBigBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::BigBullet);
 			break;
 		case EWeaponType::Rapid:
 			 pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::NormaBullet);
 			break;
 		case EWeaponType::Flame:
@@ -343,6 +417,7 @@ void CPlayer::BulletFire()
 		case EWeaponType::Lazer:
 			pBullet = (CLaserBullet*)AddGameObject<CLaserBullet>();
 			pBullet->Fire();
+			m_pGun->SetFire();
 			SoundPlay(ESoundID::LaserBullet);
 			break;
 		default :
@@ -351,16 +426,14 @@ void CPlayer::BulletFire()
 
 		m_fAmmo -= m_nAmmoDecrease;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
-		m_pAmmobar->SetFillAmount(m_fAmmo / m_fAmmoMax);
-		
-
+		m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
 	}
 	else
 	{
 		CNormalBullet* pBullet = (CNormalBullet*)AddGameObject<CNormalBullet>();
 		pBullet->Fire();
 		SoundPlay(ESoundID::NormaBullet);
-
+		m_pGun->SetFire();
 	}
 }
 
@@ -376,7 +449,7 @@ void CPlayer::ChangeWeaponUISetting()
 	//중복콜 방지용
 	if (m_ePreWeaponType != m_eCurWeaponType)
 	{
-		m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
+		m_pAmmoHud->SetAmmoIcon((UINT)m_eCurWeaponType);
 		m_ePreWeaponType = m_eCurWeaponType;
 	}
 	ChangeWeapon();
@@ -409,7 +482,7 @@ void CPlayer::ChangeWeapon()
 			break;
 		case EWeaponType::Lazer:
 			m_fBulletFireDelay = LaserDelay;
-			m_nAmmoDecrease = 0;
+			m_nAmmoDecrease = 4;
 			break;
 		default:
 			break;
@@ -423,110 +496,109 @@ void CPlayer::ChangeWeapon()
 
 void CPlayer::UpdateLight()
 {
+	if (m_bSpotLightTrigger == false)
+		return;
 	D3DLIGHT9& playerLight = *CLightMananger::GetInstance()->GetLight(CLightMananger::Player);
 	playerLight.Position = m_pTransform->Get_Position();
-	float v = 0.0001f;
-	static float h = 100;
-
-	if (GetAsyncKeyState('1') & 0x8000)
-	{
-		h -= 1.f;
-	}
-	if (GetAsyncKeyState('2') & 0x8000)
-	{
-		h += 1.f;
-	}
-	h = CLAMP(h, 5, 200);
-	playerLight.Position.y = h;
-	if (GetAsyncKeyState('T') & 0x8000)
-	{
-		playerLight.Attenuation0 -= v;
-	}
-	if (GetAsyncKeyState('Y') & 0x8000)
-	{
-		playerLight.Attenuation0 += v;
-	}
-	if (GetAsyncKeyState('G') & 0x8000)
-	{
-		playerLight.Attenuation1 -= v;
-
-	}
-	if (GetAsyncKeyState('H') & 0x8000)
-	{
-		playerLight.Attenuation1 += v;
-
-	}
-	if (GetAsyncKeyState('B') & 0x8000)
-	{
-		playerLight.Attenuation2 -= v;
-
-	}
-	if (GetAsyncKeyState('N') & 0x8000)
-	{
-		playerLight.Attenuation2 += v;
-
-	}
-
-	playerLight.Attenuation0 = CLAMP(playerLight.Attenuation0, 0.f, 0.9f);
-	playerLight.Attenuation1 = CLAMP(playerLight.Attenuation1, 0.0001f, 0.9f);
-	playerLight.Attenuation2 = CLAMP(playerLight.Attenuation2, 0.f, 0.9f);
-	
-	if (GetAsyncKeyState('3') & 0x8000)
-	{
-
-	system("cls");
-	cout << "h : " << h<< endl;
-	cout <<" 0 : "  << playerLight.Attenuation0 << endl;
-	cout << "1 : " << playerLight.Attenuation1 << endl;
-	cout << "2 : " << playerLight.Attenuation2 << endl;
-	}
-
+	playerLight.Position.y = 30.f;
 	CLightMananger::GetInstance()->SetLight(CLightMananger::Player);
+}
+
+void CPlayer::SetSpotLightTrigget(const bool & _bTrigger)
+{
+	m_bSpotLightTrigger = _bTrigger;
+}
+
+void CPlayer::SetsfxTileID(const ETileID & _eID)
+{
+	m_eTileID = _eID;
 }
 
 void CPlayer::AddHp(_int _nHp)
 {
 	m_nHp += _nHp;
-	m_nHp = CLAMP(m_nHp, 0, m_nHpMax);
-
-	if (m_nHp < 1)
-	{
-		//Dead
-	}
+	m_nHp = CLAMP(m_nHp, 0, m_nHpMax *4 );
 
 	m_pHeartManager->SetGauge(m_nHp);
 }
 
+void CPlayer::AddSkillGauge(_int _nPoint)
+{
+	m_nSkillPoint += _nPoint;
+	m_nSkillPoint = CLAMP(m_nSkillPoint, 0, SkillPGaugeMax);
+	
+	if (m_nSkillPoint == SkillPGaugeMax)
+		m_bEnableSkill = true;
+	else
+		m_bEnableSkill = false;
+
+	m_pAmmoHud->SetSkillGauge(float(m_nSkillPoint) / SkillPGaugeMax);
+}
+
 void CPlayer::AddHpMax()
 {
-	m_nHpMax += 4;
+	++m_nHpMax;
 	m_nHpMax = CLAMP(m_nHpMax, 0, HPMax);
 	m_pHeartManager->SetHeartCount(m_nHpMax);
 }
 
-void CPlayer::TileSound(ESectorTileID _eID)
+void CPlayer::TileSound(const ETileID& _eID)
 {
 	switch (_eID)
 	{
-	case ESectorTileID::Sector1:
+	case ETileID::Nomal:
 		if (m_bsfxStep)
 			CSoundMgr::GetInstance()->Play(L"sfxStep1.mp3", CSoundMgr::Player_Action);
 		else
 			CSoundMgr::GetInstance()->Play(L"sfxStep2.mp3", CSoundMgr::Player_Action);
 		break;
-	case ESectorTileID::Sector2:
+	case ETileID::Sand:
 		if (m_bsfxStep)
 			CSoundMgr::GetInstance()->Play(L"sfxSandStep1.mp3", CSoundMgr::Player_Action);
 		else
 			CSoundMgr::GetInstance()->Play(L"sfxSandStep2.mp3", CSoundMgr::Player_Action);
+		break;
+	case ETileID::Grass:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxGrass1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxGrass2.mp3", CSoundMgr::Player_Action);
+		break;
+	case ETileID::Stone:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxStoneStep1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxStoneStep2.mp3", CSoundMgr::Player_Action);
+		break;
+	case ETileID::Metal:
+		if (m_bsfxStep)
+			CSoundMgr::GetInstance()->Play(L"sfxMetalStep1.mp3", CSoundMgr::Player_Action);
+		else
+			CSoundMgr::GetInstance()->Play(L"sfxMetalStep2.mp3", CSoundMgr::Player_Action);
 		break;
 	}
 }
 
 void CPlayer::SoundPlay(const ESoundID & _eID)
 {
+
 	switch (_eID)
 	{
+	case ESoundID::YoShi:
+		CSoundMgr::GetInstance()->Play(L"sfxYoshi.mp3", CSoundMgr::Player_ActionSub);
+		break;
+	case ESoundID::DashHit:
+		CSoundMgr::GetInstance()->Play(L"sfxDashHit.mp3", CSoundMgr::MonsterHitN);
+		break;
+	case ESoundID::DashAttack:
+		CSoundMgr::GetInstance()->Play(L"sfxDashAttack2.mp3", CSoundMgr::Player_Action);
+		break;
+	case ESoundID::EmptyShot:
+		CSoundMgr::GetInstance()->Play(L"sfxGunEmpty.wav", CSoundMgr::Player_Bullet);
+		break;
+	case ESoundID::AmmoLvUp:
+		CSoundMgr::GetInstance()->Play(L"sfxUpgrade.wav", CSoundMgr::Player_Event);
+		break;
 	case ESoundID::NormaBullet:
 		CSoundMgr::GetInstance()->Play(L"sfxBullet.wav", CSoundMgr::Player_Bullet);
 		break;
@@ -539,29 +611,45 @@ void CPlayer::SoundPlay(const ESoundID & _eID)
 	case ESoundID::Hit:
 		CSoundMgr::GetInstance()->Play(L"sfxHurt.wav", CSoundMgr::Player_Hit);
 		break;
+	case ESoundID::Trap:
+		CSoundMgr::GetInstance()->Play(L"sfxTrap.wav", CSoundMgr::Player_Hit);
+		break;
 	case ESoundID::AddHeart:
+		CSoundMgr::GetInstance()->Play(L"sfxHeart.mp3", CSoundMgr::Item_Heart);
 	case ESoundID::AddCoin:
-		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Player_Effect);
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Coin);
 		break;
 	case ESoundID::Dash:
 		CSoundMgr::GetInstance()->Play(L"sfxDash.mp3", CSoundMgr::Player_Action);
+		CSoundMgr::GetInstance()->SetVolume(CSoundMgr::Player_Action, 0.5f);
 		break;
 	case ESoundID::Run:
 		m_bsfxStep = !m_bsfxStep;
-		TileSound(m_eSector);
-		break;
-	case ESoundID::AddEnergy:
-		CSoundMgr::GetInstance()->Play(L"sfxEnergy.wav", CSoundMgr::Player_Effect);
+		TileSound(m_eTileID);
 		break;
 	case ESoundID::LaserBullet:
 		CSoundMgr::GetInstance()->Play(L"sfxLaser.wav", CSoundMgr::Player_Bullet);
+		break;
+	case ESoundID::AddAmmo:
+		CSoundMgr::GetInstance()->Play(L"sfxEnergy.wav", CSoundMgr::Item_Ammo);
+		break;
+	case ESoundID::AddDisc:
+		CSoundMgr::GetInstance()->Play(L"Secret.wav", CSoundMgr::Item_Disc);
 		break;
 	default:
 		break;
 	}
 }
 
-
+void CPlayer::AmmoLvUp()
+{
+	//  [1/4/2021 wades]
+	++m_nAmmoLv;
+	m_fAmmoMax = float(50 + (m_nAmmoLv * 15));
+	m_nAmmoLv = CLAMP(m_nAmmoLv, 0, AmmoLvMax);
+	SoundPlay(ESoundID::AmmoLvUp);
+	m_pAmmoHud->SetAmmoLevel(m_nAmmoLv);
+}
 
 void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 {
@@ -574,24 +662,13 @@ void CPlayer::AddWeapon(const EWeaponType _eWeaponType)
 	}
 
 	//처음 먹은 경우 바로 웨폰 세팅 호출 
-
-	switch (_eWeaponType)
-	{
-	case EWeaponType::Multiple:
-		//cout << "add Multiple Weapon" << endl;
-		break;
-	case EWeaponType::Big:
-		//cout << "add Big Weapon" << endl;
-		break;
-	case EWeaponType::Rapid:
-		//cout << "add Rapid Weapon" << endl;
-		break;
-	}
 	m_vecWeapons.emplace_back(_eWeaponType);
 	m_nSetWeaponID = m_vecWeapons.size() - 1;
+
 	m_eCurWeaponType = m_vecWeapons[m_nSetWeaponID];
+
 	ChangeWeapon();
-	m_pWeaponHud->ChangeWeapon((_uint)m_eCurWeaponType);
+	m_pAmmoHud->SetAmmoIcon((UINT)m_eCurWeaponType);
 }
 
 HRESULT CPlayer::InitializePrototype()
@@ -611,78 +688,92 @@ HRESULT CPlayer::Awake()
 	m_fDashSpeed = 60.f;
 	m_fMouseSpeedX = 200.f;
 	m_fAmmoMax = 50.f;
-	m_fAmmo = m_fAmmoMax;
-	m_fDashDelay = 2.f;
-	m_fDashDelayTime = m_fDashDelay;
-	m_fDashDuration = 0.4f;
+	// test [1/6/2021 wades]
+	//m_fAmmo = m_fAmmoMax;
+	m_fAmmo = 10;
+	m_fDashActionDelay = 2.f;
+	m_fDashActionDelayTime = m_fDashActionDelay;
+	m_fDashMoveDuration = 0.4f;
+	m_fDashAttackSpeed = 400.f;
+	m_fDashAttackDruation = 0.1f;
 
 	//State
-	m_nHp = 8;
-	m_nHpMax = 12;
+	m_nHp = 12;
+	m_nHpMax = 4;
 	m_fHitDelay = 0.5f;
 	m_fHitDelayTime = 0.f;
 	m_nDiscMax = 1;
+	m_nGem = 0;
+	m_nDisc = 0;
+	m_nSkillPoint = 0;
+	m_bDashAttacked = false;
 
-	m_pTransform->Set_Scale(D3DXVECTOR3(5.f,5.f,5.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(3.9f, 3.9f, 3.9f));
 
 	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
 	pCollider->m_bIsRigid = true;
-	pCollider->SetMesh(L"Cube",BOUND::BOX);
+	pCollider->SetMesh(L"Cube",BOUND::SPHERE);
 
 	m_bsfxStep = false;
 
-
-#ifdef _DEBUG
-	m_nTag = 0;
-#else
-
-#endif
 	return S_OK;
 }
 
 HRESULT CPlayer::Start()
 {
-
 	m_pGun = (CGun*)FindGameObjectOfType<CGun>();
 
-	//Test
-
 	//Reference Setting
-	m_pAmmobar = (Image*)((CAmmoGauge*)FindGameObjectOfType<CAmmoGauge>())->GetComponent<Image>();
-	m_pWeaponHud = (CWeaponHUD*)FindGameObjectOfType<CWeaponHUD>();
+#pragma region Reference Setting
+	m_pPlayerCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+
+	m_pAmmoHud = (CAmmoHUD*)FindGameObjectOfType<CAmmoHUD>();
 	m_pHeartManager = (CHeartManager*)FindGameObjectOfType<CHeartManager>();
 	m_pCrossHair = FindGameObjectOfType<CCrossHair>();
-	//m_pGemText = (CText*)((CGemText*)FindGameObjectOfType<CGemText>())->GetComponent<CText>();
-	//m_pDiscText = (CText*)((CDiscText*)FindGameObjectOfType<CDiscText>())->GetComponent<CText>();
+	m_pGemText = (CGemText*)FindGameObjectOfType<CGemText>();
+	m_pDiscText = (CDiscText*)FindGameObjectOfType<CDiscText>();
 	m_pFocus = (CFocus*)FindGameObjectOfType<CFocus>();
-	//if (nullptr == m_pWeaponHud || nullptr == m_pHeartManager || nullptr == m_pGemText || nullptr == m_pDiscText)
-	//{
-	////	return E_FAIL;
-	//}
-	//SafeAddRef(m_pAmmobar);
 
+	SafeAddRef(m_pAmmoHud);
+	SafeAddRef(m_pHeartManager);
+	SafeAddRef(m_pCrossHair);
+	SafeAddRef(m_pGemText);
+	SafeAddRef(m_pDiscText);
+	SafeAddRef(m_pFocus);
+#pragma endregion
 
 	//스폰지점 세팅과 씬 초반 컬링
 #ifdef _DEBUG
-
+	m_nTag = 0;
+	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 #else
-	//CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
-	//_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
-	//m_pTransform->Set_Position(vPosition);
-	//m_nTag = pSpawn->GetTag();
+	CPlayerSpawn* pSpawn = (CPlayerSpawn*)FindGameObjectOfType<CPlayerSpawn>();
+	_vector vPosition = ((CTransform*)pSpawn->GetComponent<CTransform>())->Get_Position();
+	m_pTransform->Set_Position(vPosition);
+	m_nTag = pSpawn->GetTag();
+	CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 #endif
-	//CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f,2.5f,0.f));
+	m_pTransform->Add_Position(D3DXVECTOR3(0.f,3.f,0.f));
 
-
-	 //weapon Setting
+	 //UI Setting
 	 m_vecWeapons.emplace_back(EWeaponType::Big);
+	 //Ammo
+	 m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
+	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Rapid);
+	 m_pAmmoHud->SetAmmoLevel(0);
+	 m_pAmmoHud->SetActive(false);
 
-	 //------------
+	 //Disc
+	 m_pDiscText->SetMaxCount(DiscMax);
+	 m_pDiscText->SetCount(m_nDisc);
+
+	 //hp
 	 m_pHeartManager->SetHeartCount(m_nHpMax);
 	 m_pHeartManager->SetGauge(m_nHp);
+	 // gun
+	 m_pGun->SetActive(false);
 
 	 AddWeapon(EWeaponType::Rapid);
 	 AddWeapon(EWeaponType::Multiple);
@@ -691,7 +782,7 @@ HRESULT CPlayer::Start()
 
 	 //Skill Setting
 
-	 m_vecSkillID.push_back(ESkillID::TimeStop);
+	// m_vecSkillID.push_back(ESkillID::TimeStop);
 	 return S_OK;
 }
 
@@ -701,35 +792,47 @@ UINT CPlayer::Update(const float _fDeltaTime)
 	KeyInput(_fDeltaTime);
 	m_pTransform->UpdateTransform();
 	UpdateState(_fDeltaTime);
-	//UpdateLight();
+	UpdateLight();
 
 	return OBJ_NOENVET;
 }
 
 UINT CPlayer::LateUpdate(const float _fDeltaTime)
 {
-
 	if (m_fBulletFireTime < m_fBulletFireDelay)
 		m_fBulletFireTime += _fDeltaTime;
 	if(m_fHitDelay > m_fHitDelayTime)
 		m_fHitDelayTime += _fDeltaTime;
 
 	//대쉬에서 복귀
-	if (m_eState == EState::Dash && m_fDashDuration < m_fDashDurationTime)
+	if (m_eState == EState::Dash  && m_fDashMoveDuration < m_fDashDurationTime)
+	{
+		m_bDashDmg = false;
 		m_eState = EState::Move;
-
+	}
+	if (m_eState == EState::DashAttack  && m_fDashAttackDruation < m_fDashDurationTime)
+	{
+		m_bDashDmg = false;
+		if(m_bDashAttacked)
+			SoundPlay(ESoundID::YoShi);
+		m_eState = EState::Move;
+		m_bDashAttacked = false;
+		m_pGun->SetEnable(true);
+	}
 	if(m_eState == EState::Run && !m_pKeyMgr->Key_Press(KEY_LSHIFT))
 		m_eState = EState::Move;
 
 	if (m_eState == EState::Hit && m_fHitDelay < m_fHitDelayTime)
 	{
 		//임시 
+		CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+		pCamera->SetShakeVertical(0.f);
 		m_bIsDeBuff = false;
 		m_eState = EState::Move;
 	}
 
-	if(m_fDashDelayTime < m_fDashDelay)
-		m_fDashDelayTime += _fDeltaTime;
+	if(m_fDashActionDelayTime < m_fDashActionDelay)
+		m_fDashActionDelayTime += _fDeltaTime;
 
 	m_pTransform->UpdateWorld();
 
@@ -760,36 +863,58 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 
 	if (L"Item" == _pGameObject->GetName())
 	{
-		TakeItem(((CItem*)(_pGameObject))->GetItemID());
+		if(m_bDashDmg == false)
+			TakeItem(((CItem*)(_pGameObject))->GetItemID());
 	}
 
 	//Dmg 
-
 	if (m_eState != EState::Hit && m_fHitDelay < m_fHitDelayTime)
 	{
+		if (L"Monster" == _pGameObject->GetName() )
+		{
+			if (m_bDashDmg)
+			{
+			//  [1/7/2021 wades]
+			// 1. 코드를 분리 시키고 싶으나 시간 없으니 각설하고 몬스터가 플레이어 참조하고 있으니 내부에서 해도 되는데 상속으로 처리해줘야햐 하고 
+			// 2. 외부로 스텟을 관리하는 넘을 만들어서 게임오브젝트랑 수치값 넘겨서 해도 되고  
+				m_bDashAttacked = true;
+				static_cast<CMonster*>(_pGameObject)->AddHp(DashDmg);
+				SoundPlay(ESoundID::DashHit);
+			}
+			else
+			{
+				AddHp(-1);
+				SoundPlay(ESoundID::Hit);
+				m_fHitAnimatTime = 0.f;
+				m_fHitDelayTime = 0.f;
+				m_eState = EState::Hit;
+			}
 
-		if (L"Monster" == _pGameObject->GetName())
-		{
-			m_eState = EState::Hit;
-			m_fHitDelayTime = 0.f;
-			AddHp(-1);
-			SoundPlay(ESoundID::Hit);
 		}
-		else if (L"Electric" == _pGameObject->GetName())
+		else if (L"Slider" == _pGameObject->GetName())
 		{
-			m_eState = EState::Hit;
-			m_fHitDelayTime = 0.f;
-	
 			AddHp(-1);
 			SoundPlay(ESoundID::Hit);
+			m_fHitAnimatTime = 0.f;
+			m_fHitDelayTime = 0.f;
+			m_eState = EState::Hit;
+		}
+		else if (L"Electric" == _pGameObject->GetName() || L"Lava" == _pGameObject->GetName() )
+		{
+			AddHp(-1);
+			SoundPlay(ESoundID::Trap);
+			m_fHitAnimatTime = 0.f;
+			m_fHitDelayTime = 0.f;
+			m_eState = EState::Hit;
 		}
 		else if (L"Swamp" == _pGameObject->GetName())
 		{
-			m_eState = EState::Hit;
 			m_bIsDeBuff = true;
-			m_fHitDelayTime = 0.f;
 			AddHp(-1);
-			SoundPlay(ESoundID::Hit);
+			SoundPlay(ESoundID::Trap);
+			m_fHitAnimatTime = 0.f;
+			m_fHitDelayTime = 0.f;
+			m_eState = EState::Hit;
 		}
 	}
 
@@ -808,8 +933,12 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Free()
 {
-	//SafeRelease(m_pAmmobar);
-	SafeRelease(m_pGun);
+	SafeRelease(m_pAmmoHud);
+	SafeRelease(m_pHeartManager);
+	SafeRelease(m_pCrossHair);
+	SafeRelease(m_pGemText);
+	SafeRelease(m_pDiscText);
+	SafeRelease(m_pFocus);
 	m_vecWeapons.clear();
 	m_vecWeapons.shrink_to_fit();
 	CGameObject::Free();

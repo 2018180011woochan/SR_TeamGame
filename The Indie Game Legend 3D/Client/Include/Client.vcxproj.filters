@@ -220,18 +220,6 @@
     <Filter Include="02.GameObject\99.Trigger\01.RoomTrigger">
       <UniqueIdentifier>{9b80813f-ef7b-40ad-9d8d-f622faef8a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObject\08.Objstacle">
-      <UniqueIdentifier>{1403aea3-afc2-4c34-9859-eb2b782f80c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\00.Base">
-      <UniqueIdentifier>{56a0b881-2444-4695-a7f0-710b63b4f147}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\01.Piramid">
-      <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\09.Item">
-      <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\10.Effect">
       <UniqueIdentifier>{f59f9308-2194-4032-ac94-b37a843981d1}</UniqueIdentifier>
     </Filter>
@@ -255,9 +243,6 @@
     </Filter>
     <Filter Include="02.GameObject\10.Effect\04.BulletSpark">
       <UniqueIdentifier>{cfdf14c4-dcef-4919-bcac-26a9209ac4e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\08.Objstacle\02.PiramidUnbreak">
-      <UniqueIdentifier>{770120dd-2c36-4539-9cfe-5ba3d13d60dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\04.UI\07.WeaponHUD">
       <UniqueIdentifier>{8a7424f0-12ea-477b-b5ba-60cae37285ec}</UniqueIdentifier>
@@ -466,9 +451,6 @@
     <Filter Include="02.GameObject\13.InterectionObject\00.Base">
       <UniqueIdentifier>{75d969d3-1b9a-4b96-8c10-c4a72440af39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97.Interface">
-      <UniqueIdentifier>{ec497771-82c6-4695-9ba2-96caf03eea5f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObject\13.InterectionObject\02.Switch">
       <UniqueIdentifier>{3a8a6179-31ae-4bbc-9032-9a035c09259b}</UniqueIdentifier>
     </Filter>
@@ -477,12 +459,6 @@
     </Filter>
     <Filter Include="02.GameObject\10.Effect\05.SandBurst">
       <UniqueIdentifier>{1ae4060c-92a9-4485-b666-e665e2f19f6d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene\03.ShootingMinigame">
-      <UniqueIdentifier>{679daad6-50f2-4c5d-9fab-6722000871a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObject\00.Player\02.PlayerShip">
-      <UniqueIdentifier>{d86a0827-97ca-477c-b644-756956567cde}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObject\00.Monster\12.GreenBoy">
       <UniqueIdentifier>{792fcf4e-1174-41dd-bc0c-70f83a3b28b9}</UniqueIdentifier>
@@ -570,6 +546,69 @@
     </Filter>
     <Filter Include="02.GameObject\12.Shop\03.Price\02.SkillRunningPrice">
       <UniqueIdentifier>{a7bc47fe-5cbd-431b-8fda-1f126eb61242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\09.Item">
+      <UniqueIdentifier>{d8d5b25f-c4d5-46e6-a3f3-41335c0bc23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle">
+      <UniqueIdentifier>{1403aea3-afc2-4c34-9859-eb2b782f80c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\00.Base">
+      <UniqueIdentifier>{56a0b881-2444-4695-a7f0-710b63b4f147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\01.Piramid">
+      <UniqueIdentifier>{3bc37bbc-8183-47dd-9e0d-1ba50377df0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\02.PiramidUnbreak">
+      <UniqueIdentifier>{770120dd-2c36-4539-9cfe-5ba3d13d60dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\03.Pillar">
+      <UniqueIdentifier>{420d7f5b-c55d-41b9-8f18-5cb80b9576c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\04.Gate">
+      <UniqueIdentifier>{c99ac1e9-ee1f-4822-b1d8-bad9257f6b09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Camera\01.PuzzleRoomCamera">
+      <UniqueIdentifier>{1950680b-394f-4806-84db-6a792aa9bd39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\08.Obstacle\05.SlideBlock">
+      <UniqueIdentifier>{c3ed037a-299a-4bad-9374-56953f393f1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\03.FinalStage">
+      <UniqueIdentifier>{62c8078e-edb1-4f51-b968-6fac40576137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\02.BattleShip">
+      <UniqueIdentifier>{7906bd34-7827-4788-b54f-3093ac32a728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Camera\01.FinalCamera">
+      <UniqueIdentifier>{f12f5949-be0a-4155-a753-030826be173f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.StarParticle">
+      <UniqueIdentifier>{626452ce-caaa-44fa-b5d1-520e06860735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\14.StarParticle\Pool">
+      <UniqueIdentifier>{9497941d-3952-4435-a1ef-ecfac35cf105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss">
+      <UniqueIdentifier>{101a6db0-01e2-44db-88f0-695c5216e54c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\02.BattleShip\00.Boost">
+      <UniqueIdentifier>{6bbe9fef-7dcd-4bbf-a7b8-d66261110c12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Player\02.BattleShip\01.Bullet">
+      <UniqueIdentifier>{b466bb5c-1ec7-4199-a1c9-7057a02c5105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet">
+      <UniqueIdentifier>{76e5bbc4-ef58-43a5-b064-a93addc5e551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\00.Normal">
+      <UniqueIdentifier>{e8c69ad7-bb81-43cc-a3e9-0fa7f02b36fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser">
+      <UniqueIdentifier>{2dc3a12b-68e0-4e94-a5db-9d0bfed29d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion">
+      <UniqueIdentifier>{440dc142-10a8-4ec0-88c7-e6edad79313f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -760,7 +799,7 @@
       <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Obstacle.h">
-      <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
+      <Filter>02.GameObject\08.Obstacle\00.Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Item.h">
       <Filter>02.GameObject\09.Item</Filter>
@@ -778,13 +817,13 @@
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PiramidUnBrake.h">
-      <Filter>02.GameObject\08.Objstacle\02.PiramidUnbreak</Filter>
+      <Filter>02.GameObject\08.Obstacle\02.PiramidUnbreak</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BulletSpark.h">
       <Filter>02.GameObject\10.Effect\04.BulletSpark</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Piramid.h">
-      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+      <Filter>02.GameObject\08.Obstacle\01.Piramid</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\WeaponHUD.h">
       <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
@@ -945,7 +984,6 @@
     <ClInclude Include="..\Header\Switch.h">
       <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Door.h" />
     <ClInclude Include="..\Header\SandBurst.h">
       <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
     </ClInclude>
@@ -954,12 +992,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Edragon.h">
       <Filter>02.GameObject\11.Npc\03.Edragon</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShootingMinigame.h">
-      <Filter>03.Scene\03.ShootingMinigame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PlayerShip.h">
-      <Filter>02.GameObject\00.Player\02.PlayerShip</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GreenBoyHead.h">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\00.GreenBoyHead</Filter>
@@ -1038,6 +1070,51 @@
     </ClInclude>
     <ClInclude Include="..\Header\SkillRunningPrice.h">
       <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Door.h">
+      <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Pillar.h">
+      <Filter>02.GameObject\08.Obstacle\03.Pillar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PuzzleRoomCamera.h">
+      <Filter>02.GameObject\01.Camera\01.PuzzleRoomCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Gate.h">
+      <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalStage.h">
+      <Filter>03.Scene\03.FinalStage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleShip.h">
+      <Filter>02.GameObject\00.Player\02.BattleShip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalCamera.h">
+      <Filter>02.GameObject\01.Camera\01.FinalCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StarParticle.h">
+      <Filter>02.GameObject\14.StarParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StarPool.h">
+      <Filter>02.GameObject\14.StarParticle\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalBoss.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Boost.h">
+      <Filter>02.GameObject\00.Player\02.BattleShip\00.Boost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleShipBullet.h">
+      <Filter>02.GameObject\00.Player\02.BattleShip\01.Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalNormal.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\00.Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalLaser.h">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SlideBlock.h">
+      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1210,7 +1287,7 @@
       <Filter>02.GameObject\99.Trigger\01.RoomTrigger</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Obstacle.cpp">
-      <Filter>02.GameObject\08.Objstacle\00.Base</Filter>
+      <Filter>02.GameObject\08.Obstacle\00.Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Item.cpp">
       <Filter>02.GameObject\09.Item</Filter>
@@ -1228,13 +1305,13 @@
       <Filter>02.GameObject\10.Effect\03.ExplosionBlue</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\PiramidUnBrake.cpp">
-      <Filter>02.GameObject\08.Objstacle\02.PiramidUnbreak</Filter>
+      <Filter>02.GameObject\08.Obstacle\02.PiramidUnbreak</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\BulletSpark.cpp">
       <Filter>02.GameObject\10.Effect\04.BulletSpark</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Piramid.cpp">
-      <Filter>02.GameObject\08.Objstacle\01.Piramid</Filter>
+      <Filter>02.GameObject\08.Obstacle\01.Piramid</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\WeaponHUD.cpp">
       <Filter>02.GameObject\04.UI\07.WeaponHUD</Filter>
@@ -1395,7 +1472,6 @@
     <ClCompile Include="..\Source\Switch.cpp">
       <Filter>02.GameObject\13.InterectionObject\02.Switch</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Door.cpp" />
     <ClCompile Include="..\Source\SandBurst.cpp">
       <Filter>02.GameObject\10.Effect\05.SandBurst</Filter>
     </ClCompile>
@@ -1404,12 +1480,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Edragon.cpp">
       <Filter>02.GameObject\11.Npc\03.Edragon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\ShootingMinigame.cpp">
-      <Filter>03.Scene\03.ShootingMinigame</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\PlayerShip.cpp">
-      <Filter>02.GameObject\00.Player\02.PlayerShip</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\GreenBoyHead.cpp">
       <Filter>02.GameObject\00.Monster\12.GreenBoy\00.GreenBoyHead</Filter>
@@ -1488,6 +1558,51 @@
     </ClCompile>
     <ClCompile Include="..\Source\SkillRunningPrice.cpp">
       <Filter>02.GameObject\12.Shop\03.Price\02.SkillRunningPrice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Door.cpp">
+      <Filter>02.GameObject\13.InterectionObject\01.Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Pillar.cpp">
+      <Filter>02.GameObject\08.Obstacle\03.Pillar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PuzzleRoomCamera.cpp">
+      <Filter>02.GameObject\01.Camera\01.PuzzleRoomCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gate.cpp">
+      <Filter>02.GameObject\08.Obstacle\04.Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalStage.cpp">
+      <Filter>03.Scene\03.FinalStage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BattleShip.cpp">
+      <Filter>02.GameObject\00.Player\02.BattleShip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalCamera.cpp">
+      <Filter>02.GameObject\01.Camera\01.FinalCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\StarParticle.cpp">
+      <Filter>02.GameObject\14.StarParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\StarPool.cpp">
+      <Filter>02.GameObject\14.StarParticle\Pool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalBoss.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Boost.cpp">
+      <Filter>02.GameObject\00.Player\02.BattleShip\00.Boost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\BattleShipBullet.cpp">
+      <Filter>02.GameObject\00.Player\02.BattleShip\01.Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalNormal.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\00.Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\FinalLaser.cpp">
+      <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\01.Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\SlideBlock.cpp">
+      <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

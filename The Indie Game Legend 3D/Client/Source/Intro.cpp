@@ -68,7 +68,7 @@ HRESULT CIntro::Awake()
 	((CTransform*)pGameObject->GetComponent<CTransform>())->Set_Position(D3DXVECTOR3(-390.f, -305.f, 0.f));
 	pGameObject = AddGameObject<CStar>();
 	((CTransform*)pGameObject->GetComponent<CTransform>())->Set_Position(D3DXVECTOR3(495.f, -320.f, 0.f));
-	
+
 	AddGameObject<CLogo>();
 
 	CScene::Awake();

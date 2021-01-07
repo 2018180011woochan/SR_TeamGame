@@ -149,7 +149,7 @@ CRenderTexture * CMiniMapRenderer::GetPartialMap()
 
 void CMiniMapRenderer::DrawExploredArea()
 {
-	const int nPlayerTag = m_pPlayer->GetTag();
+	const int nPlayerTag = m_pPlayer->GetTag() - 1;
 
 	if (nPlayerTag == m_nCurrentTag)
 		return;

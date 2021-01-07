@@ -9,7 +9,6 @@ private:
 	Image*			m_pImage;
 	CTexturePool*	m_pTexturePool;
 	TSTRING			m_sTextureKey;
-
 	UINT			m_nMaxFrame;
 private:
 	explicit CAmmoIcon();

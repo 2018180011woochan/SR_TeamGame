@@ -4,12 +4,14 @@
 
 
 CMonster::CMonster()
-	
 {
 }
 
 CMonster::CMonster(const CMonster & other)
 	: CGameObject(other)
+	, m_bHit(false)
+	, m_fHitDelay(0.6f)
+	, m_fHitDelayTime(0.f)
 {
 }
 
@@ -27,7 +29,12 @@ HRESULT CMonster::Awake()
 {
 	if (FAILED(CGameObject::Awake()))
 		return E_FAIL;
+	m_fHitDelay = 0.5f;
 
+	//  [1/6/2021 wades]
+#ifdef _DEBUG
+	SetMonsterPos();
+#endif // !_DEBUG
 	return S_OK;
 }
 
@@ -45,8 +52,6 @@ UINT CMonster::Update(const float _fDeltaTime)
 {
 	CGameObject::Update(_fDeltaTime);
 	
-	ResetMonsterPos();
-
 
 	return _uint();
 }
@@ -54,6 +59,16 @@ UINT CMonster::Update(const float _fDeltaTime)
 UINT CMonster::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
+	if (m_bHit)
+		m_fHitDelayTime += _fDeltaTime;
+
+
+	if (m_bHit  && m_fHitDelay < m_fHitDelayTime)
+	{
+		m_bHit = false;
+		m_fHitDelayTime = 0.f;
+	}
+
 	IsBillboarding();
 	return _uint();
 }
@@ -104,6 +119,15 @@ HRESULT CMonster::IsBillboarding()
 	return S_OK;
 }
 
+void CMonster::sfxMetalHit()
+{
+	int nSfx = rand() % 2;
+	if (nSfx)
+		CSoundMgr::GetInstance()->Play(L"sfxMetalHit1.mp3", CSoundMgr::MonsterHitM);
+	else
+		CSoundMgr::GetInstance()->Play(L"sfxMetalHit1.mp3", CSoundMgr::MonsterHitM);
+}
+
 void CMonster::OnCollision(CGameObject * _pGameObject)
 {
 }
@@ -111,11 +135,29 @@ void CMonster::OnCollision(CGameObject * _pGameObject)
 void CMonster::SetMonsterPos()
 {
 	m_vecStartPos = m_pTransform->Get_Position();
+	//  [1/6/2021 wades]
+	m_vecStartPos.y += 1.f;
 }
 
 void CMonster::ResetMonsterPos()
 {
-	if (!m_bEnable)
-		m_pTransform->Set_Position(m_vecStartPos);
+	m_pTransform->Set_Position(m_vecStartPos);
+}
+
+void CMonster::OnEnable()
+{
+	ResetMonsterPos();
+}
+
+void CMonster::AddHp(const _int & _nHp)
+{
+	m_iHP += _nHp;
+	m_iHP = CLAMP(m_iHP, 0, m_iMaxHP);
+	if (m_iHP < 1)
+	{
+		m_bDead = true;
+		m_bDelete = true;
+	}
+
 }
 

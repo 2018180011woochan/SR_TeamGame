@@ -13,6 +13,7 @@ CPiramidUnBrake::CPiramidUnBrake(const CPiramidUnBrake & _rOther)
 
 HRESULT CPiramidUnBrake::InitializePrototype()
 {
+	CObstacle::InitializePrototype();
 	return S_OK;
 }
 
@@ -31,7 +32,6 @@ HRESULT CPiramidUnBrake::Start()
 	m_eRenderID = ERenderID::NoAlpha;
 
 	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_pTransform->Set_Position(_vector(15, 1, 10));
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Pyramid_Level2"),BOUND::BOUNDTYPE::BOX);

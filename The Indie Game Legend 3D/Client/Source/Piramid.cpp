@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Piramid.h"
 #include "Item.h"
+#include "SoundMgr.h"
 
 CPiramid::CPiramid()
 {
@@ -13,13 +14,13 @@ CPiramid::CPiramid(const CPiramid & _rOther)
 
 HRESULT CPiramid::InitializePrototype()
 {
+	CObstacle::InitializePrototype();
 	return S_OK;
 }
 
 HRESULT CPiramid::Awake()
 {
 	CObstacle::Awake();
-	m_bDead = false;
 #ifdef _DEBUG
 	m_nTag = 0;
 #endif // DEBUG
@@ -34,8 +35,6 @@ HRESULT CPiramid::Start()
 	m_pMeshRenderer->SetMesh(TEXT("Pyramid_Level1"));
 	m_eRenderID = ERenderID::NoAlpha;
 
-	m_pTransform->Set_Scale(_vector(1, 1, 1));
-	m_pTransform->Add_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -81,17 +80,17 @@ void CPiramid::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
+		CSoundMgr::GetInstance()->Play(L"sfxRockBurst.mp3", CSoundMgr::Object_SFX);
 		m_bDead = true;
 	}
 	if (m_bDead)
 	{
 		CItem* pHeart = (CItem*)AddGameObject<CItem>();
-		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		pHeart->SetItemType(EItemID::sprBigCoin);
-
+		pHeart->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 1.5f, m_pTransform->Get_Position().z));
+		pHeart->SetItemRand();
 		CItem* psqrCoin = (CItem*)AddGameObject<CItem>();
-		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 3.f, m_pTransform->Get_Position().z));
-		psqrCoin->SetItemType(EItemID::sprCoin);
+		psqrCoin->SetPos(_vector(m_pTransform->Get_Position().x, m_pTransform->Get_Position().y + 1.5f, m_pTransform->Get_Position().z));
+		psqrCoin->SetItemRand();
 	}
 }
 

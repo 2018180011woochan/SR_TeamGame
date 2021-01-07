@@ -22,6 +22,7 @@ CBullet::CBullet(const CBullet & _rOther)
 	, m_fAnimateSpeed(_rOther.m_fAnimateSpeed)
 	, m_fAnimateOneCycleTime(_rOther.m_fAnimateOneCycleTime)
 	, m_nMaxTexture(_rOther.m_nMaxTexture)
+	, m_nDmg(_rOther.m_nDmg)
 
 {
 }
@@ -39,6 +40,7 @@ HRESULT CBullet::InitializePrototype()
 	m_fAnimateSpeed = 0.f;
 	m_fAnimateOneCycleTime = 0.f;
 	m_nMaxTexture = 0;
+	m_nDmg = 0;
 	return S_OK;
 }
 //레이저는 부모 호출하지말고 box로 바꿔야함
@@ -50,8 +52,8 @@ HRESULT CBullet::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_eRenderID = ERenderID::Alpha;
 
-	CCollider* pCollider = (CCollider*)(AddComponent<CCollider>());
-	pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
+	m_pCollider = (CCollider*)(AddComponent<CCollider>());
+	m_pCollider->SetMesh(TEXT("Sphere"), BOUND::SPHERE);
 
 	return S_OK;
 }
@@ -86,43 +88,43 @@ HRESULT CBullet::Fire()
 {
 	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
 	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
-	auto  pSpawnTrans = ((CTransform*)pSpawn->GetComponent<CTransform>());
-	_vector vBulletPos = pSpawnTrans->Get_WorldPosition();
+
+	_vector  SpawnPos;
+	if (FAILED(pSpawn->GetWorldPos(SpawnPos)))
+		return E_FAIL;
+
 	CAMERA_DESC CameraDesc = pCamera->Get_Camera();
 
 	_vector PickPos;
-	CGameObject* pGameObj = nullptr;
 
-	if (CMsgManager::GetInstance()->GetAutoAimEnable() && CUtilityManger::AutoAim(m_nSceneID,pGameObj))
+	if (CUtilityManger::CrossHairPicking(m_nSceneID, PickPos))
 	{
-		if (nullptr != pGameObj)
-		{
-			auto  pMobTrans = ((CTransform*)pGameObj->GetComponent<CTransform>());
-			m_vDiraction = pMobTrans->Get_WorldPosition() - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-			//Ui추가
-		}
-		else
-		{
-			m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-		}
+		m_vDiraction = PickPos - SpawnPos;
+		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
 	}
-	else
+	else 
 	{
-		if (CUtilityManger::CrossHairPicking(m_nSceneID, PickPos))
-		{
-			m_vDiraction = PickPos - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-		}
-		else
-		{
-			m_vDiraction = CameraDesc.vAt - pSpawnTrans->Get_WorldPosition();
-			D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
-		}
+		m_vDiraction = CameraDesc.vAt - SpawnPos;
+		D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	}
 
-	}
-	m_pTransform->Set_Position(vBulletPos);
+	m_pTransform->Set_Position(SpawnPos);
+	return S_OK;
+}
+
+HRESULT CBullet::Fire(CGameObject * _pTarget)
+{
+	CPlayerCamera* pCamera = (CPlayerCamera*)FindGameObjectOfType<CPlayerCamera>();
+	CBulletSpawn* pSpawn = (CBulletSpawn*)FindGameObjectOfType<CBulletSpawn>();
+	_vector  MobPos , SpawnPos;
+	if (FAILED(pSpawn->GetWorldPos(SpawnPos)))
+		return E_FAIL;
+	if (FAILED(_pTarget->GetWorldPos(MobPos)))
+		return E_FAIL;
+
+	m_vDiraction = MobPos - SpawnPos;
+	D3DXVec3Normalize(&m_vDiraction, &m_vDiraction);
+	m_pTransform->Set_Position(SpawnPos);
 	return S_OK;
 }
 

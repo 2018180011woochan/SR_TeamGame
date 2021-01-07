@@ -68,6 +68,22 @@ HRESULT CItem::BillBord()
 	return S_OK;
 }
 
+void CItem::Blink(const float _fDeltaTime)
+{
+	m_fLiveTime += _fDeltaTime;
+
+	if (m_fBlinkStart <  m_fLiveTime)
+		m_fBlinkTime += _fDeltaTime;
+
+	if (m_fBlinkInterval < m_fBlinkTime)
+	{
+		m_bRenderOff = !m_bRenderOff;
+		m_fBlinkTime = 0.f;
+	}
+	if (m_fLive < m_fLiveTime)
+		m_bDelete = true;
+}
+
 void CItem::SetItemType(const EItemID & _eID)
 {
 	m_eType = _eID;
@@ -82,10 +98,12 @@ void CItem::SetItemType(const EItemID & _eID)
 	case EItemID::sprCoin:
 		m_sTextureName = L"sprCoin";
 		break;
+	case EItemID::Disc:
+		m_sTextureName = L"Disc";
+		break;
 	case EItemID::sprBigCoin:
 		m_sTextureName = L"sprBigCoin";
-		break;
-	case EItemID::End:
+		m_pTransform->Set_Scale(_vector(2, 2, 2));
 		break;
 	}
 
@@ -93,6 +111,22 @@ void CItem::SetItemType(const EItemID & _eID)
 	m_nMaxFrame = m_pTexturePool->GetTexture(m_sTextureName).size();
 	m_fAnimateOneCycleTime = 1.f;
 	m_fAnimateSpeed = (m_nMaxFrame + 1) / 1.f * m_fAnimateOneCycleTime;
+}
+
+void CItem::SetItemRand()
+{
+	int randValue = 0;
+
+	randValue = rand() % 10;
+
+	if (randValue < 2)
+		SetItemType(EItemID::Heart);
+	else if(randValue < 6)
+		SetItemType(EItemID::sprCoin);
+	else if (randValue < 8)
+		SetItemType(EItemID::sprBigCoin);
+	else
+		SetItemType(EItemID::Ammo);
 }
 
 void CItem::SetPos(const _vector _vPos)
@@ -145,10 +179,19 @@ HRESULT CItem::Awake()
 	m_sTextureName = L"";
 
 	// Prod By Woochan
-	m_fJumpPower = 10.f;
+	m_fJumpPower = 5.f;
 	m_fJumpTime = 0.f;
 	m_fYTest = 3.f;
 	m_bJump = true;
+
+	//  [1/4/2021 wades]
+	m_fLiveTime = 0.f;
+	m_fLive = 10.f;
+	m_fBlinkStart = 6.f;
+	m_bRenderOff = false;
+	m_fBlinkInterval = 0.2f;
+	m_fBlinkTime = 0.f;
+
 	return S_OK;
 }
 
@@ -172,15 +215,10 @@ HRESULT CItem::Start()
 
 
 	m_pTransform->Set_Scale(_vector(3, 3, 3));
-	//Test	
-	//m_pTransform->Set_Position(_vector(-25, 3, 10));
-	//SetItemType(EItemID::Heart);
-	//Test	
-
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Cube"),BOUND::BOX);
+	m_pCollider->SetMesh(TEXT("Cube"),BOUND::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 	return S_OK;
 }
@@ -189,6 +227,7 @@ UINT CItem::Update(const float _fDeltaTime)
 {
 	if (m_bDelete)
 		return OBJ_DEAD;
+
 
 	if (FAILED(Animate(_fDeltaTime)))
 		return OBJ_NOENVET;
@@ -202,15 +241,24 @@ UINT CItem::LateUpdate(const float _fDeltaTime)
 {
 	CGameObject::LateUpdate(_fDeltaTime);
 
+
+	//  [1/4/2021 wades]
+	Blink(_fDeltaTime);
+
+
 	return OBJ_NOENVET;
 }
 
 HRESULT CItem::Render()
 {
+	//  [1/4/2021 wades]
+	if (m_bRenderOff)
+		return S_OK;
+
+
 	BillBord();
 	m_pTransform->UpdateWorld();
 	m_pMeshRenderer->Render();
-	//m_pCollider->Draw();
 	return S_OK;
 }
 
@@ -224,7 +272,11 @@ void CItem::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Player" == _pGameObject->GetName())
 	{
-		m_bDelete = true;
+		//  [1/7/2021 wades]
+		if (static_cast<CPlayer*>(_pGameObject)->GetDashAttack() == false)
+		{
+			m_bDelete = true;
+		}
 	}
 }
 

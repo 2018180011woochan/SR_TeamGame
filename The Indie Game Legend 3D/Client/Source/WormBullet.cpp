@@ -92,6 +92,9 @@ HRESULT CWormBullet::Start()
 
 UINT CWormBullet::Update(const float _fDeltaTime)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	CMonster::Update(_fDeltaTime);
 	Move(_fDeltaTime);
 	Animate(_fDeltaTime);
@@ -110,6 +113,15 @@ HRESULT CWormBullet::Render()
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_pTransform->Get_WorldMatrix());
 	m_pMeshRenderer->Render();
 	return S_OK;
+}
+
+void CWormBullet::OnCollision(CGameObject * _pGameObject)
+{
+	if (L"Obstacle" == _pGameObject->GetName()	|| L"Player" == _pGameObject->GetName()
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
+	{
+		m_bDead = true;
+	}
 }
 
 void CWormBullet::SetBullet(D3DXVECTOR3 _vStart, D3DXVECTOR3 _vTarget)

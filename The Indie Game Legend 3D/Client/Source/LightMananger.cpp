@@ -37,10 +37,15 @@ HRESULT CLightMananger::CreateDirction(const LightID & _eID, const _vector & _vD
 	pLight->Diffuse = _Diffuse;
 	pLight->Diffuse.a = 1.f;
 	pLight->Specular = _Specular;
-	pLight->Direction = _vDirection;
+	_vector vDir = _vDirection;
+	D3DXVec3Normalize(&vDir, &vDir);
+	pLight->Direction = vDir;
 	
 	m_pLightChannel[_eID] = pLight;
 	m_pDevice->SetLight(_eID, m_pLightChannel[_eID]);
+	//  [1/4/2021 wades]
+	m_arrSaveColor[_eID] = pLight->Diffuse;
+
 	return S_OK;
 }
 
@@ -62,11 +67,11 @@ HRESULT CLightMananger::CreateSpotlight(const LightID & _eID, const _vector & _v
 	pLight->Position = _vPosition;
 	pLight->Direction = _vDirection;
 
-	pLight->Attenuation0 = 0.00000001f;
-	pLight->Attenuation1 = 0.00000001f;
-	pLight->Attenuation2 = 0.00000001f;
-	pLight->Range = 1000.0f;
-	pLight->Falloff = 0.0001f;
+	pLight->Attenuation0 = 0.5f;
+	pLight->Attenuation1 = 0.1f;
+	pLight->Attenuation2 = 0.0001f;
+	pLight->Range = 500.0f;
+	pLight->Falloff = 1.0f;
 
 	pLight->Theta = _fTheta;
 	pLight->Phi = _fPhi;
@@ -80,13 +85,12 @@ HRESULT CLightMananger::CreateSpotlight(const LightID & _eID, const _vector & _v
 
 HRESULT CLightMananger::LightEnable(const LightID & _eID, const bool & _bEnable)
 {
-	if (_bEnable && LIGHT_MAX <= m_nUseLightCount)
-		return E_FAIL;
-	if (!_bEnable && 0 == m_nUseLightCount)
-		return E_FAIL;
-	m_pDevice->LightEnable(_eID, _bEnable);
 
-	_bEnable ? ++m_nUseLightCount : --m_nUseLightCount;
+	if (m_bEnable[_eID] != _bEnable)
+	{
+		m_bEnable[_eID] = _bEnable;
+		m_pDevice->LightEnable(_eID, _bEnable);
+	}
 
 	return S_OK;
 }
@@ -100,7 +104,23 @@ void CLightMananger::SetLight(const LightID & _eID)
 {
 	if (nullptr == m_pLightChannel[_eID] || CLightMananger::End == _eID)
 		return;
-	m_pDevice->SetLight(_eID, m_pLightChannel[_eID]);
+	m_pDevice->SetLight((DWORD)_eID, m_pLightChannel[_eID]);
+}
+
+void CLightMananger::WorldOff()
+{
+	for (_int eID = World1; eID < End; ++eID)
+	{
+		LightEnable((LightID)eID, false);
+	}
+}
+
+void CLightMananger::WorldOn()
+{
+	for (_int eID = World1; eID < End; ++eID)
+	{
+		LightEnable((LightID)eID, true);
+	}
 }
 
 void CLightMananger::LightOn()
@@ -128,6 +148,15 @@ CLightMananger::CLightMananger()
 	{
 		pChannel = nullptr;
 	}
+	for (auto& bEnable : m_bEnable)
+	{
+		bEnable = false;
+	}
+	//  [1/4/2021 wades]
+	for (auto& color : m_arrSaveColor)
+	{
+		color = D3DCOLOR_XRGB(0, 0, 0);
+	}
 	m_pDevice = nullptr;
 	m_pDevice = CManagement::GetInstance()->GetDevice();
 	//장치가 알아서 법선백터 관리 
@@ -141,7 +170,8 @@ void CLightMananger::Free()
 	{
 		SafeDelete(pChannel);
 	}
+
+
 	SafeRelease(m_pDevice);
 
-	m_mapLights.clear();
 }

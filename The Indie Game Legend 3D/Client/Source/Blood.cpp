@@ -44,7 +44,7 @@ HRESULT CBlood::Awake()
 	m_bJump = false;
 	nIndex = 0;
 
-	m_fWalkSpeed = 0.3f;
+	m_fWalkSpeed = 0.1f;
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
@@ -81,10 +81,11 @@ UINT CBlood::Update(const float _fDeltaTime)
 	{
 		nIndex++;
 		if (nIndex >= 4)
+		{
+			nIndex = 3;
 			m_bDead = true;
-		if (nIndex >= 4)
-			nIndex = 0;
-		m_fWalkDeltaTime -= m_fWalkSpeed;
+		}
+		m_fWalkDeltaTime = 0;
 	}
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[nIndex]);
 

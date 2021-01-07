@@ -16,6 +16,7 @@ public:
 	HRESULT LoadScene( CScene* const _pScene);
 
 	HRESULT LoadCollider(CScene* _pScene, const TSTRING& _sFileName);
+	HRESULT LoadInterationObj(CScene* _pScene, const TSTRING& _sFileName);
 private:
 	void ClearData();
 	HRESULT AddObject(CScene* const _pScene, _uint _nIndex);

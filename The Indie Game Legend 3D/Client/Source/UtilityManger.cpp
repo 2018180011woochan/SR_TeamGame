@@ -7,6 +7,8 @@
 #include "Tile.h"
 #include "Obstacle.h"
 #include "Floor.h"
+#include "Wall.h"
+#include "Slider.h"
 
 list<CGameObject*> CUtilityManger::m_RoomMobList;
 
@@ -48,6 +50,7 @@ bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
 	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID));
 	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
+	CollisionList.splice(CollisionList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CWall>(_nSceneID));
 
 
 	CCollider* pCollider = nullptr;
@@ -57,12 +60,14 @@ bool CUtilityManger::CrossHairPicking(_uint _nSceneID, OUT _vector& _vPickingPos
 	CGameObject* pGameObject = nullptr;
 	float fDis = 0.f;
 	float fLowDis = -1.f;
+
 	for (auto& pGameObject : CollisionList)
 	{
-		if(pGameObject->IsEnable() == false)
+		if (pGameObject->IsEnable() == false)
 			continue;
-
 		pCollider = (CCollider*)pGameObject->GetComponent<CCollider>();
+		if(pCollider == nullptr)
+			continue;
 		if (pCollider->IsRayPicking(vPickPos, fDis, vRayPivot, vRayDirection))
 		{
 			bIsPicking = true;
@@ -137,7 +142,46 @@ bool CUtilityManger::AirstrikePicking(_uint _nSceneID, OUT _vector & _vPickingPo
 	return bIsPicking;
 }
 
-//bool CUtilityManger::AutoAim(_uint _nSceneID ,OUT CGameObject**  _pGameObject)
+bool CUtilityManger::AutoAim(_uint _nSceneID, OUT list<CGameObject*>& _listGameObj)
+{
+	if (m_RoomMobList.empty())
+		return false;
+
+	CPlayerCamera* pCamera = (CPlayerCamera*)CManagement::GetInstance()->FindGameObjectOfType<CPlayerCamera>(_nSceneID);
+	_matrix matView = pCamera->Get_Camera().matView;
+	_matrix matProj = pCamera->Get_Camera().matProj;
+
+	float fAimSize = 1.f; // 절두체 전 범위 이긴 한데 
+	float fCamerNear = pCamera->Get_Camera().fNear;
+	auto IterMob = m_RoomMobList.begin();
+
+	//엔진에서 삭제처리를 막아놨기에 여기서 삭제처리를 해야한다 
+	for (; IterMob != m_RoomMobList.end(); )
+	{
+		if (((CMonster*)*IterMob)->GetDead())
+		{
+			SafeRelease(*IterMob);
+			IterMob = m_RoomMobList.erase(IterMob);
+			continue;
+		}
+
+		_vector vPos = ((CTransform*)(*IterMob)->GetComponent<CTransform>())->Get_WorldPosition();
+		_vector vProjPos;
+		D3DXVec3TransformCoord(&vProjPos, &vPos, &matView);
+		D3DXVec3TransformCoord(&vProjPos, &vProjPos, &matProj);
+
+		if (fabs(vProjPos.x) <= fAimSize && fabs(vProjPos.y) 
+			<= fAimSize && (vProjPos.z >= 0.f && vProjPos.z <= 1.f)
+			&& vPos.z >fCamerNear)
+		{
+			_listGameObj.emplace_back(*IterMob);
+		}
+		++IterMob;
+	}
+
+	return !_listGameObj.empty();
+}
+
 bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 {
 	if(m_RoomMobList.empty())
@@ -146,19 +190,23 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 	CPlayerCamera* pCamera = (CPlayerCamera*)CManagement::GetInstance()->FindGameObjectOfType<CPlayerCamera>(_nSceneID);
 	_matrix matView = pCamera->Get_Camera().matView;
 	_matrix matProj = pCamera->Get_Camera().matProj;
-	cout << m_RoomMobList.size() << endl;
 
-	//float fAimSize = 0.6f;
 	float fAimSize = 1.f;
+	float fMinimumZ = pCamera->Get_Camera().fNear;
 
-	float fMinimumZ = 1.f;
-	for (auto& pMob : m_RoomMobList)
+	auto Iter = m_RoomMobList.begin();
+
+	//for (auto& pMob : m_RoomMobList)
+	for (; Iter != m_RoomMobList.end(); )
 	{
 		//삭제해야하긴 하는데 귀찮
-		if(((CMonster*)pMob)->GetDead())
+		if (((CMonster*)*Iter)->GetDead())
+		{
+			SafeRelease(*Iter);
+			Iter = m_RoomMobList.erase(Iter);
 			continue;
-
-		_vector vPos = ((CTransform*)pMob->GetComponent<CTransform>())->Get_WorldPosition();
+		}
+		_vector vPos = ((CTransform*)(*Iter)->GetComponent<CTransform>())->Get_WorldPosition();
 		D3DXVec3TransformCoord(&vPos, &vPos, &matView);
 		D3DXVec3TransformCoord(&vPos, &vPos, &matProj);
 
@@ -166,10 +214,11 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 		{
 			if (vPos.z < fMinimumZ)
 			{
-				_pGameObject = pMob;
+				_pGameObject = (*Iter);
 				fMinimumZ = vPos.z;
 			}
 		}
+		++Iter;
 	}
 
 	
@@ -182,11 +231,14 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 	list<CGameObject*> CullingMobList;
 	list<CGameObject*> CullingObjectList;
 
-	//컬링 리스트 : 몹 ,타일 , CObstacle
+	//컬링 리스트 : 몹 ,타일 , CObstacle CWall CSlider
 	CullingMobList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CMonster>(_nSceneID);
 
 	CullingObjectList = CManagement::GetInstance()->FindGameObjectsOfBaseType<CTile>(_nSceneID);
 	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CObstacle>(_nSceneID));
+	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
+	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CWall>(_nSceneID));
+	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CSlider>(_nSceneID));
 
 	//Object
 	for (auto& pGameObject : CullingObjectList)
@@ -205,6 +257,7 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 		else
 		{
 			pGameObject->SetEnable(true);
+			pGameObject->OnEnable();
 			m_RoomMobList.emplace_back(pGameObject);
 			SafeAddRef(pGameObject);
 		}

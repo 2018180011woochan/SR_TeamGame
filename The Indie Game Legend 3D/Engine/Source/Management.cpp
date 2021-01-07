@@ -181,3 +181,4 @@ HRESULT CManagement::SetUpCurrentScene(CScene * const _pCurrentScene)
 		return E_FAIL;
 	return m_pSceneManager->SetUpCurrentScene(_pCurrentScene);
 }
+ 

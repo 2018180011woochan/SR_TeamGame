@@ -87,11 +87,10 @@ CGameObject * CNormalBullet::Clone()
 	return pIns;
 }
 
-HRESULT CNormalBullet::Fire()
-{
-	CBullet::Fire();
-	return S_OK;
-}
+//HRESULT CNormalBullet::Fire()
+//{
+//	return CBullet::Fire();
+//}
 
 void CNormalBullet::Free()
 {
@@ -107,7 +106,7 @@ CNormalBullet * CNormalBullet::Create()
 void CNormalBullet::OnCollision(CGameObject * _pGameObject)
 {
 	if (L"Monster" == _pGameObject->GetName() || L"Obstacle" == _pGameObject->GetName()
-		|| L"Floor" == _pGameObject->GetName())
+		|| L"Floor" == _pGameObject->GetName() || L"Wall" == _pGameObject->GetName())
 	{
 		CBulletSpark* pEffect = nullptr;
 		pEffect = (CBulletSpark*)AddGameObject<CBulletSpark>();

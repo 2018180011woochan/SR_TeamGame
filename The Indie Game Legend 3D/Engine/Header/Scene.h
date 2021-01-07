@@ -6,7 +6,7 @@ class CGameObject;
 class CManagement;
 class ENGINE_DLL CScene abstract : public CBase
 {
-private:
+protected:
 	CManagement*		m_pManagement;
 	UINT				m_nSceneID;
 	bool				m_bActive;

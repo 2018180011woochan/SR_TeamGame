@@ -53,6 +53,9 @@ HRESULT CWormBoss::Awake()
 	m_fJumpSpeed = 2.f;
 	m_eCurDirState = LEFT;
 	m_eRenderID = ERenderID::Alpha;
+
+
+
 	return S_OK;
 }
 
@@ -130,6 +133,7 @@ HRESULT CWormBoss::Render()
 
 void CWormBoss::OnCollision(CGameObject * _pGameObject)
 {
+
 }
 
 HRESULT CWormBoss::Movement(float fDeltaTime)
@@ -247,12 +251,7 @@ void CWormBoss::Waving(float fDeltaTime)
 				m_pTransform->Set_RotationZ(180.f);
 		}
 
-
-
 	}
-
-
-
 }
 
 void CWormBoss::ChaseAttack(float fDeltaTime)

@@ -5,6 +5,7 @@
 #include "Wall.h"
 #include "Floor.h"
 #include "Slider.h"
+#include "InteractionObj.h"
 IMPLEMENT_SINGLETON(CFactoryManager)
 HRESULT CFactoryManager::LoadDataFile(const TSTRING & _sFileName)
 {
@@ -135,16 +136,78 @@ HRESULT CFactoryManager::LoadCollider(CScene* _pScene, const TSTRING & _sFileNam
 				((CWall*)pGameObject)->SetMesh(sMeshKey);
 				((CWall*)pGameObject)->SetDirection(sDirection);
 				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
-				pGameObject->SetTag(nRoomID);
+				pGameObject->SetTag(++nRoomID);
 			}
 			else
 			{
 				pGameObject = _pScene->AddGameObject<CFloor>();
 				((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vPosition);
-				pGameObject->SetTag(nRoomID);
+				pGameObject->SetTag(++nRoomID);
 			}
 		}
 	}
+	fclose(pFile);
+	return S_OK;
+}
+
+HRESULT CFactoryManager::LoadInterationObj(CScene * _pScene, const TSTRING & _sFileName)
+{
+
+	FILE* pFile = nullptr;
+
+	TSTRING sPath = TEXT("../../Data/");
+	TSTRING sFormat = TEXT(".obj");
+	TSTRING sFullPath = sPath + _sFileName + sFormat;
+
+	if (0 != _tfopen_s(&pFile, sFullPath.c_str(), TEXT("r")))
+	{
+		TCHAR szBuf[128] = TEXT("");
+		_stprintf_s(szBuf, 128, TEXT("Failed to open %s file"), sFullPath.c_str());
+		PrintLog(TEXT("Warning"), szBuf);
+		return E_FAIL;
+	}
+
+	TCHAR szWord[MAX_PATH + 1] = TEXT("");
+	D3DXVECTOR3 vPosition = D3DXVECTOR3(0.f, 0.f, 0.f);
+	vector<D3DXVECTOR3> vecPosition;
+	vecPosition.reserve(5);
+	int	nRoomID = 0;
+	int AttachID = 0;
+	TSTRING sMeshKey = TEXT("");
+	TSTRING sDirection = TEXT("");
+	CInteractionObj* pGameObject = nullptr;
+
+	while (EOF != _ftscanf_s(pFile, TEXT("%s"), szWord, MAX_PATH))
+	{
+		if (0 == _tcscmp(TEXT("v"), szWord))
+		{
+			_ftscanf_s(pFile, TEXT("%f %f %f\n"), &vPosition.x, &vPosition.y, &vPosition.z);
+			vecPosition.emplace_back(vPosition);
+		}
+		else if (0 == _tcscmp(TEXT("o"), szWord))
+		{
+			_ftscanf_s(pFile, TEXT("%d,%d\n"), &nRoomID, &AttachID);
+		}
+		else if (0 == _tcscmp(TEXT("usemtl"), szWord))
+		{
+			TSTRING Type;
+			_ftscanf_s(pFile, TEXT("%s\n"), &szWord, MAX_PATH);
+			Type = szWord;
+			TSTRING TypeID = L"C" + Type;
+
+			pGameObject = (CInteractionObj*)_pScene->AddGameObject(TypeID);
+			if (nullptr == pGameObject)
+			{
+				PrintLog(L"Error", L"failed Add GameObject By factoryManager load");
+				return E_FAIL;
+			}
+			pGameObject->SetAttachID(AttachID);
+			pGameObject->SetTag(nRoomID);
+			((CTransform*)(pGameObject->GetComponent<CTransform>()))->Set_Position(vecPosition[4]);
+			vecPosition.clear();
+		}
+	}
+	fclose(pFile);
 	return S_OK;
 }
 

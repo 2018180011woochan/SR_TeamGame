@@ -101,7 +101,6 @@ UINT CExplosion::LateUpdate(const float _fDeltaTime)
 
 HRESULT CExplosion::Render()
 {
-	/*엔진에서 호출하는 식으로*/
 	if (FAILED(CGameObject::Render()))
 		return E_FAIL;
 

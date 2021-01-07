@@ -65,6 +65,8 @@ private:
 	int					m_iChaseTime;
 
 	UINT nIndex;
+
+	bool				m_bDead;
 };
 
 #define __WORMBOSS_H__

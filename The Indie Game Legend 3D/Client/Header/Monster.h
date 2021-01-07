@@ -1,6 +1,7 @@
 #pragma once
 #ifndef __MONSTER_H__
 #include "GameObject.h"
+#include "SoundMgr.h"
 USING(Engine)
 class CBossHP;
 class CMonster : public CGameObject
@@ -21,7 +22,8 @@ public:
 
 public:
 	HRESULT IsBillboarding();
-
+	//  [1/4/2021 wades]
+	void	sfxMetalHit();
 public:
 	//Getter
 	bool	GetDead() { return m_bDead; };
@@ -31,7 +33,9 @@ public:
 	virtual void	SetMonsterPos();
 	// 컬링 꺼지면 위치 초기화
 	virtual void	ResetMonsterPos();
-
+	virtual void	OnEnable() override;
+	//  [1/7/2021 wades]
+	void AddHp(const _int& _nHp);
 protected:
 	const CTransform*	m_pPlayerTransform;
 	class CVIBuffer*	m_pVIBufferCom = nullptr;
@@ -44,6 +48,11 @@ protected:
 	int					m_iMaxHP;
 	_vector				m_vecStartPos;
 	CBossHP*			m_pBossHP;
+
+	bool				m_bHit;
+	float				m_fHitDelay;
+	float				m_fHitDelayTime;
+
 };
 
 #define __MONSTER_H__
