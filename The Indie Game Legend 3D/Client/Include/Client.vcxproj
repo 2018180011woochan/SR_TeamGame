@@ -198,6 +198,7 @@
     <ClInclude Include="..\Header\GreenBoyUpHand.h" />
     <ClInclude Include="..\Header\LapidGun.h" />
     <ClInclude Include="..\Header\LazerGun.h" />
+    <ClInclude Include="..\Header\MiniGamePlayerEffect.h" />
     <ClInclude Include="..\Header\Pillar.h" />
     <ClInclude Include="..\Header\PosionGas.h" />
     <ClInclude Include="..\Header\Price.h" />
@@ -372,6 +373,7 @@
     <ClCompile Include="..\Source\GreenBoyUpHand.cpp" />
     <ClCompile Include="..\Source\LapidGun.cpp" />
     <ClCompile Include="..\Source\LazerGun.cpp" />
+    <ClCompile Include="..\Source\MiniGamePlayerEffect.cpp" />
     <ClCompile Include="..\Source\Pillar.cpp" />
     <ClCompile Include="..\Source\PosionGas.cpp" />
     <ClCompile Include="..\Source\Price.cpp" />

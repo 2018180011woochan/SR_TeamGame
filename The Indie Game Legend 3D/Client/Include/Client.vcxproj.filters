@@ -622,6 +622,9 @@
     <Filter Include="02.GameObject\04.UI\15.EndingText">
       <UniqueIdentifier>{5cd60849-4365-45cc-b538-da07f66dd62e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\10.Effect\07.MiniGamePlayerEffect">
+      <UniqueIdentifier>{ff0b10c7-8297-45e1-bd3b-218ecf6f9fa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1074,7 +1077,6 @@
     <ClInclude Include="..\Header\SlideBlock.h">
       <Filter>02.GameObject\08.Obstacle\05.SlideBlock</Filter>
     </ClInclude>
-
     <ClInclude Include="..\Header\FinalExplosion.h">
       <Filter>02.GameObject\00.Monster\13.FinalBoss\00.Bullet\02.Explosion</Filter>
     </ClInclude>
@@ -1141,6 +1143,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\Price.h">
       <Filter>02.GameObject\12.Shop\03.Price\00.AmmoPrice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniGamePlayerEffect.h">
+      <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1642,6 +1647,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\BigGun.cpp">
       <Filter>02.GameObject\14.Container\04.Container_White\BigGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\MiniGamePlayerEffect.cpp">
+      <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
