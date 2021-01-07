@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\BattleShipBullet.h"
 #include "TexturePoolManager.h"
+#include "MiniGamePlayerEffect.h"
 
 CBattleShipBullet::CBattleShipBullet()
 	: m_pMeshRenderer(nullptr)
@@ -119,6 +120,18 @@ void CBattleShipBullet::OnCollision(CGameObject * _pGameObject)
 	if ((L"FinalBoss" == _pGameObject->GetName()))
 	{
 		m_bRemove = true;
+		for (int i = 0; i < 10; i++)
+		{
+			int iRandX = rand() % 2;
+			int iRandY = rand() % 2;
+			int iRandZ = rand() % 1;
+
+			CMiniGamePlayerEffect* pEffect = (CMiniGamePlayerEffect*)AddGameObject<CMiniGamePlayerEffect>();
+			pEffect->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+
+		}
 	}
 }
 

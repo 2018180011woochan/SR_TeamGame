@@ -25,6 +25,7 @@
 #include "Heart.h"
 
 #include "Explosion.h"
+#include "MiniGamePlayerEffect.h"
 CFinalStage::CFinalStage()
 	: CScene(GetTypeHashCode<CFinalStage>())
 {
@@ -66,6 +67,7 @@ HRESULT CFinalStage::Awake()
 	AddPrototype(CHeartManager::Create());
 
 	AddPrototype(CExplosion::Create());
+	AddPrototype(CMiniGamePlayerEffect::Create());
 
 	AddGameObject<CBossHPFrame>()->SetEnable(true);
 	AddGameObject<CBossText>()->SetEnable(true);
