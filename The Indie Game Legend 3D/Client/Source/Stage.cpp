@@ -184,6 +184,7 @@
 #include "PuzzleRoomCamera.h"
 #include "CameraManager.h"
 #include "SlideBlock.h"
+#include "Computer.h"
 CStage::CStage()
 	: CScene(GetTypeHashCode<CStage>())
 {
@@ -301,6 +302,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CSwitch::Create());
 	AddPrototype(CPuzzleRoomCamera::Create());
 	AddPrototype(CSlideBlock::Create());
+	AddPrototype(CComputer::Create());
 #pragma endregion
 
 #pragma region SHOP

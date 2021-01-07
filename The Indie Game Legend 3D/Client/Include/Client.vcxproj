@@ -181,6 +181,7 @@
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletSpark.h" />
     <ClInclude Include="..\Header\BulletSpawn.h" />
+    <ClInclude Include="..\Header\Computer.h" />
     <ClInclude Include="..\Header\ContainerBlack.h" />
     <ClInclude Include="..\Header\ContainerBlue.h" />
     <ClInclude Include="..\Header\ContainerNomal.h" />
@@ -354,6 +355,7 @@
     <ClCompile Include="..\Source\Bullet.cpp" />
     <ClCompile Include="..\Source\BulletSpark.cpp" />
     <ClCompile Include="..\Source\BulletSpawn.cpp" />
+    <ClCompile Include="..\Source\Computer.cpp" />
     <ClCompile Include="..\Source\ContainerBlack.cpp" />
     <ClCompile Include="..\Source\ContainerBlue.cpp" />
     <ClCompile Include="..\Source\ContainerNomal.cpp" />
