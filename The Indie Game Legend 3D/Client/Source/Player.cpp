@@ -35,6 +35,11 @@ void CPlayer::SetBuyItem(_int _Price)
 	m_pGemText->SetCount(m_nGem);
 }
 
+bool CPlayer::IsMaxDisc()
+{
+	return m_nDisc >= DiscMax;
+}
+
 CPlayer::CPlayer()
 	:CGameObject()
 	, m_fMoveSpeed(0.f)

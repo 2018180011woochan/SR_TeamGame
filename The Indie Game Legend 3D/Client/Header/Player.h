@@ -179,7 +179,7 @@ public:
 	void	SetBySkillRunning() { m_bIsBuySkillRunning = true; }
 	void	SetBuyItem(_int _Price);
 	_int	GetGem() { return m_nGem; }
-
+	bool	IsMaxDisc();
 protected:
 	explicit CPlayer();
 	explicit CPlayer(const CPlayer& _rOther);

@@ -52,9 +52,10 @@ UINT CComputer::Update(const float _fDeltaTime)
 	_vector vPlayerPos = vZero;
 	FindGameObjectOfType<CPlayer>()->GetWorldPos(vPlayerPos);
 	_vector vDis = m_pTransform->Get_WorldPosition() - vPlayerPos;
+	CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
 
-	cout << D3DXVec3Length(&vDis) << endl;
-	if (CKeyManager::GetInstance()->Key_Down(KEY_X) && m_fInteracitonDis > D3DXVec3Length(&vDis))
+	if (CKeyManager::GetInstance()->Key_Down(KEY_X) && m_fInteracitonDis > D3DXVec3Length(&vDis)
+		&& pPlayer->IsMaxDisc())
 	{
 		m_pManagement->SetUpCurrentScene(CFinalStage::Create());
 	}
