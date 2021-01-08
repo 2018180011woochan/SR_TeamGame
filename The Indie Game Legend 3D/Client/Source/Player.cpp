@@ -237,6 +237,26 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 		m_nSkillPoint = 0;
 	}
 
+
+	// Cheat [1/8/2021 wades]
+	if (m_pKeyMgr->Key_Down(KEY_4))
+	{
+		AddSkillGauge(10);
+	}
+	if (m_pKeyMgr->Key_Down(KEY_5))
+	{
+		m_fAmmo += 10;
+		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
+		m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
+		SoundPlay(ESoundID::AddAmmo);
+	}
+	if (m_pKeyMgr->Key_Down(KEY_6))
+	{
+		++m_nDisc;
+		m_nDisc = CLAMP(m_nDisc, 0, DiscMax);
+		m_pDiscText->SetCount(m_nDisc);
+		SoundPlay(ESoundID::AddDisc);
+	}
 	return S_OK;
 }
 
@@ -388,6 +408,8 @@ void CPlayer::TakeItem(const EItemID & _eID)
 		++m_nDisc;
 		m_nDisc = CLAMP(m_nDisc, 0, DiscMax);
 		m_pDiscText->SetCount(m_nDisc);
+		SoundPlay(ESoundID::AddDisc);
+
 		break;
 	case EItemID::Heart:
 		AddHp(4);

@@ -102,6 +102,13 @@ void CKeyManager::Update_KeyManager()
 	if (GetAsyncKeyState(VK_F1) & 0x8000)
 		m_dwKeyState |= KEY_F1;
 
+	if (GetAsyncKeyState('4') & 0x8000)
+		m_dwKeyState |= KEY_4;
+	if (GetAsyncKeyState('5') & 0x8000)
+		m_dwKeyState |= KEY_5;
+
+	if (GetAsyncKeyState('6') & 0x8000)
+		m_dwKeyState |= KEY_6;
 }
 
 void CKeyManager::Free()
