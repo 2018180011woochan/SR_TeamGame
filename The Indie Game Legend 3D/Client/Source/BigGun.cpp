@@ -3,6 +3,7 @@
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "Camera.h"
+#include "SoundMgr.h"
 
 CBigGun::CBigGun()
 	: m_pTexturePool(nullptr)
@@ -90,6 +91,7 @@ void CBigGun::OnCollision(CGameObject * _pGameObject)
 		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
 		pPlayer->AddWeapon(EWeaponType::Big);
 
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Coin);
 		m_bDead = true;
 	}
 }

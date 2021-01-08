@@ -20,6 +20,8 @@ public:
 	virtual HRESULT Render() override;
 
 	virtual void OnCollision(CGameObject* _pGameObject) override;
+	virtual void OnEnable() override;
+	virtual void OnDisable() override;
 private:
 	HRESULT Movement(float fDeltaTime);
 	void Dash(float _fDeltaTime);

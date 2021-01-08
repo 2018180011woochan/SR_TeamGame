@@ -55,7 +55,7 @@ HRESULT CNubBoss::Awake()
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 
-	m_iHP = 40;
+	m_iHP = 20;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -194,6 +194,21 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 	}
 }
 
+void CNubBoss::OnEnable()
+{
+	if (nullptr != m_pBossHP)
+	{
+		m_pBossHP->SetEnable(true);
+		m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
+	}
+}
+
+void CNubBoss::OnDisable()
+{
+	if (nullptr != m_pBossHP)
+		m_pBossHP->SetEnable(false);
+}
+
 
 HRESULT CNubBoss::Movement(float fDeltaTime)
 {
@@ -283,6 +298,9 @@ CNubBoss * CNubBoss::Create()
 
 void CNubBoss::Free()
 {
-	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
+	SafeRelease(m_pTexturePool);
+	if (m_pBossHP)
+		m_pBossHP->SetEnable(false);
+	SafeRelease(m_pBossHP);
 }

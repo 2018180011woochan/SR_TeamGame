@@ -50,7 +50,7 @@ HRESULT CRub::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
-	m_iHP = 5;
+	m_iHP = 2;
 
 	nIndex = 0;
 

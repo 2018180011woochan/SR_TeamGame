@@ -1169,6 +1169,9 @@
     <ClInclude Include="..\Header\Selector.h">
       <Filter>02.GameObject\04.UI\16.IntroText\03.Selector</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Computer.h">
+      <Filter>02.GameObject\13.InterectionObject\06.Computer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1673,6 +1676,7 @@
     <ClCompile Include="..\Source\MiniGamePlayerEffect.cpp">
       <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
     </ClCompile>
+
     <ClCompile Include="..\Source\Computer.cpp" />
     <ClCompile Include="..\Source\StartGame.cpp">
       <Filter>02.GameObject\04.UI\16.IntroText\00.StartGame</Filter>
@@ -1682,6 +1686,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Selector.cpp">
       <Filter>02.GameObject\04.UI\16.IntroText\03.Selector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Computer.cpp">
+      <Filter>02.GameObject\13.InterectionObject\06.Computer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

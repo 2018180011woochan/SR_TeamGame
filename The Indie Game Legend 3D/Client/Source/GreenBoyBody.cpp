@@ -66,7 +66,7 @@ HRESULT CGreenBoyBody::Awake()
 
 	m_bDead = false;
 	m_nTag = 30;
-	m_iHP = 30;
+	m_iHP = 15;
 	m_iMaxHP = m_iHP;
 	m_bIsAttack = false;
 	m_eAttackBeem = LEFTBEEM;
@@ -105,7 +105,7 @@ HRESULT CGreenBoyBody::Start()
 UINT CGreenBoyBody::Update(const float _fDeltaTime)
 {
 	/* 보스 hp 업데이트 */
-	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
+	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
 
 	if (m_bDead)
 		return OBJ_DEAD;
@@ -225,6 +225,7 @@ void CGreenBoyBody::OnCollision(CGameObject * _pGameObject)
 	if (L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_iHP--;
+		
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
 	}
@@ -262,7 +263,7 @@ void CGreenBoyBody::OnCollision(CGameObject * _pGameObject)
 				m_pTransform->Get_Position().y + iRandY
 				, m_pTransform->Get_Position().z + iRandZ));
 		}
-		m_pBossHP->SetEnable(false);
+		//m_pBossHP->SetEnable(false);
 		m_bDead = true;
 	}
 }
@@ -323,6 +324,21 @@ void CGreenBoyBody::SetPos(const _vector _Pos)
 	m_pTransform->Set_Position(_Pos);
 }
 
+void CGreenBoyBody::OnEnable()
+{
+	if (nullptr != m_pBossHP)
+	{
+		m_pBossHP->SetEnable(true);
+		m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
+	}
+}
+
+void CGreenBoyBody::OnDisable()
+{
+	if (nullptr != m_pBossHP)
+		m_pBossHP->SetEnable(false);
+}
+
 CGameObject * CGreenBoyBody::Clone()
 {
 	CGreenBoyBody* pClone = new CGreenBoyBody(*this);
@@ -337,7 +353,9 @@ CGreenBoyBody * CGreenBoyBody::Create()
 
 void CGreenBoyBody::Free()
 {
-	SafeRelease(m_pTexturePool);
-	SafeRelease(m_pBossHP);
 	CGameObject::Free();
+	SafeRelease(m_pTexturePool);
+	if (m_pBossHP)
+		m_pBossHP->SetEnable(false);
+	SafeRelease(m_pBossHP);
 }

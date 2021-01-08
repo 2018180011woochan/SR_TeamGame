@@ -37,6 +37,8 @@ private:
 	
 public:
 	void SetPos(const _vector _Pos);
+	virtual void OnEnable() override;
+	virtual void OnDisable() override;
 
 public:
 	virtual CGameObject * Clone() override;

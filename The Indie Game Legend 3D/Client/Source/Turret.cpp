@@ -106,23 +106,26 @@ HRESULT CTurret::Render()
 
 void CTurret::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+	if (!m_bDead)
 	{
-		m_iHP--;
+		if (L"PlayerBullet" == _pGameObject->GetName())
+		{
+			m_iHP--;
 
-		int iRandX = rand() % 5;
-		int iRandY = rand() % 5;
-		int iRandZ = rand() % 5;
+			int iRandX = rand() % 5;
+			int iRandY = rand() % 5;
+			int iRandZ = rand() % 5;
 
-		CSmallExlode* pSmallExlode = (CSmallExlode*)AddGameObject<CSmallExlode>();
-		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
-			m_pTransform->Get_Position().y + iRandY
-			, m_pTransform->Get_Position().z + iRandZ));
-	}
-	if (m_iHP <= 0)
-	{
-		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
-		m_bDead = true;
+			CSmallExlode* pSmallExlode = (CSmallExlode*)AddGameObject<CSmallExlode>();
+			pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
+				m_pTransform->Get_Position().y + iRandY
+				, m_pTransform->Get_Position().z + iRandZ));
+		}
+		if (m_iHP <= 0)
+		{
+			m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
+			m_bDead = true;
+		}
 	}
 }
 

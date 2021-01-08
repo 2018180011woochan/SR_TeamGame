@@ -3,6 +3,7 @@
 #include "MeshRenderer.h"
 #include "Player.h"
 #include "Camera.h"
+#include "SoundMgr.h"
 
 CLazerGun::CLazerGun()
 	: m_pTexturePool(nullptr)
@@ -91,6 +92,7 @@ void CLazerGun::OnCollision(CGameObject * _pGameObject)
 		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
 		pPlayer->AddWeapon(EWeaponType::Lazer);
 
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Coin);
 		m_bDead = true;
 	}
 }
