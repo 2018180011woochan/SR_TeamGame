@@ -264,7 +264,7 @@ void CGreenBoyBody::OnCollision(CGameObject * _pGameObject)
 				m_pTransform->Get_Position().y + iRandY
 				, m_pTransform->Get_Position().z + iRandZ));
 		}
-		//m_pBossHP->SetEnable(false);
+		m_pBossHP->SetEnable(false);
 		m_bDead = true;
 	}
 }
