@@ -21,7 +21,7 @@ HRESULT CComputer::InitializePrototype()
 	m_sName = L"Obstacle";
 	m_eRenderID = ERenderID::Alpha;
 	m_fInteracitonDis = 10.f;
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 HRESULT CComputer::Awake()

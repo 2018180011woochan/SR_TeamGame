@@ -3,6 +3,9 @@
 #include "IntroBackGround.h"
 #include "Star.h"
 #include "Logo.h"
+#include "StartGame.h"
+#include "ExitGame.h"
+#include "Selector.h"
 #include "Stage.h"
 #include "FinalStage.h"
 #include "SoundMgr.h"
@@ -30,6 +33,9 @@ HRESULT CIntro::Awake()
 	AddPrototype(CIntroBackGround::Create());
 	AddPrototype(CStar::Create());
 	AddPrototype(CLogo::Create());
+	AddPrototype(CStartGame::Create());
+	AddPrototype(CExitGame::Create());
+	AddPrototype(CSelector::Create());
 
 	CGameObject* pGameObject = nullptr;
 
@@ -71,6 +77,9 @@ HRESULT CIntro::Awake()
 
 	AddGameObject<CLogo>();
 
+	AddGameObject<CStartGame>();
+	AddGameObject<CExitGame>();
+	AddGameObject<CSelector>();
 	CScene::Awake();
 	return S_OK;
 }
@@ -87,17 +96,17 @@ HRESULT CIntro::Start()
 UINT CIntro::Update(const float _fDeltaTime)
 {
 	CScene::Update(_fDeltaTime);
-	if (GetAsyncKeyState(VK_RETURN) && 0x8000)
-	{
-		CLoading* pLoading = CLoading::Create(m_pDevice);
-		pLoading->OnLoading(CFinalStage::Create());
-		SafeRelease(pLoading);
-	/*	if (FAILED(SetUpCurrentScene(CStage::Create())))
-		{
-			PrintLog(L"Error", L"Failed To SetUpCurrentScene");
-			return E_FAIL;
-		}*/
-	}
+	//if (GetAsyncKeyState(VK_RETURN) && 0x8000)
+	//{
+	//	CLoading* pLoading = CLoading::Create(m_pDevice);
+	//	pLoading->OnLoading(CStage::Create());
+	//	SafeRelease(pLoading);
+	///*	if (FAILED(SetUpCurrentScene(CStage::Create())))
+	//	{
+	//		PrintLog(L"Error", L"Failed To SetUpCurrentScene");
+	//		return E_FAIL;
+	//	}*/
+	//}
 	return 0;
 }
 

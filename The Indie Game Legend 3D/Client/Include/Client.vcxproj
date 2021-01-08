@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\Door.h" />
     <ClInclude Include="..\Header\Ending.h" />
     <ClInclude Include="..\Header\EndingText.h" />
+    <ClInclude Include="..\Header\ExitGame.h" />
     <ClInclude Include="..\Header\FinalExplosion.h" />
     <ClInclude Include="..\Header\FireBat.h" />
     <ClInclude Include="..\Header\Gate.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\Header\Price.h" />
     <ClInclude Include="..\Header\PuzzleRoomCamera.h" />
     <ClInclude Include="..\Header\Sand.h" />
+    <ClInclude Include="..\Header\Selector.h" />
     <ClInclude Include="..\Header\SkillRunning.h" />
     <ClInclude Include="..\Header\SkillRunningPrice.h" />
     <ClInclude Include="..\Header\SlideBlock.h" />
@@ -215,6 +217,7 @@
     <ClInclude Include="..\Header\SpreadGun.h" />
     <ClInclude Include="..\Header\StarParticle.h" />
     <ClInclude Include="..\Header\StarPool.h" />
+    <ClInclude Include="..\Header\StartGame.h" />
     <ClInclude Include="..\Header\Switch.h" />
     <ClInclude Include="..\Header\CameraManager.h" />
     <ClInclude Include="..\Header\Cactus.h" />
@@ -365,6 +368,7 @@
     <ClCompile Include="..\Source\Door.cpp" />
     <ClCompile Include="..\Source\Ending.cpp" />
     <ClCompile Include="..\Source\EndingText.cpp" />
+    <ClCompile Include="..\Source\ExitGame.cpp" />
     <ClCompile Include="..\Source\FinalExplosion.cpp" />
     <ClCompile Include="..\Source\FireBat.cpp" />
     <ClCompile Include="..\Source\Gate.cpp" />
@@ -379,6 +383,7 @@
     <ClCompile Include="..\Source\Price.cpp" />
     <ClCompile Include="..\Source\PuzzleRoomCamera.cpp" />
     <ClCompile Include="..\Source\Sand.cpp" />
+    <ClCompile Include="..\Source\Selector.cpp" />
     <ClCompile Include="..\Source\SkillRunning.cpp" />
     <ClCompile Include="..\Source\SkillRunningPrice.cpp" />
     <ClCompile Include="..\Source\SlideBlock.cpp" />
@@ -390,6 +395,7 @@
     <ClCompile Include="..\Source\SpreadGun.cpp" />
     <ClCompile Include="..\Source\StarParticle.cpp" />
     <ClCompile Include="..\Source\StarPool.cpp" />
+    <ClCompile Include="..\Source\StartGame.cpp" />
     <ClCompile Include="..\Source\Switch.cpp" />
     <ClCompile Include="..\Source\CameraManager.cpp" />
     <ClCompile Include="..\Source\Cactus.cpp" />

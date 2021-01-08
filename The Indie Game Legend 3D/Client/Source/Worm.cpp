@@ -72,7 +72,7 @@ HRESULT CWorm::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(8.6f, 5.6f, 1.f));
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -5.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(240.f, -5.f, 208.f));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -82,7 +82,7 @@ HRESULT CWorm::Awake()
 	m_pCollider->m_bExcept = true;
 	m_vMove = D3DXVECTOR3(0.f, 0.f, 0.f);
 
-	m_tAreaRect = { -300,260,240,208 };
+	m_tAreaRect = { -300,260,-180,156 };
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -108,10 +108,10 @@ HRESULT CWorm::Start()
 	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
 	SafeAddRef(m_pBossHP);
 
-	m_nCurrentHP = 3;
+	m_nCurrentHP = 100;
 	m_nMaxHP = 100;
-
-	m_pBossHP->SetEnable(true);
+	m_pBossHP->SetHPBar(1.f);
+	//m_pBossHP->SetEnable(true);
 	return S_OK;
 }
 

@@ -17,8 +17,6 @@ void CAmmoGauge::Free()
 {
 	CGameObject::Free();
 	SafeRelease(m_pTexturePool);
-	int a = 0;
-	a = 1;
 }
 
 CAmmoGauge * CAmmoGauge::Create()

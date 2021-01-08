@@ -46,7 +46,7 @@ HRESULT CWormTail::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(9.6f, 5.6f, 1.f));
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -5.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(240.f, -5.f, 208.f));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();

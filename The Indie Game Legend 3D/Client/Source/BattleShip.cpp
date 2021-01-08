@@ -104,6 +104,7 @@ HRESULT CBattleShip::Start()
 {
 	CGameObject::Start();
 	m_pKeyManager = CKeyManager::GetInstance();
+	SafeAddRef(m_pKeyManager);
 
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("BattleShip"));
 	SafeAddRef(m_pTexturePool);

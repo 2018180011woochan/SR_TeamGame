@@ -625,6 +625,18 @@
     <Filter Include="02.GameObject\10.Effect\07.MiniGamePlayerEffect">
       <UniqueIdentifier>{ff0b10c7-8297-45e1-bd3b-218ecf6f9fa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObject\04.UI\16.IntroText">
+      <UniqueIdentifier>{ff465d78-7b4d-43de-9cfa-a39ea8001397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\16.IntroText\00.StartGame">
+      <UniqueIdentifier>{effd6ff3-8055-45c8-99d8-e6914c962ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\16.IntroText\01.ExitGame">
+      <UniqueIdentifier>{32e0021b-098c-4e08-8854-b62b877ca6bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\04.UI\16.IntroText\03.Selector">
+      <UniqueIdentifier>{1ed87701-75a7-4069-8959-31204f8a5721}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -1147,6 +1159,16 @@
     <ClInclude Include="..\Header\MiniGamePlayerEffect.h">
       <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Computer.h" />
+    <ClInclude Include="..\Header\StartGame.h">
+      <Filter>02.GameObject\04.UI\16.IntroText\00.StartGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExitGame.h">
+      <Filter>02.GameObject\04.UI\16.IntroText\01.ExitGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Selector.h">
+      <Filter>02.GameObject\04.UI\16.IntroText\03.Selector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1650,6 +1672,16 @@
     </ClCompile>
     <ClCompile Include="..\Source\MiniGamePlayerEffect.cpp">
       <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Computer.cpp" />
+    <ClCompile Include="..\Source\StartGame.cpp">
+      <Filter>02.GameObject\04.UI\16.IntroText\00.StartGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\ExitGame.cpp">
+      <Filter>02.GameObject\04.UI\16.IntroText\01.ExitGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Selector.cpp">
+      <Filter>02.GameObject\04.UI\16.IntroText\03.Selector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
