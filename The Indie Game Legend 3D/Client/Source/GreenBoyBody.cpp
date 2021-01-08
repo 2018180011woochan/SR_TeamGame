@@ -337,6 +337,7 @@ CGreenBoyBody * CGreenBoyBody::Create()
 
 void CGreenBoyBody::Free()
 {
+	SafeRelease(m_pBossHP);
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
 }

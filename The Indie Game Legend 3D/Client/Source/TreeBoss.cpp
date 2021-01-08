@@ -221,6 +221,7 @@ CTreeBoss * CTreeBoss::Create()
 
 void CTreeBoss::Free()
 {
+	SafeRelease(m_pBossHP);
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
 }

@@ -26,7 +26,7 @@ HRESULT CNormalBullet::Awake()
 	CBullet::Awake();
 
 	m_sName = L"PlayerBullet";
-
+	m_nDmg = 1;
 	return S_OK;
 }
 

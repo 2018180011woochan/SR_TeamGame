@@ -303,6 +303,7 @@ HRESULT CStage::Awake()
 	AddPrototype(CPuzzleRoomCamera::Create());
 	AddPrototype(CSlideBlock::Create());
 	AddPrototype(CComputer::Create());
+
 #pragma endregion
 
 #pragma region SHOP
@@ -335,19 +336,19 @@ HRESULT CStage::Awake()
 	CSector* pSector = (CSector*)AddGameObject<CSector>();
 	
 
-//	AddGameObject<CPiramid>()->SetPosition(_vector(10,0,5));
 	AddSlideBlock();
 	AddLight();
 	AddUIObject();
 
 	m_pPlayer = AddGameObject<CPlayer>();
-	//SafeAddRef(m_pPlayer);
+	SafeAddRef(m_pPlayer);
 	//AddGameObject<CPlayerCamera>();
 	CCameraManager::GetInstance()->RegisteCamera(CCameraManager::ECameraID::Player, (CCamera*)AddGameObject<CPlayerCamera>());
 	auto pTest = AddGameObject<CPuzzleRoomCamera>();
 	CCameraManager::GetInstance()->RegisteCamera(CCameraManager::ECameraID::PuzzleRoom, (CCamera*)pTest);
 	AddGameObject<CBulletSpawn>();
 	AddGameObject<CMouse>();
+
 	CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
 #pragma region SKYBOX
 	AddPrototype(CSkyBox::Create());
@@ -362,10 +363,12 @@ HRESULT CStage::Awake()
 
 	
 #ifdef _DEBUG
+  //  AddGameObject<CComputer>()->SetPosition(_vector(10, 0, 5));
+
 	//CFactoryManager::GetInstance()->LoadDataFile(L"Test2");
 	//CFactoryManager::GetInstance()->LoadScene(this);
 #else
-	CFactoryManager::GetInstance()->LoadDataFile(L"ppp");
+	CFactoryManager::GetInstance()->LoadDataFile(L"Sector1");
 	CFactoryManager::GetInstance()->LoadInterationObj(this, L"Sector1_InterObj");;
 	CFactoryManager::GetInstance()->LoadScene(this);
 	CFactoryManager::GetInstance()->LoadCollider(this, TEXT("Sector1_Collider"));
@@ -389,7 +392,6 @@ UINT CStage::Update(float _fDeltaTime)
 {
 	CScene::Update(_fDeltaTime);
 
-	CheckRoomEvent();
 
 
 	return 0;
@@ -398,13 +400,15 @@ UINT CStage::Update(float _fDeltaTime)
 UINT CStage::LateUpdate(float _fDeltaTime)
 {
 	CScene::LateUpdate(_fDeltaTime);
+	CheckRoomEvent();
+
 	if (GetKeyState('Z'))
 	{
-		CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::PuzzleRoom);
+	//	CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::PuzzleRoom);
 	}
 	else
 	{
-		CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
+		//CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
 	}
 	return 0;
 }
@@ -545,6 +549,11 @@ HRESULT CStage::AddUIObject()
 	AddPrototype(CWormTail::Create());
 	AddPrototype(CWormBullet::Create());
 	AddPrototype(CSand::Create());
+
+#ifdef _DEBUG
+
+
+#else
 	AddGameObject<CWormConnector>();
 	AddGameObject<CWormConnector>();
 	AddGameObject<CWormConnector>();
@@ -560,6 +569,9 @@ HRESULT CStage::AddUIObject()
 
 	AddGameObject<CSand>();
 	AddGameObject<CSand>();
+#endif // _DEBUG
+
+
 
 	return S_OK;
 }

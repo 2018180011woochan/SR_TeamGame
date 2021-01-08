@@ -37,7 +37,9 @@ HRESULT CBub::Awake()
 	SafeAddRef(m_pTexturePool);
 	m_iHP = 7;
 	m_eRenderID = ERenderID::Alpha;
-	//m_nTag = 0;
+#ifdef _DEBUG
+	m_nTag = 0;
+#endif
 	return S_OK;
 }
 
@@ -82,9 +84,9 @@ UINT CBub::Update(const float _fDeltaTime)
 		m_fJumpingCnt = 0.f;
 	}
 
-	/*if (FAILED(Movement(_fDeltaTime)))
+	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
-*/
+
 
 	m_pTransform->UpdateTransform();
 
@@ -112,12 +114,18 @@ HRESULT CBub::Render()
 
 void CBub::OnCollision(CGameObject * _pGameObject)
 {
-	//if (L"PlayerBullet" == _pGameObject->GetName())
-	//{
-	//	m_iHP--;
-	//	CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
-	//	pBlood->SetPos(m_pTransform->Get_Position());
-	//}
+	if (m_bHit == false && L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
+		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
+		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-8);
+	}
 	if (L"Player" == _pGameObject->GetName())
 	{
 		for (int i = 0; i < 10; i++)

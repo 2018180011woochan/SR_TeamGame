@@ -106,10 +106,12 @@ HRESULT CTurret::Render()
 
 void CTurret::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
-	{
-		m_iHP--;
 
+
+	if (m_bHit == false && L"PlayerBullet" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
 		int iRandX = rand() % 5;
 		int iRandY = rand() % 5;
 		int iRandZ = rand() % 5;
@@ -119,6 +121,12 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 			m_pTransform->Get_Position().y + iRandY
 			, m_pTransform->Get_Position().z + iRandZ));
 	}
+	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-8);
+	}
+
 	if (m_iHP <= 0)
 	{
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);

@@ -4,6 +4,7 @@
 
 
 CMonster::CMonster()
+	:m_pBossHP(nullptr)
 {
 }
 
@@ -12,6 +13,7 @@ CMonster::CMonster(const CMonster & other)
 	, m_bHit(false)
 	, m_fHitDelay(0.6f)
 	, m_fHitDelayTime(0.f)
+	, m_pBossHP(other.m_pBossHP)
 {
 }
 

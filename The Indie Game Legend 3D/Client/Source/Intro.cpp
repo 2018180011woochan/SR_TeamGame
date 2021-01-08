@@ -90,7 +90,7 @@ UINT CIntro::Update(const float _fDeltaTime)
 	if (GetAsyncKeyState(VK_RETURN) && 0x8000)
 	{
 		CLoading* pLoading = CLoading::Create(m_pDevice);
-		pLoading->OnLoading(CFinalStage::Create());
+		pLoading->OnLoading(CStage::Create());
 		SafeRelease(pLoading);
 	/*	if (FAILED(SetUpCurrentScene(CStage::Create())))
 		{

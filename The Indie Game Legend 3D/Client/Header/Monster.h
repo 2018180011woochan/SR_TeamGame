@@ -2,6 +2,7 @@
 #ifndef __MONSTER_H__
 #include "GameObject.h"
 #include "SoundMgr.h"
+#include "Bullet.h"
 USING(Engine)
 class CBossHP;
 class CMonster : public CGameObject

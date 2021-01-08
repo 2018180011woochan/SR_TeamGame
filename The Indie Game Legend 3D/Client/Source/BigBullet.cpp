@@ -28,6 +28,7 @@ HRESULT CBigBullet::Awake()
 	CBullet::Awake();
 
 	m_sName = L"PlayerBullet";
+	m_nDmg = 3;
 
 	return S_OK;
 }

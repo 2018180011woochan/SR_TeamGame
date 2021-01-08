@@ -16,6 +16,7 @@ HRESULT CTripleBullet::InitializePrototype()
 {
 	if (FAILED(CBullet::InitializePrototype()))
 		return E_FAIL;
+	m_nDmg = 1;
 
 	return S_OK;
 }

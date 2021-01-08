@@ -30,7 +30,7 @@ HRESULT CLapidGun::Awake()
 	m_pMeshRenderer = (CMeshRenderer*)AddComponent<CMeshRenderer>();
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
-	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("UI"));
+	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("WeaponHUD"));
 	SafeAddRef(m_pTexturePool);
 	m_bDead = false;
 	m_pTransform->Set_Scale(_vector(8, 8, 8));
@@ -42,7 +42,7 @@ HRESULT CLapidGun::Start()
 {
 	CGameObject::Start();
 
-	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("WeaponHUD"))[2]);
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("On"))[2]);
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"), BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
@@ -59,7 +59,7 @@ UINT CLapidGun::Update(const float _fDeltaTime)
 
 	CGameObject::Update(_fDeltaTime);
 
-	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("WeaponHUD"))[2]);
+	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("On"))[2]);
 	m_pTransform->Add_RotationY(0.5f);
 	m_pTransform->UpdateTransform();
 

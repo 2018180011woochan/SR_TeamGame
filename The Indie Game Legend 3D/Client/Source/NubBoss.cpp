@@ -146,11 +146,16 @@ HRESULT CNubBoss::Render()
 
 void CNubBoss::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+	if (m_bHit == false && L"PlayerBullet" == _pGameObject->GetName())
 	{
-		m_iHP--;
 		m_bHit = true;
+		AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
 
+	}
+	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-8);
 	}
 	if (m_iHP <= 0)
 	{
@@ -283,6 +288,7 @@ CNubBoss * CNubBoss::Create()
 
 void CNubBoss::Free()
 {
+	SafeAddRef(m_pBossHP);
 	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
 }

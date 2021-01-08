@@ -12,6 +12,7 @@
 
 #include "SlideBlock.h"
 #include "CameraManager.h"
+#include "InteractionObj.h"
 
 list<CGameObject*> CUtilityManger::m_RoomMobList;
 
@@ -224,7 +225,7 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT list<CGameObject*>& _listGameO
 	//엔진에서 삭제처리를 막아놨기에 여기서 삭제처리를 해야한다 
 	for (; IterMob != m_RoomMobList.end(); )
 	{
-		if (((CMonster*)*IterMob)->GetDead())
+		if (((CMonster*)*IterMob)->GetDead() || (*IterMob)->IsDelete())
 		{
 			SafeRelease(*IterMob);
 			IterMob = m_RoomMobList.erase(IterMob);
@@ -266,7 +267,7 @@ bool CUtilityManger::AutoAim(_uint _nSceneID, OUT CGameObject*&  _pGameObject)
 	for (; Iter != m_RoomMobList.end(); )
 	{
 		//삭제해야하긴 하는데 귀찮
-		if (((CMonster*)*Iter)->GetDead())
+		if (((CMonster*)*Iter)->GetDead() || (*Iter)->IsDelete() )
 		{
 			SafeRelease(*Iter);
 			Iter = m_RoomMobList.erase(Iter);
@@ -305,6 +306,7 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CFloor>(_nSceneID));
 	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CWall>(_nSceneID));
 	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CSlider>(_nSceneID));
+	CullingObjectList.splice(CullingObjectList.end(), CManagement::GetInstance()->FindGameObjectsOfBaseType<CInteractionObj>(_nSceneID));
 
 	//Object
 	for (auto& pGameObject : CullingObjectList)

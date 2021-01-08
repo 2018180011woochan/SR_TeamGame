@@ -18,14 +18,17 @@ CComputer::CComputer(const CComputer & _rOther)
 HRESULT CComputer::InitializePrototype()
 {
 	CInteractionObj::InitializePrototype();
-	m_sName = L"Obstacle";
-	m_eRenderID = ERenderID::Alpha;
-	m_fInteracitonDis = 10.f;
-	return E_NOTIMPL;
+
+
+	return S_OK;
 }
 
 HRESULT CComputer::Awake()
 {
+#ifdef _DEBUG
+	m_nTag = 0;
+#endif // !_DEBUG
+
 	return S_OK;
 }
 
@@ -37,7 +40,9 @@ HRESULT CComputer::Start()
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(L"PC", BOUND::BOUNDTYPE::BOX);
 	m_pCollider->m_bIsRigid = true;
-
+	m_fInteracitonDis = 10.f;
+	m_sName = L"Computer";
+	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
 }
 
@@ -48,7 +53,7 @@ UINT CComputer::Update(const float _fDeltaTime)
 	FindGameObjectOfType<CPlayer>()->GetWorldPos(vPlayerPos);
 	_vector vDis = m_pTransform->Get_WorldPosition() - vPlayerPos;
 
-
+	cout << D3DXVec3Length(&vDis) << endl;
 	if (CKeyManager::GetInstance()->Key_Down(KEY_X) && m_fInteracitonDis > D3DXVec3Length(&vDis))
 	{
 		m_pManagement->SetUpCurrentScene(CFinalStage::Create());
@@ -59,15 +64,15 @@ UINT CComputer::Update(const float _fDeltaTime)
 
 UINT CComputer::LateUpdate(const float _fDeltaTime)
 {
-	m_pTransform->UpdateTransform();
-	m_pTransform->UpdateWorld();
-	m_pMeshRenderer->Render();
+	CInteractionObj::LateUpdate(_fDeltaTime);
 	return S_OK;
 }
 
 HRESULT CComputer::Render()
 {
-	return E_NOTIMPL;
+	m_pTransform->UpdateWorld();
+	m_pMeshRenderer->Render();
+	return S_OK;
 }
 
 CGameObject * CComputer::Clone()

@@ -104,11 +104,17 @@ HRESULT CEgg::Render()
 
 void CEgg::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+	if (m_bHit == false && L"PlayerBullet" == _pGameObject->GetName())
 	{
-		m_iHP--;
+		m_bHit = true;
+		AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-8);
 	}
 	if (m_iHP <= 0)
 	{
