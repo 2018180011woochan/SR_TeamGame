@@ -45,7 +45,7 @@ HRESULT CTreeBoss::Awake()
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 
 	m_fWinckDeltaTime = 0.f;
-	m_fWinckSpeed = 2.5f;
+	m_fWinckSpeed = 1.5f;
 
 	m_fCreateDeltaTime = 0.f;
 	m_fCreateSpeed = 0.5f;
@@ -58,7 +58,7 @@ HRESULT CTreeBoss::Awake()
 	nIndex = 0;
 	nCreateIndex = 0;
 	//m_bEnable = true;
-	m_iHP = 50;
+	m_iHP = 20;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -72,8 +72,8 @@ HRESULT CTreeBoss::Start()
 	m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[0]);
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
-	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::BOX);
-	m_pCollider->m_bIsRigid = false;
+	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
+	//m_pCollider->m_bIsRigid = false;
 
 	m_pTransform->Add_Position(_vector(10, 10, 10));
 
@@ -89,7 +89,7 @@ HRESULT CTreeBoss::Start()
 UINT CTreeBoss::Update(const float _fDeltaTime)
 {
 	/* 보스 hp 업데이트 */
-	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
+	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
 
 	if (m_bDead)
 		return OBJ_DEAD;
@@ -198,12 +198,27 @@ void CTreeBoss::RootAttack(float _fDeltaTime)
 		if (m_fAttackSpeed <= m_fAttackDeltaTime)
 		{
 			CRootAttack* pRootAttack = (CRootAttack*)AddGameObject<CRootAttack>();
-			RootPos = { m_pTransform->Get_Position().x, m_pTransform->Get_Position().y, m_pTransform->Get_Position().z };
+			RootPos = { m_pTransform->Get_Position().x, m_pTransform->Get_Position().y - 2.f, m_pTransform->Get_Position().z };
 			pRootAttack->SetRootPos(RootPos);
 
 			m_fAttackDeltaTime -= m_fAttackSpeed;
 		}
 	}
+}
+
+void CTreeBoss::OnEnable()
+{
+	if (nullptr != m_pBossHP)
+	{
+		m_pBossHP->SetEnable(true);
+		m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
+	}
+}
+
+void CTreeBoss::OnDisable()
+{
+	if (nullptr != m_pBossHP)
+		m_pBossHP->SetEnable(false);
 }
 
 
@@ -221,6 +236,9 @@ CTreeBoss * CTreeBoss::Create()
 
 void CTreeBoss::Free()
 {
-	SafeRelease(m_pTexturePool);
 	CGameObject::Free();
+	SafeRelease(m_pTexturePool);
+	if (m_pBossHP)
+		m_pBossHP->SetEnable(false);
+	SafeRelease(m_pBossHP);
 }

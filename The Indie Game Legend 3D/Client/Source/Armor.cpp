@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "ShopKeeper.h"
 #include "GemText.h"
+#include "SoundMgr.h"
 
 CArmor::CArmor()
 	: m_pTexturePool(nullptr)
@@ -94,7 +95,7 @@ void CArmor::OnCollision(CGameObject * _pGameObject)
 	
 		if (pPlayer->GetGem() < m_nPrice)
 			return;
-
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Coin);
 		pPlayer->SetBuyItem(m_nPrice);
 		pPlayer->AddHpMax();
 		m_isBuyItem = true;

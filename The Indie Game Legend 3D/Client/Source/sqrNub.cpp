@@ -50,7 +50,7 @@ HRESULT CsqrNub::Awake()
 	m_fWalkDeltaTime = 0.f;
 	m_fYTest = 0.f;
 
-	m_iHP = 3;
+	m_iHP = 1;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;

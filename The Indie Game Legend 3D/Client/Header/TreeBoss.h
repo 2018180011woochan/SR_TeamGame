@@ -23,6 +23,8 @@ public:
 public:
 	void YukPoongHyul(float _fDeltaTime);
 	void RootAttack(float _fDeltaTime);
+	virtual void OnEnable() override;
+	virtual void OnDisable() override;
 
 public:
 	virtual CGameObject * Clone() override;

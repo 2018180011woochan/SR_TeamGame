@@ -46,7 +46,7 @@ HRESULT CWalker::Awake()
 
 	m_pTransform->Set_Scale(_vector(10, 10, 10));
 
-	m_iHP = 10;
+	m_iHP = 7;
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;

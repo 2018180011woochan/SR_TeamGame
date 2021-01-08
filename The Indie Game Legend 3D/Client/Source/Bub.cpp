@@ -35,7 +35,7 @@ HRESULT CBub::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 	m_pTexturePool = CTexturePoolManager::GetInstance()->GetTexturePool(TEXT("Bub"));
 	SafeAddRef(m_pTexturePool);
-	m_iHP = 7;
+	m_iHP = 3;
 	m_eRenderID = ERenderID::Alpha;
 	//m_nTag = 0;
 	return S_OK;
@@ -82,9 +82,9 @@ UINT CBub::Update(const float _fDeltaTime)
 		m_fJumpingCnt = 0.f;
 	}
 
-	/*if (FAILED(Movement(_fDeltaTime)))
+	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
-*/
+
 
 	m_pTransform->UpdateTransform();
 

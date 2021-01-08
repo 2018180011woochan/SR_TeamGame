@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "ShopKeeper.h"
+#include "SoundMgr.h"
 
 CSkillRunning::CSkillRunning()
 	: m_pTexturePool(nullptr)
@@ -91,7 +92,7 @@ void CSkillRunning::OnCollision(CGameObject * _pGameObject)
 		CPlayer* pPlayer = (CPlayer*)FindGameObjectOfType<CPlayer>();
 		if (pPlayer->GetGem() < m_nPrice)
 			return;
-
+		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Coin);
 		pPlayer->SetBuyItem(m_nPrice);
 		pPlayer->SetBySkillRunning();
 		m_isBuyItem = true;

@@ -1147,6 +1147,9 @@
     <ClInclude Include="..\Header\MiniGamePlayerEffect.h">
       <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Computer.h">
+      <Filter>02.GameObject\13.InterectionObject\06.Computer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1650,6 +1653,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\MiniGamePlayerEffect.cpp">
       <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Computer.cpp">
+      <Filter>02.GameObject\13.InterectionObject\06.Computer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

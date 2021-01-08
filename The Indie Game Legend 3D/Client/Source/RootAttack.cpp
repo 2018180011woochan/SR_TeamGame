@@ -55,8 +55,7 @@ HRESULT CRootAttack::Start()
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
-	m_pCollider->m_bIsRigid = true;
-
+	//m_pCollider->m_bIsRigid = false;
 	return S_OK;
 }
 
@@ -78,6 +77,8 @@ UINT CRootAttack::Update(const float _fDeltaTime)
 
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
+
+	m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 2.f, m_pTransform->Get_Position().z));
 
 	m_pTransform->UpdateTransform();
 
