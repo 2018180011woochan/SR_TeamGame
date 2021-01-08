@@ -81,8 +81,7 @@ HRESULT CGreenBoyFace::Start()
 	m_pCollider->m_bIsRigid = true;
 	m_nTag = 30;
 	//Test
-	m_pBossHP = (CBossHP*)FindGameObjectOfType<CBossHP>();
-	SafeAddRef(m_pBossHP);
+
 
 	return S_OK;
 }
@@ -90,7 +89,6 @@ HRESULT CGreenBoyFace::Start()
 UINT CGreenBoyFace::Update(const float _fDeltaTime)
 {
 	/* 보스 hp 업데이트 */
-	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
 
 	if (m_bIsBossDead)
 		return OBJ_DEAD;

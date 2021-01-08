@@ -105,10 +105,11 @@ HRESULT CGreenBoyBody::Start()
 UINT CGreenBoyBody::Update(const float _fDeltaTime)
 {
 	/* 보스 hp 업데이트 */
-	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
 
 	if (m_bDead)
 		return OBJ_DEAD;
+	m_pBossHP->SetEnable(true);
+	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 	CMonster::Update(_fDeltaTime);
 
@@ -263,7 +264,7 @@ void CGreenBoyBody::OnCollision(CGameObject * _pGameObject)
 				m_pTransform->Get_Position().y + iRandY
 				, m_pTransform->Get_Position().z + iRandZ));
 		}
-		//m_pBossHP->SetEnable(false);
+		m_pBossHP->SetEnable(false);
 		m_bDead = true;
 	}
 }

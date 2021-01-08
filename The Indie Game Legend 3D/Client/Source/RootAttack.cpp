@@ -78,7 +78,7 @@ UINT CRootAttack::Update(const float _fDeltaTime)
 	if (FAILED(Movement(_fDeltaTime)))
 		return 0;
 
-	m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 2.f, m_pTransform->Get_Position().z));
+	//m_pTransform->Set_Position(_vector(m_pTransform->Get_Position().x, 2.f, m_pTransform->Get_Position().z));
 
 	m_pTransform->UpdateTransform();
 
@@ -142,7 +142,7 @@ void CRootAttack::SetRootPos(const _vector _TurretPos)
 	vecTarget = ((CTransform*)pGameObject->GetComponent<CTransform>())->Get_Position();
 
 	m_vecDir = vecTarget - _TurretPos;
-	m_vecDir.y = 0.f;
+	m_vecDir.y = -1.5f;
 	D3DXVec3Normalize(&m_vecDir, &m_vecDir);
 }
 
