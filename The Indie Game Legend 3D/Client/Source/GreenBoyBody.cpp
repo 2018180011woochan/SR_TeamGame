@@ -65,7 +65,7 @@ HRESULT CGreenBoyBody::Awake()
 	m_fYTest = 0.f;
 
 	m_bDead = false;
-	m_nTag = 30;
+	m_nTag = 0;
 	m_iHP = 15;
 	m_iMaxHP = m_iHP;
 	m_bIsAttack = false;
@@ -105,6 +105,7 @@ HRESULT CGreenBoyBody::Start()
 UINT CGreenBoyBody::Update(const float _fDeltaTime)
 {
 	/* 보스 hp 업데이트 */
+	//m_pBossHP->SetEnable(true);
 	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
 
 	if (m_bDead)
