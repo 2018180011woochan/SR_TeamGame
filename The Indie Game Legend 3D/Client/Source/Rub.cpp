@@ -141,12 +141,17 @@ HRESULT CRub::Render()
 void CRub::OnCollision(CGameObject * _pGameObject)
 {
 
-	if (m_bHit == false && (L"PlayerBullet" == _pGameObject->GetName() || L"ExplosionBlue" == _pGameObject->GetName()))
+	if (m_bHit == false && L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_bHit = true;
-		m_iHP--;
+		AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
 		CBlood* pBlood = (CBlood*)AddGameObject<CBlood>();
 		pBlood->SetPos(m_pTransform->Get_Position());
+	}
+	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-8);
 	}
 	if (L"Player" == _pGameObject->GetName())
 	{

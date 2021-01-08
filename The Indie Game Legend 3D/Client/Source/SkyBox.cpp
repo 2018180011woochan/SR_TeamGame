@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\SkyBox.h"
-//#include "Camera.h"
+#include "Camera.h"
 CSkyBox::CSkyBox()
 	: m_pMeshRenderer(nullptr)
 	, m_pCamera(nullptr)

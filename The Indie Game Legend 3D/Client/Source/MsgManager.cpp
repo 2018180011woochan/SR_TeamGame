@@ -35,7 +35,7 @@ void CMsgManager::Freeze(const float* _fTimeDeleta)
 void CMsgManager::AirStrikeFire()
 {
 	static mt19937 engine((_uint)time(NULL));
-	float fInterval = 10.f;
+	float fInterval = 15.f;
 	static uniform_real_distribution<> distribution(-fInterval, fInterval);    // 생성 범위	
 	static auto RandomValue = bind(distribution, engine);
 	_vector vFirePos = _vector(m_vAirStrikePos.x + (float)RandomValue(), 100.f, m_vAirStrikePos.z + (float)RandomValue());

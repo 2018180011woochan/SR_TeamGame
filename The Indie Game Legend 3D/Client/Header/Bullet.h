@@ -28,6 +28,7 @@ public:
 	void SetBulletSpeed(const float& _fSpeed) { m_fMoveSpeed = _fSpeed; }
 	void SetBulletDmg(const _int& _nDmg) { m_nDmg = _nDmg; }
 	void SetDiractino(const _vector& _vDir) { m_vDiraction = _vDir; }
+	_int GetBulletDmg() { return m_nDmg; }
 public:
 	explicit CBullet();
 	explicit CBullet(const CBullet& _rOther);

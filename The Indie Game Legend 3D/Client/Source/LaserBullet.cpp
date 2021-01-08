@@ -31,6 +31,8 @@ HRESULT CLaserBullet::Awake()
 
 	m_sName = L"PlayerBullet";
 	m_eRenderID = ERenderID::AlphaCullNone;
+	m_nDmg = 5;
+
 	return S_OK;
 }
 

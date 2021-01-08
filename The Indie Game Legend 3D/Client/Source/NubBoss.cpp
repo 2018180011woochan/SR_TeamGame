@@ -55,7 +55,7 @@ HRESULT CNubBoss::Awake()
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 
-	m_iHP = 20;
+	m_iHP = 40;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -146,11 +146,16 @@ HRESULT CNubBoss::Render()
 
 void CNubBoss::OnCollision(CGameObject * _pGameObject)
 {
-	if (L"PlayerBullet" == _pGameObject->GetName())
+	if (m_bHit == false && L"PlayerBullet" == _pGameObject->GetName())
 	{
-		m_iHP--;
 		m_bHit = true;
+		AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
 
+	}
+	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
+	{
+		m_bHit = true;
+		AddHp(-8);
 	}
 	if (m_iHP <= 0)
 	{
@@ -192,21 +197,6 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 
 		m_bDead = true;
 	}
-}
-
-void CNubBoss::OnEnable()
-{
-	if (nullptr != m_pBossHP)
-	{
-		m_pBossHP->SetEnable(true);
-		m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
-	}
-}
-
-void CNubBoss::OnDisable()
-{
-	if (nullptr != m_pBossHP)
-		m_pBossHP->SetEnable(false);
 }
 
 
@@ -298,9 +288,7 @@ CNubBoss * CNubBoss::Create()
 
 void CNubBoss::Free()
 {
-	CGameObject::Free();
+	SafeAddRef(m_pBossHP);
 	SafeRelease(m_pTexturePool);
-	if (m_pBossHP)
-		m_pBossHP->SetEnable(false);
-	SafeRelease(m_pBossHP);
+	CGameObject::Free();
 }

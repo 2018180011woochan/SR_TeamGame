@@ -55,7 +55,8 @@ HRESULT CFinalStage::Awake()
 	AddPrototype(CBattleShipBullet::Create());
 
 	AddPrototype(CFinalCamera::Create());
-	AddPrototype(CSkyBox::Create());
+	// 프로토 타입 존재한다고 뜸 [1/8/2021 wades]
+	//AddPrototype(CSkyBox::Create());
 	AddPrototype(CStarParticle::Create());
 	AddPrototype(CStarPool::Create());
 
@@ -64,16 +65,16 @@ HRESULT CFinalStage::Awake()
 	AddPrototype(CFinalLaser::Create());
 	AddPrototype(CFinalExplosion::Create());
 
-	AddPrototype(CBossHPFrame::Create());
-	AddPrototype(CBossText::Create());
-	AddPrototype(CBossHPBar::Create());
-	AddPrototype(CBossHP::Create());
+	//AddPrototype(CBossHPFrame::Create());
+	//AddPrototype(CBossText::Create());
+	//AddPrototype(CBossHPBar::Create());
+	//AddPrototype(CBossHP::Create());
 
-	AddPrototype(CHeart::Create());
-	AddPrototype(CHeartManager::Create());
+	//AddPrototype(CHeart::Create());
+	//AddPrototype(CHeartManager::Create());
 
-	AddPrototype(CExplosion::Create());
-	AddPrototype(CMiniGamePlayerEffect::Create());
+//	AddPrototype(CExplosion::Create());
+	//AddPrototype(CMiniGamePlayerEffect::Create());
 
 	AddGameObject<CBossHPFrame>()->SetEnable(true);
 	AddGameObject<CBossText>()->SetEnable(true);

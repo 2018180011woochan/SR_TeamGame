@@ -13,11 +13,11 @@ class CGun;
 #define FlameDelay 0.1f
 #define LaserDelay 0.5f
 #define HPMax 6
-#define SkillPGaugeMax 20
+#define SkillPGaugeMax 10 
 #define DiscMax 4
 #define AmmoLvMax 3
 #define HighNoonAmount 30.f
-#define HighNoonMaxDmg 100.f
+#define HighNoonMaxDmg 50.f
 #define DashDmg 10
 
 enum class EState : _uint
@@ -179,7 +179,7 @@ public:
 	void	SetBySkillRunning() { m_bIsBuySkillRunning = true; }
 	void	SetBuyItem(_int _Price);
 	_int	GetGem() { return m_nGem; }
-
+	bool	IsMaxDisc();
 protected:
 	explicit CPlayer();
 	explicit CPlayer(const CPlayer& _rOther);

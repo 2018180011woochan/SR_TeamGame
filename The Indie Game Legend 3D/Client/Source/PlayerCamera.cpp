@@ -44,9 +44,9 @@ HRESULT CPlayerCamera::Awake()
 	m_tCameraDesc.fAspect = (float)g_nWinCX / g_nWinCY;
 	m_tCameraDesc.fFar = 500.f;
 	m_tCameraDesc.fNear = 1.f;
+	m_fFov = 90.f;
 	m_tCameraDesc.fFovY = D3DXToRadian(m_fFov);
 	m_tCameraDesc.vUp = _vector(0, 1, 0);
-	m_fFov = 90.f;
 
 	memcpy(&m_tOriCamera_Desc, &m_tCameraDesc, sizeof(CAMERA_DESC));
 

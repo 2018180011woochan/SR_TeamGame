@@ -1676,7 +1676,6 @@
     <ClCompile Include="..\Source\MiniGamePlayerEffect.cpp">
       <Filter>02.GameObject\10.Effect\07.MiniGamePlayerEffect</Filter>
     </ClCompile>
-
     <ClCompile Include="..\Source\Computer.cpp" />
     <ClCompile Include="..\Source\StartGame.cpp">
       <Filter>02.GameObject\04.UI\16.IntroText\00.StartGame</Filter>

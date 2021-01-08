@@ -35,6 +35,11 @@ void CPlayer::SetBuyItem(_int _Price)
 	m_pGemText->SetCount(m_nGem);
 }
 
+bool CPlayer::IsMaxDisc()
+{
+	return m_nDisc >= DiscMax;
+}
+
 CPlayer::CPlayer()
 	:CGameObject()
 	, m_fMoveSpeed(0.f)
@@ -153,9 +158,7 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 				//계속 UI 호출 
 				m_fHighNoonDmg += HighNoonAmount * _fDeltaTime;
 				m_fHighNoonDmg = CLAMP(m_fHighNoonDmg, 0, HighNoonMaxDmg);
-
 				// Log [1/6/2021 wades]
-				cout << "Target Count : " << m_listHighNoon.size() << ", Dmg: " << m_fHighNoonDmg << endl;
 				if (m_pKeyMgr->Key_Down(KEY_LBUTTON))
 				{
 					m_pPlayerCamera->StopCameraWorking();
@@ -212,7 +215,7 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	// 형 이거도 상점에서 스킬 뚫어야지 사용 가능하게 해놀겓요
 	if (m_bIsBuySkillRunning)
 	{
-		if (true  /*m_bEnableSkill*/)
+		if (m_bEnableSkill)
 		{
 			if (m_pKeyMgr->Key_Down(KEY_1))
 			{
@@ -221,7 +224,7 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 			if (m_pKeyMgr->Key_Down(KEY_2))
 			{
 				CMsgManager::GetInstance()->HighNoonReady(5.f);
-				m_pPlayerCamera->SetCameraZoomIn(80.f, 5.f);
+				m_pPlayerCamera->SetCameraZoomIn(85.f, 2.f);
 				m_fHighNoonDmg = 0;
 			}
 			else if (m_pKeyMgr->Key_Down(KEY_3))
@@ -231,8 +234,29 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 				m_pCrossHair->SetEnable(false);
 			}
 		}
+		m_nSkillPoint = 0;
 	}
 
+
+	// Cheat [1/8/2021 wades]
+	if (m_pKeyMgr->Key_Down(KEY_4))
+	{
+		AddSkillGauge(10);
+	}
+	if (m_pKeyMgr->Key_Down(KEY_5))
+	{
+		m_fAmmo += 10;
+		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
+		m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
+		SoundPlay(ESoundID::AddAmmo);
+	}
+	if (m_pKeyMgr->Key_Down(KEY_6))
+	{
+		++m_nDisc;
+		m_nDisc = CLAMP(m_nDisc, 0, DiscMax);
+		m_pDiscText->SetCount(m_nDisc);
+		SoundPlay(ESoundID::AddDisc);
+	}
 	return S_OK;
 }
 
@@ -384,6 +408,8 @@ void CPlayer::TakeItem(const EItemID & _eID)
 		++m_nDisc;
 		m_nDisc = CLAMP(m_nDisc, 0, DiscMax);
 		m_pDiscText->SetCount(m_nDisc);
+		SoundPlay(ESoundID::AddDisc);
+
 		break;
 	case EItemID::Heart:
 		AddHp(4);
@@ -798,7 +824,7 @@ HRESULT CPlayer::Start()
 	 m_vecWeapons.emplace_back(EWeaponType::Big);
 	 //Ammo
 	 m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
-	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Rapid);
+	 m_pAmmoHud->SetAmmoIcon((UINT)EWeaponType::Big);
 	 m_pAmmoHud->SetAmmoLevel(0);
 	 m_pAmmoHud->SetActive(false);
 
@@ -812,14 +838,13 @@ HRESULT CPlayer::Start()
 	 // gun
 	 m_pGun->SetActive(false);
 
-	 AddWeapon(EWeaponType::Rapid);
+
+	 /*AddWeapon(EWeaponType::Rapid);
 	 AddWeapon(EWeaponType::Multiple);
 	 AddWeapon(EWeaponType::Flame);
 	 AddWeapon(EWeaponType::Lazer);
-
+	*/
 	 //Skill Setting
-
-	// m_vecSkillID.push_back(ESkillID::TimeStop);
 
 	 // By Woochan
 	 m_bIsBuyWeapon = false;
@@ -898,7 +923,6 @@ void CPlayer::OnCollision(CGameObject * _pGameObject)
 	if (L"RoomTrigger" == _pGameObject->GetName() && m_nTag != _pGameObject->GetTag())
 	{
 		m_nTag = _pGameObject->GetTag();
-		cout << "Change RoomID : " <<m_nTag << endl;
 		CUtilityManger::ObjectCulling(m_nSceneID, m_nTag);
 	}
 
