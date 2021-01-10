@@ -324,7 +324,7 @@ HRESULT CStage::Awake()
 	AddGameObject<CGreenBoyUpHand>()->SetPosition(_vector(240.f, 12.f, -240.f));
 	AddGameObject<CGreenBoyDownHand>()->SetPosition(_vector(240.f, 12.f, -240.f));
 	AddGameObject<CGreenBoyFace>()->SetPosition(_vector(240.f, 17.f, -240.f));
-	AddGameObject<CFlame>()->SetPosition(_vector(240.f, 12.f, 300.f));
+	AddGameObject<CFlame>()->SetPosition(_vector(240.f, 12.f, -240.f));
 #pragma endregion
 
 #pragma region GUN_TEST
@@ -404,11 +404,11 @@ UINT CStage::LateUpdate(float _fDeltaTime)
 
 	if (GetKeyState('Z'))
 	{
-	//	CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::PuzzleRoom);
+			CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::PuzzleRoom);
 	}
 	else
 	{
-		//CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
+		CCameraManager::GetInstance()->SetCurrentMainCamera(CCameraManager::Player);
 	}
 	return 0;
 }
@@ -656,7 +656,7 @@ void CStage::CheckRoomEvent()
 		break;
 	}
 
-	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.05f);
+	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.15f);
 	m_nPreRoomID = m_nCurRoomID;
 }
 

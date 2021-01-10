@@ -65,6 +65,9 @@ UINT CTurret::Update(const float _fDeltaTime)
 	{
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
 	}
+
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	CMonster::Update(_fDeltaTime);
 
 
@@ -80,6 +83,8 @@ UINT CTurret::Update(const float _fDeltaTime)
 		{
 			m_fFireDeltaTime -= m_fFireSpeed;
 			BulletFire();
+			CSoundMgr::GetInstance()->Play(L"Fat.wav", CSoundMgr::MONSTER_BULLET);
+
 		}
 	}
 
@@ -90,6 +95,8 @@ UINT CTurret::Update(const float _fDeltaTime)
 
 UINT CTurret::LateUpdate(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
@@ -120,6 +127,8 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 		pSmallExlode->SetPos(_vector(m_pTransform->Get_Position().x + iRandX,
 			m_pTransform->Get_Position().y + iRandY
 			, m_pTransform->Get_Position().z + iRandZ));
+		CSoundMgr::GetInstance()->Play(L"sfxMetalHit1.mp3", CSoundMgr::MonsterHitM);
+
 	}
 	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
 	{
@@ -131,6 +140,7 @@ void CTurret::OnCollision(CGameObject * _pGameObject)
 	{
 		m_pMeshRenderer->SetTexture(0, m_pTexturePool->GetTexture(TEXT("Idle"))[1]);
 		m_bDead = true;
+		CSoundMgr::GetInstance()->Play(L"sfxExplode.wav", CSoundMgr::MonsterKill);
 	}
 }
 

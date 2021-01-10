@@ -73,8 +73,8 @@ HRESULT CFinalStage::Awake()
 	//AddPrototype(CHeart::Create());
 	//AddPrototype(CHeartManager::Create());
 
-//	AddPrototype(CExplosion::Create());
-	//AddPrototype(CMiniGamePlayerEffect::Create());
+	//AddPrototype(CExplosion::Create());
+	AddPrototype(CMiniGamePlayerEffect::Create());
 
 	AddGameObject<CBossHPFrame>()->SetEnable(true);
 	AddGameObject<CBossText>()->SetEnable(true);

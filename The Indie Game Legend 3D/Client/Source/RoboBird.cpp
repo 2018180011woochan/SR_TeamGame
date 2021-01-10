@@ -79,6 +79,7 @@ UINT CRoboBird::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	CMonster::Update(_fDeltaTime);
 

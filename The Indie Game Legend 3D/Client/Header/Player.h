@@ -163,8 +163,8 @@ private:
 	void	UpdateLight();
 	void	TileSound(const ETileID& _eID);
 	void	SoundPlay(const ESoundID& _eID);
-	void	AmmoLvUp();
 public:
+	void	AmmoLvUp();
 	//Getter Setter
 	void	SetSpotLightTrigget(const bool& _bTrigger);
 	void	SetsfxTileID(const ETileID& _bool);
@@ -173,6 +173,7 @@ public:
 	void    AddHpMax();
 	void	AddWeapon(const EWeaponType _eWeaponType);
 	bool	GetDashAttack() { return m_bDashDmg; };
+
 
 	// Prod By Woochan
 	void	SetByWeapon() { m_bIsBuyWeapon = true; }

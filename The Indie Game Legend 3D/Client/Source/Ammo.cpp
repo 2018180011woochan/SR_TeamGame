@@ -94,7 +94,11 @@ void CAmmo::OnCollision(CGameObject * _pGameObject)
 			return;
 		CSoundMgr::GetInstance()->Play(L"sfxCoin.wav", CSoundMgr::Item_Coin);
 		pPlayer->SetBuyItem(m_nPrice);
-		pPlayer->SetByWeapon();
+		//pPlayer->SetByWeapon();
+
+		pPlayer->AmmoLvUp();
+		pPlayer->AmmoLvUp();
+
 		m_isBuyItem = true;
 		m_bDead = true;
 	}

@@ -75,7 +75,7 @@ HRESULT CFinalBoss::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(25.f, 25.f, 25.f));
-	m_pTransform->Set_Position(D3DXVECTOR3(150.f, 0.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(-150.f, 0.f, 0.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(90.f, 0.f, 0.f));
 	m_pTransform->UpdateTransform();
 

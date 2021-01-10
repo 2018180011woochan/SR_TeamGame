@@ -76,6 +76,8 @@ UINT CsqrNub::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 
 	CMonster::Update(_fDeltaTime);
 
@@ -114,6 +116,8 @@ UINT CsqrNub::Update(const float _fDeltaTime)
 
 UINT CsqrNub::LateUpdate(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }

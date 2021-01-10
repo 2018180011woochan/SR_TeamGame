@@ -86,6 +86,8 @@ HRESULT CGreenBoyLeftHand::Start()
 
 UINT CGreenBoyLeftHand::Update(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	if (m_bIsBossDead)
 		return OBJ_DEAD;
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());

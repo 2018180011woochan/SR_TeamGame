@@ -101,6 +101,7 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	// 퍼즐모드인지 확인하는 조건으로 변경 해야함 [1/7/2021 wades]
 	if (CMsgManager::GetInstance()->GetMouseMode())
 	{
+		m_pCrossHair->SetEnable(false);
 		if (GetKeyState(VK_F2))
 		{
 			if (m_pKeyMgr->Key_Press(KEY_LBUTTON))
@@ -121,6 +122,10 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 			}
 		}
 		return S_OK;
+	}
+	else
+	{
+		m_pCrossHair->SetEnable(true);
 	}
 
 	//Move Code
@@ -194,48 +199,48 @@ HRESULT CPlayer::KeyInput(const float _fDeltaTime)
 	//weapon Change
 	// Feat. Woochan
 	// 형 이거 상점에서 무기추가 구매 안하면 그냥 여기가 안먹게 해놀게요
-	if (m_bIsBuyWeapon)
+	if (m_pKeyMgr->Key_Down(KEY_Q) && m_vecWeapons.empty() == false)
 	{
-		if (m_pKeyMgr->Key_Down(KEY_Q) && m_vecWeapons.empty() == false)
-		{
-			--m_nSetWeaponID;
-			m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
-			ChangeWeaponUISetting();
-		}
-		else if (m_pKeyMgr->Key_Down(KEY_E) && m_vecWeapons.empty() == false)
-		{
-			++m_nSetWeaponID;
-			m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
-			ChangeWeaponUISetting();
-		}
+		--m_nSetWeaponID;
+		m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
+		ChangeWeaponUISetting();
+	}
+	else if (m_pKeyMgr->Key_Down(KEY_E) && m_vecWeapons.empty() == false)
+	{
+		++m_nSetWeaponID;
+		m_nSetWeaponID = CLAMP(m_nSetWeaponID, 0, _int(m_vecWeapons.size() - 1));
+		ChangeWeaponUISetting();
 	}
 
 	//Use Skill
 	// Made By Woochan
 	// 형 이거도 상점에서 스킬 뚫어야지 사용 가능하게 해놀겓요
-	if (m_bIsBuySkillRunning)
-	{
+
 		if (m_bEnableSkill)
 		{
 			if (m_pKeyMgr->Key_Down(KEY_1))
 			{
 				CMsgManager::GetInstance()->FreezingStart(5.f);
+				m_nSkillPoint = 0;
+				m_pAmmoHud->SetSkillGauge(float(m_nSkillPoint) / SkillPGaugeMax);
 			}
 			if (m_pKeyMgr->Key_Down(KEY_2))
 			{
 				CMsgManager::GetInstance()->HighNoonReady(5.f);
 				m_pPlayerCamera->SetCameraZoomIn(85.f, 2.f);
 				m_fHighNoonDmg = 0;
+				m_nSkillPoint = 0;
+				m_pAmmoHud->SetSkillGauge(float(m_nSkillPoint) / SkillPGaugeMax);
 			}
 			else if (m_pKeyMgr->Key_Down(KEY_3))
 			{
 				CMsgManager::GetInstance()->AirStrikeReady();
 				m_pFocus->SetEnable(true);
 				m_pCrossHair->SetEnable(false);
+				m_nSkillPoint = 0;
+				m_pAmmoHud->SetSkillGauge(float(m_nSkillPoint) / SkillPGaugeMax);
 			}
 		}
-		m_nSkillPoint = 0;
-	}
 
 
 	// Cheat [1/8/2021 wades]
@@ -409,13 +414,12 @@ void CPlayer::TakeItem(const EItemID & _eID)
 		m_nDisc = CLAMP(m_nDisc, 0, DiscMax);
 		m_pDiscText->SetCount(m_nDisc);
 		SoundPlay(ESoundID::AddDisc);
-
 		break;
 	case EItemID::Heart:
 		AddHp(4);
 		break;
 	case EItemID::Ammo:
-		++m_fAmmo;
+		m_fAmmo+= 5;
 		m_fAmmo = CLAMP(m_fAmmo, 0.f, m_fAmmoMax);
 		m_pAmmoHud->SetAmmoCount(m_fAmmo, m_fAmmoMax);
 		SoundPlay(ESoundID::AddAmmo);
@@ -753,7 +757,7 @@ HRESULT CPlayer::Awake()
 	m_fAmmoMax = 50.f;
 	// test [1/6/2021 wades]
 	//m_fAmmo = m_fAmmoMax;
-	m_fAmmo = 10;
+	m_fAmmo = m_fAmmoMax;
 	m_fDashActionDelay = 2.f;
 	m_fDashActionDelayTime = m_fDashActionDelay;
 	m_fDashMoveDuration = 0.4f;
@@ -839,11 +843,11 @@ HRESULT CPlayer::Start()
 	 m_pGun->SetActive(false);
 
 
-	 /*AddWeapon(EWeaponType::Rapid);
-	 AddWeapon(EWeaponType::Multiple);
-	 AddWeapon(EWeaponType::Flame);
-	 AddWeapon(EWeaponType::Lazer);
-	*/
+	 //AddWeapon(EWeaponType::Rapid);
+	 //AddWeapon(EWeaponType::Multiple);
+	 //AddWeapon(EWeaponType::Flame);
+	 //AddWeapon(EWeaponType::Lazer);
+
 	 //Skill Setting
 
 	 // By Woochan
