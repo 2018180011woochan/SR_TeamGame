@@ -65,7 +65,7 @@ HRESULT CGreenBoyBody::Awake()
 	m_fYTest = 0.f;
 
 	m_bDead = false;
-	m_nTag = 0;
+	m_nTag = 30;
 	m_iHP = 15;
 	m_iMaxHP = m_iHP;
 	m_bIsAttack = false;

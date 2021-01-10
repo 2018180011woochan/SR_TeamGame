@@ -55,7 +55,7 @@ HRESULT CNubBoss::Awake()
 
 	m_pTransform->Set_Scale(_vector(20, 20, 20));
 
-	m_iHP = 40;
+	m_iHP = 20;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -84,11 +84,11 @@ HRESULT CNubBoss::Start()
 
 UINT CNubBoss::Update(const float _fDeltaTime)
 {
-	/* 보스 hp 업데이트 */
-	m_pBossHP->SetHPBar(float(m_iHP / m_iMaxHP));
-
 	if (m_bDead)
 		return OBJ_DEAD;
+
+	/* 보스 hp 업데이트 */
+	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
 
 	CMonster::Update(_fDeltaTime);
 
@@ -157,6 +157,10 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 		m_bHit = true;
 		AddHp(-8);
 	}
+	if (m_iHP < 35)
+	{
+		//m_bHit = true;
+	}
 	if (m_iHP <= 0)
 	{
 		for (int i = 0; i < 10; i++)
@@ -197,6 +201,21 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 
 		m_bDead = true;
 	}
+}
+
+void CNubBoss::OnEnable()
+{
+	if (nullptr != m_pBossHP)
+	{
+		m_pBossHP->SetEnable(true);
+		m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
+	}
+}
+
+void CNubBoss::OnDisable()
+{
+	if (nullptr != m_pBossHP)
+		m_pBossHP->SetEnable(false);
 }
 
 

@@ -213,7 +213,7 @@ HRESULT CStage::Awake()
 
 	AddPrototype(CContainerBlack::Create());
 	AddPrototype(CContainerBlue::Create());
-	AddPrototype(CContainerNomal::Create());
+	//AddPrototype(CContainerNomal::Create());
 	AddPrototype(CContainerRed::Create());
 	AddPrototype(CContainerWhite::Create());
 	AddPrototype(CLazerGun::Create());
