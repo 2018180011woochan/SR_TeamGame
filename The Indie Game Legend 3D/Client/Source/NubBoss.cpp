@@ -53,9 +53,9 @@ HRESULT CNubBoss::Awake()
 
 	m_fMoveSpeed = 8.f;
 
-	m_pTransform->Set_Scale(_vector(20, 20, 20));
+	m_pTransform->Set_Scale(_vector(15,15,15));
 
-	m_iHP = 20;
+	m_iHP =15;
 	m_iMaxHP = m_iHP;
 
 	m_eRenderID = ERenderID::Alpha;
@@ -84,11 +84,19 @@ HRESULT CNubBoss::Start()
 
 UINT CNubBoss::Update(const float _fDeltaTime)
 {
-	if (m_bDead)
-		return OBJ_DEAD;
+
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	/* 보스 hp 업데이트 */
 	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
+	if (m_bDead)
+	{
+		_vector vPos = m_pTransform->Get_WorldPosition();
+		CItem* pItem = (CItem*)AddGameObject<CItem>();
+		pItem->SetPosition(_vector(vPos.x, 15.f, vPos.z));
+		pItem->SetItemType(EItemID::Disc);
+		return OBJ_DEAD;
+	}
 
 	CMonster::Update(_fDeltaTime);
 
@@ -130,6 +138,7 @@ UINT CNubBoss::Update(const float _fDeltaTime)
 
 UINT CNubBoss::LateUpdate(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }
@@ -149,17 +158,15 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 	if (m_bHit == false && L"PlayerBullet" == _pGameObject->GetName())
 	{
 		m_bHit = true;
-		AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
+		//AddHp(-((CBullet*)_pGameObject)->GetBulletDmg());
+
+		m_iHP -= ((CBullet*)_pGameObject)->GetBulletDmg();
 
 	}
 	else if (m_bHit == false && L"ExplosionBlue" == _pGameObject->GetName())
 	{
 		m_bHit = true;
 		AddHp(-8);
-	}
-	if (m_iHP < 35)
-	{
-		//m_bHit = true;
 	}
 	if (m_iHP <= 0)
 	{
@@ -200,7 +207,7 @@ void CNubBoss::OnCollision(CGameObject * _pGameObject)
 		CSoundMgr::GetInstance()->Play(L"sfxKill.wav", CSoundMgr::MonsterKill);
 
 		m_bDead = true;
-	}
+	}	
 }
 
 void CNubBoss::OnEnable()
@@ -280,7 +287,7 @@ bool CNubBoss::isCloseToPlayer()
 	float fHeight = abs(vecPlayerPos.z - m_pTransform->Get_Position().z);
 	fDistance = sqrt((fWidth * fWidth) + (fHeight * fHeight));
 
-	if (fDistance < 40.f)
+	if (fDistance < 15.f)
 		return true;
 
 	return false;

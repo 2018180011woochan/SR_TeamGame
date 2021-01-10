@@ -87,6 +87,7 @@ UINT CRub::Update(const float _fDeltaTime)
 		return OBJ_DEAD;
 
 	CMonster::Update(_fDeltaTime);
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	m_fWalkDeltaTime += _fDeltaTime;
 	if (m_fWalkSpeed <= m_fWalkDeltaTime)
@@ -123,6 +124,7 @@ UINT CRub::Update(const float _fDeltaTime)
 
 UINT CRub::LateUpdate(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }

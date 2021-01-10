@@ -83,6 +83,7 @@ HRESULT CGreenBoyHead::Start()
 UINT CGreenBoyHead::Update(const float _fDeltaTime)
 {
 
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	if (m_bIsBossDead)
 		return OBJ_DEAD;

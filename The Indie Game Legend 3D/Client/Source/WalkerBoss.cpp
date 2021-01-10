@@ -79,6 +79,8 @@ UINT CWalkerBoss::Update(const float _fDeltaTime)
 	if (m_bDead)
 		return OBJ_DEAD;
 
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	CMonster::Update(_fDeltaTime);
 
 	if (m_pTransform->Get_Position().y > 5.f || m_pTransform->Get_Position().y < 3.f)
@@ -117,6 +119,7 @@ UINT CWalkerBoss::Update(const float _fDeltaTime)
 
 UINT CWalkerBoss::LateUpdate(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }

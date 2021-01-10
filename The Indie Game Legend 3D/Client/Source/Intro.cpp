@@ -90,6 +90,7 @@ HRESULT CIntro::Start()
 
 	CSoundMgr::GetInstance()->Initialize();
 	CSoundMgr::GetInstance()->PlayBGM(L"Title.wav");
+	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.35f);
 	return S_OK;
 }
 

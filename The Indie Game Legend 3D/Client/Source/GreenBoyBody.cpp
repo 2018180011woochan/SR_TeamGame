@@ -104,12 +104,19 @@ HRESULT CGreenBoyBody::Start()
 
 UINT CGreenBoyBody::Update(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	/* 보스 hp 업데이트 */
 	//m_pBossHP->SetEnable(true);
 	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
-
 	if (m_bDead)
+	{
+		_vector vPos = m_pTransform->Get_WorldPosition();
+		CItem* pItem = (CItem*)AddGameObject<CItem>();
+		pItem->SetPosition(_vector(vPos.x, 15.f, vPos.z));
+		pItem->SetItemType(EItemID::Disc);
 		return OBJ_DEAD;
+	}
 	m_pPlayerTransform = (CTransform*)(FindGameObjectOfType<CPlayer>()->GetComponent<CTransform>());
 	CMonster::Update(_fDeltaTime);
 

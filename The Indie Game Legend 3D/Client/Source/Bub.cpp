@@ -63,6 +63,7 @@ UINT CBub::Update(const float _fDeltaTime)
 		return OBJ_DEAD;
 
 	CMonster::Update(_fDeltaTime);
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	//3.f->2.f 이거 통일 필요 
 	if (m_pTransform->Get_Position().y > m_fMaxJump || m_pTransform->Get_Position().y < 2.f)
@@ -96,6 +97,7 @@ UINT CBub::Update(const float _fDeltaTime)
 
 UINT CBub::LateUpdate(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();

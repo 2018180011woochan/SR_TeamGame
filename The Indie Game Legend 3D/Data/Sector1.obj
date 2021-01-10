@@ -10133,7 +10133,7 @@ v 240 -0.00000000011642 -104
 # 5 vertices
 
 o 25_12
-usemtl ContainerNormal
+usemtl ContainerNomal
 f 3376 3377 3378 3379
 f 3380 3378 3377
 f 3380 3379 3378

@@ -88,6 +88,7 @@ HRESULT CGreenBoyFace::Start()
 
 UINT CGreenBoyFace::Update(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 	/* 보스 hp 업데이트 */
 
 	if (m_bIsBossDead)

@@ -75,7 +75,7 @@ HRESULT CTreeBoss::Start()
 	m_pCollider->SetMesh(TEXT("Quad"),BOUND::BOUNDTYPE::SPHERE);
 	m_pCollider->m_bIsRigid = true;
 
-	m_pTransform->Add_Position(_vector(10, 10, 10));
+	m_pTransform->Add_Position(_vector(10,8, 10));
 
 	m_pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 
@@ -88,11 +88,19 @@ HRESULT CTreeBoss::Start()
 
 UINT CTreeBoss::Update(const float _fDeltaTime)
 {
+
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 	/* 보스 hp 업데이트 */
 	m_pBossHP->SetHPBar(float(m_iHP) / float(m_iMaxHP));
 
 	if (m_bDead)
+	{
+		_vector vPos = m_pTransform->Get_WorldPosition();
+		CItem* pItem = (CItem*)AddGameObject<CItem>();
+		pItem->SetPosition(_vector(vPos.x, 15.f, vPos.z));
+		pItem->SetItemType(EItemID::Disc);
 		return OBJ_DEAD;
+	}
 
 	CMonster::Update(_fDeltaTime);
 
@@ -118,6 +126,8 @@ UINT CTreeBoss::Update(const float _fDeltaTime)
 
 UINT CTreeBoss::LateUpdate(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }

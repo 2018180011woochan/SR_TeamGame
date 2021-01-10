@@ -26,8 +26,8 @@ CEnding * CEnding::Create()
 
 HRESULT CEnding::Awake()
 {
-	AddPrototype(CIntroBackGround::Create());
-	AddPrototype(CStar::Create());
+	//AddPrototype(CIntroBackGround::Create());
+	//AddPrototype(CStar::Create());
 	AddPrototype(CEndingText::Create());
 	CGameObject* pGameObject = nullptr;
 

@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "BossHP.h"
 #include "Sand.h"
+#include "Item.h"
 
 CWorm::CWorm()
 	: m_nMaxCount(0)
@@ -72,7 +73,7 @@ HRESULT CWorm::Awake()
 	m_pMeshRenderer->SetMesh(TEXT("Quad"));
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(8.6f, 5.6f, 1.f));
-	m_pTransform->Set_Position(D3DXVECTOR3(240.f, -5.f, 208.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(-240.f, -5.f, 208.f));
 	m_pTransform->UpdateTransform();
 
 	m_pCollider = (CCollider*)AddComponent<CCollider>();
@@ -82,7 +83,7 @@ HRESULT CWorm::Awake()
 	m_pCollider->m_bExcept = true;
 	m_vMove = D3DXVECTOR3(0.f, 0.f, 0.f);
 
-	m_tAreaRect = { -300,260,-180,156 };
+	m_tAreaRect = { -280,260,-200,176 };
 
 	m_eRenderID = ERenderID::Alpha;
 	return S_OK;
@@ -119,8 +120,13 @@ UINT CWorm::Update(const float _fDeltaTime)
 {
 	CWormPart::Update(_fDeltaTime);
 	if (true == m_bRemove)
+	{
+		_vector vPos = m_pTransform->Get_WorldPosition();
+		CItem* pItem  = (CItem*)AddGameObject<CItem>();
+		pItem->SetPosition(_vector(vPos.x, 15.f, vPos.z));
+		pItem->SetItemType(EItemID::Disc);
 		return OBJ_DEAD;
-
+	}
 	DoPattern(_fDeltaTime);
 	SetTextureKey();
 	Animate(_fDeltaTime);

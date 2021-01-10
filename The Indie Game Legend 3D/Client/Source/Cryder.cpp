@@ -74,6 +74,7 @@ UINT CCryder::Update(const float _fDeltaTime)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
 
 	CMonster::Update(_fDeltaTime);
 
@@ -114,6 +115,9 @@ UINT CCryder::Update(const float _fDeltaTime)
 
 UINT CCryder::LateUpdate(const float _fDeltaTime)
 {
+
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	CMonster::LateUpdate(_fDeltaTime);
 	return _uint();
 }

@@ -326,7 +326,9 @@ void CUtilityManger::ObjectCulling(_uint _nSceneID, _uint _nTag)
 		{
 			pGameObject->SetEnable(true);
 			pGameObject->OnEnable();
-			m_RoomMobList.emplace_back(pGameObject);
+
+			if (_nTag != 6)
+				m_RoomMobList.emplace_back(pGameObject);
 			SafeAddRef(pGameObject);
 		}
 	}

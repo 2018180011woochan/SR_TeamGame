@@ -87,6 +87,8 @@ HRESULT CGreenBoyUpHand::Start()
 
 UINT CGreenBoyUpHand::Update(const float _fDeltaTime)
 {
+	CMsgManager::GetInstance()->Freeze(&_fDeltaTime);
+
 	CMonster::Update(_fDeltaTime);
 	if (m_bIsBossDead)
 		return OBJ_DEAD;
